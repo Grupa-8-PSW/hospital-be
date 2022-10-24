@@ -1,4 +1,8 @@
 ﻿using HospitalAPI.Persistence;
+using HospitalAPI.Persistence.Repository;
+using HospitalAPI.Web.Converters;
+using HospitalLibrary.Feedback;
+using HospitalLibrary.Patient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -18,7 +22,18 @@ namespace HospitalAPI
             services.AddDbContext<HospitalDbContext>(options => 
                 options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")));
 
-            services.AddControllers();
+            services.AddScoped(typeof(IFeedbackService), typeof(FeedbackService));
+            services.AddScoped(typeof(IPatientService), typeof(PatientService));
+
+            services.AddScoped(typeof(IFeedbackRepository), typeof(FeedbackRepository));
+            services.AddScoped(typeof(IPatientRepository), typeof(PatientRepository));
+
+            services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+                });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HospitalAPI", Version = "v1" });
