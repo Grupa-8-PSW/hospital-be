@@ -9,6 +9,7 @@ namespace HospitalLibrary.Core.Model
 {
     public class BloodBank
     {
+<<<<<<< HEAD
         public int Id { get; set; }
         
         public string Name { get; set; }
@@ -16,5 +17,13 @@ namespace HospitalLibrary.Core.Model
         public string Email { get; set; }
 
         public string ServerAddress { get; set; }
+=======
+        [Required]
+        public string Name { get; set; }
+        
+        public String Email { get; set; }
+       
+        public String ServerAddress { get; set; }
+>>>>>>> 7cd19fb14d5fce0b3579bc2d0c9d6275d0d71fb8
     }
 }
