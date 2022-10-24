@@ -1,4 +1,6 @@
-﻿using HospitalAPI.Persistence;
+﻿using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Core.Service;
+using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -23,6 +25,9 @@ namespace HospitalAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HospitalAPI", Version = "v1" });
             });
+
+            services.AddScoped<IBloodBankService, BloodBankService>();
+            services.AddScoped<IBloodBankRepository, BloodBankRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
