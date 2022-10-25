@@ -9,11 +9,13 @@ namespace HospitalLibrary.Core.Model
 {
     public class BloodBank
     {
-        [Required]
-        public string Name { get; set; }
+        public int Id { get; set; }
         
-        public String Email { get; set; }
-       
-        public String ServerAddress { get; set; }
+        public string Name { get; set; }
+
+        public string Email { get; set; }
+
+        public string ServerAddress { get; set; }
+
     }
 }

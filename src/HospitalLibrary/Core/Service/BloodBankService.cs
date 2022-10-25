@@ -1,18 +1,26 @@
 ﻿using HospitalLibrary.Core.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using HospitalLibrary.Core.Repository;
 
 namespace HospitalLibrary.Core.Service
 {
-    internal class BloodBankService
+    public class BloodBankService : IBloodBankService
     {
+        private readonly IBloodBankRepository _bloodBankRepository;
+
+
+        public BloodBankService(IBloodBankRepository bloodBankRepository)
+        {
+            _bloodBankRepository = bloodBankRepository;
+        }
 
         public void Create(BloodBank bloodBank)
         {
+            _bloodBankRepository.Create(bloodBank);
         }
 
+        public IEnumerable<BloodBank> GetAll()
+        {
+            return _bloodBankRepository.GetAll();
+        }
     }
 }
