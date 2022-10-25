@@ -28,9 +28,9 @@ namespace HospitalLibrary.Core.Service
         {
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUsername").Value));
-            email.To.Add(MailboxAddress.Parse(request.To));
+            email.To.Add(MailboxAddress.Parse(request.address));
             email.Subject = "Your API key";
-            email.Body = new TextPart(TextFormat.Html) { Text = "123456789" };
+            email.Body = new TextPart(TextFormat.Html) { Text = "Ovo je moj tekst gde treba da stoji api kljuc"};
 
             using var smtp = new SmtpClient();
             smtp.Connect(_config.GetSection("EmailHost").Value, 587, SecureSocketOptions.StartTls);

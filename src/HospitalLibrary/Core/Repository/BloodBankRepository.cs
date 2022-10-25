@@ -1,4 +1,3 @@
-using HospitalAPI.Persistence;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
 

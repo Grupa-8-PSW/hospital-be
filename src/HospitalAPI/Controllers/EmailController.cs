@@ -15,8 +15,9 @@ namespace HospitalAPI.Controllers
         {
             _emailService = emailService;
         }
+
         [HttpPost]
-        public IActionResult SendEmail(EmailDto request)
+        public ActionResult SendEmail([FromBody]EmailDto request)
         {
             _emailService.SendEmail(request);
             return Ok();
