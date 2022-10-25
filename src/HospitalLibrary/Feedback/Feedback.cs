@@ -11,7 +11,7 @@ namespace HospitalLibrary.Feedback
         public DateOnly CreationDate { get; private set; }
         public bool IsAnonymous { get; private set; }
         public bool IsPublic { get; private set; }
-        public FeedbackStatus Status { get; private set; }
+        public FeedbackStatus Status { get; set; }
 
         public Feedback()
         {

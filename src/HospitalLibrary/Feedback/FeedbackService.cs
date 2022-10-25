@@ -14,12 +14,22 @@ namespace HospitalLibrary.Feedback
 
         public Feedback GetById(int id) => _feedbackRepository.GetById(id);
 
+        public List<Feedback> GetAllPublic() => _feedbackRepository.GetAllPublic();
+
         public Feedback Create(Feedback feedback) => _feedbackRepository.Create(feedback);
 
         public void Update(Feedback feedback) => _feedbackRepository.Update(feedback);
         
         public void Delete(int id) => _feedbackRepository.Delete(id);
 
-        public List<Feedback> GetPublicFeedback() => GetAll().Where(f => f.IsPublic).ToList();
+        public void ChangeStatus(int id, FeedbackStatus feedbackStatus)
+        {
+            var feedback = _feedbackRepository.GetById(id);
+            if (feedback == null)
+                return;
+            feedback.Status = feedbackStatus;
+            _feedbackRepository.Update(feedback);
+        }
+
     }
 }

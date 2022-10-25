@@ -14,5 +14,12 @@ namespace HospitalAPI.Web.Controllers.InternalApp
             _feedbackService = feedbackService;
         }
 
+        [HttpPut("{id}")]
+        public IActionResult ChangeStatus(int id, FeedbackStatus feedbackStatus)
+        {
+            _feedbackService.ChangeStatus(id, feedbackStatus);
+            return Ok();
+        }
+
     }
 }

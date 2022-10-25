@@ -10,5 +10,7 @@ namespace HospitalAPI.Persistence.Repository
 
         }
 
+        public List<Feedback> GetAllPublic() => _dbContext.Feedbacks.Where(f => f.IsPublic).ToList();
+
     }
 }
