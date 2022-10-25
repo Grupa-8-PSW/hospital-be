@@ -1,4 +1,4 @@
-﻿using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
@@ -17,17 +17,20 @@ namespace HospitalAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<HospitalDbContext>(options => 
-                options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")));
-
+            services.AddDbContext<HospitalDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HospitalAPI", Version = "v1" });
             });
 
+            
+            services.AddScoped<IEmailService, EmailService>();
+
+
             services.AddScoped<IBloodBankService, BloodBankService>();
             services.AddScoped<IBloodBankRepository, BloodBankRepository>();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
