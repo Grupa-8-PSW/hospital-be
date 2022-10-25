@@ -14,6 +14,18 @@ namespace HospitalAPI.Web.Controllers.PublicApp
             _feedbackService = feedbackService;
         }
 
+        // GET: api/Feedback
+        [HttpGet]
+        public ActionResult GetAll()
+        {
+            return Ok(_feedbackService.GetAll());
+        }
 
+        // GET: api/Feedback/public
+        [HttpGet("/public")]
+        public ActionResult GetPublicFeedback()
+        {
+            return Ok(_feedbackService.GetPublicFeedback());
+        }
     }
 }

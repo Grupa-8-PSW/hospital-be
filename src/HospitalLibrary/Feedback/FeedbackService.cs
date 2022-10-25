@@ -20,5 +20,6 @@ namespace HospitalLibrary.Feedback
         
         public void Delete(int id) => _feedbackRepository.Delete(id);
 
+        public List<Feedback> GetPublicFeedback() => GetAll().Where(f => f.IsPublic).ToList();
     }
 }

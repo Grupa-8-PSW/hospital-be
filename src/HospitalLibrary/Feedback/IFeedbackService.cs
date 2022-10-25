@@ -13,5 +13,6 @@ namespace HospitalLibrary.Feedback
         public Feedback Create(Feedback feedback);
         public void Update(Feedback feedback);
         public void Delete(int id);
+        public List<Feedback> GetPublicFeedback();
     }
 }
