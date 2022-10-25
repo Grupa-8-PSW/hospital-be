@@ -26,13 +26,14 @@ namespace HospitalAPI.Controllers
         [HttpPost]
         public ActionResult Create(BloodBank bloodBank)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
 
             _bloodBankService.Create(bloodBank);
-            return CreatedAtAction("GetById", new { id = bloodBank.Id }, bloodBank);
+
+            return Ok();
         }
 
     }
