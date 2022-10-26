@@ -4,14 +4,14 @@ namespace HospitalLibrary.Feedback
 {
     public class Feedback : BaseEntityModel
     {
-        public int PatientId { get; private set; }
-        public Patient.Patient Patient { get; private set; }
-        public string Text { get; private set; }
-        public int Rating { get; private set; }
-        public DateOnly CreationDate { get; private set; }
-        public bool IsAnonymous { get; private set; }
-        public bool IsPublic { get; private set; }
-        public FeedbackStatus Status { get; private set; }
+        public int PatientId { get; set; }
+        public Patient.Patient Patient { get; set; }
+        public string Text { get; set; }
+        public int Rating { get; set; }
+        public DateOnly CreationDate { get; set; }
+        public bool IsAnonymous { get; set; }
+        public bool IsPublic { get; set; }
+        public FeedbackStatus Status { get; set; }
 
         public Feedback()
         {
@@ -29,6 +29,13 @@ namespace HospitalLibrary.Feedback
             IsPublic = isPublic;
             Status = status;
         }
+
+        public void SetAnonymous()
+        {
+            Patient.FirstName = "Anonymous";
+            Patient.LastName = "";
+        }
+
     }
 
     public enum FeedbackStatus { OnHold, Approved, Denied }

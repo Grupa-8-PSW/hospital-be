@@ -3,6 +3,6 @@ namespace HospitalLibrary.Feedback
 {
     public interface IFeedbackRepository : IEntityRepository<Feedback>
     {
-
+        public List<Feedback> GetAllPublic();
     }
 }
