@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
-using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Core.Model;
 using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
 using MimeKit.Text;
-using MailKit.Net.Smtp;
 using SmtpClient = MailKit.Net.Smtp.SmtpClient;
+
 
 namespace HospitalLibrary.Core.Service
 {
@@ -27,16 +21,52 @@ namespace HospitalLibrary.Core.Service
         public void SendEmail(EmailDto request)
         {
             var email = new MimeMessage();
-            email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUsername").Value));
-            email.To.Add(MailboxAddress.Parse(request.address));
-            email.Subject = "Your API key";
-            email.Body = new TextPart(TextFormat.Html) { Text = "Ovo je moj tekst gde treba da stoji api kljuc"};
+            string address = request.address;
+
+            GenerateEmail(email, address);
 
             using var smtp = new SmtpClient();
             smtp.Connect(_config.GetSection("EmailHost").Value, 587, SecureSocketOptions.StartTls);
             smtp.Authenticate(_config.GetSection("EmailUsername").Value, _config.GetSection("EmailPassword").Value);
+            
             smtp.Send(email);
             smtp.Disconnect(true);
+        }
+
+        private void GenerateEmail(MimeMessage email, string address)
+        {
+            email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUsername").Value));
+            email.To.Add(MailboxAddress.Parse(address));
+
+            AddGeneratedPasswordInEmail(email);
+            AddGeneratedAPIkeyInEmail(email);
+        }
+
+        private void AddGeneratedPasswordInEmail(MimeMessage email)
+        {
+            email.Subject = "Your password: ";
+            email.Body = new TextPart(TextFormat.Html) { Text = CreateDummyString() };
+        }
+
+        private void AddGeneratedAPIkeyInEmail(MimeMessage email)
+        {
+            email.Subject = "Your API key: ";
+            email.Body = new TextPart(TextFormat.Html) { Text = CreateDummyString() };
+        }
+
+
+        private string CreateDummyString(int length = 8)
+        {
+            string validChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*?_-";
+            Random random = new Random();
+
+            char[] chars = new char[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                chars[i] = validChars[random.Next(0, validChars.Length)];
+            }
+            return new string(chars);
         }
     }
 }
