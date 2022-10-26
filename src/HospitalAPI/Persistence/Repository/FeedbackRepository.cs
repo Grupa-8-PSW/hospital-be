@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Feedback;
+using Microsoft.EntityFrameworkCore;
 
 namespace HospitalAPI.Persistence.Repository
 {
@@ -10,7 +11,11 @@ namespace HospitalAPI.Persistence.Repository
 
         }
 
-        public List<Feedback> GetAllPublic() => _dbContext.Feedbacks.Where(f => f.IsPublic).ToList();
+        public override List<Feedback> GetAll() => _dbContext.Feedbacks.Include(f => f.Patient).ToList();
+
+        public override Feedback GetById(int id) => _dbContext.Feedbacks.Include(f => f.Patient).FirstOrDefault(f => f.Id == id);
+
+        public List<Feedback> GetAllPublic() => _dbContext.Feedbacks.Include(f => f.Patient).Where(f => f.IsPublic).ToList();
 
     }
 }

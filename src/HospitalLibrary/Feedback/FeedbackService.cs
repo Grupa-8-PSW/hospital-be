@@ -10,13 +10,13 @@ namespace HospitalLibrary.Feedback
             _feedbackRepository = feedbackRepository;
         }
 
-        public List<Feedback> GetAll() => _feedbackRepository.GetAll();
+        public List<Feedback> GetAll() => HandleAnonymous(_feedbackRepository.GetAll());
 
-        public Feedback GetById(int id) => _feedbackRepository.GetById(id);
+        public Feedback GetById(int id) => HandleAnonymous(_feedbackRepository.GetById(id));
 
-        public List<Feedback> GetAllPublic() => _feedbackRepository.GetAllPublic();
+        public List<Feedback> GetAllPublic() => HandleAnonymous(_feedbackRepository.GetAllPublic());
 
-        public Feedback Create(Feedback feedback) => _feedbackRepository.Create(feedback);
+        public Feedback Create(Feedback feedback) => HandleAnonymous(_feedbackRepository.Create(feedback));
 
         public void Update(Feedback feedback) => _feedbackRepository.Update(feedback);
         
@@ -29,6 +29,20 @@ namespace HospitalLibrary.Feedback
                 return;
             feedback.Status = feedbackStatus;
             _feedbackRepository.Update(feedback);
+        }
+
+        private Feedback HandleAnonymous(Feedback feedback)
+        {
+            if (feedback.IsAnonymous)
+                feedback.SetAnonymous();
+            return feedback;
+        }
+
+        private List<Feedback> HandleAnonymous(List<Feedback> feedbacks)
+        {
+            foreach (var feedback in feedbacks)
+                HandleAnonymous(feedback);
+            return feedbacks;
         }
 
     }

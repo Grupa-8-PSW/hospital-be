@@ -12,18 +12,18 @@ namespace HospitalAPI.Persistence.Repository
             _dbContext = dbContext;
         }
 
-        public List<TEntity> GetAll() => _dbContext.Set<TEntity>().ToList();
+        public virtual List<TEntity> GetAll() => _dbContext.Set<TEntity>().ToList();
 
-        public TEntity GetById(int id) => _dbContext.Set<TEntity>().FirstOrDefault(e => e.Id == id);
+        public virtual TEntity GetById(int id) => _dbContext.Set<TEntity>().FirstOrDefault(e => e.Id == id);
 
-        public TEntity Create(TEntity entity)
+        public virtual TEntity Create(TEntity entity)
         {
             _dbContext.Set<TEntity>().Add(entity);
             _dbContext.SaveChanges();
             return entity;
         }
 
-        public void Update(TEntity entity)
+        public virtual void Update(TEntity entity)
         {
             _dbContext.Entry<TEntity>(entity).State = EntityState.Modified;
             try
@@ -36,7 +36,7 @@ namespace HospitalAPI.Persistence.Repository
             }
         }
 
-        public void Delete(int id)
+        public virtual void Delete(int id)
         {
             var entity = GetById(id);
             _dbContext.Set<TEntity>().Remove(entity);
