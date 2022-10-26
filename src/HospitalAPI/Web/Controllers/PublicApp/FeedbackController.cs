@@ -27,5 +27,12 @@ namespace HospitalAPI.Web.Controllers.PublicApp
         {
             return Ok(_feedbackService.GetPublicFeedback());
         }
+
+        //POST: api/Feedback
+        [HttpPost]
+        public ActionResult Create(Feedback Feedback)
+        {
+            return CreatedAtAction("Created feedback",_feedbackService.Create(Feedback));
+        }
     }
 }
