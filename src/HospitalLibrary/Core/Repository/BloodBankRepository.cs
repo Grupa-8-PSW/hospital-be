@@ -7,10 +7,10 @@ namespace HospitalLibrary.Core.Repository
     {
         private readonly HospitalDbContext _context;
 
-        //public BloodBankRepository(HospitalDbContext context)
-      //  {
-       //     _context = context;
-        //}
+        public BloodBankRepository(HospitalDbContext context)
+        {
+            _context = context;
+        }
 
         public IEnumerable<BloodBank> GetAll()
         {

@@ -8,7 +8,7 @@ namespace HospitalLibrary.Core.Model
 {
     public class EmailDto
     {
-        public string address { get; set; } = string.Empty;
+        public string email { get; set; } = string.Empty;
 
     }
 }

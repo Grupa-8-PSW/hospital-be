@@ -21,7 +21,7 @@ namespace HospitalLibrary.Core.Service
         public void SendEmail(EmailDto request)
         {
             var email = new MimeMessage();
-            string address = request.address;
+            string address = request.email;
 
             GenerateEmail(email, address);
 
@@ -35,27 +35,28 @@ namespace HospitalLibrary.Core.Service
 
         private void GenerateEmail(MimeMessage email, string address)
         {
+            string body = "";
             email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUsername").Value));
             email.To.Add(MailboxAddress.Parse(address));
 
-            AddGeneratedPasswordInEmail(email);
-            AddGeneratedAPIkeyInEmail(email);
+            body = AddGeneratedPasswordInEmail() + AddGeneratedAPIkeyInEmail();
+
+            email.Subject = "Registered user";
+            email.Body = new TextPart(TextFormat.Html) { Text = body };
         }
 
-        private void AddGeneratedPasswordInEmail(MimeMessage email)
+        private string AddGeneratedPasswordInEmail()
         {
-            email.Subject = "Your password: ";
-            email.Body = new TextPart(TextFormat.Html) { Text = CreateDummyString() };
+            return "Your password: " + CreateDummyString(8);
         }
 
-        private void AddGeneratedAPIkeyInEmail(MimeMessage email)
+        private string AddGeneratedAPIkeyInEmail()
         {
-            email.Subject = "Your API key: ";
-            email.Body = new TextPart(TextFormat.Html) { Text = CreateDummyString() };
+            return "Your API key: " + CreateDummyString(36);
         }
 
 
-        private string CreateDummyString(int length = 8)
+        private string CreateDummyString(int length)
         {
             string validChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*?_-";
             Random random = new Random();
@@ -68,5 +69,6 @@ namespace HospitalLibrary.Core.Service
             }
             return new string(chars);
         }
+
     }
 }
