@@ -1,4 +1,8 @@
 ﻿using IntegrationAPI.Persistence;
+using IntegrationAPI.Web.Connection.HTTPConnection;
+using IntegrationAPI.Web.Connection.HTTPConnection.Interface;
+using IntegrationAPI.Web.ConnectionService;
+using IntegrationAPI.Web.ConnectionService.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -23,6 +27,10 @@ namespace IntegrationAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IntegrationAPI", Version = "v1" });
             });
+
+            services.AddScoped<IBloodBankHTTPConnection, BloodBankHTTPConnection>();
+            services.AddScoped<IBloodBankConnectionService, BloodBankConnectionService>();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
