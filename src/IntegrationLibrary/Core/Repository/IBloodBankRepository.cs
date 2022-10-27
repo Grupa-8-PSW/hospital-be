@@ -1,14 +1,17 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using IntegrationLibrary.Core.Model;
 
-namespace HospitalLibrary.Core.Repository
+namespace IntegrationLibrary.Core.Repository
 {
     public interface IBloodBankRepository
     {
-
         IEnumerable<BloodBank> GetAll();
         void Create(BloodBank bloodBank);
         BloodBank GetById(int id);
         void Delete(BloodBank bloodBank);
-
     }
 }

@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HospitalLibrary.Core.Model;
+using IntegrationLibrary.Core.Model;
 
-
-namespace HospitalLibrary.Core.Service
+namespace IntegrationLibrary.Core.Service
 {
     public interface IEmailService
     {
-        void SendEmail(EmailDto request);
+        void SendEmail(EmailDTO request);
     }
 }

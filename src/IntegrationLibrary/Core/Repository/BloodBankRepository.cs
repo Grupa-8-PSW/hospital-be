@@ -1,21 +1,21 @@
-using HospitalLibrary.Core.Model;
-using HospitalLibrary.Settings;
-using Microsoft.EntityFrameworkCore;
+﻿using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Persistence;
 
-namespace HospitalLibrary.Core.Repository
+namespace IntegrationLibrary.Core.Repository
 {
     public class BloodBankRepository : IBloodBankRepository
     {
-        private readonly HospitalDbContext _context;
+        private readonly IntegrationDbContext _context;
 
-        public BloodBankRepository(HospitalDbContext context)
+        public BloodBankRepository(IntegrationDbContext context)
         {
             _context = context;
         }
 
         public IEnumerable<BloodBank> GetAll()
         {
-            return _context.BloodBanks.ToList();    
+            return _context.BloodBanks.ToList();
+            
         }
 
         public void Create(BloodBank bloodBank)
@@ -34,6 +34,5 @@ namespace HospitalLibrary.Core.Repository
             _context.BloodBanks.Remove(bloodBank);
             _context.SaveChanges();
         }
-
     }
 }

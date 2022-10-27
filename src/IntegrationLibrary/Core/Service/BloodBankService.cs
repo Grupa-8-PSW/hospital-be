@@ -1,7 +1,12 @@
-﻿using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Repository;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Repository;
 
-namespace HospitalLibrary.Core.Service
+namespace IntegrationLibrary.Core.Service
 {
     public class BloodBankService : IBloodBankService
     {

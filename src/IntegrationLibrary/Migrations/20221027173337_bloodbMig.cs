@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace IntegrationAPI.Persistence.Migrations
+namespace IntegrationLibrary.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class bloodbMig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -1,4 +1,7 @@
 ﻿using IntegrationAPI.Persistence;
+using IntegrationLibrary.Core.Repository;
+using IntegrationLibrary.Core.Service;
+using IntegrationLibrary.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -23,6 +26,11 @@ namespace IntegrationAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IntegrationAPI", Version = "v1" });
             });
+
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IBloodBankService, BloodBankService>();
+            services.AddScoped<IBloodBankRepository, BloodBankRepository>();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

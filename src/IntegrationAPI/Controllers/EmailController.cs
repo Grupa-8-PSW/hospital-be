@@ -1,9 +1,9 @@
-﻿using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Service;
+﻿using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HospitalAPI.Controllers
+namespace IntegrationAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -17,7 +17,7 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult SendEmail([FromBody]EmailDto request)
+        public ActionResult SendEmail([FromBody] EmailDTO request)
         {
             _emailService.SendEmail(request);
             return Ok();
