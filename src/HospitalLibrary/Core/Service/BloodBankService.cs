@@ -18,9 +18,19 @@ namespace HospitalLibrary.Core.Service
             _bloodBankRepository.Create(bloodBank);
         }
 
+        public void Delete(BloodBank bloodBank)
+        {
+            _bloodBankRepository.Delete(bloodBank);
+        }
+
         public IEnumerable<BloodBank> GetAll()
         {
             return _bloodBankRepository.GetAll();
+        }
+
+        public BloodBank GetById(int id)
+        {
+            return _bloodBankRepository.GetById(id);
         }
     }
 }

@@ -6,5 +6,7 @@ namespace HospitalLibrary.Core.Service
     {
         IEnumerable<BloodBank> GetAll();
         void Create(BloodBank bloodBank);
+        BloodBank GetById(int id);
+        public void Delete(BloodBank bloodBank);
     }
 }

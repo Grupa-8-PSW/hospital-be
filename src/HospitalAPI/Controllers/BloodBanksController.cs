@@ -26,14 +26,28 @@ namespace HospitalAPI.Controllers
         [HttpPost]
         public ActionResult Create(BloodBank bloodBank)
         {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
             _bloodBankService.Create(bloodBank);
 
             return Ok();
+        }
+
+        // DELETE api/rooms/2
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            var bloodBank = _bloodBankService.GetById(id);
+            if (bloodBank == null)
+            {
+                return NotFound();
+            }
+
+            _bloodBankService.Delete(bloodBank);
+            return NoContent();
         }
 
     }

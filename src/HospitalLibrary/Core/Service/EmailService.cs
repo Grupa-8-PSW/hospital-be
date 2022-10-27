@@ -39,20 +39,19 @@ namespace HospitalLibrary.Core.Service
             email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUsername").Value));
             email.To.Add(MailboxAddress.Parse(address));
 
-            body = AddGeneratedPasswordInEmail() + AddGeneratedAPIkeyInEmail();
-
+            
             email.Subject = "Registered user";
             email.Body = new TextPart(TextFormat.Html) { Text = body };
         }
 
         private string AddGeneratedPasswordInEmail()
         {
-            return "Your password: " + CreateDummyString(8);
+            return  CreateDummyString(8);
         }
 
         private string AddGeneratedAPIkeyInEmail()
         {
-            return "Your API key: " + CreateDummyString(36);
+            return  CreateDummyString(36);
         }
 
 

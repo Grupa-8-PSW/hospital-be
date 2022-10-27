@@ -7,6 +7,8 @@ namespace HospitalLibrary.Core.Repository
 
         IEnumerable<BloodBank> GetAll();
         void Create(BloodBank bloodBank);
+        BloodBank GetById(int id);
+        void Delete(BloodBank bloodBank);
 
     }
 }
