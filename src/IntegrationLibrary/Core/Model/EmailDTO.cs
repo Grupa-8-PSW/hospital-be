@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.Model
+namespace IntegrationLibrary.Core.Model
 {
-    public class EmailDto
+    public class EmailDTO
     {
         public string email { get; set; } = string.Empty;
-
     }
 }

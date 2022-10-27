@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace IntegrationAPI.Persistence.Migrations
+namespace IntegrationLibrary.Persistence.Migrations
 {
     public partial class InitialCreate : Migration
     {

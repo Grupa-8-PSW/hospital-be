@@ -1,5 +1,3 @@
-using HospitalLibrary.Core.Repository;
-using HospitalLibrary.Core.Service;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -25,11 +23,6 @@ namespace HospitalAPI
             });
 
             
-            services.AddScoped<IEmailService, EmailService>();
-
-
-            services.AddScoped<IBloodBankService, BloodBankService>();
-            services.AddScoped<IBloodBankRepository, BloodBankRepository>();
 
         }
 
