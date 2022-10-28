@@ -5,15 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.Model
+namespace IntegrationLibrary.Core.Model
 {
     public class BloodBank
     {
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+
+        public string Email { get; set; } 
         
-        public String Email { get; set; }
-       
-        public String ServerAddress { get; set; }
+        public string ServerAddress { get; set; }
     }
 }
