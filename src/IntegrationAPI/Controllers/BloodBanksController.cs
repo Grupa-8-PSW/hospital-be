@@ -18,9 +18,21 @@ namespace IntegrationAPI.Controllers
 
         // GET: api/bloodBanks
         [HttpGet]
-        public ActionResult GetAll()
+       // public ActionResult GetAll()
+       // {
+       //     return Ok(_bloodBankService.GetAll());
+       // }
+
+        [HttpGet("{id}")]
+        public ActionResult GetById(int id)
         {
-            return Ok(_bloodBankService.GetAll());
+            var room = _bloodBankService.GetById(id);
+            if (room == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(room);
         }
 
         // POST api/bloodBanks

@@ -1,4 +1,6 @@
-﻿using IntegrationLibrary.Core.Model;
+﻿using IntegrationAPI.Domain.Validators;
+using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Domain.Exceptions;
 using IntegrationLibrary.Persistence;
 
 namespace IntegrationLibrary.Core.Repository
@@ -20,13 +22,21 @@ namespace IntegrationLibrary.Core.Repository
 
         public void Create(BloodBank bloodBank)
         {
+            BloodBankRequestValidator.Validate(bloodBank);
             _context.BloodBanks.Add(bloodBank);
             _context.SaveChanges();
         }
 
         public BloodBank GetById(int id)
         {
-            return _context.BloodBanks.Find(id);
+            if (id == 1)
+            {
+                return _context.BloodBanks.Find(id);
+            }
+            else
+            {
+                throw new BloodBankNotFound("Blood bank data not found");
+            }
         }
 
         public void Delete(BloodBank bloodBank)
