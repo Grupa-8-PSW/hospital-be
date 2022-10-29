@@ -1,5 +1,4 @@
 ﻿using IntegrationAPI.Web.ConnectionService.Interface;
-using IntegrationLibrary.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IntegrationAPI.Web.Controllers.BloodBank

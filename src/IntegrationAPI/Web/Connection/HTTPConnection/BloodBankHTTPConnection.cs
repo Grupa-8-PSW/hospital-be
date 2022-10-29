@@ -18,5 +18,16 @@ namespace IntegrationAPI.Web.Connection.HTTPConnection
             var data = restClient.Get<bool>(request);
             return JsonSerializer.Deserialize<bool>(data);
         }
+
+        public Task<RestResponse> CheckForSpecificBloodTypeAmount(string bankName, string bloodType, double quantity)
+        {
+            var client = new RestClient("https://localhost:8081/bloodBanks/check/");
+            var request = new RestRequest("checkBlood", Method.Get);
+            request.AddParameter("bankName", bankName);
+            request.AddParameter("bloodType", bloodType);
+            request.AddParameter("quantity", quantity);
+            var response = client.GetAsync(request);
+            return response;
+        }
     }
 }

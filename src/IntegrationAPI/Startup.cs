@@ -1,8 +1,7 @@
 ﻿using IntegrationAPI.Persistence;
-using IntegrationAPI.Web.Connection.HTTPConnection;
-using IntegrationAPI.Web.Connection.HTTPConnection.Interface;
-using IntegrationAPI.Web.ConnectionService;
-using IntegrationAPI.Web.ConnectionService.Interface;
+using IntegrationLibrary.Core.Repository;
+using IntegrationLibrary.Core.Service;
+using IntegrationLibrary.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -28,8 +27,10 @@ namespace IntegrationAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IntegrationAPI", Version = "v1" });
             });
 
-            services.AddScoped<IBloodBankHTTPConnection, BloodBankHTTPConnection>();
-            services.AddScoped<IBloodBankConnectionService, BloodBankConnectionService>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IBloodBankService, BloodBankService>();
+            services.AddScoped<IBloodBankRepository, BloodBankRepository>();
+            services.AddScoped<ICredentialGenerator, CredentialGenerator>();
 
         }
 
