@@ -19,7 +19,7 @@ namespace IntegrationAPI.Controllers
         [HttpPost]
         public ActionResult SendEmail([FromBody] EmailDTO request)
         {
-            _emailService.SendEmail(request);
+          //  _emailService.SendEmail(request);
             return Ok();
         }
     }

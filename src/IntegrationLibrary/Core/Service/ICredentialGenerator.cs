@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IntegrationLibrary.Core.Model;
 
 namespace IntegrationLibrary.Core.Service
 {
-    public interface IEmailService
+    public interface ICredentialGenerator
     {
-        void SendEmail(string emailBB, string password, string API);
+        public string GeneratePassword();
+        public string GenerateAPI();
+        public string GenerateDummyString(int length);
+
     }
 }

@@ -16,5 +16,9 @@ namespace IntegrationLibrary.Core.Model
         public string Email { get; set; } 
         
         public string ServerAddress { get; set; }
+        public string Password { get; set; } = "unknown";
+
+        public string APIKey { get; set; } = "unknown";
+
     }
 }

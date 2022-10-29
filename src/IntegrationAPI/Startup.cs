@@ -30,6 +30,7 @@ namespace IntegrationAPI
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IBloodBankService, BloodBankService>();
             services.AddScoped<IBloodBankRepository, BloodBankRepository>();
+            services.AddScoped<ICredentialGenerator, CredentialGenerator>();
 
         }
 

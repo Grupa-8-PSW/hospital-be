@@ -23,10 +23,10 @@ namespace IntegrationLibrary.Core.Service
 
         }
 
-        public void SendEmail(EmailDTO request)
+        public void SendEmail(string emailBB, string password, string API)
         {
             var email = new MimeMessage();
-            GenerateEmail(email, request.email);
+            GenerateEmail(email, emailBB,  password,  API);
             
             using var smtp = new SmtpClient();
             smtp.Connect(_config.GetSection("EmailHost").Value, 587, SecureSocketOptions.StartTls);
@@ -37,10 +37,10 @@ namespace IntegrationLibrary.Core.Service
 
         }
 
-        private void GenerateEmail(MimeMessage email, string address)
+        private void GenerateEmail(MimeMessage email, string address, string password, string api)
         {
 
-            string body = "";
+            string body = "password: " + password + "   api: " + api;
             email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUsername").Value));
             email.To.Add(MailboxAddress.Parse(address));
 
@@ -49,29 +49,6 @@ namespace IntegrationLibrary.Core.Service
             email.Body = new TextPart(TextFormat.Html) { Text = body };
         }
 
-        private string AddGeneratedPasswordInEmail()
-        {
-            return  CreateDummyString(8);
-        }
-
-        private string AddGeneratedAPIkeyInEmail()
-        {
-            return  CreateDummyString(36);
-        }
-
-
-        private string CreateDummyString(int length)
-        {
-            string validChars = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*?_-";
-            Random random = new Random();
-
-            char[] chars = new char[length];
-
-            for (int i = 0; i < length; i++)
-            {
-                chars[i] = validChars[random.Next(0, validChars.Length)];
-            }
-            return new string(chars);
-        }
     }
 }
+

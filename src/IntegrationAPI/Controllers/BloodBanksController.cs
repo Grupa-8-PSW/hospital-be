@@ -10,10 +10,14 @@ namespace IntegrationAPI.Controllers
     public class BloodBanksController : ControllerBase
     {
         private readonly IBloodBankService _bloodBankService;
+        private readonly IEmailService _emailService;
+        private readonly ICredentialGenerator _credentialGenerator;
 
-        public BloodBanksController(IBloodBankService bloodBankService)
+        public BloodBanksController(IBloodBankService bloodBankService,  IEmailService emailService, ICredentialGenerator credentialGenerator)
         {
             _bloodBankService = bloodBankService;
+            _emailService = emailService;
+            _credentialGenerator = credentialGenerator;
         }
 
         // GET: api/bloodBanks
@@ -21,6 +25,7 @@ namespace IntegrationAPI.Controllers
         public ActionResult GetAll()
         {
             return Ok(_bloodBankService.GetAll());
+            return Ok();
         }
 
         // POST api/bloodBanks
@@ -32,7 +37,13 @@ namespace IntegrationAPI.Controllers
                 return BadRequest(ModelState);
             }
 
+            bloodBank.APIKey = _credentialGenerator.GenerateAPI();
+            bloodBank.Password = _credentialGenerator.GeneratePassword();
+
+
             _bloodBankService.Create(bloodBank);
+            _emailService.SendEmail(bloodBank.Email, bloodBank.Password, bloodBank.APIKey);
+
 
             return Ok();
         }
