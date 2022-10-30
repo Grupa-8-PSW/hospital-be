@@ -13,14 +13,17 @@ namespace IntegrationLibrary.Core.Service
     public class BloodBankConnectionService : IBloodBankConnectionService
     {
         private IBloodBankHTTPConnection bloodBankHTTPConnection;
+        private IBloodBankService bloodBankService;
 
-        public BloodBankConnectionService(IBloodBankHTTPConnection bloodBankHTTPConnection)
+        public BloodBankConnectionService(IBloodBankHTTPConnection bloodBankHTTPConnection, IBloodBankService bloodBankService)
         {
             this.bloodBankHTTPConnection = bloodBankHTTPConnection;
+            this.bloodBankService = bloodBankService;
         }
 
-        public bool CheckForSpecificBloodType(BloodBank bloodBank, string bloodType)
+        public bool CheckForSpecificBloodType(int bloodBankId, string bloodType)
         {
+            BloodBank bloodBank = bloodBankService.GetById(bloodBankId);
             return bloodBankHTTPConnection.CheckForSpecificBloodType(bloodBank, bloodType);
         }
 

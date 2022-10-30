@@ -1,6 +1,7 @@
 ﻿using IntegrationAPI.ConnectionService.Interface;
 using IntegrationLibrary.Core.Model;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace IntegrationAPI.Controllers.Connections
 {
@@ -18,9 +19,20 @@ namespace IntegrationAPI.Controllers.Connections
 
 
         [HttpGet]
-        public bool BloodQuantityExists(BloodBank bloodBank, string bloodType)
+        public ActionResult CheckForSpecificBloodType([FromQuery(Name = "bloodBankId")] int id, [FromQuery(Name = "bloodType")] string bloodType)
         {
-            return connectionService.CheckForSpecificBloodType(bloodBank, bloodType);
+            bool hasblood = true;
+            try
+            {
+                hasblood = connectionService.CheckForSpecificBloodType(id, bloodType);
+            }catch(HttpRequestException ex)
+            {
+                if(ex.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    return Unauthorized();
+                }
+            }
+            return Ok(hasblood);
         }
 
         //public bool GetSpecificBloodTypeAmount([FromQuery(Name = "bank")] string bankName, [FromQuery(Name = "type")] string bloodType, [FromQuery(Name = "quantity")] double quant)
