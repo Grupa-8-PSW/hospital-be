@@ -1,4 +1,5 @@
-﻿using IntegrationAPI.Persistence;
+﻿using IntegrationAPI.Middlewares;
+using IntegrationAPI.Persistence;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Service;
 using IntegrationLibrary.Persistence;
@@ -50,6 +51,8 @@ namespace IntegrationAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HospitalAPI v1"));
             }
+
+            app.UseExceptionMiddleware();
 
             app.UseRouting();
 
