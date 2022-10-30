@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IntegrationAPI.Connections.Interface;
+using IntegrationAPI.ConnectionService.Interface;
 using IntegrationLibrary.Core.Model;
-using IntegrationLibrary.Core.Service.Interface;
 using RestSharp;
 
 namespace IntegrationLibrary.Core.Service
@@ -30,6 +30,11 @@ namespace IntegrationLibrary.Core.Service
         public Task<RestResponse> CheckForSpecificBloodTypeAmount(string bankName, string bloodType, double quantity)
         {
             throw new NotImplementedException();
+        }
+
+        public bool CheckBloodAmount(string api, string bloodType, double quant)
+        {
+            return bloodBankHTTPConnection.CheckBloodAmount(api, bloodType, quant);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using IntegrationAPI.Connections.Interface;
 using IntegrationLibrary.Core.Model;
 using Microsoft.AspNetCore.Mvc;
+using IntegrationLibrary.Persistence.Migrations;
 using RestSharp;
 using System.Data;
 using System.Net;
@@ -24,6 +25,19 @@ namespace IntegrationAPI.Connections
         public Task<RestResponse> CheckForSpecificBloodTypeAmount(string bankName, string bloodType, double quantity)
         {
             throw new NotImplementedException();
+        }
+
+        public bool CheckBloodAmount(string api, string bloodType, double quant)
+        {
+            RestClient restClient = new RestClient("http://localhost:8081/" + "bloodBanks/checkBloodAmount");
+            RestRequest request = new RestRequest();
+            request.AddParameter("bloodType", bloodType);
+            request.AddParameter("quantity", quant);
+            request.AddHeader("apiKey", api);
+            var data = restClient.Get(request);
+            var a = data.StatusCode;
+            var b = data.Content;
+            return JsonSerializer.Deserialize<bool>(Boolean.Parse(b));
         }
     }
 }
