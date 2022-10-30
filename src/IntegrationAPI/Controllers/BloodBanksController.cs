@@ -1,5 +1,7 @@
 ﻿using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibrary.Core.Service;
+using IntegrationLibrary.Core.Service.Validators;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,27 +26,35 @@ namespace IntegrationAPI.Controllers
         [HttpGet]
         public ActionResult GetAll()
         {
+
             return Ok(_bloodBankService.GetAll());
+
         }
 
         // POST api/bloodBanks
         [HttpPost]
-        public ActionResult Create(BloodBank bloodBank)
+        public ActionResult Create([FromBody] BloodBankDTO bloodBankDTO)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                BloodBankValidator.Validate(bloodBankDTO);
+               
+                string password = _credentialGenerator.GeneratePassword();
+                string api =  _credentialGenerator.GenerateAPI();
+
+                BloodBank bloodBank = new BloodBank(bloodBankDTO.Name, bloodBankDTO.Email, bloodBankDTO.ServerAddress, password, api);
+
+                _bloodBankService.Create(bloodBank);
+                _emailService.SendEmail(bloodBank.Email, bloodBank.Password, bloodBank.APIKey);
+                return Ok();
+
+
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);  
             }
 
-            bloodBank.APIKey = _credentialGenerator.GenerateAPI();
-            bloodBank.Password = _credentialGenerator.GeneratePassword();
-
-
-            _bloodBankService.Create(bloodBank);
-            _emailService.SendEmail(bloodBank.Email, bloodBank.Password, bloodBank.APIKey);
-
-
-            return Ok();
         }
 
         // DELETE api/rooms/2

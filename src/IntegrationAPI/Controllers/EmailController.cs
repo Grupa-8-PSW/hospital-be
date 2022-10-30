@@ -1,4 +1,4 @@
-﻿using IntegrationLibrary.Core.Model;
+﻿using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibrary.Core.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
