@@ -1,4 +1,4 @@
-﻿using IntegrationLibrary.Core.Model;
+﻿using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibrary.Core.Service.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -27,6 +27,7 @@ namespace IntegrationLibrary.Core.Service.Validators
             else if (string.IsNullOrWhiteSpace(bb.Name))
             {
                 throw new BloodBankArgumentException($"{nameof(bb.Name)} is Null/Empty/WhiteSpace.");
+                 
             }
 
             else if (string.IsNullOrWhiteSpace(bb.ServerAddress))

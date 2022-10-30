@@ -1,4 +1,5 @@
 ﻿using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibrary.Core.Service;
 using IntegrationLibrary.Core.Service.Validators;
 using Microsoft.AspNetCore.Http;
@@ -37,16 +38,22 @@ namespace IntegrationAPI.Controllers
             try
             {
                 BloodBankValidator.Validate(bloodBankDTO);
+               
+                string password = _credentialGenerator.GeneratePassword();
+                string api =  _credentialGenerator.GenerateAPI();
+
+                BloodBank bloodBank = new BloodBank(bloodBankDTO.Name, bloodBankDTO.Email, bloodBankDTO.ServerAddress, password, api);
+
+                _bloodBankService.Create(bloodBank);
+                _emailService.SendEmail(bloodBank.Email, bloodBank.Password, bloodBank.APIKey);
+                return Ok();
+
 
             }
             catch(Exception ex)
             {
                 return BadRequest(ex.Message);  
             }
-            return Ok();
-            //_bloodBankService.Create(bloodBank);
-            //_emailService.SendEmail(bloodBank.Email, bloodBank.Password, bloodBank.APIKey);
-
 
         }
 

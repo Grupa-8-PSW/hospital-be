@@ -20,5 +20,17 @@ namespace IntegrationLibrary.Core.Model
 
         public string APIKey { get; set; } = "unknown";
 
+        public BloodBank(string name, string email, string serverAddress, string password, string aPIKey)
+        {
+            Name = name;
+            Email = email;
+            ServerAddress = serverAddress;
+            Password = password;
+            APIKey = aPIKey;
+        }
+
+        public BloodBank()
+        {
+        }
     }
 }
