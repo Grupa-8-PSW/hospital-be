@@ -18,9 +18,9 @@ namespace IntegrationAPI.Controllers.Connections
 
 
         [HttpGet]
-        public bool BloodQuantityExists(BloodBank bloodBank, string bloodType)
+        public bool CheckForSpecificBloodType([FromQuery(Name = "bloodBankId")] int id, [FromQuery(Name = "bloodType")] string bloodType)
         {
-            return connectionService.CheckForSpecificBloodType(bloodBank, bloodType);
+            return connectionService.CheckForSpecificBloodType(id, bloodType);
         }
 
         //public ActionResult GetSpecificBloodTypeAmount([FromQuery(Name = "bank")] string bankName, [FromQuery(Name = "type")] string bloodType, [FromQuery(Name = "quantity")] double quant)

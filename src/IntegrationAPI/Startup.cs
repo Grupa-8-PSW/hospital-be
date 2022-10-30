@@ -1,6 +1,9 @@
-﻿using IntegrationAPI.Persistence;
+﻿using IntegrationAPI.Connections;
+using IntegrationAPI.Connections.Interface;
+using IntegrationAPI.Persistence;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Service;
+using IntegrationLibrary.Core.Service.Interface;
 using IntegrationLibrary.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -30,6 +33,8 @@ namespace IntegrationAPI
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IBloodBankService, BloodBankService>();
             services.AddScoped<IBloodBankRepository, BloodBankRepository>();
+            services.AddScoped<IBloodBankHTTPConnection, BloodBankHTTPConnection>();
+            services.AddScoped<IBloodBankConnectionService, BloodBankConnectionService>();
             services.AddScoped<ICredentialGenerator, CredentialGenerator>();
 
         }

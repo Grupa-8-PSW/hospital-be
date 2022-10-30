@@ -25,7 +25,6 @@ namespace IntegrationAPI.Controllers
         public ActionResult GetAll()
         {
             return Ok(_bloodBankService.GetAll());
-            return Ok();
         }
 
         // POST api/bloodBanks
