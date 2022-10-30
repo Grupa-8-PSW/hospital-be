@@ -1,5 +1,5 @@
-﻿using IntegrationLibrary.Core.Model;
-using IntegrationLibrary.Core.Service.Interface;
+﻿using IntegrationAPI.ConnectionService.Interface;
+using IntegrationLibrary.Core.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IntegrationAPI.Controllers.Connections
@@ -23,11 +23,18 @@ namespace IntegrationAPI.Controllers.Connections
             return connectionService.CheckForSpecificBloodType(bloodBank, bloodType);
         }
 
-        //public ActionResult GetSpecificBloodTypeAmount([FromQuery(Name = "bank")] string bankName, [FromQuery(Name = "type")] string bloodType, [FromQuery(Name = "quantity")] double quant)
+        //public bool GetSpecificBloodTypeAmount([FromQuery(Name = "bank")] string bankName, [FromQuery(Name = "type")] string bloodType, [FromQuery(Name = "quantity")] double quant)
         //{
-          //  var response = Ok(connectionService.CheckForSpecificBloodTypeAmount(bankName, bloodType, quant));
-            //System.Console.WriteLine(response);
-            //return response;
+        //  var response = Ok(connectionService.CheckForSpecificBloodTypeAmount(bankName, bloodType, quant));
+        //System.Console.WriteLine(response);
+        //return response;
         //}
+
+        [HttpGet]
+        [Route("/CheckBloodAmount")]
+        public bool CheckBloodAmount([FromQuery(Name = "api")] string api, [FromQuery(Name = "bloodType")] string bloodType, [FromQuery(Name = "quantity")] double quant)
+        {
+            return connectionService.CheckBloodAmount(api, bloodType, quant);
+        }
     }
 }

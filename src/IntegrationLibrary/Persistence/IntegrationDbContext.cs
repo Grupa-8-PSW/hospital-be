@@ -10,10 +10,12 @@ namespace IntegrationLibrary.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<BloodBank>().HasData(
                 new BloodBank() { Id = 1, Email = "test@test.com", Name = "testName", ServerAddress = "testServAdd" }
             );
-            base.OnModelCreating(modelBuilder);
+            
         }
 
     }

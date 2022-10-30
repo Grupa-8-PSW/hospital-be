@@ -7,11 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Service.Interface
+namespace IntegrationAPI.ConnectionService.Interface
 {
     public interface IBloodBankConnectionService
     {
         public bool CheckForSpecificBloodType(BloodBank bloodBank, string bloodType);
         Task<RestResponse> CheckForSpecificBloodTypeAmount(string bankName, string bloodType, double quantity);
+
+        public bool CheckBloodAmount(string api, string bloodType, double quant);
     }
 }

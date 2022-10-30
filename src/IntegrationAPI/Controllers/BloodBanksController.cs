@@ -24,8 +24,8 @@ namespace IntegrationAPI.Controllers
         [HttpGet]
         public ActionResult GetAll()
         {
+            System.Diagnostics.Debug.WriteLine("Gas");
             return Ok(_bloodBankService.GetAll());
-            return Ok();
         }
 
         // POST api/bloodBanks
