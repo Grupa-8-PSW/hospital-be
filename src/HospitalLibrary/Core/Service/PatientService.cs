@@ -1,5 +1,7 @@
-﻿
-namespace HospitalLibrary.Patient
+﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Repository;
+
+namespace HospitalLibrary.Core.Service
 {
     public class PatientService : IPatientService
     {

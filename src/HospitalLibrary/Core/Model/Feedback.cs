@@ -1,13 +1,10 @@
-﻿using HospitalLibrary.Shared;
-
-namespace HospitalLibrary.Feedback
+﻿namespace HospitalLibrary.Core.Model
 {
     public class Feedback : BaseEntityModel
     {
         public int PatientId { get; set; }
-        public Patient.Patient Patient { get; set; }
+        public Patient Patient { get; set; }
         public string Text { get; set; }
-        public int Rating { get; set; }
         public DateOnly CreationDate { get; set; }
         public bool IsAnonymous { get; set; }
         public bool IsPublic { get; set; }
@@ -18,13 +15,13 @@ namespace HospitalLibrary.Feedback
             CreationDate = DateOnly.FromDateTime(DateTime.Now);
         }
 
-        public Feedback(int id, int patientId, string text, int rating, bool isAnonymous, bool isPublic, FeedbackStatus status)
+        // for seed
+        public Feedback(int id, int patientId, string text, bool isAnonymous, bool isPublic, FeedbackStatus status)
         {
             Id = id;
             PatientId = patientId;
             Text = text;
-            Rating = rating;
-            CreationDate = DateOnly.FromDateTime(DateTime.Now);
+            CreationDate = new DateOnly(2022, 10, 24);
             IsAnonymous = isAnonymous;
             IsPublic = isPublic;
             Status = status;

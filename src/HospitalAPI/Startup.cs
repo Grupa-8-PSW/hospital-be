@@ -1,12 +1,10 @@
-﻿using HospitalAPI.Persistence;
-using HospitalAPI.Persistence.Repository;
+﻿using HospitalLibrary.Core.Service;
+using HospitalLibrary.Core.Repository;
 using HospitalAPI.Web.Converters;
 using HospitalAPI.Web.DTO;
-using HospitalLibrary.Feedback;
-using HospitalLibrary.Patient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using AutoMapper;
+using HospitalLibrary.Settings;
 
 namespace HospitalAPI
 {

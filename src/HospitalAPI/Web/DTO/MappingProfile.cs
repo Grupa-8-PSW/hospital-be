@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using HospitalLibrary.Feedback;
+using HospitalLibrary.Core.Model;
 
 namespace HospitalAPI.Web.DTO
 {

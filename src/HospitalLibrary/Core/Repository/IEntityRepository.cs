@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HospitalLibrary.Core.Model;
 
-namespace HospitalLibrary.Shared
+namespace HospitalLibrary.Core.Repository
 {
     public interface IEntityRepository<TEntity> where TEntity : BaseEntityModel
     {

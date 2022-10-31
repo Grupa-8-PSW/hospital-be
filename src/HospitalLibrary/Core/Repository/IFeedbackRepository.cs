@@ -1,5 +1,6 @@
-﻿using HospitalLibrary.Shared;
-namespace HospitalLibrary.Feedback
+﻿using HospitalLibrary.Core.Model;
+
+namespace HospitalLibrary.Core.Repository
 {
     public interface IFeedbackRepository : IEntityRepository<Feedback>
     {

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace HospitalAPI.Persistence.Migrations
+namespace HospitalLibrary.Settings
 {
     public partial class InitialCreate : Migration
     {

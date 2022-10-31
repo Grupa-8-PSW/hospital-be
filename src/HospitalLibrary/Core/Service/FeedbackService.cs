@@ -1,5 +1,7 @@
-﻿
-namespace HospitalLibrary.Feedback
+﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Repository;
+
+namespace HospitalLibrary.Core.Service
 {
     public class FeedbackService : IFeedbackService
     {
@@ -19,7 +21,7 @@ namespace HospitalLibrary.Feedback
         public Feedback Create(Feedback feedback) => HandleAnonymous(_feedbackRepository.Create(feedback));
 
         public void Update(Feedback feedback) => _feedbackRepository.Update(feedback);
-        
+
         public void Delete(int id) => _feedbackRepository.Delete(id);
 
         public void ChangeStatus(int id, FeedbackStatus feedbackStatus)

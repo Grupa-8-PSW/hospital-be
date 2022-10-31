@@ -1,5 +1,6 @@
-﻿
-namespace HospitalLibrary.Feedback
+﻿using HospitalLibrary.Core.Model;
+
+namespace HospitalLibrary.Core.Service
 {
     public interface IFeedbackService
     {

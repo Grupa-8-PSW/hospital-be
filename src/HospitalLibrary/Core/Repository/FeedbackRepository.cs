@@ -1,7 +1,8 @@
-﻿using HospitalLibrary.Feedback;
+﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 
-namespace HospitalAPI.Persistence.Repository
+namespace HospitalLibrary.Core.Repository
 {
     public class FeedbackRepository : BaseEntityModelRepository<Feedback>, IFeedbackRepository
     {
