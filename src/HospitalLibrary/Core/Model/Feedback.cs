@@ -1,4 +1,6 @@
-﻿namespace HospitalLibrary.Core.Model
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HospitalLibrary.Core.Model
 {
     public class Feedback : BaseEntityModel
     {
@@ -13,6 +15,7 @@
         public Feedback()
         {
             CreationDate = DateOnly.FromDateTime(DateTime.Now);
+            Status = FeedbackStatus.OnHold;
         }
 
         // for seed
