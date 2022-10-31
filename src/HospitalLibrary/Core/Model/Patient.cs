@@ -1,6 +1,6 @@
-﻿using HospitalLibrary.Shared;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace HospitalLibrary.Patient
+namespace HospitalLibrary.Core.Model
 {
     public class Patient : BaseEntityModel
     {
@@ -8,7 +8,7 @@ namespace HospitalLibrary.Patient
         public string LastName { get; set; }
         public string FullName { get => FirstName + " " + LastName; }
 
-        public List<Feedback.Feedback> Feedbacks { get; private set; }
+        public List<Feedback> Feedbacks { get; private set; }
 
         public Patient(int id, string firstName, string lastName)
         {

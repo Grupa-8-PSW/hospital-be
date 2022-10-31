@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using HospitalAPI.Web.DTO;
-using HospitalLibrary.Feedback;
+using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Web.Controllers.PublicApp
@@ -25,5 +25,6 @@ namespace HospitalAPI.Web.Controllers.PublicApp
         {
             return Ok(_mapper.Map<List<PublicFeedbackDTO>>(_feedbackService.GetAllPublic()));
         }
+
     }
 }

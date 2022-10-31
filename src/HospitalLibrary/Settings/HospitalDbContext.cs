@@ -1,10 +1,8 @@
-﻿using HospitalAPI.Persistence.Config;
-using HospitalAPI.Persistence.DataSeed;
-using HospitalLibrary.Feedback;
-using HospitalLibrary.Patient;
+﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.Settings.DataSeed;
 using Microsoft.EntityFrameworkCore;
 
-namespace HospitalAPI.Persistence
+namespace HospitalLibrary.Settings
 {
     public class HospitalDbContext : DbContext
     {
@@ -15,7 +13,6 @@ namespace HospitalAPI.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(PatientConfig).Assembly);
             modelBuilder.SeedPatient();
             modelBuilder.SeedFeedback();
         }

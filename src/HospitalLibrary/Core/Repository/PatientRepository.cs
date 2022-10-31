@@ -1,6 +1,7 @@
-﻿using HospitalLibrary.Patient;
+﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.Settings;
 
-namespace HospitalAPI.Persistence.Repository
+namespace HospitalLibrary.Core.Repository
 {
     public class PatientRepository : BaseEntityModelRepository<Patient>, IPatientRepository
     {

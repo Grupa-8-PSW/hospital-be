@@ -1,6 +1,6 @@
-﻿using HospitalLibrary.Shared;
+﻿using HospitalLibrary.Core.Model;
 
-namespace HospitalLibrary.Patient
+namespace HospitalLibrary.Core.Repository
 {
     public interface IPatientRepository : IEntityRepository<Patient>
     {

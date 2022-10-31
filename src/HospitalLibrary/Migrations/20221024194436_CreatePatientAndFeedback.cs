@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace HospitalAPI.Persistence.Migrations
+namespace HospitalLibrary.Settings
 {
     public partial class CreatePatientAndFeedback : Migration
     {

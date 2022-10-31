@@ -1,7 +1,7 @@
-﻿using HospitalLibrary.Patient;
+﻿using HospitalLibrary.Core.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace HospitalAPI.Persistence.DataSeed
+namespace HospitalLibrary.Settings.DataSeed
 {
     public static class PatientSeed
     {
