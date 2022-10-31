@@ -13,7 +13,7 @@ namespace IntegrationAPI.Connections
     {
         public bool CheckForSpecificBloodType(BloodBank bloodBank, string bloodType) 
         {
-            RestClient restClient = new RestClient(bloodBank.ServerAddress +  "/bloodBanks/checkForBloodType");
+            RestClient restClient = new RestClient("http://localhost:8081/" +  "bloodBanks/checkForBloodType");
             RestRequest request = new RestRequest();
             request.AddParameter("type", bloodType);
             request.AddHeader("apiKey", bloodBank.APIKey);

@@ -44,9 +44,22 @@ namespace IntegrationAPI.Controllers.Connections
 
         [HttpGet]
         [Route("/CheckBloodAmount")]
-        public bool CheckBloodAmount([FromQuery(Name = "api")] string api, [FromQuery(Name = "bloodType")] string bloodType, [FromQuery(Name = "quantity")] double quant)
+        public ActionResult CheckBloodAmount([FromQuery(Name = "bloodBankId")] int id, [FromQuery(Name = "bloodType")] string bloodType, [FromQuery(Name = "quantity")] double quant)
         {
-            return connectionService.CheckBloodAmount(api, bloodType, quant);
+            bool hasblood = true;
+            try
+            {
+                hasblood = connectionService.CheckBloodAmount(id, bloodType, quant);
+            }
+            catch (HttpRequestException ex)
+            {
+                if (ex.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    return Unauthorized();
+                }
+            }
+
+            return Ok(hasblood);
         }
     }
 }

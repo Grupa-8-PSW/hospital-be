@@ -5,7 +5,6 @@ using IntegrationAPI.ConnectionService.Interface;
 using IntegrationAPI.Persistence;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Service;
-using IntegrationLibrary.Core.Service.Interface;
 using IntegrationLibrary.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;

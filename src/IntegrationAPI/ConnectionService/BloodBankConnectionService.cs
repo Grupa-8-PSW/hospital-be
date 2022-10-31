@@ -32,9 +32,10 @@ namespace IntegrationLibrary.Core.Service
             throw new NotImplementedException();
         }
 
-        public bool CheckBloodAmount(string api, string bloodType, double quant)
+        public bool CheckBloodAmount(int id, string bloodType, double quant)
         {
-            return bloodBankHTTPConnection.CheckBloodAmount(api, bloodType, quant);
+            BloodBank bloodBank = bloodBankService.GetById(id);
+            return bloodBankHTTPConnection.CheckBloodAmount(bloodBank.APIKey, bloodType, quant);
         }
     }
 }
