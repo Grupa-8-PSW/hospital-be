@@ -14,6 +14,6 @@ namespace IntegrationAPI.ConnectionService.Interface
         public bool CheckForSpecificBloodType(int bloodBankId, string bloodType);
         Task<RestResponse> CheckForSpecificBloodTypeAmount(string bankName, string bloodType, double quantity);
 
-        public bool CheckBloodAmount(string api, string bloodType, double quant);
+        public bool CheckBloodAmount(int id, string bloodType, double quant);
     }
 }

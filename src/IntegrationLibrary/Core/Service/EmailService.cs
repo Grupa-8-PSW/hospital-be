@@ -9,13 +9,14 @@ using System.Threading.Tasks;
 using IntegrationLibrary.Core.Model;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Configuration;
-
+using IntegrationLibrary.Core.Service.Interfaces;
 
 namespace IntegrationLibrary.Core.Service
 {
     public class EmailService : IEmailService
     {
         private readonly IConfiguration _config;
+        private StringBuilder template = new StringBuilder();
 
         public EmailService(IConfiguration config)
         {
@@ -39,14 +40,13 @@ namespace IntegrationLibrary.Core.Service
 
         private void GenerateEmail(MimeMessage email, string address, string password, string api)
         {
-
-            string body = "password: " + password + "   api: " + api;
+            template.AppendLine("<b><h1>***SUCCESSFUL REGISTRATION***</h1></b>");
+            template.AppendLine("<p><h3>Password: " + password + "</h3></p>");
+            template.AppendLine("<p><h3>API Key: " + api + "</h3></p>");
             email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUsername").Value));
             email.To.Add(MailboxAddress.Parse(address));
-
-            
-            email.Subject = "Registered user";
-            email.Body = new TextPart(TextFormat.Html) { Text = body };
+            email.Subject = "Your bank has been successfully registered";
+            email.Body = new TextPart(TextFormat.Html) { Text = template.ToString() };
         }
 
     }

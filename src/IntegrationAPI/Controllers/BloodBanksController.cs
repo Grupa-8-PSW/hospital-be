@@ -1,7 +1,7 @@
-﻿using IntegrationLibrary.Core.Model;
+﻿using IntegrationAPI.ExceptionHandler.Validators;
+using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.DTO;
-using IntegrationLibrary.Core.Service;
-using IntegrationLibrary.Core.Service.Validators;
+using IntegrationLibrary.Core.Service.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,29 +33,19 @@ namespace IntegrationAPI.Controllers
         [HttpPost]
         public ActionResult Create([FromBody] BloodBankDTO bloodBankDTO)
         {
-            try
-            {
-                BloodBankValidator.Validate(bloodBankDTO);
-               
-                string password = _credentialGenerator.GeneratePassword();
-                string api =  _credentialGenerator.GenerateAPI();
+            BloodBankValidator.Validate(bloodBankDTO);
 
-                BloodBank bloodBank = new BloodBank(bloodBankDTO.Name, bloodBankDTO.Email, bloodBankDTO.ServerAddress, password, api);
+            string password = _credentialGenerator.GeneratePassword();
+            string api = _credentialGenerator.GenerateAPI();
 
-                _bloodBankService.Create(bloodBank);
-                _emailService.SendEmail(bloodBank.Email, bloodBank.Password, bloodBank.APIKey);
-                return Ok();
+            BloodBank bloodBank = new BloodBank(bloodBankDTO.Name, bloodBankDTO.Email, bloodBankDTO.ServerAddress, password, api);
 
-
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);  
-            }
+            _bloodBankService.Create(bloodBank);
+            _emailService.SendEmail(bloodBank.Email, bloodBank.Password, bloodBank.APIKey);
+            return Ok();
 
         }
 
-        // DELETE api/rooms/2
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
