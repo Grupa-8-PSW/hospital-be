@@ -5,13 +5,16 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Service.Exceptions
+namespace IntegrationAPI.ExceptionHandler.Exceptions
 {
     public static class ExceptionStatusCode
     {
         private static Dictionary<Type, HttpStatusCode> exceptionStatusCodes = new Dictionary<Type, HttpStatusCode>
         {
             {typeof(BloodBankArgumentException), HttpStatusCode.BadRequest},
+            {typeof(BloodBankApiKeyAuthException), HttpStatusCode.Unauthorized},
+            {typeof(BloodBankURIException), HttpStatusCode.InternalServerError},
+            {typeof(BloodBankConnectionException), HttpStatusCode.BadGateway}
         };
         
         public static HttpStatusCode GetExceptionStatusCode(Exception ex)

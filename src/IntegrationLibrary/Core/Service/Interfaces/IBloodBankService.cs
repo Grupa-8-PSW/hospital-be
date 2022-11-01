@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IntegrationLibrary.Core.Model;
 
-namespace IntegrationLibrary.Core.Service
+namespace IntegrationLibrary.Core.Service.Interfaces
 {
     public interface IBloodBankService
     {

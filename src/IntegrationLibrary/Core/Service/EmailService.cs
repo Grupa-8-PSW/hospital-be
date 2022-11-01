@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using IntegrationLibrary.Core.Model;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Configuration;
-
+using IntegrationLibrary.Core.Service.Interfaces;
 
 namespace IntegrationLibrary.Core.Service
 {
