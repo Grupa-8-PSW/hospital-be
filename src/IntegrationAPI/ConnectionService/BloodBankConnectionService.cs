@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using IntegrationAPI.Connections.Interface;
 using IntegrationAPI.ConnectionService.Interface;
 using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Service.Interfaces;
 using RestSharp;
 
 namespace IntegrationLibrary.Core.Service
