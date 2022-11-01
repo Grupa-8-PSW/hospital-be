@@ -1,3 +1,7 @@
+using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Core.Service;
+using HospitalLibrary.GraphicalEditor.Repository;
+using HospitalLibrary.GraphicalEditor.Service;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -22,8 +26,8 @@ namespace HospitalAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HospitalAPI", Version = "v1" });
             });
 
-            
-
+            services.AddScoped<IBuildingService, BuildingService>();
+            services.AddScoped<IBuildingRepository, BuildingRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
