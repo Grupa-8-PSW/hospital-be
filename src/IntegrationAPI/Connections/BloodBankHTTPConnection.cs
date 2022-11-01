@@ -29,9 +29,8 @@ namespace IntegrationAPI.Connections
             request.AddParameter("bloodType", bloodType);
             request.AddParameter("quantity", quant);
             request.AddHeader("apiKey", api);
-            var data = restClient.Get(request);
-            var hasBlood = data.Content;
-            return JsonSerializer.Deserialize<bool>(Boolean.Parse(hasBlood));
+            RestResponse res = BloodBankConnectionValidator.Authenticate(restClient, request);
+            return JsonSerializer.Deserialize<bool>(Boolean.Parse(res.Content));
         }
     }
 }
