@@ -1,10 +1,6 @@
 ﻿using HospitalLibrary.GraphicalEditor.Model;
-using HospitalLibrary.GraphicalEditor.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
+using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 
 namespace HospitalLibrary.GraphicalEditor.Service
 {
@@ -20,6 +16,11 @@ namespace HospitalLibrary.GraphicalEditor.Service
         public IEnumerable<Building> GetAll()
         {
             return _buildingRepository.GetAll();
+        }
+
+        public Building GetById(int id)
+        {
+            return _buildingRepository.GetById(id);
         }
     }
 }

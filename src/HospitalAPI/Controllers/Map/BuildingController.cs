@@ -1,4 +1,4 @@
-﻿using HospitalLibrary.GraphicalEditor.Service;
+﻿using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

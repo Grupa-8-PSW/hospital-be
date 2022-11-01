@@ -4,23 +4,23 @@ using HospitalLibrary.Settings;
 
 namespace HospitalLibrary.GraphicalEditor.Repository
 {
-    public class BuildingRepository : IBuildingRepository
+    public class RoomRepository : IRoomRepository
     {
         private readonly HospitalDbContext _context;
 
-        public BuildingRepository(HospitalDbContext context)
+        public RoomRepository(HospitalDbContext context)
         {
             _context = context;
         }
 
-        public IEnumerable<Building> GetAll()
+        public IEnumerable<Room> GetAll()
         {
-            return _context.Buildings.ToList();
+            return _context.Rooms.ToList();
         }
 
-        public Building GetById(int id)
+        public Room GetById(int id)
         {
-            return _context.Buildings.Find(id);
+            return _context.Rooms.Find(id);
         }
     }
 }
