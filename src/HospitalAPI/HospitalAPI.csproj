@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="Persistence\Repository\" />
     <Folder Include="Persistence\Migrations\" />
     <Folder Include="Web\Controllers\" />

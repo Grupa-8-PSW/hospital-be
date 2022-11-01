@@ -21,5 +21,17 @@ namespace HospitalAPI.Controllers.Map
             return Ok(_buildingService.GetAll());
         }
 
+        [HttpGet("{id}")]
+        public ActionResult GetById(int id)
+        {
+            var building = _buildingService.GetById(id);
+            if (building == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(building);
+        }
+
     }
 }

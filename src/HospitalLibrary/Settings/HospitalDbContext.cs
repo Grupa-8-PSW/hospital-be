@@ -1,10 +1,14 @@
 ﻿using HospitalLibrary.GraphicalEditor.Model;
+using HospitalLibrary.GraphicalEditor.Model.Map;
 using Microsoft.EntityFrameworkCore;
 
 namespace HospitalLibrary.Settings
 {
     public class HospitalDbContext : DbContext
     {
+        public DbSet<MapBuilding> MapBuildings { get; set; }
+        public DbSet<MapFloor> MapFloors { get; set; }
+        public DbSet<MapRoom> MapRooms { get; set; }
         public DbSet<Building> Buildings { get; set; }
         public DbSet<Floor> Floors { get; set; }
         public DbSet<Room> Rooms { get; set; }
@@ -17,6 +21,11 @@ namespace HospitalLibrary.Settings
                 new Building() { Id = 1, Name = "One", Floors = new List<Floor>() },
                 new Building() { Id = 2, Name = "Too", Floors = new List<Floor>() },
                 new Building() { Id = 3, Name = "Tre", Floors = new List<Floor>() }
+            );
+            modelBuilder.Entity<MapBuilding>().HasData(
+                new MapBuilding() { Id = 1, x = 100, y = 100, width = 450, height = 150, color = "gray", BuildingId = 1 },
+                new MapBuilding() { Id = 2, x = 600, y = 100, width = 150, height = 450, color = "gray", BuildingId = 2 },
+                new MapBuilding() { Id = 3, x = 400, y = 600, width = 400, height = 130, color = "gray", BuildingId = 3 }
             );
             modelBuilder.Entity<Floor>().HasData(
                 new Floor() { Id = 1, Number = "One", BuildingId = 1, Rooms = new List<Room>() },

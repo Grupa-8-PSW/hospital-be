@@ -1,5 +1,6 @@
 using HospitalLibrary.GraphicalEditor.Repository;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
+using HospitalLibrary.GraphicalEditor.Repository.Map.Interfaces;
 using HospitalLibrary.GraphicalEditor.Service;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using HospitalLibrary.Settings;
@@ -34,6 +35,15 @@ namespace HospitalAPI
 
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
+
+            services.AddScoped<IMapBuildingService, MapBuildingService>();
+            services.AddScoped<IMapBuildingRepository, MapBuildingRepository>();
+
+            services.AddScoped<IMapFloorService, MapFloorService>();
+            services.AddScoped<IMapFloorRepository, MapFloorRepository>();
+
+            services.AddScoped<IMapRoomService, MapRoomService>();
+            services.AddScoped<IMapRoomRepository, MapRoomRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

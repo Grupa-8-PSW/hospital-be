@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using HospitalLibrary.GraphicalEditor.Model.Map;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalLibrary.GraphicalEditor.Model
 {
@@ -12,6 +8,8 @@ namespace HospitalLibrary.GraphicalEditor.Model
         public int Id { get; set; }
         [Required]
         public string Number { get; set; }
+
+        public virtual MapFloor Map { get; set; }
 
         public int BuildingId { get; set; }
         public virtual Building Building { get; set; }
