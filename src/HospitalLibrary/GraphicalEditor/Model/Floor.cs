@@ -12,6 +12,10 @@ namespace HospitalLibrary.GraphicalEditor.Model
         public int Id { get; set; }
         [Required]
         public string Number { get; set; }
-        public string Building { get; set; }
+
+        public int BuildingId { get; set; }
+        public virtual Building Building { get; set; }
+
+        public virtual ICollection<Room> Rooms { get; set; }
     }
 }
