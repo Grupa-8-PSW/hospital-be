@@ -33,16 +33,16 @@ namespace IntegrationAPI.Controllers
         [HttpPost]
         public ActionResult Create([FromBody] BloodBankDTO bloodBankDTO)
         {
-                BloodBankValidator.Validate(bloodBankDTO);
+            BloodBankValidator.Validate(bloodBankDTO);
 
-                string password = _credentialGenerator.GeneratePassword();
-                string api = _credentialGenerator.GenerateAPI();
+            string password = _credentialGenerator.GeneratePassword();
+            string api = _credentialGenerator.GenerateAPI();
 
-                BloodBank bloodBank = new BloodBank(bloodBankDTO.Name, bloodBankDTO.Email, bloodBankDTO.ServerAddress, password, api);
+            BloodBank bloodBank = new BloodBank(bloodBankDTO.Name, bloodBankDTO.Email, bloodBankDTO.ServerAddress, password, api);
 
-                _bloodBankService.Create(bloodBank);
-                _emailService.SendEmail(bloodBank.Email, bloodBank.Password, bloodBank.APIKey);
-                return Ok();
+            _bloodBankService.Create(bloodBank);
+            _emailService.SendEmail(bloodBank.Email, bloodBank.Password, bloodBank.APIKey);
+            return Ok();
 
         }
 
