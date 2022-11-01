@@ -33,12 +33,13 @@ namespace IntegrationAPI.Controllers
         [HttpPost]
         public ActionResult Create([FromBody] BloodBankDTO bloodBankDTO)
         {
+
             try
             {
                 BloodBankValidator.Validate(bloodBankDTO);
-               
+
                 string password = _credentialGenerator.GeneratePassword();
-                string api =  _credentialGenerator.GenerateAPI();
+                string api = _credentialGenerator.GenerateAPI();
 
                 BloodBank bloodBank = new BloodBank(bloodBankDTO.Name, bloodBankDTO.Email, bloodBankDTO.ServerAddress, password, api);
 
@@ -48,10 +49,11 @@ namespace IntegrationAPI.Controllers
 
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return BadRequest(ex.Message);  
+                return BadRequest(ex.Message);
             }
+
 
         }
 

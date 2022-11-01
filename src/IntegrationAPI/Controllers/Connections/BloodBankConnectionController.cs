@@ -5,6 +5,7 @@ using System.Net;
 
 namespace IntegrationAPI.Controllers.Connections
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class BloodBankConnectionController : ControllerBase
@@ -21,17 +22,7 @@ namespace IntegrationAPI.Controllers.Connections
         [HttpGet]
         public ActionResult CheckForSpecificBloodType([FromQuery(Name = "bloodBankId")] int id, [FromQuery(Name = "bloodType")] string bloodType)
         {
-            bool hasblood = true;
-            try
-            {
-                hasblood = connectionService.CheckForSpecificBloodType(id, bloodType);
-            }catch(HttpRequestException ex)
-            {
-                if(ex.StatusCode == HttpStatusCode.Unauthorized)
-                {
-                    return Unauthorized();
-                }
-            }
+            bool hasblood = connectionService.CheckForSpecificBloodType(id, bloodType);
             return Ok(hasblood);
         }
 

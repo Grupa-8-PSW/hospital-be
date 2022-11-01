@@ -2,20 +2,13 @@
 
 namespace IntegrationAPI.Middlewares
 {
-    public class ExceptionMiddleware
+    public class ExceptionMiddleware : IMiddleware
     {
-        private readonly RequestDelegate _requestDelegate;
-
-        public ExceptionMiddleware(RequestDelegate requestDelegate)
-        {
-            this._requestDelegate = requestDelegate;
-        }
-
-        public async Task InvokeAsync(HttpContext httpContext)
+        public async Task InvokeAsync(HttpContext httpContext, RequestDelegate next)
         {
             try
             {
-                await _requestDelegate(httpContext);
+                await next(httpContext);
             }
             catch(Exception ex)
             {

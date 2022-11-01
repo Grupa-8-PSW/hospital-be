@@ -23,11 +23,10 @@ namespace IntegrationLibrary.Core.Service.Validators
                 throw new BloodBankArgumentException($"{nameof(bb.Email)} is Null/Empty/WhiteSpace.");
             }
 
-            
             else if (string.IsNullOrWhiteSpace(bb.Name))
             {
                 throw new BloodBankArgumentException($"{nameof(bb.Name)} is Null/Empty/WhiteSpace.");
-                 
+     
             }
 
             else if (string.IsNullOrWhiteSpace(bb.ServerAddress))
