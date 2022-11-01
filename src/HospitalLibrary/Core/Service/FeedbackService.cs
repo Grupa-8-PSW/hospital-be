@@ -6,10 +6,12 @@ namespace HospitalLibrary.Core.Service
     public class FeedbackService : IFeedbackService
     {
         private readonly IFeedbackRepository _feedbackRepository;
+        private readonly IPatientRepository _petientRepository;
 
-        public FeedbackService(IFeedbackRepository feedbackRepository)
+        public FeedbackService(IFeedbackRepository feedbackRepository, IPatientRepository patientRepository)
         {
             _feedbackRepository = feedbackRepository;
+            _petientRepository = patientRepository;
         }
 
         public List<Feedback> GetAll() => HandleAnonymous(_feedbackRepository.GetAll());
@@ -18,7 +20,14 @@ namespace HospitalLibrary.Core.Service
 
         public List<Feedback> GetAllPublic() => HandleAnonymous(_feedbackRepository.GetAllPublic());
 
-        public Feedback Create(Feedback feedback) => HandleAnonymous(_feedbackRepository.Create(feedback));
+        public Feedback Create(Feedback feedback)
+        {
+            feedback.Status = FeedbackStatus.OnHold;
+            feedback.PatientId = 1;
+            feedback.CreationDate = DateOnly.FromDateTime(DateTime.Now);
+            feedback.Patient = _petientRepository.GetById(1);
+            return HandleAnonymous(_feedbackRepository.Create(feedback));
+        }
 
         public void Update(Feedback feedback) => _feedbackRepository.Update(feedback);
 

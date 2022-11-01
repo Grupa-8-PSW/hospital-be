@@ -1,6 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
 
-namespace HospitalAPI.Web.DTO
+namespace HospitalAPI.DTO
 {
     public class FeedbackDTO
     {

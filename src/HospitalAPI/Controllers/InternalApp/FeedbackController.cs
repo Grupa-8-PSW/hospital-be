@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using HospitalAPI.Web.DTO;
+using HospitalAPI.DTO;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HospitalAPI.Web.Controllers.InternalApp
+namespace HospitalAPI.Controllers.InternalApp
 {
     [Route("api/internal/[controller]")]
     [ApiController]
