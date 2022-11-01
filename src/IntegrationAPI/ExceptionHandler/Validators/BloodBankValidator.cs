@@ -1,5 +1,5 @@
-﻿using IntegrationLibrary.Core.Model.DTO;
-using IntegrationLibrary.Core.Service.Exceptions;
+﻿using IntegrationAPI.ExceptionHandler.Exceptions;
+using IntegrationLibrary.Core.Model.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Service.Validators
+namespace IntegrationAPI.ExceptionHandler.Validators
 {
     public static class BloodBankValidator
     {

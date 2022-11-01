@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Service.Exceptions
+namespace IntegrationAPI.ExceptionHandler.Exceptions
 {
     public class BloodBankArgumentException : Exception
     {

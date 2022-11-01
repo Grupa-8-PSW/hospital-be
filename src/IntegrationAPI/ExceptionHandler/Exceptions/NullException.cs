@@ -5,28 +5,28 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Service.Exceptions
+namespace IntegrationAPI.ExceptionHandler.Exceptions
 {
-    public class MailException : Exception
+    public class NullException : Exception
     {
-        public MailException()
+        public NullException()
         {
 
         }
 
-        public MailException(string message)
+        public NullException(string message) 
             : base(message)
         {
 
         }
 
-        public MailException(string message, Exception inner)
+        public NullException(string message, Exception inner)
             : base(message, inner)
         {
 
         }
 
-        public MailException(SerializationInfo info, StreamingContext context)
+        public NullException(SerializationInfo info,  StreamingContext context)
             : base(info, context)
         {
 

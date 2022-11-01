@@ -6,7 +6,7 @@ using RestSharp;
 using System.Data;
 using System.Net;
 using System.Text.Json;
-using IntegrationLibrary.Core.Service.Validators;
+using IntegrationAPI.ExceptionHandler.Validators;
 
 namespace IntegrationAPI.Connections
 {
@@ -24,7 +24,7 @@ namespace IntegrationAPI.Connections
 
         public bool CheckBloodAmount(string api, string bloodType, double quant)
         {
-            RestClient restClient = new RestClient("http://localhost:8081/" + "bloodBanks/checkBloodAmount");
+            RestClient restClient = BloodBankConnectionValidator.ValidateURL("http://localhost:8081/" + "bloodBanks/checkBloodAmount");
             RestRequest request = new RestRequest();
             request.AddParameter("bloodType", bloodType);
             request.AddParameter("quantity", quant);

@@ -22,16 +22,12 @@ namespace IntegrationAPI.Controllers.Connections
         [HttpGet]
         public ActionResult CheckForSpecificBloodType([FromQuery(Name = "bloodBankId")] int id, [FromQuery(Name = "bloodType")] string bloodType)
         {
+            
             bool hasblood = connectionService.CheckForSpecificBloodType(id, bloodType);
             return Ok(hasblood);
+
         }
 
-        //public bool GetSpecificBloodTypeAmount([FromQuery(Name = "bank")] string bankName, [FromQuery(Name = "type")] string bloodType, [FromQuery(Name = "quantity")] double quant)
-        //{
-        //  var response = Ok(connectionService.CheckForSpecificBloodTypeAmount(bankName, bloodType, quant));
-        //System.Console.WriteLine(response);
-        //return response;
-        //}
 
         [HttpGet]
         [Route("/CheckBloodAmount")]
@@ -49,7 +45,6 @@ namespace IntegrationAPI.Controllers.Connections
                     return Unauthorized();
                 }
             }
-
             return Ok(hasblood);
         }
     }

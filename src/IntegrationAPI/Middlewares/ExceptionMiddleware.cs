@@ -1,4 +1,4 @@
-﻿using IntegrationLibrary.Core.Service.Exceptions;
+﻿using IntegrationAPI.ExceptionHandler.Exceptions;
 
 namespace IntegrationAPI.Middlewares
 {

@@ -1,4 +1,4 @@
-﻿using IntegrationLibrary.Core.Service.Exceptions;
+﻿using IntegrationAPI.ExceptionHandler.Exceptions;
 using Microsoft.AspNetCore.Http.Features.Authentication;
 using Org.BouncyCastle.Asn1.Ocsp;
 using RestSharp;
@@ -10,7 +10,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Service.Validators
+namespace IntegrationAPI.ExceptionHandler.Validators
 {
     public static class BloodBankConnectionValidator
     {

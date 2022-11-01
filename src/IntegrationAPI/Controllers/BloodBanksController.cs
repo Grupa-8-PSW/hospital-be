@@ -1,7 +1,7 @@
-﻿using IntegrationLibrary.Core.Model;
+﻿using IntegrationAPI.ExceptionHandler.Validators;
+using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibrary.Core.Service;
-using IntegrationLibrary.Core.Service.Validators;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -53,8 +53,6 @@ namespace IntegrationAPI.Controllers
             {
                 return BadRequest(ex.Message);
             }
-
-
         }
 
         // DELETE api/rooms/2
