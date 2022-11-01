@@ -1,6 +1,14 @@
-﻿using IntegrationAPI.Persistence;
+﻿using IntegrationAPI.Connections;
+using IntegrationAPI.Connections.Interface;
+using IntegrationAPI.Middlewares;
+using IntegrationAPI.ConnectionService.Interface;
+using IntegrationAPI.Persistence;
+using IntegrationLibrary.Core.Repository;
+using IntegrationLibrary.Core.Service;
+using IntegrationLibrary.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using IntegrationLibrary.Core.Service.Interfaces;
 
 namespace IntegrationAPI
 {
@@ -23,6 +31,16 @@ namespace IntegrationAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IntegrationAPI", Version = "v1" });
             });
+
+            services.AddScoped<IBloodBankConnectionService, BloodBankConnectionService>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IBloodBankService, BloodBankService>();
+            services.AddScoped<IBloodBankRepository, BloodBankRepository>();
+            services.AddScoped<IBloodBankHTTPConnection, BloodBankHTTPConnection>();
+            services.AddScoped<IBloodBankConnectionService, BloodBankConnectionService>();
+            services.AddScoped<ICredentialGenerator, CredentialGenerator>();
+            services.AddScoped<IBloodBankHTTPConnection, BloodBankHTTPConnection>();
+            services.AddTransient<ExceptionMiddleware>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -42,8 +60,9 @@ namespace IntegrationAPI
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HospitalAPI v1"));
             }
 
-            app.UseRouting();
+            app.UseMiddleware<ExceptionMiddleware>();
 
+            app.UseRouting();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -1,4 +1,4 @@
-﻿using HospitalAPI.Persistence;
+using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -15,14 +15,15 @@ namespace HospitalAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<HospitalDbContext>(options => 
-                options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")));
-
+            services.AddDbContext<HospitalDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")));
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HospitalAPI", Version = "v1" });
             });
+
+            
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

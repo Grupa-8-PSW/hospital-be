@@ -7,7 +7,30 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="SharedModel\" />
+    <Compile Remove="Persistence\Repository\**" />
+    <Compile Remove="SharedModel\**" />
+    <EmbeddedResource Remove="Persistence\Repository\**" />
+    <EmbeddedResource Remove="SharedModel\**" />
+    <None Remove="Persistence\Repository\**" />
+    <None Remove="SharedModel\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MailKit" Version="3.4.1" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RestSharp" Version="108.0.2" />
   </ItemGroup>
 
 </Project>
