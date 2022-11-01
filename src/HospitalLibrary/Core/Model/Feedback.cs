@@ -30,11 +30,7 @@ namespace HospitalLibrary.Core.Model
             Status = status;
         }
 
-        public void SetAnonymous()
-        {
-            Patient.FirstName = "Anonymous";
-            Patient.LastName = "";
-        }
+        public void SetAnonymous() => Patient = null;
 
     }
 
