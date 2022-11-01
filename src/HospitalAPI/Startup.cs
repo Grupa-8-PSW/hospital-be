@@ -1,3 +1,8 @@
+using HospitalLibrary.GraphicalEditor.Repository;
+using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
+using HospitalLibrary.GraphicalEditor.Repository.Map.Interfaces;
+using HospitalLibrary.GraphicalEditor.Service;
+using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -22,8 +27,23 @@ namespace HospitalAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HospitalAPI", Version = "v1" });
             });
 
-            
+            services.AddScoped<IBuildingService, BuildingService>();
+            services.AddScoped<IBuildingRepository, BuildingRepository>();
 
+            services.AddScoped<IFloorService, FloorService>();
+            services.AddScoped<IFloorRepository, FloorRepository>();
+
+            services.AddScoped<IRoomService, RoomService>();
+            services.AddScoped<IRoomRepository, RoomRepository>();
+
+            services.AddScoped<IMapBuildingService, MapBuildingService>();
+            services.AddScoped<IMapBuildingRepository, MapBuildingRepository>();
+
+            services.AddScoped<IMapFloorService, MapFloorService>();
+            services.AddScoped<IMapFloorRepository, MapFloorRepository>();
+
+            services.AddScoped<IMapRoomService, MapRoomService>();
+            services.AddScoped<IMapRoomRepository, MapRoomRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
