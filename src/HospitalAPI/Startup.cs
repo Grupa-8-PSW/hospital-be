@@ -1,10 +1,10 @@
-﻿using HospitalAPI.Persistence;
-using HospitalAPI.Persistence.Repository;
+﻿using HospitalLibrary.Core.Service;
+using HospitalLibrary.Core.Repository;
 using HospitalAPI.Web.Converters;
-using HospitalLibrary.Feedback;
-using HospitalLibrary.Patient;
+using HospitalAPI.Web.DTO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using HospitalLibrary.Settings;
 
 namespace HospitalAPI
 {
@@ -27,6 +27,8 @@ namespace HospitalAPI
 
             services.AddScoped(typeof(IFeedbackRepository), typeof(FeedbackRepository));
             services.AddScoped(typeof(IPatientRepository), typeof(PatientRepository));
+
+            services.AddAutoMapper(typeof(MappingProfile));
 
             services.AddControllers()
                 .AddJsonOptions(options =>

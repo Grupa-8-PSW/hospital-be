@@ -1,4 +1,7 @@
-﻿using HospitalLibrary.Feedback;
+﻿using AutoMapper;
+using HospitalAPI.Web.DTO;
+using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Web.Controllers.PublicApp
@@ -7,32 +10,45 @@ namespace HospitalAPI.Web.Controllers.PublicApp
     [ApiController]
     public class FeedbackController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly IFeedbackService _feedbackService;
 
-        public FeedbackController(IFeedbackService feedbackService)
+        public FeedbackController(IFeedbackService feedbackService, IMapper mapper)
         {
+            _mapper = mapper;
             _feedbackService = feedbackService;
         }
-
-        // GET: api/Feedback
-        [HttpGet]
-        public ActionResult GetAll()
-        {
-            return Ok(_feedbackService.GetAll());
-        }
+        
 
         // GET: api/Feedback/public
-        [HttpGet("/public")]
+        [HttpGet("public")]
         public ActionResult GetPublicFeedback()
         {
-            return Ok(_feedbackService.GetPublicFeedback());
+            return Ok(_mapper.Map<List<PublicFeedbackDTO>>(_feedbackService.GetAllPublic()));
+        }
+        // GET: api/Feedback
+        [HttpGet]
+        [Route ("{id}")]
+        public ActionResult Get(int id)
+        {
+            var feedback = _feedbackService.GetById(id);
+            if(feedback is not null)
+            {
+                return Ok(_mapper.Map<PublicFeedbackDTO>(feedback));
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
-        //POST: api/Feedback
+        // POST: api/Feedback
         [HttpPost]
-        public ActionResult Create(Feedback Feedback)
+        public ActionResult CreateFeedback(CreateFeedbackDTO feedbackDTO)
         {
-            return CreatedAtAction("Created feedback",_feedbackService.Create(Feedback));
+            var newFeedback = _feedbackService.Create(_mapper.Map<Feedback>(feedbackDTO));
+            return CreatedAtAction(nameof(Get), new { id = newFeedback.Id }, _mapper.Map<PublicFeedbackDTO>(newFeedback));
         }
+
     }
 }
