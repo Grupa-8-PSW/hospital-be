@@ -1,4 +1,4 @@
-﻿namespace HospitalAPI.Web.DTO
+﻿namespace HospitalAPI.DTO
 {
     public class PublicFeedbackDTO
     {

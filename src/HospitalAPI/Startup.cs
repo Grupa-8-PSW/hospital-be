@@ -1,7 +1,7 @@
 ﻿using HospitalLibrary.Core.Service;
 using HospitalLibrary.Core.Repository;
-using HospitalAPI.Web.Converters;
-using HospitalAPI.Web.DTO;
+using HospitalAPI.Converters;
+using HospitalAPI.DTO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using HospitalLibrary.Settings;

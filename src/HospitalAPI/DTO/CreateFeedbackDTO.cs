@@ -1,7 +1,7 @@
 ﻿using HospitalLibrary.Core.Model;
 using System.ComponentModel.DataAnnotations;
 
-namespace HospitalAPI.Web.DTO
+namespace HospitalAPI.DTO
 {
     public class CreateFeedbackDTO
     {

@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace HospitalAPI.Web.Converters
+namespace HospitalAPI.Converters
 {
     public class DateOnlyJsonConverter : JsonConverter<DateOnly>
     {
