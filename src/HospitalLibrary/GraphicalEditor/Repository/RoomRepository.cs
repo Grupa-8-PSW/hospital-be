@@ -15,14 +15,12 @@ namespace HospitalLibrary.GraphicalEditor.Repository
 
         public IEnumerable<Room> GetAll()
         {
-            // return _context.Rooms.ToList();
-            return null;
+            return _context.Rooms.ToList();
         }
 
         public Room GetById(int id)
         {
-            // return _context.Rooms.Find(id);
-            return null;
+            return _context.Rooms.Find(id);
         }
     }
 }
