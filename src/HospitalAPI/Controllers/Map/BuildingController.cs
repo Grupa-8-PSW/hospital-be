@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.GraphicalEditor.Service.Interfaces;
+﻿using HospitalLibrary.GraphicalEditor.Model.DTO;
+using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +19,12 @@ namespace HospitalAPI.Controllers.Map
         [HttpGet]
         public ActionResult GetAll()
         {
-            return Ok(_buildingService.GetAll());
+            List<BuildingDTO> buildings = new();
+            foreach (var building in _buildingService.GetAll())
+            {
+                buildings.Add(new BuildingDTO(building));
+            }
+            return Ok(buildings);
         }
 
         [HttpGet("{id}")]
