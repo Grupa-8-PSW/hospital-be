@@ -22,5 +22,10 @@ namespace HospitalLibrary.GraphicalEditor.Repository
         {
             return _context.Rooms.Find(id);
         }
+
+        public IEnumerable<Room> GetRoomsByFloorId(int id)
+        {
+            return _context.Rooms.Where(f => f.FloorId == id);
+        }
     }
 }

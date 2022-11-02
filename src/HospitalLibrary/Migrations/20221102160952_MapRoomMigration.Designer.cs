@@ -3,6 +3,7 @@ using System;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221102160952_MapRoomMigration")]
+    partial class MapRoomMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -236,25 +238,9 @@ namespace HospitalLibrary.Migrations
                     b.Property<int>("BuildingId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Height")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Number")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<int>("Width")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("X")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Y")
-                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -265,47 +251,27 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 3,
+                            Id = 1,
                             BuildingId = 1,
-                            Color = "white",
-                            Height = 100,
-                            Number = "Floor 3",
-                            Width = 300,
-                            X = 100,
-                            Y = 70
+                            Number = "One"
                         },
                         new
                         {
                             Id = 2,
                             BuildingId = 1,
-                            Color = "white",
-                            Height = 100,
-                            Number = "Floor 2",
-                            Width = 300,
-                            X = 100,
-                            Y = 170
+                            Number = "Too"
                         },
                         new
                         {
-                            Id = 1,
+                            Id = 3,
                             BuildingId = 1,
-                            Color = "white",
-                            Height = 100,
-                            Number = "Floor 1",
-                            Width = 300,
-                            X = 100,
-                            Y = 270
+                            Number = "Tre"
                         },
                         new
                         {
                             Id = 4,
                             BuildingId = 2,
-                            Color = "white",
-                            Height = 100,
-                            Number = "Floor 1",
-                            Width = 300,
-                            X = 100,
-                            Y = 270
+                            Number = "Noo"
                         });
                 });
 

@@ -15,8 +15,6 @@ namespace HospitalLibrary.GraphicalEditor.Model.Map
         public int Height { get; set; }
         public string Color { get; set; }
 
-        public int RoomId { get; set; }
-
-        public virtual Room Room { get; set; }
+      
     }
 }

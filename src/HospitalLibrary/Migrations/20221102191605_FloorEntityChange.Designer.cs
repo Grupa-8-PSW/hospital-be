@@ -3,6 +3,7 @@ using System;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221102191605_FloorEntityChange")]
+    partial class FloorEntityChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -265,7 +267,7 @@ namespace HospitalLibrary.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 3,
+                            Id = 1,
                             BuildingId = 1,
                             Color = "white",
                             Height = 100,
@@ -287,11 +289,11 @@ namespace HospitalLibrary.Migrations
                         },
                         new
                         {
-                            Id = 1,
+                            Id = 3,
                             BuildingId = 1,
                             Color = "white",
                             Height = 100,
-                            Number = "Floor 1",
+                            Number = "floor 1",
                             Width = 300,
                             X = 100,
                             Y = 270
@@ -302,7 +304,7 @@ namespace HospitalLibrary.Migrations
                             BuildingId = 2,
                             Color = "white",
                             Height = 100,
-                            Number = "Floor 1",
+                            Number = "floor 1",
                             Width = 300,
                             X = 100,
                             Y = 270
