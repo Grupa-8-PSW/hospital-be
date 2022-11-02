@@ -28,9 +28,10 @@ namespace HospitalLibrary.Settings.DataSeed
                 new Floor() { Id = 4, Number = "Noo", BuildingId = 2, Rooms = new List<Room>() }
             );
             modelBuilder.Entity<Room>().HasData(
-                new Room() { Id = 1, Name = "One", Number = "101A", FloorId = 1 },
-                new Room() { Id = 2, Name = "Too", Number = "204", FloorId = 2 },
-                new Room() { Id = 3, Name = "Tre", Number = "305B", FloorId = 3 }
+                new Room() { Id = 1, X = 0, Y = 0, Width = 260, Height = 160, Color = "blue", Name = "One" , FloorId = 1 },
+                new Room() { Id = 2, X = 0, Y = 338, Width = 220, Height = 140, Color = "blue", Name = "Two", FloorId = 1 },
+                new Room() { Id = 3, X = 237, Y = 0, Width = 300, Height = 180, Color = "blue", Name = "Tre", FloorId = 1 },
+                new Room() { Id = 4, X = 230, Y = 338, Width = 200, Height = 100, Color = "blue", Name = "Tre", FloorId = 2 }
             );
         }
     }
