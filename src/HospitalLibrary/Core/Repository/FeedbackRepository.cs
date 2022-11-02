@@ -18,5 +18,6 @@ namespace HospitalLibrary.Core.Repository
 
         public List<Feedback> GetAllPublic() => _dbContext.Feedbacks.Include(f => f.Patient).Where(f => f.IsPublic).ToList();
 
+        public List<Feedback> GetAllApprovedPublic() => _dbContext.Feedbacks.Include(f => f.Patient).Where(f => f.IsPublic && f.Status == FeedbackStatus.Approved).ToList();
     }
 }

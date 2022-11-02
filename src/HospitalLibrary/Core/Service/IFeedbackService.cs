@@ -7,6 +7,7 @@ namespace HospitalLibrary.Core.Service
         public List<Feedback> GetAll();
         public Feedback GetById(int id);
         public List<Feedback> GetAllPublic();
+        public List<Feedback> GetAllApprovedPublic();
         public Feedback Create(Feedback feedback);
         public void Update(Feedback feedback);
         public void Delete(int id);

@@ -20,6 +20,8 @@ namespace HospitalLibrary.Core.Service
 
         public List<Feedback> GetAllPublic() => HandleAnonymous(_feedbackRepository.GetAllPublic());
 
+        public List<Feedback> GetAllApprovedPublic() => HandleAnonymous(_feedbackRepository.GetAllApprovedPublic());
+
         public Feedback Create(Feedback feedback)
         {
             feedback.Status = FeedbackStatus.OnHold;
@@ -55,6 +57,5 @@ namespace HospitalLibrary.Core.Service
                 HandleAnonymous(feedback);
             return feedbacks;
         }
-
     }
 }

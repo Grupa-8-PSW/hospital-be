@@ -22,10 +22,11 @@ namespace HospitalAPI.Controllers.PublicApp
 
         // GET: api/Feedback/public
         [HttpGet("public")]
-        public ActionResult GetPublicFeedback()
+        public ActionResult GetApprovedPublicFeedback()
         {
-            return Ok(_mapper.Map<List<PublicFeedbackDTO>>(_feedbackService.GetAllPublic()));
+            return Ok(_mapper.Map<List<PublicFeedbackDTO>>(_feedbackService.GetAllApprovedPublic()));
         }
+
         // GET: api/Feedback
         [HttpGet]
         [Route ("{id}")]
