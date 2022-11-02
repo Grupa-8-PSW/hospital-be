@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.GraphicalEditor.Service.Interfaces;
+﻿using HospitalLibrary.GraphicalEditor.Model.DTO;
+using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,9 +17,38 @@ namespace HospitalAPI.Controllers.Map
         }
 
         [HttpGet]
-        public ActionResult GetAll()
+        public IActionResult GetAll()
         {
-            return Ok(_floorService.GetAll());
+            List<FloorDTO> floors = new();
+            foreach (var floor in _floorService.GetAll())
+            {
+                floors.Add(new FloorDTO(floor));
+            }
+            return Ok(floors);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            var floor = _floorService.GetById(id);
+            if (floor == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(floor);
+        }
+
+        [HttpGet("get/by/building/{id}")]
+        public IActionResult GetFloorsByBuildingId(int id)
+        {
+            var floors = _floorService.GetFloorsByBuildingId(id);
+            if (floors == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(floors);
         }
     }
 }
