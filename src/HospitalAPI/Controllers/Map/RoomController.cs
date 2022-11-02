@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.GraphicalEditor.Model.DTO;
+using HospitalLibrary.GraphicalEditor.Service;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -38,6 +39,18 @@ namespace HospitalAPI.Controllers.Map
                 }
 
                 return Ok(room);
+            }
+
+            [HttpGet("get/by/floor/{id}")]
+            public IActionResult GetRoomsByFloorId(int id)
+            {
+                var rooms = _roomService.GetRoomsByFloorId(id);
+                if (rooms == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(rooms);
             }
         }
     

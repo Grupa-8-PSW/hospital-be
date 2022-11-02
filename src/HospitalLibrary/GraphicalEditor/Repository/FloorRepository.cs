@@ -27,5 +27,7 @@ namespace HospitalLibrary.GraphicalEditor.Repository
         {
             return _context.Floors.Where(f => f.BuildingId == id);
         }
+
+
     }
 }
