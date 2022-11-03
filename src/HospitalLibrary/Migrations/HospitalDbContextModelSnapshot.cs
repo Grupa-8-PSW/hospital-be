@@ -551,7 +551,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MapRooms");
+                    b.ToTable("MapRoom");
                 });
 
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Room", b =>

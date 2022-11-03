@@ -10,6 +10,9 @@ using HospitalAPI.Converters;
 using HospitalAPI.DTO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using HospitalLibrary.GraphicalEditor.Service.Map.Interfaces;
+using HospitalLibrary.GraphicalEditor.Service.Map;
+using HospitalLibrary.GraphicalEditor.Repository.Map;
 
 namespace HospitalAPI
 {
@@ -63,6 +66,9 @@ namespace HospitalAPI
 
             services.AddScoped<IMapRoomService, MapRoomService>();
             services.AddScoped<IMapRoomRepository, MapRoomRepository>();
+
+            services.AddScoped<IMapFormService, MapFormService>();
+            services.AddScoped<IMapFormRepository, MapFormRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
