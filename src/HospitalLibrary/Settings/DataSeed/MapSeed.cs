@@ -52,6 +52,13 @@ namespace HospitalLibrary.Settings.DataSeed
                 new Room() { Id = 18, X = 50, Y = 100, Width = 420, Height = 280, Color = "blue", Name = "Gastronomija", FloorId = 7 },
                 new Room() { Id = 19, X = 100, Y = 138, Width = 320, Height = 170, Color = "blue", Name = "Magacin", FloorId = 8 }
             );
+
+                modelBuilder.Entity<Form>().HasData(
+                new Form() { Id = 1, Name = "101,Pedijatrija" , Description= "Pregledi za decu", StartHourWorkDay = "10:00h" , EndHourWorkDay = "17:00h" , StartHourSaturday = "12:00h" , EndHourSaturday = "17:00h" , StartHourSunday = "CLOSED" , EndHourSunday = "CLOSED", RoomId = 1 },
+                new Form() { Id = 2, Name = "102,Kafeterija", Description = "Opustanje za radnike i posetioce", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 2 },
+                new Form() { Id = 3, Name = "103,Otorinolaringologija", Description = "UHO,GRLO,NOS", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 3 },
+                new Form() { Id = 4, Name = "201,Fizioterapeut", Description = "Pregled misica i povreda", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 4 }
+            );
         }
     }
 }
