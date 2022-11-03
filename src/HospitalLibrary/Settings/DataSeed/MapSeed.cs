@@ -25,13 +25,32 @@ namespace HospitalLibrary.Settings.DataSeed
                 new Floor() { Id = 3, X = 100, Y = 70, Width = 300, Height = 100, Color = "white", Number = "Floor 3", BuildingId = 1, Rooms = new List<Room>() },
                 new Floor() { Id = 2, X = 100, Y = 170, Width = 300, Height = 100, Color = "white", Number = "Floor 2", BuildingId = 1, Rooms = new List<Room>() },
                 new Floor() { Id = 1, X = 100, Y = 270, Width = 300, Height = 100, Color = "white", Number = "Floor 1", BuildingId = 1, Rooms = new List<Room>() },
-                new Floor() { Id = 4, X = 100, Y = 270, Width = 300, Height = 100, Color = "white", Number = "Floor 1", BuildingId = 2, Rooms = new List<Room>() }
+                new Floor() { Id = 5, X = 100, Y = 170, Width = 300, Height = 100, Color = "white", Number = "Floor 2", BuildingId = 2, Rooms = new List<Room>() },
+                new Floor() { Id = 4, X = 100, Y = 270, Width = 300, Height = 100, Color = "white", Number = "Floor 1", BuildingId = 2, Rooms = new List<Room>() },
+                new Floor() { Id = 8, X = 100, Y = 70, Width = 300, Height = 100, Color = "white", Number = "Floor 3", BuildingId = 3, Rooms = new List<Room>() },
+                new Floor() { Id = 7, X = 100, Y = 170, Width = 300, Height = 100, Color = "white", Number = "Floor 2", BuildingId = 3, Rooms = new List<Room>() },
+                new Floor() { Id = 6, X = 100, Y = 270, Width = 300, Height = 100, Color = "white", Number = "Floor 1", BuildingId = 3, Rooms = new List<Room>() }
             );
             modelBuilder.Entity<Room>().HasData(
-                new Room() { Id = 1, X = 0, Y = 0, Width = 260, Height = 160, Color = "blue", Name = "One" , FloorId = 1 },
-                new Room() { Id = 2, X = 0, Y = 338, Width = 220, Height = 140, Color = "blue", Name = "Two", FloorId = 1 },
-                new Room() { Id = 3, X = 237, Y = 0, Width = 300, Height = 180, Color = "blue", Name = "Tre", FloorId = 1 },
-                new Room() { Id = 4, X = 230, Y = 338, Width = 200, Height = 100, Color = "blue", Name = "Tre", FloorId = 2 }
+                new Room() { Id = 1, X = 0, Y = 0, Width = 260, Height = 160, Color = "blue", Name = "Pedijatrija" , FloorId = 1 },
+                new Room() { Id = 2, X = 0, Y = 338, Width = 220, Height = 140, Color = "blue", Name = "Kafeterija", FloorId = 1 },
+                new Room() { Id = 3, X = 237, Y = 0, Width = 300, Height = 180, Color = "blue", Name = "Otorinolaringologija", FloorId = 1 },
+                new Room() { Id = 4, X = 270, Y = 378, Width = 200, Height = 100, Color = "blue", Name = "Fizioterapeut", FloorId = 2 },
+                new Room() { Id = 5, X = 0, Y = 0, Width = 360, Height = 180, Color = "blue", Name = "Stomatologija", FloorId = 2 },
+                new Room() { Id = 6, X = 0, Y = 0, Width = 260, Height = 180, Color = "blue", Name = "Magacin", FloorId = 3 },
+                new Room() { Id = 7, X = 0, Y = 338, Width = 220, Height = 140, Color = "blue", Name = "Opsta nega", FloorId = 3},
+                new Room() { Id = 8, X = 330, Y = 158, Width = 220, Height = 140, Color = "blue", Name = "Cekaonica", FloorId = 3 },
+                new Room() { Id = 9, X = 0, Y = 0, Width = 320, Height = 170, Color = "blue", Name = "Kardiologija", FloorId = 4 },
+                new Room() { Id = 10, X = 0, Y = 365, Width = 220, Height = 140, Color = "blue", Name = "Vaskularne bolesti", FloorId = 4 },
+                new Room() { Id = 11, X = 245, Y = 0, Width = 220, Height = 140, Color = "blue", Name = "Hirurgija", FloorId = 4 },
+                new Room() { Id = 12, X = 0, Y = 0, Width = 220, Height = 140, Color = "blue", Name = "Papirologija", FloorId = 5 },
+                new Room() { Id = 13, X = 200, Y = 0, Width = 220, Height = 140, Color = "blue", Name = "Prijavna soba", FloorId = 5 },
+                new Room() { Id = 14, X = 0, Y = 350, Width = 220, Height = 140, Color = "blue", Name = "Uplasta/isplata", FloorId = 5 },
+                new Room() { Id = 15, X = 200, Y = 350, Width = 220, Height = 140, Color = "blue", Name = "Izgubljeno/nadjeno", FloorId = 5 },
+                new Room() { Id = 16, X = 0, Y = 0, Width = 320, Height = 190, Color = "blue", Name = "Onkologija", FloorId = 6 },
+                new Room() { Id = 17, X = 200, Y = 300, Width = 250, Height = 240, Color = "blue", Name = "Onkologija", FloorId = 6 },
+                new Room() { Id = 18, X = 50, Y = 100, Width = 420, Height = 280, Color = "blue", Name = "Gastronomija", FloorId = 7 },
+                new Room() { Id = 19, X = 100, Y = 138, Width = 320, Height = 170, Color = "blue", Name = "Magacin", FloorId = 8 }
             );
         }
     }

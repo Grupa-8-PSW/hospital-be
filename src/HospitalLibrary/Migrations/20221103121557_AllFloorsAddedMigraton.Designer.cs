@@ -3,6 +3,7 @@ using System;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221103121557_AllFloorsAddedMigraton")]
+    partial class AllFloorsAddedMigraton
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -494,7 +496,7 @@ namespace HospitalLibrary.Migrations
                             Color = "blue",
                             FloorId = 1,
                             Height = 160,
-                            Name = "Pedijatrija",
+                            Name = "One",
                             Width = 260,
                             X = 0,
                             Y = 0
@@ -505,7 +507,7 @@ namespace HospitalLibrary.Migrations
                             Color = "blue",
                             FloorId = 1,
                             Height = 140,
-                            Name = "Kafeterija",
+                            Name = "Two",
                             Width = 220,
                             X = 0,
                             Y = 338
@@ -516,7 +518,7 @@ namespace HospitalLibrary.Migrations
                             Color = "blue",
                             FloorId = 1,
                             Height = 180,
-                            Name = "Otorinolaringologija",
+                            Name = "Thre",
                             Width = 300,
                             X = 237,
                             Y = 0
@@ -527,10 +529,10 @@ namespace HospitalLibrary.Migrations
                             Color = "blue",
                             FloorId = 2,
                             Height = 100,
-                            Name = "Fizioterapeut",
+                            Name = "Four",
                             Width = 200,
-                            X = 270,
-                            Y = 378
+                            X = 230,
+                            Y = 338
                         },
                         new
                         {
@@ -538,7 +540,7 @@ namespace HospitalLibrary.Migrations
                             Color = "blue",
                             FloorId = 2,
                             Height = 180,
-                            Name = "Stomatologija",
+                            Name = "Five",
                             Width = 360,
                             X = 0,
                             Y = 0
@@ -549,7 +551,7 @@ namespace HospitalLibrary.Migrations
                             Color = "blue",
                             FloorId = 3,
                             Height = 180,
-                            Name = "Magacin",
+                            Name = "Six",
                             Width = 260,
                             X = 0,
                             Y = 0
@@ -560,141 +562,64 @@ namespace HospitalLibrary.Migrations
                             Color = "blue",
                             FloorId = 3,
                             Height = 140,
-                            Name = "Opsta nega",
+                            Name = "Seven",
                             Width = 220,
                             X = 0,
-                            Y = 338
+                            Y = 138
                         },
                         new
                         {
                             Id = 8,
                             Color = "blue",
-                            FloorId = 3,
+                            FloorId = 4,
                             Height = 140,
-                            Name = "Cekaonica",
+                            Name = "Seven",
                             Width = 220,
-                            X = 330,
-                            Y = 158
+                            X = 0,
+                            Y = 138
                         },
                         new
                         {
                             Id = 9,
                             Color = "blue",
-                            FloorId = 4,
-                            Height = 170,
-                            Name = "Kardiologija",
-                            Width = 320,
+                            FloorId = 5,
+                            Height = 140,
+                            Name = "Seven",
+                            Width = 220,
                             X = 0,
-                            Y = 0
+                            Y = 138
                         },
                         new
                         {
                             Id = 10,
                             Color = "blue",
-                            FloorId = 4,
+                            FloorId = 6,
                             Height = 140,
-                            Name = "Vaskularne bolesti",
+                            Name = "Seven",
                             Width = 220,
                             X = 0,
-                            Y = 365
+                            Y = 138
                         },
                         new
                         {
                             Id = 11,
                             Color = "blue",
-                            FloorId = 4,
+                            FloorId = 7,
                             Height = 140,
-                            Name = "Hirurgija",
+                            Name = "Seven",
                             Width = 220,
-                            X = 245,
-                            Y = 0
+                            X = 0,
+                            Y = 138
                         },
                         new
                         {
                             Id = 12,
                             Color = "blue",
-                            FloorId = 5,
-                            Height = 140,
-                            Name = "Papirologija",
-                            Width = 220,
-                            X = 0,
-                            Y = 0
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Color = "blue",
-                            FloorId = 5,
-                            Height = 140,
-                            Name = "Prijavna soba",
-                            Width = 220,
-                            X = 200,
-                            Y = 0
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Color = "blue",
-                            FloorId = 5,
-                            Height = 140,
-                            Name = "Uplasta/isplata",
-                            Width = 220,
-                            X = 0,
-                            Y = 350
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Color = "blue",
-                            FloorId = 5,
-                            Height = 140,
-                            Name = "Izgubljeno/nadjeno",
-                            Width = 220,
-                            X = 200,
-                            Y = 350
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Color = "blue",
-                            FloorId = 6,
-                            Height = 190,
-                            Name = "Onkologija",
-                            Width = 320,
-                            X = 0,
-                            Y = 0
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Color = "blue",
-                            FloorId = 6,
-                            Height = 240,
-                            Name = "Onkologija",
-                            Width = 250,
-                            X = 200,
-                            Y = 300
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Color = "blue",
-                            FloorId = 7,
-                            Height = 280,
-                            Name = "Gastronomija",
-                            Width = 420,
-                            X = 50,
-                            Y = 100
-                        },
-                        new
-                        {
-                            Id = 19,
-                            Color = "blue",
                             FloorId = 8,
-                            Height = 170,
-                            Name = "Magacin",
-                            Width = 320,
-                            X = 100,
+                            Height = 140,
+                            Name = "Seven",
+                            Width = 220,
+                            X = 0,
                             Y = 138
                         });
                 });
