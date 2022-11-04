@@ -11,7 +11,7 @@ namespace HospitalLibrary.Settings
         public DbSet<MapBuilding> MapBuildings { get; set; }
         public DbSet<MapFloor> MapFloors { get; set; }
         public DbSet<MapRoom> MapRooms { get; set; }
-        public DbSet<MapRoom> MapForms { get; set; }
+        public DbSet<MapForm> MapForms { get; set; }
         public DbSet<Building> Buildings { get; set; }
         public DbSet<Floor> Floors { get; set; }
         public DbSet<Room> Rooms { get; set; }
