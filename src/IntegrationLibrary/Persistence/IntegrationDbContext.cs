@@ -6,6 +6,7 @@ namespace IntegrationLibrary.Persistence
     public class IntegrationDbContext: DbContext
     {
         public DbSet<BloodBank> BloodBanks { get; set; }
+        public DbSet<BloodConsumptionConfiguration> BloodConsumptionConfigurations { get; set; }
         public IntegrationDbContext(DbContextOptions options): base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -15,7 +16,7 @@ namespace IntegrationLibrary.Persistence
             modelBuilder.Entity<BloodBank>().HasData(
                 new BloodBank() { Id = 1, Email = "test@test.com", Name = "testName", ServerAddress = "testServAdd" }
             );
-            
+
         }
 
     }

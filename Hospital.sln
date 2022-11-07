@@ -5,13 +5,17 @@ VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4E6CA2FE-84A6-4CAF-ACAC-26F41B02E2E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalAPI", "src\HospitalAPI\HospitalAPI.csproj", "{B96F768B-263D-47B3-AFBC-6BA3F9E34C36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalAPI", "src\HospitalAPI\HospitalAPI.csproj", "{B96F768B-263D-47B3-AFBC-6BA3F9E34C36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationAPI", "src\IntegrationAPI\IntegrationAPI.csproj", "{5E986A18-8FEB-4AFB-9843-B5E30DAF456D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationAPI", "src\IntegrationAPI\IntegrationAPI.csproj", "{5E986A18-8FEB-4AFB-9843-B5E30DAF456D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalLibrary", "src\HospitalLibrary\HospitalLibrary.csproj", "{D4B8B668-2893-4448-8100-B8043F16E301}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalLibrary", "src\HospitalLibrary\HospitalLibrary.csproj", "{D4B8B668-2893-4448-8100-B8043F16E301}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationLibrary", "src\IntegrationLibrary\IntegrationLibrary.csproj", "{EEA7FD47-F7B5-407A-82D1-D84435989F48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationLibrary", "src\IntegrationLibrary\IntegrationLibrary.csproj", "{EEA7FD47-F7B5-407A-82D1-D84435989F48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTeamTests", "IntegrationTests\IntegrationTeamTests.csproj", "{F0D9F7B0-5A40-4B57-9C41-84C4B496300C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C8F5D807-B3C7-4F3B-B6B1-AA3832D52E07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +39,10 @@ Global
 		{EEA7FD47-F7B5-407A-82D1-D84435989F48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEA7FD47-F7B5-407A-82D1-D84435989F48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEA7FD47-F7B5-407A-82D1-D84435989F48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0D9F7B0-5A40-4B57-9C41-84C4B496300C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0D9F7B0-5A40-4B57-9C41-84C4B496300C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0D9F7B0-5A40-4B57-9C41-84C4B496300C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0D9F7B0-5A40-4B57-9C41-84C4B496300C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +52,7 @@ Global
 		{5E986A18-8FEB-4AFB-9843-B5E30DAF456D} = {4E6CA2FE-84A6-4CAF-ACAC-26F41B02E2E5}
 		{D4B8B668-2893-4448-8100-B8043F16E301} = {4E6CA2FE-84A6-4CAF-ACAC-26F41B02E2E5}
 		{EEA7FD47-F7B5-407A-82D1-D84435989F48} = {4E6CA2FE-84A6-4CAF-ACAC-26F41B02E2E5}
+		{F0D9F7B0-5A40-4B57-9C41-84C4B496300C} = {C8F5D807-B3C7-4F3B-B6B1-AA3832D52E07}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {70B780B3-1435-4A39-953C-99EC39A4FCCF}

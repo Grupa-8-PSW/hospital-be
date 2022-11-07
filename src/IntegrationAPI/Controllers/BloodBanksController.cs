@@ -1,4 +1,5 @@
-﻿using IntegrationAPI.ExceptionHandler.Validators;
+﻿using HospitalLibrary.Core.Service;
+using IntegrationAPI.ExceptionHandler.Validators;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibrary.Core.Service.Interfaces;
@@ -14,6 +15,7 @@ namespace IntegrationAPI.Controllers
         private readonly IBloodBankService _bloodBankService;
         private readonly IEmailService _emailService;
         private readonly ICredentialGenerator _credentialGenerator;
+        private IRoomService roomService;
 
         public BloodBanksController(IBloodBankService bloodBankService,  IEmailService emailService, ICredentialGenerator credentialGenerator)
         {
@@ -21,6 +23,7 @@ namespace IntegrationAPI.Controllers
             _emailService = emailService;
             _credentialGenerator = credentialGenerator;
         }
+
 
         // GET: api/bloodBanks
         [HttpGet]
