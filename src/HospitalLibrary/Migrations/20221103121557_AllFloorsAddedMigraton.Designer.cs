@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221105200114_AddingEquipmentProba")]
-    partial class AddingEquipmentProba
+    [Migration("20221103121557_AllFloorsAddedMigraton")]
+    partial class AllFloorsAddedMigraton
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -227,59 +227,6 @@ namespace HospitalLibrary.Migrations
                         });
                 });
 
-            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Equipment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("RoomId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Equipments");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Amount = 2,
-                            Name = "Krevet",
-                            RoomId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Amount = 2,
-                            Name = "Stetoskop",
-                            RoomId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Amount = 4,
-                            Name = "Stolica",
-                            RoomId = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Amount = 20,
-                            Name = "Stolica",
-                            RoomId = 2
-                        });
-                });
-
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Floor", b =>
                 {
                     b.Property<int>("Id")
@@ -408,303 +355,6 @@ namespace HospitalLibrary.Migrations
                         });
                 });
 
-            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Form", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("EndHourSaturday")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("EndHourSunday")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("EndHourWorkDay")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("RoomId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("StartHourSaturday")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("StartHourSunday")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("StartHourWorkDay")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Forms");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Pregledi za decu",
-                            EndHourSaturday = "17:00h",
-                            EndHourSunday = "CLOSED",
-                            EndHourWorkDay = "17:00h",
-                            Name = "101,Pedijatrija",
-                            RoomId = 1,
-                            StartHourSaturday = "12:00h",
-                            StartHourSunday = "CLOSED",
-                            StartHourWorkDay = "10:00h"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Opustanje za radnike i posetioce",
-                            EndHourSaturday = "17:00h",
-                            EndHourSunday = "CLOSED",
-                            EndHourWorkDay = "17:00h",
-                            Name = "102,Kafeterija",
-                            RoomId = 2,
-                            StartHourSaturday = "12:00h",
-                            StartHourSunday = "CLOSED",
-                            StartHourWorkDay = "10:00h"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "UHO,GRLO,NOS",
-                            EndHourSaturday = "17:00h",
-                            EndHourSunday = "CLOSED",
-                            EndHourWorkDay = "17:00h",
-                            Name = "103,Otorinolaringologija",
-                            RoomId = 3,
-                            StartHourSaturday = "12:00h",
-                            StartHourSunday = "CLOSED",
-                            StartHourWorkDay = "10:00h"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Description = "Pregled misica i povreda",
-                            EndHourSaturday = "17:00h",
-                            EndHourSunday = "CLOSED",
-                            EndHourWorkDay = "17:00h",
-                            Name = "201,Fizioterapeut",
-                            RoomId = 4,
-                            StartHourSaturday = "12:00h",
-                            StartHourSunday = "CLOSED",
-                            StartHourWorkDay = "10:00h"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Description = "Pregledi za decu",
-                            EndHourSaturday = "17:00h",
-                            EndHourSunday = "CLOSED",
-                            EndHourWorkDay = "17:00h",
-                            Name = "202,Stomatologija",
-                            RoomId = 5,
-                            StartHourSaturday = "12:00h",
-                            StartHourSunday = "CLOSED",
-                            StartHourWorkDay = "10:00h"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Description = "Stanje robe u objektu",
-                            EndHourSaturday = "17:00h",
-                            EndHourSunday = "CLOSED",
-                            EndHourWorkDay = "17:00h",
-                            Name = "301,Magacin",
-                            RoomId = 6,
-                            StartHourSaturday = "12:00h",
-                            StartHourSunday = "CLOSED",
-                            StartHourWorkDay = "10:00h"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Description = "Kreveti i sve potrebno za oporavku",
-                            EndHourSaturday = "17:00h",
-                            EndHourSunday = "CLOSED",
-                            EndHourWorkDay = "17:00h",
-                            Name = "302,Opsta nega",
-                            RoomId = 7,
-                            StartHourSaturday = "12:00h",
-                            StartHourSunday = "CLOSED",
-                            StartHourWorkDay = "10:00h"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Description = "Stolice i fotelje za cekanje",
-                            EndHourSaturday = "17:00h",
-                            EndHourSunday = "CLOSED",
-                            EndHourWorkDay = "17:00h",
-                            Name = "303,Cekaonica",
-                            RoomId = 8,
-                            StartHourSaturday = "12:00h",
-                            StartHourSunday = "CLOSED",
-                            StartHourWorkDay = "10:00h"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Description = "...",
-                            EndHourSaturday = "17:00h",
-                            EndHourSunday = "CLOSED",
-                            EndHourWorkDay = "17:00h",
-                            Name = "101a,Kardiologija",
-                            RoomId = 9,
-                            StartHourSaturday = "12:00h",
-                            StartHourSunday = "CLOSED",
-                            StartHourWorkDay = "10:00h"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Description = "...",
-                            EndHourSaturday = "17:00h",
-                            EndHourSunday = "CLOSED",
-                            EndHourWorkDay = "17:00h",
-                            Name = "102a,Vaskularne bolesti",
-                            RoomId = 10,
-                            StartHourSaturday = "12:00h",
-                            StartHourSunday = "CLOSED",
-                            StartHourWorkDay = "10:00h"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Description = "...,...,...",
-                            EndHourSaturday = "17:00h",
-                            EndHourSunday = "CLOSED",
-                            EndHourWorkDay = "17:00h",
-                            Name = "103a,Hirurgija",
-                            RoomId = 11,
-                            StartHourSaturday = "12:00h",
-                            StartHourSunday = "CLOSED",
-                            StartHourWorkDay = "10:00h"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Description = "... ... ... ...",
-                            EndHourSaturday = "17:00h",
-                            EndHourSunday = "CLOSED",
-                            EndHourWorkDay = "17:00h",
-                            Name = "201a,Papirologija",
-                            RoomId = 12,
-                            StartHourSaturday = "12:00h",
-                            StartHourSunday = "CLOSED",
-                            StartHourWorkDay = "10:00h"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Description = "...",
-                            EndHourSaturday = "17:00h",
-                            EndHourSunday = "CLOSED",
-                            EndHourWorkDay = "17:00h",
-                            Name = "202a,Prijavna soba",
-                            RoomId = 13,
-                            StartHourSaturday = "12:00h",
-                            StartHourSunday = "CLOSED",
-                            StartHourWorkDay = "10:00h"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Description = "...",
-                            EndHourSaturday = "17:00h",
-                            EndHourSunday = "CLOSED",
-                            EndHourWorkDay = "17:00h",
-                            Name = "203a,Uplasta/isplata",
-                            RoomId = 14,
-                            StartHourSaturday = "12:00h",
-                            StartHourSunday = "CLOSED",
-                            StartHourWorkDay = "10:00h"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Description = "...",
-                            EndHourSaturday = "17:00h",
-                            EndHourSunday = "CLOSED",
-                            EndHourWorkDay = "17:00h",
-                            Name = "204a,Izgubljeno/nadjeno",
-                            RoomId = 15,
-                            StartHourSaturday = "12:00h",
-                            StartHourSunday = "CLOSED",
-                            StartHourWorkDay = "10:00h"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Description = "...",
-                            EndHourSaturday = "17:00h",
-                            EndHourSunday = "CLOSED",
-                            EndHourWorkDay = "17:00h",
-                            Name = "101b,Onkologija",
-                            RoomId = 16,
-                            StartHourSaturday = "12:00h",
-                            StartHourSunday = "CLOSED",
-                            StartHourWorkDay = "10:00h"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Description = "...",
-                            EndHourSaturday = "17:00h",
-                            EndHourSunday = "CLOSED",
-                            EndHourWorkDay = "17:00h",
-                            Name = "102b,Pedijatrija",
-                            RoomId = 17,
-                            StartHourSaturday = "12:00h",
-                            StartHourSunday = "CLOSED",
-                            StartHourWorkDay = "10:00h"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Description = "...",
-                            EndHourSaturday = "17:00h",
-                            EndHourSunday = "CLOSED",
-                            EndHourWorkDay = "17:00h",
-                            Name = "201b,Gastronomija",
-                            RoomId = 18,
-                            StartHourSaturday = "12:00h",
-                            StartHourSunday = "CLOSED",
-                            StartHourWorkDay = "10:00h"
-                        },
-                        new
-                        {
-                            Id = 19,
-                            Description = "...",
-                            EndHourSaturday = "17:00h",
-                            EndHourSunday = "CLOSED",
-                            EndHourWorkDay = "17:00h",
-                            Name = "301b,Magacin",
-                            RoomId = 19,
-                            StartHourSaturday = "12:00h",
-                            StartHourSunday = "CLOSED",
-                            StartHourWorkDay = "10:00h"
-                        });
-                });
-
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Map.MapBuilding", b =>
                 {
                     b.Property<int>("Id")
@@ -773,51 +423,6 @@ namespace HospitalLibrary.Migrations
                         .IsUnique();
 
                     b.ToTable("MapFloors");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Map.MapForm", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("EndHourSaturday")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("EndHourSunday")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("EndHourWorkDay")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("StartHourSaturday")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("StartHourSunday")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("StartHourWorkDay")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MapForms");
                 });
 
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Map.MapRoom", b =>
@@ -891,7 +496,7 @@ namespace HospitalLibrary.Migrations
                             Color = "blue",
                             FloorId = 1,
                             Height = 160,
-                            Name = "Pedijatrija",
+                            Name = "One",
                             Width = 260,
                             X = 0,
                             Y = 0
@@ -902,7 +507,7 @@ namespace HospitalLibrary.Migrations
                             Color = "blue",
                             FloorId = 1,
                             Height = 140,
-                            Name = "Kafeterija",
+                            Name = "Two",
                             Width = 220,
                             X = 0,
                             Y = 338
@@ -913,7 +518,7 @@ namespace HospitalLibrary.Migrations
                             Color = "blue",
                             FloorId = 1,
                             Height = 180,
-                            Name = "Otorinolaringologija",
+                            Name = "Thre",
                             Width = 300,
                             X = 237,
                             Y = 0
@@ -924,10 +529,10 @@ namespace HospitalLibrary.Migrations
                             Color = "blue",
                             FloorId = 2,
                             Height = 100,
-                            Name = "Fizioterapeut",
+                            Name = "Four",
                             Width = 200,
-                            X = 270,
-                            Y = 378
+                            X = 230,
+                            Y = 338
                         },
                         new
                         {
@@ -935,7 +540,7 @@ namespace HospitalLibrary.Migrations
                             Color = "blue",
                             FloorId = 2,
                             Height = 180,
-                            Name = "Stomatologija",
+                            Name = "Five",
                             Width = 360,
                             X = 0,
                             Y = 0
@@ -946,7 +551,7 @@ namespace HospitalLibrary.Migrations
                             Color = "blue",
                             FloorId = 3,
                             Height = 180,
-                            Name = "Magacin",
+                            Name = "Six",
                             Width = 260,
                             X = 0,
                             Y = 0
@@ -957,141 +562,64 @@ namespace HospitalLibrary.Migrations
                             Color = "blue",
                             FloorId = 3,
                             Height = 140,
-                            Name = "Opsta nega",
+                            Name = "Seven",
                             Width = 220,
                             X = 0,
-                            Y = 338
+                            Y = 138
                         },
                         new
                         {
                             Id = 8,
                             Color = "blue",
-                            FloorId = 3,
+                            FloorId = 4,
                             Height = 140,
-                            Name = "Cekaonica",
+                            Name = "Seven",
                             Width = 220,
-                            X = 330,
-                            Y = 158
+                            X = 0,
+                            Y = 138
                         },
                         new
                         {
                             Id = 9,
                             Color = "blue",
-                            FloorId = 4,
-                            Height = 170,
-                            Name = "Kardiologija",
-                            Width = 320,
+                            FloorId = 5,
+                            Height = 140,
+                            Name = "Seven",
+                            Width = 220,
                             X = 0,
-                            Y = 0
+                            Y = 138
                         },
                         new
                         {
                             Id = 10,
                             Color = "blue",
-                            FloorId = 4,
+                            FloorId = 6,
                             Height = 140,
-                            Name = "Vaskularne bolesti",
+                            Name = "Seven",
                             Width = 220,
                             X = 0,
-                            Y = 365
+                            Y = 138
                         },
                         new
                         {
                             Id = 11,
                             Color = "blue",
-                            FloorId = 4,
+                            FloorId = 7,
                             Height = 140,
-                            Name = "Hirurgija",
+                            Name = "Seven",
                             Width = 220,
-                            X = 245,
-                            Y = 0
+                            X = 0,
+                            Y = 138
                         },
                         new
                         {
                             Id = 12,
                             Color = "blue",
-                            FloorId = 5,
-                            Height = 140,
-                            Name = "Papirologija",
-                            Width = 220,
-                            X = 0,
-                            Y = 0
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Color = "blue",
-                            FloorId = 5,
-                            Height = 140,
-                            Name = "Prijavna soba",
-                            Width = 220,
-                            X = 200,
-                            Y = 0
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Color = "blue",
-                            FloorId = 5,
-                            Height = 140,
-                            Name = "Uplasta/isplata",
-                            Width = 220,
-                            X = 0,
-                            Y = 350
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Color = "blue",
-                            FloorId = 5,
-                            Height = 140,
-                            Name = "Izgubljeno/nadjeno",
-                            Width = 220,
-                            X = 200,
-                            Y = 350
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Color = "blue",
-                            FloorId = 6,
-                            Height = 190,
-                            Name = "Onkologija",
-                            Width = 320,
-                            X = 0,
-                            Y = 0
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Color = "blue",
-                            FloorId = 6,
-                            Height = 240,
-                            Name = "Onkologija",
-                            Width = 250,
-                            X = 200,
-                            Y = 300
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Color = "blue",
-                            FloorId = 7,
-                            Height = 280,
-                            Name = "Gastronomija",
-                            Width = 420,
-                            X = 50,
-                            Y = 100
-                        },
-                        new
-                        {
-                            Id = 19,
-                            Color = "blue",
                             FloorId = 8,
-                            Height = 170,
-                            Name = "Magacin",
-                            Width = 320,
-                            X = 100,
+                            Height = 140,
+                            Name = "Seven",
+                            Width = 220,
+                            X = 0,
                             Y = 138
                         });
                 });

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221107200924_EquipmentsUpdatedMigration")]
-    partial class EquipmentsUpdatedMigration
+    [Migration("20221108173037_MapMergeMigration")]
+    partial class MapMergeMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,93 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("RoomsId");
 
                     b.ToTable("FloorRoom");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Bed", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Available")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Bed");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("EndWork")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("StartWork")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Doctors");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Examination", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Examinations");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Feedback", b =>
@@ -277,6 +364,160 @@ namespace HospitalLibrary.Migrations
                             Amount = 20,
                             Name = "Stolica",
                             RoomId = 2
+                        },
+                        new
+                        {
+                            EquipmentId = 5,
+                            Amount = 2,
+                            Name = "Aparat za kafu",
+                            RoomId = 2
+                        },
+                        new
+                        {
+                            EquipmentId = 6,
+                            Amount = 4,
+                            Name = "Fotelja",
+                            RoomId = 2
+                        },
+                        new
+                        {
+                            EquipmentId = 7,
+                            Amount = 2,
+                            Name = "Spric za ispiranje usiju",
+                            RoomId = 3
+                        },
+                        new
+                        {
+                            EquipmentId = 8,
+                            Amount = 3,
+                            Name = "Otoskop",
+                            RoomId = 3
+                        },
+                        new
+                        {
+                            EquipmentId = 9,
+                            Amount = 2,
+                            Name = "Stetoskop",
+                            RoomId = 4
+                        },
+                        new
+                        {
+                            EquipmentId = 10,
+                            Amount = 3,
+                            Name = "Bolnicki krevet",
+                            RoomId = 4
+                        },
+                        new
+                        {
+                            EquipmentId = 11,
+                            Amount = 2,
+                            Name = "Aparat za merenje pritiska",
+                            RoomId = 4
+                        },
+                        new
+                        {
+                            EquipmentId = 12,
+                            Amount = 4,
+                            Name = "Stolica",
+                            RoomId = 5
+                        },
+                        new
+                        {
+                            EquipmentId = 13,
+                            Amount = 50,
+                            Name = "Zavoji",
+                            RoomId = 6
+                        },
+                        new
+                        {
+                            EquipmentId = 14,
+                            Amount = 24,
+                            Name = "Spricevi",
+                            RoomId = 6
+                        },
+                        new
+                        {
+                            EquipmentId = 15,
+                            Amount = 12,
+                            Name = "Gips",
+                            RoomId = 6
+                        },
+                        new
+                        {
+                            EquipmentId = 16,
+                            Amount = 200,
+                            Name = "Flasteri",
+                            RoomId = 6
+                        },
+                        new
+                        {
+                            EquipmentId = 17,
+                            Amount = 20,
+                            Name = "Bolnicki krevet",
+                            RoomId = 7
+                        },
+                        new
+                        {
+                            EquipmentId = 18,
+                            Amount = 20,
+                            Name = "Infuzija",
+                            RoomId = 7
+                        },
+                        new
+                        {
+                            EquipmentId = 19,
+                            Amount = 20,
+                            Name = "Stolica",
+                            RoomId = 8
+                        },
+                        new
+                        {
+                            EquipmentId = 20,
+                            Amount = 2,
+                            Name = "Stetoskop",
+                            RoomId = 9
+                        },
+                        new
+                        {
+                            EquipmentId = 21,
+                            Amount = 4,
+                            Name = "Stolica",
+                            RoomId = 10
+                        },
+                        new
+                        {
+                            EquipmentId = 22,
+                            Amount = 2,
+                            Name = "Krevet",
+                            RoomId = 11
+                        },
+                        new
+                        {
+                            EquipmentId = 23,
+                            Amount = 2,
+                            Name = "Stetoskop",
+                            RoomId = 12
+                        },
+                        new
+                        {
+                            EquipmentId = 24,
+                            Amount = 4,
+                            Name = "Infuzija",
+                            RoomId = 13
+                        },
+                        new
+                        {
+                            EquipmentId = 25,
+                            Amount = 1,
+                            Name = "Fotelja",
+                            RoomId = 13
+                        },
+                        new
+                        {
+                            EquipmentId = 26,
+                            Amount = 20,
+                            Name = "Stolica",
+                            RoomId = 13
                         });
                 });
 
@@ -871,6 +1112,9 @@ namespace HospitalLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
                     b.Property<int>("Width")
                         .HasColumnType("integer");
 
@@ -892,6 +1136,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 1,
                             Height = 160,
                             Name = "Pedijatrija",
+                            Type = 0,
                             Width = 260,
                             X = 0,
                             Y = 0
@@ -903,6 +1148,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 1,
                             Height = 140,
                             Name = "Kafeterija",
+                            Type = 0,
                             Width = 220,
                             X = 0,
                             Y = 338
@@ -914,6 +1160,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 1,
                             Height = 180,
                             Name = "Otorinolaringologija",
+                            Type = 0,
                             Width = 300,
                             X = 237,
                             Y = 0
@@ -925,6 +1172,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 2,
                             Height = 100,
                             Name = "Fizioterapeut",
+                            Type = 0,
                             Width = 200,
                             X = 270,
                             Y = 378
@@ -936,6 +1184,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 2,
                             Height = 180,
                             Name = "Stomatologija",
+                            Type = 0,
                             Width = 360,
                             X = 0,
                             Y = 0
@@ -947,6 +1196,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 3,
                             Height = 180,
                             Name = "Magacin",
+                            Type = 0,
                             Width = 260,
                             X = 0,
                             Y = 0
@@ -958,6 +1208,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 3,
                             Height = 140,
                             Name = "Opsta nega",
+                            Type = 0,
                             Width = 220,
                             X = 0,
                             Y = 338
@@ -969,6 +1220,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 3,
                             Height = 140,
                             Name = "Cekaonica",
+                            Type = 0,
                             Width = 220,
                             X = 330,
                             Y = 158
@@ -980,6 +1232,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 4,
                             Height = 170,
                             Name = "Kardiologija",
+                            Type = 0,
                             Width = 320,
                             X = 0,
                             Y = 0
@@ -991,6 +1244,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 4,
                             Height = 140,
                             Name = "Vaskularne bolesti",
+                            Type = 0,
                             Width = 220,
                             X = 0,
                             Y = 365
@@ -1002,6 +1256,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 4,
                             Height = 140,
                             Name = "Hirurgija",
+                            Type = 0,
                             Width = 220,
                             X = 245,
                             Y = 0
@@ -1013,6 +1268,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 5,
                             Height = 140,
                             Name = "Papirologija",
+                            Type = 0,
                             Width = 220,
                             X = 0,
                             Y = 0
@@ -1024,6 +1280,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 5,
                             Height = 140,
                             Name = "Prijavna soba",
+                            Type = 0,
                             Width = 220,
                             X = 200,
                             Y = 0
@@ -1035,6 +1292,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 5,
                             Height = 140,
                             Name = "Uplasta/isplata",
+                            Type = 0,
                             Width = 220,
                             X = 0,
                             Y = 350
@@ -1046,6 +1304,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 5,
                             Height = 140,
                             Name = "Izgubljeno/nadjeno",
+                            Type = 0,
                             Width = 220,
                             X = 200,
                             Y = 350
@@ -1057,6 +1316,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 6,
                             Height = 190,
                             Name = "Onkologija",
+                            Type = 0,
                             Width = 320,
                             X = 0,
                             Y = 0
@@ -1068,6 +1328,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 6,
                             Height = 240,
                             Name = "Onkologija",
+                            Type = 0,
                             Width = 250,
                             X = 200,
                             Y = 300
@@ -1079,6 +1340,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 7,
                             Height = 280,
                             Name = "Gastronomija",
+                            Type = 0,
                             Width = 420,
                             X = 50,
                             Y = 100
@@ -1090,6 +1352,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 8,
                             Height = 170,
                             Name = "Magacin",
+                            Type = 0,
                             Width = 320,
                             X = 100,
                             Y = 138
@@ -1109,6 +1372,55 @@ namespace HospitalLibrary.Migrations
                         .HasForeignKey("RoomsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Bed", b =>
+                {
+                    b.HasOne("HospitalLibrary.GraphicalEditor.Model.Room", "Room")
+                        .WithMany("Beds")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
+                {
+                    b.HasOne("HospitalLibrary.GraphicalEditor.Model.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Examination", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HospitalLibrary.Core.Model.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HospitalLibrary.GraphicalEditor.Model.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
+
+                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Feedback", b =>
@@ -1172,6 +1484,11 @@ namespace HospitalLibrary.Migrations
                 {
                     b.Navigation("Map")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Room", b =>
+                {
+                    b.Navigation("Beds");
                 });
 #pragma warning restore 612, 618
         }
