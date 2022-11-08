@@ -3,6 +3,7 @@ using System;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221107200924_EquipmentsUpdatedMigration")]
+    partial class EquipmentsUpdatedMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -275,160 +277,6 @@ namespace HospitalLibrary.Migrations
                             Amount = 20,
                             Name = "Stolica",
                             RoomId = 2
-                        },
-                        new
-                        {
-                            EquipmentId = 5,
-                            Amount = 2,
-                            Name = "Aparat za kafu",
-                            RoomId = 2
-                        },
-                        new
-                        {
-                            EquipmentId = 6,
-                            Amount = 4,
-                            Name = "Fotelja",
-                            RoomId = 2
-                        },
-                        new
-                        {
-                            EquipmentId = 7,
-                            Amount = 2,
-                            Name = "Spric za ispiranje usiju",
-                            RoomId = 3
-                        },
-                        new
-                        {
-                            EquipmentId = 8,
-                            Amount = 3,
-                            Name = "Otoskop",
-                            RoomId = 3
-                        },
-                        new
-                        {
-                            EquipmentId = 9,
-                            Amount = 2,
-                            Name = "Stetoskop",
-                            RoomId = 4
-                        },
-                        new
-                        {
-                            EquipmentId = 10,
-                            Amount = 3,
-                            Name = "Bolnicki krevet",
-                            RoomId = 4
-                        },
-                        new
-                        {
-                            EquipmentId = 11,
-                            Amount = 2,
-                            Name = "Aparat za merenje pritiska",
-                            RoomId = 4
-                        },
-                        new
-                        {
-                            EquipmentId = 12,
-                            Amount = 4,
-                            Name = "Stolica",
-                            RoomId = 5
-                        },
-                        new
-                        {
-                            EquipmentId = 13,
-                            Amount = 50,
-                            Name = "Zavoji",
-                            RoomId = 6
-                        },
-                        new
-                        {
-                            EquipmentId = 14,
-                            Amount = 24,
-                            Name = "Spricevi",
-                            RoomId = 6
-                        },
-                        new
-                        {
-                            EquipmentId = 15,
-                            Amount = 12,
-                            Name = "Gips",
-                            RoomId = 6
-                        },
-                        new
-                        {
-                            EquipmentId = 16,
-                            Amount = 200,
-                            Name = "Flasteri",
-                            RoomId = 6
-                        },
-                        new
-                        {
-                            EquipmentId = 17,
-                            Amount = 20,
-                            Name = "Bolnicki krevet",
-                            RoomId = 7
-                        },
-                        new
-                        {
-                            EquipmentId = 18,
-                            Amount = 20,
-                            Name = "Infuzija",
-                            RoomId = 7
-                        },
-                        new
-                        {
-                            EquipmentId = 19,
-                            Amount = 20,
-                            Name = "Stolica",
-                            RoomId = 8
-                        },
-                        new
-                        {
-                            EquipmentId = 20,
-                            Amount = 2,
-                            Name = "Stetoskop",
-                            RoomId = 9
-                        },
-                        new
-                        {
-                            EquipmentId = 21,
-                            Amount = 4,
-                            Name = "Stolica",
-                            RoomId = 10
-                        },
-                        new
-                        {
-                            EquipmentId = 22,
-                            Amount = 2,
-                            Name = "Krevet",
-                            RoomId = 11
-                        },
-                        new
-                        {
-                            EquipmentId = 23,
-                            Amount = 2,
-                            Name = "Stetoskop",
-                            RoomId = 12
-                        },
-                        new
-                        {
-                            EquipmentId = 24,
-                            Amount = 4,
-                            Name = "Infuzija",
-                            RoomId = 13
-                        },
-                        new
-                        {
-                            EquipmentId = 25,
-                            Amount = 1,
-                            Name = "Fotelja",
-                            RoomId = 13
-                        },
-                        new
-                        {
-                            EquipmentId = 26,
-                            Amount = 20,
-                            Name = "Stolica",
-                            RoomId = 13
                         });
                 });
 

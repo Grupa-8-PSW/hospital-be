@@ -73,6 +73,35 @@ namespace HospitalLibrary.Settings.DataSeed
                 new Form() { Id = 17, Name = "102b,Pedijatrija", Description = "...", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 17 },
                 new Form() { Id = 18, Name = "201b,Gastronomija", Description = "...", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 18 },
                 new Form() { Id = 19, Name = "301b,Magacin", Description = "...", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 19 }            );
+
+            modelBuilder.Entity<Equipment>().HasData(
+               new Equipment() { EquipmentId = 1, Name = "Krevet", Amount = 2, RoomId = 1 },
+               new Equipment() { EquipmentId = 2, Name = "Stetoskop", Amount = 2, RoomId = 1 },
+               new Equipment() { EquipmentId = 3, Name = "Stolica", Amount = 4, RoomId = 1 },
+               new Equipment() { EquipmentId = 4, Name = "Stolica", Amount = 20, RoomId = 2 },
+               new Equipment() { EquipmentId = 5, Name = "Aparat za kafu", Amount = 2, RoomId = 2 },
+               new Equipment() { EquipmentId = 6, Name = "Fotelja", Amount = 4, RoomId = 2 },
+               new Equipment() { EquipmentId = 7, Name = "Spric za ispiranje usiju", Amount = 2, RoomId = 3 },
+               new Equipment() { EquipmentId = 8, Name = "Otoskop", Amount = 3, RoomId = 3 },
+               new Equipment() { EquipmentId = 9, Name = "Stetoskop", Amount = 2, RoomId = 4 },
+               new Equipment() { EquipmentId = 10, Name = "Bolnicki krevet", Amount = 3, RoomId = 4 },
+               new Equipment() { EquipmentId = 11, Name = "Aparat za merenje pritiska", Amount = 2, RoomId = 4 },
+               new Equipment() { EquipmentId = 12, Name = "Stolica", Amount = 4, RoomId = 5 },
+               new Equipment() { EquipmentId = 13, Name = "Zavoji", Amount = 50, RoomId = 6 },
+               new Equipment() { EquipmentId = 14, Name = "Spricevi", Amount = 24, RoomId = 6 },
+               new Equipment() { EquipmentId = 15, Name = "Gips", Amount = 12, RoomId = 6 },
+               new Equipment() { EquipmentId = 16, Name = "Flasteri", Amount = 200, RoomId = 6 },
+               new Equipment() { EquipmentId = 17, Name = "Bolnicki krevet", Amount = 20, RoomId = 7 },
+               new Equipment() { EquipmentId = 18, Name = "Infuzija", Amount = 20, RoomId = 7 },
+               new Equipment() { EquipmentId = 19, Name = "Stolica", Amount = 20, RoomId = 8 },
+               new Equipment() { EquipmentId = 20, Name = "Stetoskop", Amount = 2, RoomId = 9 },
+               new Equipment() { EquipmentId = 21, Name = "Stolica", Amount = 4, RoomId = 10 },
+               new Equipment() { EquipmentId = 22, Name = "Krevet", Amount = 2, RoomId = 11 },
+               new Equipment() { EquipmentId = 23, Name = "Stetoskop", Amount = 2, RoomId = 12 },
+               new Equipment() { EquipmentId = 24, Name = "Infuzija", Amount = 4, RoomId = 13 },
+               new Equipment() { EquipmentId = 25, Name = "Fotelja", Amount = 1, RoomId = 13 },
+               new Equipment() { EquipmentId = 26, Name = "Stolica", Amount = 20, RoomId = 13 }
+           );
         }
     }
 }
