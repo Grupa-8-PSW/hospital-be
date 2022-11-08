@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.GraphicalEditor.Model.Map;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace HospitalLibrary.GraphicalEditor.Model.DTO
 {
     public class BuildingDTO
     {
+
     public int Id { get; set; }
     public int X { get; set; }
     public int Y { get; set; }

@@ -7,12 +7,15 @@ namespace HospitalLibrary.GraphicalEditor.Model
     {
         public int Id { get; set; }
         [Required]
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+        public string Color { get; set; }
         public string Name { get; set; }
-        public string Number { get; set; }
-
-        public virtual MapRoom Map { get; set; }
 
         public int FloorId { get; set; }
-        public virtual Floor Floor { get; set; }
+
+        public virtual ICollection<Floor> Floors { get; set; }
     }
 }

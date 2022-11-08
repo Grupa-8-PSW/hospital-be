@@ -6,5 +6,7 @@ namespace HospitalLibrary.GraphicalEditor.Repository.Interfaces
     {
         IEnumerable<Floor> GetAll();
         Floor GetById(int id);
+
+        IEnumerable<Floor> GetFloorsByBuildingId(int id);
     }
 }

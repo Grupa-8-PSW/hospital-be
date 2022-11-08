@@ -22,5 +22,19 @@ namespace HospitalLibrary.GraphicalEditor.Service
         {
             return _floorRepository.GetById(id);
         }
+
+        public IEnumerable<Floor> GetFloorsByBuildingId(int id)
+        {
+            try
+            {
+               return _floorRepository.GetFloorsByBuildingId(id);
+
+            }
+            catch(Exception e)
+            {
+                return null;
+            }
+
+        }
     }
 }
