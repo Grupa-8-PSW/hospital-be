@@ -10,6 +10,11 @@ using HospitalAPI.Converters;
 using HospitalAPI.DTO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using HospitalAPI.Web.Dto;
+using HospitalAPI.Web.Mapper;
+using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Validation;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 
 namespace HospitalAPI
 {
@@ -63,6 +68,16 @@ namespace HospitalAPI
 
             services.AddScoped<IMapRoomService, MapRoomService>();
             services.AddScoped<IMapRoomRepository, MapRoomRepository>();
+
+            services.AddScoped<IDoctorService, DoctorService>();
+            services.AddScoped<IDoctorRepository, DoctorRepository>();
+
+            services.AddScoped<IExaminationService, ExaminationService>();
+            services.AddScoped<IExaminationRepository, ExaminationRepository>();
+
+            services.AddScoped<IMapper<Examination, ExaminationDTO>, ExaminationMapper>();
+
+            services.AddScoped<IValidation, ExaminationValidation>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
