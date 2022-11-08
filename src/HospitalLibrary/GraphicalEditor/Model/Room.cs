@@ -1,4 +1,6 @@
-﻿using HospitalLibrary.GraphicalEditor.Model.Map;
+﻿using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Model;
+using HospitalLibrary.GraphicalEditor.Model.Map;
 using System.ComponentModel.DataAnnotations;
 
 namespace HospitalLibrary.GraphicalEditor.Model
@@ -17,5 +19,8 @@ namespace HospitalLibrary.GraphicalEditor.Model
         public int FloorId { get; set; }
 
         public virtual ICollection<Floor> Floors { get; set; }
+
+        public ICollection<Bed> Beds { get; set; }
+        public RoomType Type { get; set; }
     }
 }
