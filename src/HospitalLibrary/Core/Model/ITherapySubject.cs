@@ -8,6 +8,6 @@ namespace HospitalLibrary.Core.Model
 {
     public interface ITherapySubject
     {
-        String Print();
+        public String Print();
     }
 }

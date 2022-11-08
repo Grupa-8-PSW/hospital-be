@@ -7,19 +7,26 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Model
 {
-    public class BloodUnit
+    public class BloodUnit : ITherapySubject
     {
-        BloodType BloodType { get; set; }
-        int AmountMl { get; set; }
+        public int Id { get; set; }
+        public BloodType BloodType { get; set; }
+        public int AmountMl { get; set; }
 
         public BloodUnit()
         {
         }
 
-        public BloodUnit(BloodType bloodType, int amountMl)
+        public BloodUnit(int id, BloodType bloodType, int amountMl)
         {
+            Id = id;
             BloodType = bloodType;
             AmountMl = amountMl;
+        }
+
+        public string Print()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Model
 {
-    public class MedicalDrugs
+    public class MedicalDrugs : ITherapySubject
     {
         public string Name { get; set; }
         public MedicalDrugType Type {get; set;}
@@ -20,6 +20,11 @@ namespace HospitalLibrary.Core.Model
         {
             Name = name;
             Type = type;
+        }
+
+        public string Print()
+        {
+            throw new NotImplementedException();
         }
     }
 }
