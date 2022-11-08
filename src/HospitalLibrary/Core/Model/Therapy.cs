@@ -8,6 +8,7 @@ namespace HospitalLibrary.Core.Model
 {
     public class Therapy
     {
+        public int Id { get; set; }
         public DateTime WhenPrescribed { get; set; }
         public int Amount { get; set; }
         public string Reason { get; set; }
