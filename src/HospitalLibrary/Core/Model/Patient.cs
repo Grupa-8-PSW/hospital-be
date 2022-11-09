@@ -13,6 +13,7 @@ namespace HospitalLibrary.Core.Model
         public Gender Gender { get; set; }
         public BloodType BloodType { get; set; }
         public List<Feedback> Feedbacks { get; private set; }
+        public List<Allergen> Allergens { get; set; }
 
         public Patient(int id, string firstName, string lastName, string email, string pin, Gender gender, BloodType bloodType)
         {

@@ -19,6 +19,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Examination> Examinations { get; set; }
         public DbSet<TreatmentHistory> TreatmentHistories { get; set; }
+        public DbSet<Allergen> Allergens { get; set; }
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
@@ -28,6 +29,7 @@ namespace HospitalLibrary.Settings
             modelBuilder.SeedMap();
             modelBuilder.SeedPatient();
             modelBuilder.SeedFeedback();
+            modelBuilder.SeedAllergen();
             base.OnModelCreating(modelBuilder);
         }
 

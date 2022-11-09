@@ -14,6 +14,8 @@ namespace HospitalAPI.DTO
                 .ForMember(f => f.PatientFullName, o => o.MapFrom(f => f.Patient.FullName));
 
             CreateMap<CreateFeedbackDTO, Feedback>();
+
+            CreateMap<Allergen, AllergenDTO>();
         }
 
     }

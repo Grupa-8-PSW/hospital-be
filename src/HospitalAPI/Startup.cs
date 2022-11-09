@@ -38,6 +38,9 @@ namespace HospitalAPI
             services.AddScoped(typeof(IFeedbackRepository), typeof(FeedbackRepository));
             services.AddScoped(typeof(IPatientRepository), typeof(PatientRepository));
 
+            services.AddScoped(typeof(IAllergensRepository), typeof(AllergensRepository));
+            services.AddScoped(typeof(IAllergenService), typeof(AllergenService));
+
             services.AddAutoMapper(typeof(MappingProfile));
 
             services.AddControllers()
