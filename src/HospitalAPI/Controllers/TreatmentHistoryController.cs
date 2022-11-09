@@ -1,7 +1,9 @@
-﻿using HospitalAPI.Web.Dto;
+﻿using HospitalAPI.DTO;
+using HospitalAPI.Web.Dto;
 using HospitalAPI.Web.Mapper;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.GraphicalEditor.Model.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,7 +15,7 @@ namespace HospitalAPI.Controllers
     {
         private readonly ITreatmentHistoryService _treatmentHistoryService;
   //      private readonly IDoctorService _doctorService;
-   //     private readonly IMapper<Examination, ExaminationDTO> _examinationMapper;
+        private readonly IMapper<TreatmentHistory, TreatmentHistoryDTO> _treatmentHistoryMapper;
 
         public TreatmentHistoryController(ITreatmentHistoryService treatmentHistoryService)
         {
@@ -42,24 +44,21 @@ namespace HospitalAPI.Controllers
 
         // POST api/rooms
         [HttpPost]
-        public ActionResult Create(TreatmentHistory treatmentHistory)     //DTO!
+        public ActionResult Create(TreatmentHistoryDTO treatmentHistoryDTO, int roomId)     //DTO!
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-        //    Doctor doctor = _doctorService.GetById(examinationDTO.DoctorId);
+            TreatmentHistory treatmentHistory = _treatmentHistoryMapper.toModel(treatmentHistoryDTO);
 
-       //     Examination examination = _examinationMapper.toModel(examinationDTO);
-        //    examination.RoomId = doctor.RoomId;
-
-            bool succes = _treatmentHistoryService.Create(treatmentHistory);
+            bool succes = _treatmentHistoryService.Create(treatmentHistory, roomId);
             if (!succes)
             {
                 return BadRequest("Poruka .....");
             }
-            return CreatedAtAction("GetById", new { id = treatmentHistory.Id });//, _examinationMapper.toDTO(examination));
+            return CreatedAtAction("GetById", new { id = treatmentHistory.Id });
         }
 
         // PUT api/rooms/2

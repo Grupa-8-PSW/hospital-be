@@ -1,6 +1,10 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Validation;
+using HospitalLibrary.GraphicalEditor.Model;
+using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
+using HospitalLibrary.GraphicalEditor.Service.Interfaces;
+using MimeKit.IO.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,56 +13,62 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Service
 {
-    public class TreatmentHistoryService
+    public class TreatmentHistoryService : ITreatmentHistoryService
     {
-        private readonly IExaminationRepository _examinationRepository;
-        private readonly IValidation _validation;
-        private readonly IDoctorRepository _doctorRepository;
+        private readonly ITreatmentHistoryRepository _treatmentHistoryRepository;
+        private readonly IRoomService _roomService;
+        private readonly IPatientService _patientService;
 
-        public TreatmentHistoryService(IExaminationRepository examinationRepository, IValidation validation, IDoctorRepository doctorRepository)
+        public TreatmentHistoryService(ITreatmentHistoryRepository treatmentHistoryRepository, IRoomService roomService,
+            IPatientService patientService)
         {
-            _examinationRepository = examinationRepository;
-            _validation = validation;
-            _doctorRepository = doctorRepository;
+            _treatmentHistoryRepository = treatmentHistoryRepository;
+            _roomService = roomService;
+            _patientService = patientService;
         }
 
-        public IEnumerable<Examination> GetAll()
+        public IEnumerable<TreatmentHistory> GetAll()
         {
-            return _examinationRepository.GetAll();
+            return _treatmentHistoryRepository.GetAll();
         }
 
-        public Examination GetById(int id)
+        public TreatmentHistory GetById(int id)
         {
-            return _examinationRepository.GetById(id);
+            return _treatmentHistoryRepository.GetById(id);
         }
 
-        public bool Create(Examination examination)
+        public bool Create(TreatmentHistory treatmentHistory, int roomId)
         {
-           // if (!_validation.Validate(examination.DoctorId, examination.StartTime, examination.Duration))
-         //   {
-         //       return false;
-         //   }
-            _examinationRepository.Create(examination);
-            return true;
-        }
-
-        public bool Update(Examination examination)
-        {
-     /*       if (!_validation.ValidateNotIncludingExaminationId(examination.DoctorId, examination.StartTime, examination.Duration, examination.Id))
+            treatmentHistory.StartDate = DateTime.Today;
+            treatmentHistory.Active = true;
+            treatmentHistory.Patient = _patientService.GetById(treatmentHistory.PatientId);
+            treatmentHistory.Therapies = new List<Therapy>();
+            Room room = _roomService.GetById(roomId);
+            foreach (Bed bed in room.Beds)
             {
-                return false;
+                if (bed.Available)
+                {
+                    treatmentHistory.Bed = bed;
+                    treatmentHistory.BedId = bed.Id;
+                    break;
+                }
             }
-            Doctor doctor = _doctorRepository.GetById(examination.DoctorId);
-            examination.Doctor = doctor;
-     */       _examinationRepository.Update(examination);
+            if (treatmentHistory.Bed == null)  return false;
+
+            _treatmentHistoryRepository.Create(treatmentHistory);
             return true;
         }
 
-        public void Delete(Examination examination)
+        public bool Update(TreatmentHistory treatmentHistory)
         {
-            _examinationRepository.Delete(examination);
+            _treatmentHistoryRepository.Update(treatmentHistory);
+            return true;
         }
 
+        public void Delete(TreatmentHistory treatmentHistory)
+        {
+            _treatmentHistoryRepository.Delete(treatmentHistory);
+        }
 
     }
 }

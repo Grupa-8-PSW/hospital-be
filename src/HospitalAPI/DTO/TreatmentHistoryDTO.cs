@@ -9,9 +9,10 @@ namespace HospitalAPI.DTO
         public DateTime EndDate { get; set; }
         public bool Active { get; set; }
         public string DischargeReason { get; set; }
-        public IEnumerable<Therapy> Therapies { get; set; }
+//        public IEnumerable<Therapy> Therapies { get; set; }
         public int PatientId { get; set; }
         public int BedId { get; set; }
+        public string Reason { get; set; }
     }
 }
  

@@ -79,6 +79,10 @@ namespace HospitalAPI
 
             services.AddScoped<IValidation, ExaminationValidation>();
 
+            services.AddScoped<ITreatmentHistoryService, TreatmentHistoryService>();
+            services.AddScoped<ITreatmentHistoryRepository, TreatmentHistoryRepository>();
+
+
             services.AddScoped<ITherapyRepository, TherapyRepository>();
             services.AddScoped<ITherapyService, TherapyService>();
         }
