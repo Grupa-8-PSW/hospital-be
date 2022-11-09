@@ -17,10 +17,11 @@ namespace IntegrationLibrary.Core.Repository
             _context = context;
         }
 
-        public void Create(BloodConsumptionConfiguration bloodConsumptionConfiguration)
+        public BloodConsumptionConfiguration Create(BloodConsumptionConfiguration bloodConsumptionConfiguration)
         {
             _context.BloodConsumptionConfigurations.Add(bloodConsumptionConfiguration);
             _context.SaveChanges();
+            return bloodConsumptionConfiguration;
         }
     }
 }

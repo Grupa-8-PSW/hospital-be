@@ -10,7 +10,7 @@ namespace IntegrationLibrary.Core.Repository
 {
     public interface IBloodConsumptionConfigurationRepository
     {
-        void Create(BloodConsumptionConfiguration bloodConsumptionConfiguration);
+        public BloodConsumptionConfiguration Create(BloodConsumptionConfiguration bloodConsumptionConfiguration);
 
     }
 }

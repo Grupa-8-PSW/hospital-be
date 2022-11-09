@@ -19,14 +19,13 @@ namespace IntegrationAPI.Controllers
 
         [Route("daily")]
         [HttpPost]
-        public ActionResult CreateDaily([FromBody] BloodConsumptionReportDTO dto)
+        public BloodConsumptionConfiguration CreateDaily([FromBody] BloodConsumptionReportDTO dto)
         {
             String startDate = DateTime.Now.ToString("MM/dd/yyyy");
-
             BloodConsumptionConfiguration bcs = new BloodConsumptionConfiguration((int)Period.DAILY, dto.StartTime, startDate);
-            _service.Create(bcs);
-            return Ok();
-
+            
+            return _service.Create(bcs);
+            
         }
     }
 }

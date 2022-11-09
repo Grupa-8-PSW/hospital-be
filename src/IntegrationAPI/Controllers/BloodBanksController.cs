@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Service;
+using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using IntegrationAPI.ExceptionHandler.Validators;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.DTO;
@@ -15,13 +16,11 @@ namespace IntegrationAPI.Controllers
         private readonly IBloodBankService _bloodBankService;
         private readonly IEmailService _emailService;
         private readonly ICredentialGenerator _credentialGenerator;
-        private IRoomService roomService;
-
-        public BloodBanksController(IBloodBankService bloodBankService,  IEmailService emailService, ICredentialGenerator credentialGenerator)
+        
+        
+        public BloodBanksController(IBloodBankService bloodBankService1)
         {
-            _bloodBankService = bloodBankService;
-            _emailService = emailService;
-            _credentialGenerator = credentialGenerator;
+            this._bloodBankService = bloodBankService1;
         }
 
 

@@ -18,9 +18,9 @@ namespace IntegrationLibrary.Core.Service
             _repository = repo;
         }
 
-        public void Create(BloodConsumptionConfiguration bloodConsumptionConfiguration)
+        public BloodConsumptionConfiguration Create(BloodConsumptionConfiguration bloodConsumptionConfiguration)
         {
-            _repository.Create(bloodConsumptionConfiguration);
+            return _repository.Create(bloodConsumptionConfiguration);
         }
     }
 }

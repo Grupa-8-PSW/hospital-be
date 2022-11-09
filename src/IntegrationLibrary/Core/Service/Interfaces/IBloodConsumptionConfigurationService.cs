@@ -9,6 +9,6 @@ namespace IntegrationLibrary.Core.Service.Interfaces
 {
     public interface IBloodConsumptionConfigurationService
     {
-        void Create(BloodConsumptionConfiguration bloodConsumptionConfiguration);
+        public BloodConsumptionConfiguration Create(BloodConsumptionConfiguration bloodConsumptionConfiguration);
     }
 }
