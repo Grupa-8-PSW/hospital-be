@@ -1,5 +1,6 @@
 ﻿using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Repository;
+using IntegrationLibrary.Core.Service.Interfaces;
 using Microsoft.AspNetCore.Connections;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Newtonsoft.Json;
@@ -41,13 +42,13 @@ namespace IntegrationAPI.Connections
                     message = JsonConvert.DeserializeObject<BloodBankNews>(jsonMessage);
                     using(var scope = serviceProvider.CreateScope())
                     {
-                        var scopedService = scope.ServiceProvider.GetRequiredService<IBloodBankNewsRepository>();
+                        var scopedService = scope.ServiceProvider.GetRequiredService<IBloodBankNewsService>();
                         scopedService.Create(message);
                     }
                 }
                 catch (Exception ex)
                 {
-                    message = JsonConvert.DeserializeObject<BloodBankNews>(jsonMessage);
+                    Console.WriteLine(ex.ToString());
                 }
 
             };
@@ -55,6 +56,11 @@ namespace IntegrationAPI.Connections
                                    autoAck: true,
                                    consumer: consumer);
             return Task.CompletedTask;
+        }
+
+        public override Task StopAsync(CancellationToken cancellationToken)
+        {
+            return base.StopAsync(cancellationToken);
         }
     }
 }
