@@ -23,7 +23,7 @@ namespace HospitalLibrary.Settings
         public DbSet<BloodUnit> BloodUnits { get; set; }
         public DbSet<MedicalDrugs> MedicalDrugs { get; set; }
         public DbSet<BloodUnitRequest> BloodUnitRequests { get; set; }
-
+        public DbSet<Blood> Bloods { get; set; }
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }

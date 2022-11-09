@@ -78,6 +78,9 @@ namespace HospitalAPI
             services.AddScoped<IMapper<Examination, ExaminationDTO>, ExaminationMapper>();
 
             services.AddScoped<IValidation, ExaminationValidation>();
+
+            services.AddScoped<IBloodRepository, BloodRepository>();
+            services.AddScoped<IBloodService, BloodService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
