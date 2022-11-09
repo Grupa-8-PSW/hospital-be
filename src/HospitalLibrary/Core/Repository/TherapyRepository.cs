@@ -1,8 +1,11 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HospitalLibrary.Settings;
+using Microsoft.EntityFrameworkCore;
 
 namespace HospitalLibrary.Core.Repository
 {
@@ -10,7 +13,7 @@ namespace HospitalLibrary.Core.Repository
     {
         private readonly HospitalDbContext _context;
 
-        public ExaminationRepository(HospitalDbContext context)
+        public TherapyRepository(HospitalDbContext context)
         {
             _context = context;
         }
@@ -20,21 +23,21 @@ namespace HospitalLibrary.Core.Repository
             return _context.Therapies.ToList();
         }
 
-        public Examination GetById(int id)
+        public Therapy GetById(int id)
         {
             return _context.Therapies.Find(id);
         }
 
-        public void Create(Examination examination)
+        public void Create(Therapy therapy)
         {
-            _context.Therapies.Add(examination);
+            _context.Therapies.Add(therapy);
             _context.SaveChanges();
         }
 
-        public void Update(Examination examination)
+        public void Update(Therapy therapy)
         {
-            Examination examinationOld = _context.Therapies.Find(examination.Id);
-            _context.Entry(examinationOld).CurrentValues.SetValues(examination);
+            Therapy therapyOld = _context.Therapies.Find(therapy.Id);
+            _context.Entry(therapyOld).CurrentValues.SetValues(therapy);
             //_context.Entry(examination).State = EntityState.Modified;
 
             try
@@ -47,9 +50,9 @@ namespace HospitalLibrary.Core.Repository
             }
         }
 
-        public void Delete(Examination examination)
+        public void Delete(Therapy therapy)
         {
-            _context.Examinations.Remove(examination);
+            _context.Therapies.Remove(therapy);
             _context.SaveChanges();
         }
 
