@@ -15,7 +15,7 @@ namespace HospitalAPI.Controllers
     {
         private readonly ITreatmentHistoryService _treatmentHistoryService;
   //      private readonly IDoctorService _doctorService;
-   //     private readonly IMapper<Examination, ExaminationDTO> _examinationMapper;
+        private readonly IMapper<TreatmentHistory, TreatmentHistoryDTO> _treatmentHistoryMapper;
 
         public TreatmentHistoryController(ITreatmentHistoryService treatmentHistoryService)
         {
