@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Model
 {
-    public interface ITherapySubject
+    public abstract class ITherapySubject
     {
-        public String Print();
+        public int Id { get; set; }
     }
 }

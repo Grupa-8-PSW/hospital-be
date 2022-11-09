@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 namespace HospitalLibrary.Core.Model
 {
     public class MedicalDrugs : ITherapySubject
-    {
-        public int Id { get; set; }
+    { 
         public string Name { get; set; }
         public MedicalDrugType Type {get; set;}
 

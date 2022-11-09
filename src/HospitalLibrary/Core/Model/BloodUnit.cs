@@ -9,7 +9,6 @@ namespace HospitalLibrary.Core.Model
 {
     public class BloodUnit : ITherapySubject
     {
-        public int Id { get; set; }
         public BloodType BloodType { get; set; }
         public int AmountMl { get; set; }
 
