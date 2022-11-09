@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.GraphicalEditor.Model;
+﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Repository;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
@@ -36,6 +37,16 @@ namespace HospitalLibrary.GraphicalEditor.Service
                 return null;
             }
 
+        }
+
+        public IEnumerable<Room> GetFreeRooms()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Bed GetFreeBedInRoom(Room room)
+        {
+            throw new NotImplementedException();
         }
     }
 }
