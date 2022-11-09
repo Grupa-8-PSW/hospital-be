@@ -2,7 +2,6 @@
 using IntegrationAPI.Connections.Interface;
 using IntegrationAPI.Middlewares;
 using IntegrationAPI.ConnectionService.Interface;
-using IntegrationAPI.Persistence;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Service;
 using IntegrationLibrary.Persistence;
@@ -34,6 +33,8 @@ namespace IntegrationAPI
 
             services.AddScoped<IBloodConsumptionConfigurationRepository, BloodConsumptionConfigurationRepository>();
             services.AddScoped<IBloodConsumptionConfigurationService, BloodConsumptionConfigurationService>();
+            services.AddHostedService<BloodBankRabbitMqConnection>();
+
             services.AddScoped<IBloodBankConnectionService, BloodBankConnectionService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IBloodBankService, BloodBankService>();
@@ -42,6 +43,7 @@ namespace IntegrationAPI
             services.AddScoped<IBloodBankConnectionService, BloodBankConnectionService>();
             services.AddScoped<ICredentialGenerator, CredentialGenerator>();
             services.AddScoped<IBloodBankHTTPConnection, BloodBankHTTPConnection>();
+            services.AddScoped<IBloodBankNewsRepository, BloodBankNewsRepository>();
             services.AddTransient<ExceptionMiddleware>();
         }
 
