@@ -1,3 +1,6 @@
+using IntegrationAPI.Connections;
+using Microsoft.Extensions.DependencyInjection;
+
 namespace IntegrationTests
 {
     public class UnitTest1
@@ -5,7 +8,7 @@ namespace IntegrationTests
         [Fact]
         public void Test1()
         {
-
+            
         }
     }
 }
