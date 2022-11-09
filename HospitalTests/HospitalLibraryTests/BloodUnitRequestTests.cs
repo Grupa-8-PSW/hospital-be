@@ -1,4 +1,7 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Core.Service;
 using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 using HospitalLibrary.GraphicalEditor.Service;
@@ -14,49 +17,43 @@ namespace HospitalTests.HospitalLibraryTests
     public class BloodUnitRequestTests
     {
         [Fact]
-        public void Finds_free_rooms()
+        public void Create_therapy()
         {
-            RoomService roomService = new RoomService(CreateRoomStubRepository());
+            TherapyService therapyService = new TherapyService(CreateTherapyStubRepository());
 
-            var freeRooms = roomService.GetFreeRooms();
+            Therapy therapy = new Therapy();
 
-            Assert.NotNull(freeRooms);
-            Assert.NotEmpty(freeRooms);
+            var succes = therapyService.Create(therapy);
+
+            var allTherapies = therapyService.GetAll();
+
+            Assert.True(succes);
+            Assert.True(allTherapies.Count() == 2);
         }
 
 
-
-        [Fact]
-        public void Finds_free_bed_in_room()
+        private static ITherapyRepository CreateTherapyStubRepository()
         {
-            RoomService roomService = new RoomService(CreateRoomStubRepository());
+            var stubRepository = new Mock<ITherapyRepository>();
 
-            var room = roomService.GetById(1);
+            List<Therapy> allTherapies = new List<Therapy>();
 
-            Bed bed = roomService.GetFreeBedInRoom(room);
-
-            Assert.NotNull(bed);
-            Assert.True(bed.Available == true);
-            Assert.True(bed.RoomId == room.Id);
-        }
+            Doctor doctor1 = new Doctor() { Id = 1, FirstName = "firstName", LastName = "lastName", RoomId = 0, Room = null, StartWork = new DateTime(), EndWork = new DateTime() };
+            BloodUnit unit = new BloodUnit() { Id = 1, BloodType = BloodType.A_NEGATIVE, AmountMl = 200 };
 
 
-        private static IRoomRepository CreateRoomStubRepository()
-        {
-            var stubRepository = new Mock<IRoomRepository>();
+            allTherapies.Add(new Therapy() { Id = 1, WhenPrescribed = new DateTime(), Amount = 50, Reason = "reason1", PrescribedId = 1, Prescribed = unit, DoctorId = 1, Doctor = doctor1 });
 
-            List<Room> allRooms = new List<Room>();
 
-            allRooms.Add(new Room() { Id = 1, X = 0, Y = 0, Width = 260, Height = 160, Color = "blue", Name = "Pedijatrija", FloorId = 1 });
-            allRooms[0].Beds = new List<Bed>();
-            Bed bed1 = new Bed(1, 1, allRooms[0], true);
-            allRooms[0].Beds.Add(bed1);
-
-            stubRepository.Setup(r => r.GetAll()).Returns(allRooms);
+            stubRepository.Setup(r => r.GetAll()).Returns(allTherapies);
 
             return stubRepository.Object;
 
 
         }
+
+
+
+       
     }
 }
