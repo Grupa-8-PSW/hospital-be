@@ -2,7 +2,6 @@
 using IntegrationAPI.Connections.Interface;
 using IntegrationAPI.Middlewares;
 using IntegrationAPI.ConnectionService.Interface;
-using IntegrationAPI.Persistence;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Service;
 using IntegrationLibrary.Persistence;
@@ -32,6 +31,8 @@ namespace IntegrationAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IntegrationAPI", Version = "v1" });
             });
 
+            services.AddHostedService<BloodBankRabbitMqConnection>();
+
             services.AddScoped<IBloodBankConnectionService, BloodBankConnectionService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IBloodBankService, BloodBankService>();
@@ -40,6 +41,8 @@ namespace IntegrationAPI
             services.AddScoped<IBloodBankConnectionService, BloodBankConnectionService>();
             services.AddScoped<ICredentialGenerator, CredentialGenerator>();
             services.AddScoped<IBloodBankHTTPConnection, BloodBankHTTPConnection>();
+            services.AddScoped<IBloodBankNewsRepository, BloodBankNewsRepository>();
+            services.AddScoped<IBloodBankNewsService, BloodBankNewsService>();
             services.AddTransient<ExceptionMiddleware>();
         }
 

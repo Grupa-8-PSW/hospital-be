@@ -52,6 +52,56 @@ namespace HospitalLibrary.Settings.DataSeed
                 new Room() { Id = 18, X = 50, Y = 100, Width = 420, Height = 280, Color = "blue", Name = "Gastronomija", FloorId = 7 },
                 new Room() { Id = 19, X = 100, Y = 138, Width = 320, Height = 170, Color = "blue", Name = "Magacin", FloorId = 8 }
             );
+
+                modelBuilder.Entity<Form>().HasData(
+                new Form() { Id = 1, Name = "101,Pedijatrija" , Description= "Pregledi za decu", StartHourWorkDay = "10:00h" , EndHourWorkDay = "17:00h" , StartHourSaturday = "12:00h" , EndHourSaturday = "17:00h" , StartHourSunday = "CLOSED" , EndHourSunday = "CLOSED", RoomId = 1 },
+                new Form() { Id = 2, Name = "102,Kafeterija", Description = "Opustanje za radnike i posetioce", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 2 },
+                new Form() { Id = 3, Name = "103,Otorinolaringologija", Description = "UHO,GRLO,NOS", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 3 },
+                new Form() { Id = 4, Name = "201,Fizioterapeut", Description = "Pregled misica i povreda", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 4 },
+                new Form() { Id = 5, Name = "202,Stomatologija", Description = "Pregledi za decu", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 5 },
+                new Form() { Id = 6, Name = "301,Magacin", Description = "Stanje robe u objektu", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 6 },
+                new Form() { Id = 7, Name = "302,Opsta nega", Description = "Kreveti i sve potrebno za oporavku", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 7 },
+                new Form() { Id = 8, Name = "303,Cekaonica", Description = "Stolice i fotelje za cekanje", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 8 },
+                new Form() { Id = 9, Name = "101a,Kardiologija", Description = "...", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 9 },
+                new Form() { Id = 10, Name = "102a,Vaskularne bolesti", Description = "...", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 10 },
+                new Form() { Id = 11, Name = "103a,Hirurgija", Description = "...,...,...", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 11 },
+                new Form() { Id = 12, Name = "201a,Papirologija", Description = "... ... ... ...", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 12 },
+                new Form() { Id = 13, Name = "202a,Prijavna soba", Description = "...", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 13 },
+                new Form() { Id = 14, Name = "203a,Uplasta/isplata", Description = "...", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 14 },
+                new Form() { Id = 15, Name = "204a,Izgubljeno/nadjeno", Description = "...", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 15 },
+                new Form() { Id = 16, Name = "101b,Onkologija", Description = "...", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 16 },
+                new Form() { Id = 17, Name = "102b,Pedijatrija", Description = "...", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 17 },
+                new Form() { Id = 18, Name = "201b,Gastronomija", Description = "...", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 18 },
+                new Form() { Id = 19, Name = "301b,Magacin", Description = "...", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 19 }            );
+
+            modelBuilder.Entity<Equipment>().HasData(
+               new Equipment() { EquipmentId = 1, Name = "Krevet", Amount = 2, RoomId = 1 },
+               new Equipment() { EquipmentId = 2, Name = "Stetoskop", Amount = 2, RoomId = 1 },
+               new Equipment() { EquipmentId = 3, Name = "Stolica", Amount = 4, RoomId = 1 },
+               new Equipment() { EquipmentId = 4, Name = "Stolica", Amount = 20, RoomId = 2 },
+               new Equipment() { EquipmentId = 5, Name = "Aparat za kafu", Amount = 2, RoomId = 2 },
+               new Equipment() { EquipmentId = 6, Name = "Fotelja", Amount = 4, RoomId = 2 },
+               new Equipment() { EquipmentId = 7, Name = "Spric za ispiranje usiju", Amount = 2, RoomId = 3 },
+               new Equipment() { EquipmentId = 8, Name = "Otoskop", Amount = 3, RoomId = 3 },
+               new Equipment() { EquipmentId = 9, Name = "Stetoskop", Amount = 2, RoomId = 4 },
+               new Equipment() { EquipmentId = 10, Name = "Bolnicki krevet", Amount = 3, RoomId = 4 },
+               new Equipment() { EquipmentId = 11, Name = "Aparat za merenje pritiska", Amount = 2, RoomId = 4 },
+               new Equipment() { EquipmentId = 12, Name = "Stolica", Amount = 4, RoomId = 5 },
+               new Equipment() { EquipmentId = 13, Name = "Zavoji", Amount = 50, RoomId = 6 },
+               new Equipment() { EquipmentId = 14, Name = "Spricevi", Amount = 24, RoomId = 6 },
+               new Equipment() { EquipmentId = 15, Name = "Gips", Amount = 12, RoomId = 6 },
+               new Equipment() { EquipmentId = 16, Name = "Flasteri", Amount = 200, RoomId = 6 },
+               new Equipment() { EquipmentId = 17, Name = "Bolnicki krevet", Amount = 20, RoomId = 7 },
+               new Equipment() { EquipmentId = 18, Name = "Infuzija", Amount = 20, RoomId = 7 },
+               new Equipment() { EquipmentId = 19, Name = "Stolica", Amount = 20, RoomId = 8 },
+               new Equipment() { EquipmentId = 20, Name = "Stetoskop", Amount = 2, RoomId = 9 },
+               new Equipment() { EquipmentId = 21, Name = "Stolica", Amount = 4, RoomId = 10 },
+               new Equipment() { EquipmentId = 22, Name = "Krevet", Amount = 2, RoomId = 11 },
+               new Equipment() { EquipmentId = 23, Name = "Stetoskop", Amount = 2, RoomId = 12 },
+               new Equipment() { EquipmentId = 24, Name = "Infuzija", Amount = 4, RoomId = 13 },
+               new Equipment() { EquipmentId = 25, Name = "Fotelja", Amount = 1, RoomId = 13 },
+               new Equipment() { EquipmentId = 26, Name = "Stolica", Amount = 20, RoomId = 13 }
+           );
         }
     }
 }
