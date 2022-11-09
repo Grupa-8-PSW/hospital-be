@@ -31,6 +31,8 @@
   <ItemGroup>
     <Folder Include="HospitalAPITests\" />
     <Folder Include="HospitalLibraryTests\" />
+    <Folder Include="HospitalApiTests\" />
+    <Folder Include="HospitalLibraryTests\" />
   </ItemGroup>
 
 </Project>
