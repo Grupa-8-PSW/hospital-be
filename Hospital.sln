@@ -5,13 +5,19 @@ VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4E6CA2FE-84A6-4CAF-ACAC-26F41B02E2E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalAPI", "src\HospitalAPI\HospitalAPI.csproj", "{B96F768B-263D-47B3-AFBC-6BA3F9E34C36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalAPI", "src\HospitalAPI\HospitalAPI.csproj", "{B96F768B-263D-47B3-AFBC-6BA3F9E34C36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationAPI", "src\IntegrationAPI\IntegrationAPI.csproj", "{5E986A18-8FEB-4AFB-9843-B5E30DAF456D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationAPI", "src\IntegrationAPI\IntegrationAPI.csproj", "{5E986A18-8FEB-4AFB-9843-B5E30DAF456D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalLibrary", "src\HospitalLibrary\HospitalLibrary.csproj", "{D4B8B668-2893-4448-8100-B8043F16E301}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalLibrary", "src\HospitalLibrary\HospitalLibrary.csproj", "{D4B8B668-2893-4448-8100-B8043F16E301}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationLibrary", "src\IntegrationLibrary\IntegrationLibrary.csproj", "{EEA7FD47-F7B5-407A-82D1-D84435989F48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationLibrary", "src\IntegrationLibrary\IntegrationLibrary.csproj", "{EEA7FD47-F7B5-407A-82D1-D84435989F48}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{E82523DF-9CF7-460F-BC9F-470C5037E334}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalTests", "HospitalTests\HospitalTests.csproj", "{05026F2C-181A-4168-96A8-90F03722A249}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{52F3CA58-9651-40FF-9526-EB9A32EC2A7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +41,14 @@ Global
 		{EEA7FD47-F7B5-407A-82D1-D84435989F48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEA7FD47-F7B5-407A-82D1-D84435989F48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEA7FD47-F7B5-407A-82D1-D84435989F48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05026F2C-181A-4168-96A8-90F03722A249}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05026F2C-181A-4168-96A8-90F03722A249}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05026F2C-181A-4168-96A8-90F03722A249}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05026F2C-181A-4168-96A8-90F03722A249}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52F3CA58-9651-40FF-9526-EB9A32EC2A7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52F3CA58-9651-40FF-9526-EB9A32EC2A7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52F3CA58-9651-40FF-9526-EB9A32EC2A7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52F3CA58-9651-40FF-9526-EB9A32EC2A7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +58,8 @@ Global
 		{5E986A18-8FEB-4AFB-9843-B5E30DAF456D} = {4E6CA2FE-84A6-4CAF-ACAC-26F41B02E2E5}
 		{D4B8B668-2893-4448-8100-B8043F16E301} = {4E6CA2FE-84A6-4CAF-ACAC-26F41B02E2E5}
 		{EEA7FD47-F7B5-407A-82D1-D84435989F48} = {4E6CA2FE-84A6-4CAF-ACAC-26F41B02E2E5}
+		{05026F2C-181A-4168-96A8-90F03722A249} = {E82523DF-9CF7-460F-BC9F-470C5037E334}
+		{52F3CA58-9651-40FF-9526-EB9A32EC2A7F} = {E82523DF-9CF7-460F-BC9F-470C5037E334}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {70B780B3-1435-4A39-953C-99EC39A4FCCF}
