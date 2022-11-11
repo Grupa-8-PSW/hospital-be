@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HospitalLibrary.Core.Enums;
 
 namespace HospitalLibrary.GraphicalEditor.Model.DTO
 {
@@ -16,6 +17,10 @@ namespace HospitalLibrary.GraphicalEditor.Model.DTO
         public string Color { get; set; }
         public string Name { get; set; }
 
+        public int FloorId { get; set; }
+
+        public RoomType Type { get; set; }
+
         public RoomDTO(Room room)
         {
             Id = room.Id;
@@ -25,6 +30,7 @@ namespace HospitalLibrary.GraphicalEditor.Model.DTO
             Height = room.Height;
             Color = room.Color;
             Name = room.Name;
+            FloorId = room.FloorId;
         }
     }
 }

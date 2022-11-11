@@ -3,6 +3,7 @@ using System;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221111003016_DifferentColorForRoomTypeMigration")]
+    partial class DifferentColorForRoomTypeMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -698,15 +700,15 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Neuroloske operacije i zahvati",
+                            Description = "Pregledi za decu",
                             EndHourSaturday = "17:00h",
                             EndHourSunday = "CLOSED",
                             EndHourWorkDay = "17:00h",
-                            Name = "101,Neurohirurgija",
+                            Name = "101,Pedijatrija",
                             RoomId = 1,
                             StartHourSaturday = "12:00h",
                             StartHourSunday = "CLOSED",
-                            StartHourWorkDay = "8:00h"
+                            StartHourWorkDay = "10:00h"
                         },
                         new
                         {
@@ -906,11 +908,11 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 17,
-                            Description = "Operacija endokrinog sistema",
+                            Description = "...",
                             EndHourSaturday = "17:00h",
                             EndHourSunday = "CLOSED",
                             EndHourWorkDay = "17:00h",
-                            Name = "102b,Endokrinologija",
+                            Name = "102b,Pedijatrija",
                             RoomId = 17,
                             StartHourSaturday = "12:00h",
                             StartHourSunday = "CLOSED",
@@ -1133,8 +1135,8 @@ namespace HospitalLibrary.Migrations
                             Color = "blue",
                             FloorId = 1,
                             Height = 160,
-                            Name = "Neurohirurgija",
-                            Type = 3,
+                            Name = "Pedijatrija",
+                            Type = 0,
                             Width = 260,
                             X = 0,
                             Y = 0
@@ -1146,7 +1148,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 1,
                             Height = 140,
                             Name = "Kafeterija",
-                            Type = 2,
+                            Type = 0,
                             Width = 220,
                             X = 0,
                             Y = 338
@@ -1158,7 +1160,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 1,
                             Height = 180,
                             Name = "Otorinolaringologija",
-                            Type = 0,
+                            Type = 1,
                             Width = 300,
                             X = 237,
                             Y = 0
@@ -1194,7 +1196,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 3,
                             Height = 180,
                             Name = "Magacin",
-                            Type = 4,
+                            Type = 0,
                             Width = 260,
                             X = 0,
                             Y = 0
@@ -1230,7 +1232,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 4,
                             Height = 170,
                             Name = "Kardiologija",
-                            Type = 3,
+                            Type = 0,
                             Width = 320,
                             X = 0,
                             Y = 0
@@ -1254,7 +1256,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 4,
                             Height = 140,
                             Name = "Hirurgija",
-                            Type = 3,
+                            Type = 0,
                             Width = 220,
                             X = 245,
                             Y = 0
@@ -1325,8 +1327,8 @@ namespace HospitalLibrary.Migrations
                             Color = "blue",
                             FloorId = 6,
                             Height = 240,
-                            Name = "Endokrinologija",
-                            Type = 3,
+                            Name = "Onkologija",
+                            Type = 0,
                             Width = 250,
                             X = 200,
                             Y = 300
@@ -1350,7 +1352,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 8,
                             Height = 170,
                             Name = "Magacin",
-                            Type = 4,
+                            Type = 0,
                             Width = 320,
                             X = 100,
                             Y = 138
