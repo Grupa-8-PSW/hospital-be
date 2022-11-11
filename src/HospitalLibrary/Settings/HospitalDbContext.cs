@@ -21,6 +21,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Examination> Examinations { get; set; }
+        public DbSet<TreatmentHistory> TreatmentHistories { get; set; }
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }

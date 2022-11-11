@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,10 +9,12 @@ namespace HospitalLibrary.Core.Model
 {
     public class Therapy
     {
+        public int Id { get; set; }
         public DateTime WhenPrescribed { get; set; }
         public int Amount { get; set; }
         public string Reason { get; set; }
         public int PrescribedId { get; set; }
+        [NotMapped]
         public ITherapySubject Prescribed { get; set; }
         public int DoctorId { get; set; }
         public Doctor Doctor { get; set; }

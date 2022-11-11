@@ -1,7 +1,6 @@
 ﻿using IntegrationAPI.Connections.Interface;
 using IntegrationLibrary.Core.Model;
 using Microsoft.AspNetCore.Mvc;
-using IntegrationLibrary.Persistence.Migrations;
 using RestSharp;
 using System.Data;
 using System.Net;
