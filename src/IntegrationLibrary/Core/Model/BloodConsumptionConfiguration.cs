@@ -11,15 +11,28 @@ namespace IntegrationLibrary.Core.Model
     {
         public int Id { get; set; }
         [Required]
-        public int Period { get; set; }
+        public uint FrequencyPeriodInHours { get; set; }
+        public uint ConsumptionPeriodHours { get; set; }
+
         public String StartTime { get; set; }
         public String StartDate { get; set; }
 
-        public BloodConsumptionConfiguration( int period, String startTime, String startDate)
+        
+        public BloodConsumptionConfiguration(int id, uint frequencyPeriodInHours, uint consumptionPeriodHours, string startTime, string startDate)
         {
-            this.Period = period;
-            this.StartDate = startDate;
-            this.StartTime = startTime;        
+            Id = id;
+            FrequencyPeriodInHours = frequencyPeriodInHours;
+            ConsumptionPeriodHours = consumptionPeriodHours;
+            StartTime = startTime;
+            StartDate = startDate;
+        }
+
+        public BloodConsumptionConfiguration(uint frequencyPeriodInHours, uint consumptionPeriodHours, string startTime, string startDate)
+        {
+            FrequencyPeriodInHours = frequencyPeriodInHours;
+            ConsumptionPeriodHours = consumptionPeriodHours;
+            StartTime = startTime;
+            StartDate = startDate;
         }
 
         public BloodConsumptionConfiguration()

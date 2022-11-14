@@ -17,15 +17,19 @@ namespace IntegrationAPI.Controllers
             _service = service;
         }
 
-        [Route("daily")]
+        
         [HttpPost]
-        public BloodConsumptionConfiguration CreateDaily([FromBody] BloodConsumptionReportDTO dto)
+        public BloodConsumptionConfiguration CreateConfiguration([FromBody] BloodConsumptionReportDTO dto)
         {
-            String startDate = DateTime.Now.ToString("MM/dd/yyyy");
-            BloodConsumptionConfiguration bcs = new BloodConsumptionConfiguration((int)Period.DAILY, dto.StartTime, startDate);
-            
-            return _service.Create(bcs);
-            
+
+            return _service.Create(new BloodConsumptionConfiguration()
+            {
+                ConsumptionPeriodHours = dto.ConsumptionPeriodHours,
+                FrequencyPeriodInHours = dto.FrequencyPeriodInHours,
+                StartDate = dto.StartDate,
+                StartTime = dto.StartTime
+            });
+
         }
     }
 }

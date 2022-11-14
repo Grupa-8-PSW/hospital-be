@@ -7,7 +7,7 @@ namespace IntegrationLibrary.Persistence
     public class IntegrationDbContext: DbContext
     {
         public DbSet<BloodBank> BloodBanks { get; set; }
-        public DbSet<BloodConsumptionConfiguration> BloodConsumptionConfigurations { get; set; }
+        public DbSet<BloodConsumptionConfiguration> BloodConsumptionConfiguration { get; set; }
         public DbSet<BloodBankNews> BloodBankNews { get; set; }
         public IntegrationDbContext(DbContextOptions options): base(options) { }
 

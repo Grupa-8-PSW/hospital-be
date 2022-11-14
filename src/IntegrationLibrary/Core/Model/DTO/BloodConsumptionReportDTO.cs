@@ -11,5 +11,9 @@ namespace IntegrationLibrary.Core.Model.DTO
         public string StartTime { get; set; }
         public string StartDate { get; set; }
 
+        public uint FrequencyPeriodInHours { get; set; }
+        
+        public uint ConsumptionPeriodHours { get; set; }
+
     }
 }

@@ -19,7 +19,7 @@ namespace IntegrationLibrary.Core.Repository
 
         public BloodConsumptionConfiguration Create(BloodConsumptionConfiguration bloodConsumptionConfiguration)
         {
-            _context.BloodConsumptionConfigurations.Add(bloodConsumptionConfiguration);
+            _context.BloodConsumptionConfiguration.Add(bloodConsumptionConfiguration);
             _context.SaveChanges();
             return bloodConsumptionConfiguration;
         }

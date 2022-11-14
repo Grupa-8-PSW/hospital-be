@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalLibrary", "src\Hosp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationLibrary", "src\IntegrationLibrary\IntegrationLibrary.csproj", "{EEA7FD47-F7B5-407A-82D1-D84435989F48}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "..\..\IntegrationTests\IntegrationTests.csproj", "{462F365A-4BAA-4792-A668-BA01129FCAC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{4F0D5E16-B196-4834-B820-8B44DDE16F4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +37,10 @@ Global
 		{EEA7FD47-F7B5-407A-82D1-D84435989F48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEA7FD47-F7B5-407A-82D1-D84435989F48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEA7FD47-F7B5-407A-82D1-D84435989F48}.Release|Any CPU.Build.0 = Release|Any CPU
-		{462F365A-4BAA-4792-A668-BA01129FCAC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{462F365A-4BAA-4792-A668-BA01129FCAC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{462F365A-4BAA-4792-A668-BA01129FCAC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{462F365A-4BAA-4792-A668-BA01129FCAC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F0D5E16-B196-4834-B820-8B44DDE16F4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F0D5E16-B196-4834-B820-8B44DDE16F4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F0D5E16-B196-4834-B820-8B44DDE16F4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F0D5E16-B196-4834-B820-8B44DDE16F4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
