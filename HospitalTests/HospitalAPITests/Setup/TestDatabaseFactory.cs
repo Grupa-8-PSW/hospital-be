@@ -41,7 +41,7 @@ namespace HospitalTests.HospitalAPITests.Setup
             context.Database.EnsureCreated();
 
             //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Rooms\";");
-            //context.Rooms.Add(new Room { Id = 1, FloorId = 1, Name = "11" });
+            context.Rooms.Add(new Room { Id = 1, FloorId = 1, Name = "11" });
             //context.Rooms.Add(new Room { Id = 2, FloorId = 1, Name = "12" });
             //context.Rooms.Add(new Room { Id = 3, FloorId = 2, Name = "21" });
             //context.Rooms.Add(new Room { Id = 4, FloorId = 3, Name = "31" });

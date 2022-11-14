@@ -13,8 +13,14 @@ namespace HospitalLibrary.Settings.DataSeed
     {
         public static void SeedBed(this ModelBuilder modelBuilder)
         {
-       /*     modelBuilder.Entity<Bed>().HasData(
-                new Bed(1, 1, new Room(), true));*/
+            modelBuilder.Entity<Bed>().HasData(
+                new Bed() { Id = 1, RoomId = 1, Available = true },
+                new Bed() { Id = 2, RoomId = 1, Available = true },
+                new Bed() { Id = 3, RoomId = 2, Available = false },
+                new Bed() { Id = 4, RoomId = 2, Available = true },
+                new Bed() { Id = 5, RoomId = 3, Available = false },
+                new Bed() { Id = 6, RoomId = 3, Available = false }
+                );
         }
 
     }
