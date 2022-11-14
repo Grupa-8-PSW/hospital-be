@@ -8,6 +8,6 @@ namespace HospitalLibrary.Core.Enums
 {
     public enum MedicalDrugType
     {
-
+        PILL, NOTPILL
     }
 }
