@@ -50,7 +50,7 @@ namespace IntegrationTeamTests.Integration
             await Task.Delay(1000);
             await rabbitConnection.StopAsync(CancellationToken.None);
             int newsCountAfter = (((OkObjectResult)controller.GetAll())?.Value as IEnumerable<BloodBankNews>).Count();
-            
+
             //ASSERT
             newsCountAfter.ShouldBe(newsCountBefore + 1);
         }
