@@ -23,5 +23,11 @@ namespace IntegrationLibrary.Core.Repository
             _context.SaveChanges();
             return bloodConsumptionConfiguration;
         }
+         
+        public List<BloodConsumptionConfiguration> GetAll()
+        {
+            return _context.BloodConsumptionConfiguration.ToList();
+
+        }
     }
 }

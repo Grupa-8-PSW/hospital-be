@@ -22,5 +22,10 @@ namespace IntegrationLibrary.Core.Service
         {
             return _repository.Create(bloodConsumptionConfiguration);
         }
+
+        public List<BloodConsumptionConfiguration> GetAll()
+        {
+            return _repository.GetAll();
+        }
     }
 }
