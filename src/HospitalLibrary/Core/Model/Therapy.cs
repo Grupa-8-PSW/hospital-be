@@ -14,7 +14,6 @@ namespace HospitalLibrary.Core.Model
         public int Amount { get; set; }
         public string Reason { get; set; }
         public int PrescribedId { get; set; }
-        [NotMapped]
         public ITherapySubject Prescribed { get; set; }
         public int DoctorId { get; set; }
         public Doctor Doctor { get; set; }
