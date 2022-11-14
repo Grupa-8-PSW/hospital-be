@@ -17,7 +17,7 @@ using IntegrationLibrary.Core.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using IntegrationLibrary.Core.Model;
 using Shouldly;
-
+/*
 namespace IntegrationTeamTests.Integration
 {
     public class BloodBankNewsTests : BaseIntegrationTests
@@ -55,4 +55,4 @@ namespace IntegrationTeamTests.Integration
             newsCountAfter.ShouldBe(newsCountBefore + 1);
         }
     }
-}
+} */

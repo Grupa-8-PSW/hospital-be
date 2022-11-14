@@ -3,6 +3,7 @@ using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibrary.Core.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Web.Http.Description;
 
 namespace IntegrationAPI.Controllers
 {
@@ -17,18 +18,17 @@ namespace IntegrationAPI.Controllers
             _service = service;
         }
 
-        
         [HttpPost]
-        public BloodConsumptionConfiguration CreateConfiguration([FromBody] BloodConsumptionReportDTO dto)
+        public IActionResult CreateConfiguration([FromBody] BloodConsumptionReportDTO dto)
         {
 
-            return _service.Create(new BloodConsumptionConfiguration()
+            return Ok(_service.Create(new BloodConsumptionConfiguration()
             {
                 ConsumptionPeriodHours = dto.ConsumptionPeriodHours,
                 FrequencyPeriodInHours = dto.FrequencyPeriodInHours,
                 StartDate = dto.StartDate,
                 StartTime = dto.StartTime
-            });
+            }));
 
         }
     }
