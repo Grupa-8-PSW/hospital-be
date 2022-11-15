@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace HospitalTests.HospitalLibraryTests
 {
-    public class BloodUnitRequestTests
+    public class TherapyTests
     {
         [Fact]
         public void Create_therapy()

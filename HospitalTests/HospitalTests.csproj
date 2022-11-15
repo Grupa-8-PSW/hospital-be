@@ -24,8 +24,5 @@
     <ProjectReference Include="..\src\HospitalAPI\HospitalAPI.csproj" />
     <ProjectReference Include="..\src\HospitalLibrary\HospitalLibrary.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="HospitalLibraryTests\" />
-  </ItemGroup>
 
 </Project>
