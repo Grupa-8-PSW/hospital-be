@@ -2,6 +2,7 @@
 using HospitalAPI.Controllers;
 using HospitalAPI.Controllers.Map;
 using HospitalAPI.DTO;
+using HospitalAPI.Web.Mapper;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.GraphicalEditor.Model;
@@ -23,7 +24,7 @@ namespace HospitalTests.HospitalAPITests.Integration
 
         private static TreatmentHistoryController SetupController(IServiceScope scope)
         {
-            return new TreatmentHistoryController(scope.ServiceProvider.GetRequiredService<ITreatmentHistoryService>());
+            return new TreatmentHistoryController(scope.ServiceProvider.GetRequiredService<ITreatmentHistoryService>(), scope.ServiceProvider.GetRequiredService<IMapper<TreatmentHistory, TreatmentHistoryDTO>>());
         }
 
         [Fact]
@@ -37,6 +38,8 @@ namespace HospitalTests.HospitalAPITests.Integration
             var result = ((CreatedAtActionResult)controller.Create(treatmentHistoryDTO, 1))?.Value as TreatmentHistory;
 
             Assert.NotNull(result);
+            Assert.IsType<TreatmentHistory>(result);
         }
+
     }
 }
