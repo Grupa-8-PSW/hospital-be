@@ -3,6 +3,7 @@ using System;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221114145429_SeedBed")]
+    partial class SeedBed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -157,20 +159,11 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 1,
-                            EndWork = new DateTime(2022, 11, 15, 1, 23, 40, 708, DateTimeKind.Utc).AddTicks(2590),
+                            EndWork = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             FirstName = "firstName",
                             LastName = "lastName",
                             RoomId = 1,
-                            StartWork = new DateTime(2022, 11, 15, 1, 23, 40, 708, DateTimeKind.Utc).AddTicks(2588)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            EndWork = new DateTime(2022, 11, 15, 1, 23, 40, 708, DateTimeKind.Utc).AddTicks(2594),
-                            FirstName = "firstNam2",
-                            LastName = "lastName2",
-                            RoomId = 1,
-                            StartWork = new DateTime(2022, 11, 15, 1, 23, 40, 708, DateTimeKind.Utc).AddTicks(2593)
+                            StartWork = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -406,7 +399,7 @@ namespace HospitalLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("EndDate")
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("PatientId")

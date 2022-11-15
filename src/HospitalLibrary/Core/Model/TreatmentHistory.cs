@@ -10,7 +10,7 @@ namespace HospitalLibrary.Core.Model
     {
         public int Id { get; set; }
         public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public bool Active { get; set; }
         public string DischargeReason { get; set; }
         public IEnumerable<Therapy> Therapies { get; set; }

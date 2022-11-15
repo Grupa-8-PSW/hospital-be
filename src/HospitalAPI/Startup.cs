@@ -14,7 +14,7 @@ using HospitalAPI.Web.Dto;
 using HospitalAPI.Web.Mapper;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Validation;
-
+using HospitalAPI.Mapper;
 
 namespace HospitalAPI
 {
@@ -82,12 +82,14 @@ namespace HospitalAPI
             services.AddScoped<IExaminationRepository, ExaminationRepository>();
 
             services.AddScoped<IMapper<Examination, ExaminationDTO>, ExaminationMapper>();
+            services.AddScoped<IMapper<TreatmentHistory, TreatmentHistoryDTO>, TreatmentHistoryMapper>();
 
             services.AddScoped<IValidation, ExaminationValidation>();
 
             services.AddScoped<ITreatmentHistoryService, TreatmentHistoryService>();
             services.AddScoped<ITreatmentHistoryRepository, TreatmentHistoryRepository>();
 
+            services.AddScoped<IBedRepository, BedRepository>();
 
             services.AddScoped<ITherapyRepository, TherapyRepository>();
             services.AddScoped<ITherapyService, TherapyService>();

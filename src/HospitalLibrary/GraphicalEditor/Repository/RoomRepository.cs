@@ -2,6 +2,7 @@
 using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 using HospitalLibrary.Settings;
+using Microsoft.EntityFrameworkCore;
 
 namespace HospitalLibrary.GraphicalEditor.Repository
 {
@@ -21,7 +22,7 @@ namespace HospitalLibrary.GraphicalEditor.Repository
 
         public Room GetById(int id)
         {
-            return _context.Rooms.Find(id);
+            return _context.Rooms.Include(r => r.Beds).Where(r => r.Id == id).FirstOrDefault<Room>();// Find(id);
         }
 
         public IEnumerable<Room> GetRoomsByFloorId(int id)

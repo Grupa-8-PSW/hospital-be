@@ -18,13 +18,15 @@ namespace HospitalLibrary.Core.Service
         private readonly ITreatmentHistoryRepository _treatmentHistoryRepository;
         private readonly IRoomService _roomService;
         private readonly IPatientService _patientService;
+        private readonly IBedRepository _bedRepository;
 
         public TreatmentHistoryService(ITreatmentHistoryRepository treatmentHistoryRepository, IRoomService roomService,
-            IPatientService patientService)
+            IPatientService patientService, IBedRepository bedRepository)
         {
             _treatmentHistoryRepository = treatmentHistoryRepository;
             _roomService = roomService;
             _patientService = patientService;
+            _bedRepository = bedRepository;
         }
 
         public IEnumerable<TreatmentHistory> GetAll()
@@ -39,22 +41,27 @@ namespace HospitalLibrary.Core.Service
 
         public bool Create(TreatmentHistory treatmentHistory, int roomId)
         {
-            treatmentHistory.StartDate = DateTime.Today;
+            treatmentHistory.StartDate = DateTime.UtcNow;
+            treatmentHistory.EndDate = null;
             treatmentHistory.Active = true;
             treatmentHistory.Patient = _patientService.GetById(treatmentHistory.PatientId);
             treatmentHistory.Therapies = new List<Therapy>();
+            treatmentHistory.DischargeReason = "";
             Room room = _roomService.GetById(roomId);
             foreach (Bed bed in room.Beds)
             {
+                bed.Available = true;
                 if (bed.Available)
                 {
                     treatmentHistory.Bed = bed;
+                    treatmentHistory.Bed.Available = false;
                     treatmentHistory.BedId = bed.Id;
                     break;
                 }
             }
             if (treatmentHistory.Bed == null)  return false;
 
+            _bedRepository.Update(treatmentHistory.Bed);
             _treatmentHistoryRepository.Create(treatmentHistory);
             return true;
         }

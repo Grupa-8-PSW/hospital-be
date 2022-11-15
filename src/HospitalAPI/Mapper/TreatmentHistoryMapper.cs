@@ -13,8 +13,8 @@ namespace HospitalAPI.Mapper
         {
             TreatmentHistoryDTO treatmentHistoryDTO = new TreatmentHistoryDTO();
             treatmentHistoryDTO.Id = treatmentHistory.Id;
-            treatmentHistoryDTO.StartDate = treatmentHistory.StartDate;
-            treatmentHistoryDTO.EndDate = treatmentHistory.EndDate;
+            treatmentHistoryDTO.StartDate = treatmentHistory.StartDate.ToString("d", CultureInfo.InvariantCulture);
+            treatmentHistoryDTO.EndDate = treatmentHistory.EndDate?.ToString("d", CultureInfo.InvariantCulture);
             treatmentHistoryDTO.Active = treatmentHistory.Active;
             treatmentHistoryDTO.DischargeReason = treatmentHistory.DischargeReason;
             treatmentHistoryDTO.PatientId = treatmentHistory.PatientId;
@@ -36,10 +36,9 @@ namespace HospitalAPI.Mapper
             {
                 treatmentHistory.Id = dto.Id.Value;
             }
-            treatmentHistory.StartDate = dto.StartDate; 
-            treatmentHistory.EndDate = dto.EndDate;
-            //examination.StartTime = DateTime.ParseExact(dto.StartTime, "dd/MM/yyyy HH:mm", null); //DateTime.Parse(dto.StartTime, null, System.Globalization.DateTimeStyles.RoundtripKind);
 
+          //  treatmentHistory.StartDate = DateTime.ParseExact(dto.StartDate, "dd/MM/yyyy", null); //DateTime.Parse(dto.StartTime, null, System.Globalization.DateTimeStyles.RoundtripKind);
+          //  treatmentHistory.EndDate = DateTime.ParseExact(dto.EndDate, "dd/MM/yyyy", null); 
             treatmentHistory.Active = dto.Active;
             treatmentHistory.DischargeReason = dto.DischargeReason;
             //Therapies? Patient? Bed?
