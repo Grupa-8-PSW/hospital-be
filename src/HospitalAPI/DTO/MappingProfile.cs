@@ -16,6 +16,9 @@ namespace HospitalAPI.DTO
             CreateMap<CreateFeedbackDTO, Feedback>();
 
             CreateMap<Allergen, AllergenDTO>();
+
+            CreateMap<Patient, PatientDTO>();
+
         }
 
     }

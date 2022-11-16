@@ -14,7 +14,7 @@ using HospitalAPI.Web.Dto;
 using HospitalAPI.Web.Mapper;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Validation;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
+
 
 namespace HospitalAPI
 {
@@ -62,6 +62,12 @@ namespace HospitalAPI
 
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
+
+            services.AddScoped<IFormService, FormService>();
+            services.AddScoped<IFormRepository, FormRepository>();
+
+            services.AddScoped<IEquipmentService, EquipmentService>();
+            services.AddScoped<IEquipmentRepository, EquipmentRepository>();
 
             services.AddScoped<IMapBuildingService, MapBuildingService>();
             services.AddScoped<IMapBuildingRepository, MapBuildingRepository>();
