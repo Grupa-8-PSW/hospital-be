@@ -11,6 +11,8 @@ namespace HospitalAPI.Mapper
     {
         public TreatmentHistoryDTO toDTO(TreatmentHistory treatmentHistory)
         {
+            IMapper<Patient, PatientDTO> patientMapper = new PatientMapper();
+
             TreatmentHistoryDTO treatmentHistoryDTO = new TreatmentHistoryDTO();
             treatmentHistoryDTO.Id = treatmentHistory.Id;
             treatmentHistoryDTO.StartDate = treatmentHistory.StartDate.ToString("d", CultureInfo.InvariantCulture);
@@ -18,6 +20,7 @@ namespace HospitalAPI.Mapper
             treatmentHistoryDTO.Active = treatmentHistory.Active;
             treatmentHistoryDTO.DischargeReason = treatmentHistory.DischargeReason;
             treatmentHistoryDTO.PatientId = treatmentHistory.PatientId;
+            treatmentHistoryDTO.Patient = patientMapper.toDTO(treatmentHistory.Patient);
             treatmentHistoryDTO.BedId = treatmentHistory.BedId;
             treatmentHistoryDTO.Reason = treatmentHistory.Reason;
             return treatmentHistoryDTO;
