@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Org.BouncyCastle.Asn1.Cms;
 
 namespace IntegrationLibrary.Core.Model
 {
@@ -12,27 +14,25 @@ namespace IntegrationLibrary.Core.Model
         public int Id { get; set; }
         [Required]
         public uint FrequencyPeriodInHours { get; set; }
-        public uint ConsumptionPeriodHours { get; set; }
+        public TimeSpan ConsumptionPeriodHours { get; set; }
 
-        public String StartTime { get; set; }
-        public String StartDate { get; set; }
+        //public TimeOnly StartTime { get; set; }
+        public DateTime StartDateTime { get; set; }
 
-        
-        public BloodConsumptionConfiguration(int id, uint frequencyPeriodInHours, uint consumptionPeriodHours, string startTime, string startDate)
+
+        public BloodConsumptionConfiguration(int id, uint frequencyPeriodInHours, TimeSpan consumptionPeriodHours, DateTime startDateTime)
         {
             Id = id;
             FrequencyPeriodInHours = frequencyPeriodInHours;
             ConsumptionPeriodHours = consumptionPeriodHours;
-            StartTime = startTime;
-            StartDate = startDate;
+            StartDateTime = startDateTime;
         }
 
-        public BloodConsumptionConfiguration(uint frequencyPeriodInHours, uint consumptionPeriodHours, string startTime, string startDate)
+        public BloodConsumptionConfiguration(uint frequencyPeriodInHours, TimeSpan consumptionPeriodHours, DateTime startDateTime)
         {
             FrequencyPeriodInHours = frequencyPeriodInHours;
             ConsumptionPeriodHours = consumptionPeriodHours;
-            StartTime = startTime;
-            StartDate = startDate;
+            StartDateTime = startDateTime;
         }
 
         public BloodConsumptionConfiguration()

@@ -41,5 +41,12 @@ namespace IntegrationTeamTests.Integration
             Assert.NotNull(retVal);
 
         }
+
+        [Fact]
+        public void CheckData()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+        }
     }
 }

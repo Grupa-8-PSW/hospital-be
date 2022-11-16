@@ -1,11 +1,16 @@
-﻿using IntegrationAPI.ExceptionHandler.Validators;
+﻿using System.Collections.ObjectModel;
+using IntegrationAPI.ExceptionHandler.Validators;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibrary.Core.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Xml.Linq;
+using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Model;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using Microsoft.AspNetCore.Hosting.Server;
+using Org.BouncyCastle.Asn1.Cms;
 
 namespace IntegrationAPI.Controllers
 {
@@ -20,7 +25,7 @@ namespace IntegrationAPI.Controllers
             _service = service;
         }
 
-        
+
         [HttpPost]
         public BloodConsumptionConfiguration CreateConfiguration([FromBody] BloodConsumptionReportDTO dto)
         {
@@ -28,80 +33,51 @@ namespace IntegrationAPI.Controllers
             {
                 ConsumptionPeriodHours = dto.ConsumptionPeriodHours,
                 FrequencyPeriodInHours = dto.FrequencyPeriodInHours,
-                StartDate = dto.StartDate,
-                StartTime = dto.StartTime
+                StartDateTime = dto.StartDate,
             });
 
         }
 
-        [Route("/api/[controller]/generatePdf")]
+        [Route("/api/[controller]/generateSeveral")]
         [HttpPost]
-        public IActionResult GeneratePdf()
+        public IActionResult GenerateSeveralPdfs()
         {
-            using (MemoryStream ms = new MemoryStream())
+            FileContentResult pdf = null;
+            BloodUnit2 bu1 = new BloodUnit2(1, BloodType.AB_NEGATIVE, 20, DateTime.Now.AddHours(17));
+            BloodUnit2 bu2 = new BloodUnit2(2, BloodType.A_NEGATIVE, 150, DateTime.Now.AddDays(7));
+            BloodUnit2 bu3 = new BloodUnit2(3, BloodType.B_NEGATIVE, 200, DateTime.Today);
+            BloodUnit2 bu4 = new BloodUnit2(4, BloodType.ZERO_NEGATIVE, 450, DateTime.Now.AddHours(20));
+            BloodUnit2 bu5 = new BloodUnit2(5, BloodType.A_POSITIVE, 30, DateTime.Now.AddDays(15));
+            List<BloodUnit2> buList = new List<BloodUnit2>();
+            buList.Add(bu1);
+            buList.Add(bu2);
+            buList.Add(bu3);
+            buList.Add(bu4);
+            buList.Add(bu5);
+            List<BloodUnit2> list = new List<BloodUnit2>();
+
+            TimeSpan duration = new TimeSpan(250, 0, 0);
+            DateTime startDateTime = new DateTime(2022, 11, 30, 20, 0, 0);
+
+            BloodConsumptionConfiguration bcc = new BloodConsumptionConfiguration(1, 10, duration, startDateTime);
+
+
+            DateTime sumTime = bcc.StartDateTime.Subtract(duration);
+
+            foreach (BloodUnit2 unit in buList)
             {
-                Document document = new Document(PageSize.A4, 25, 25, 30, 30);
-                
-                PdfWriter writer = PdfWriter.GetInstance(document, ms);
-                document.Open();
-                PdfPTable table = new PdfPTable(2);
-
-                PdfPCell cell1 = new PdfPCell(new Phrase("Type", new Font(Font.FontFamily.HELVETICA, 10)));
-                cell1.BackgroundColor = BaseColor.LIGHT_GRAY;
-                cell1.Border = Rectangle.BOTTOM_BORDER | Rectangle.TOP_BORDER | Rectangle.LEFT_BORDER |
-                               Rectangle.RIGHT_BORDER;
-                cell1.BorderWidthBottom = 1f;
-                cell1.BorderWidthTop = 1f;
-                cell1.BorderWidthLeft = 1f;
-                cell1.BorderWidthRight = 1f;
-                cell1.HorizontalAlignment = Element.ALIGN_CENTER;
-                cell1.VerticalAlignment = Element.ALIGN_CENTER;
-                table.AddCell(cell1);
-
-                PdfPCell cell2 = new PdfPCell(new Phrase("Amount", new Font(Font.FontFamily.HELVETICA, 10)));
-                cell2.BackgroundColor = BaseColor.LIGHT_GRAY;
-                cell2.Border = Rectangle.BOTTOM_BORDER | Rectangle.TOP_BORDER | Rectangle.LEFT_BORDER |
-                               Rectangle.RIGHT_BORDER;
-                cell2.BorderWidthBottom = 1f;
-                cell2.BorderWidthTop = 1f;
-                cell2.BorderWidthLeft = 1f;
-                cell2.BorderWidthRight = 1f;
-                cell2.HorizontalAlignment = Element.ALIGN_CENTER;
-                cell2.VerticalAlignment = Element.ALIGN_CENTER;
-                table.AddCell(cell2);
-                
-
-                List<BloodConsumptionConfiguration> bloodConsumptionConfigurations = _service.GetAll();
-                
-                
-                Paragraph para1 = new Paragraph("Report for last: " + bloodConsumptionConfigurations[0].ConsumptionPeriodHours + " hours", new Font(Font.FontFamily.HELVETICA, 20));
-                para1.Alignment = Element.ALIGN_CENTER;
-                para1.SpacingAfter = 10;
-                document.Add(para1);
-                
-                
-
-                for (int i = 0; i < 8; i++)
+                if ((sumTime < unit.consumptionDate) && (unit.consumptionDate < startDateTime))
                 {
 
-                    PdfPCell cell_1 = new PdfPCell(new Phrase("Grupa: " + i ));
-                    cell_1.HorizontalAlignment = Element.ALIGN_CENTER;
-                    table.AddCell(cell_1);
-
-                    PdfPCell cell_2 = new PdfPCell(new Phrase(i + 1.ToString()));
-                    cell_2.HorizontalAlignment = Element.ALIGN_CENTER;
-                    table.AddCell(cell_2);
+                    list.Add(unit);
+                    var consta = _service.GeneratePdf(bcc, list);
+                    pdf = File(consta, "application/vnd", "bloodconsumptionreport.pdf");
                 }
 
-                document.Add(table);
-                document.Close();
-                writer.Close();
-                var constant = ms.ToArray();
-
-                return File(constant, "application/vnd", "bloodconsumptionreport.pdf");
-
-
             }
-        }
+
+            return pdf;
     }
+
+}
 }

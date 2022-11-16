@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221114173225_ConfigurationMigration")]
-    partial class ConfigurationMigration
+    [Migration("20221116165558_test2")]
+    partial class test2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -118,19 +118,14 @@ namespace IntegrationLibrary.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<long>("ConsumptionPeriodHours")
-                        .HasColumnType("bigint");
+                    b.Property<TimeSpan>("ConsumptionPeriodHours")
+                        .HasColumnType("interval");
 
                     b.Property<long>("FrequencyPeriodInHours")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("StartDate")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("StartTime")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<DateTime>("StartDateTime")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
