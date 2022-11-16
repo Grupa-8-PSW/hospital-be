@@ -9,12 +9,12 @@ namespace IntegrationLibrary.Core.Model.DTO
 {
     public class BloodConsumptionReportDTO
     {
-        public TimeOnly StartTime { get; set; }
-        public DateTime StartDate { get; set; }
+        public String StartTime { get; set; }
+        public String StartDate { get; set; }
 
         public uint FrequencyPeriodInHours { get; set; }
         
-        public TimeSpan ConsumptionPeriodHours { get; set; }
+        public uint ConsumptionPeriodHours { get; set; }
 
     }
 }

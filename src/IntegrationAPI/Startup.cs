@@ -74,6 +74,8 @@ namespace IntegrationAPI
             {
                 endpoints.MapControllers();
             });
+
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
 
     }

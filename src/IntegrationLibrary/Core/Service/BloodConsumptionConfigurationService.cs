@@ -41,7 +41,7 @@ namespace IntegrationLibrary.Core.Service
                 PdfPTable table = new PdfPTable(2);
 
                 PdfPCell cell1 = new PdfPCell(new Phrase("Type", new Font(Font.FontFamily.HELVETICA, 10)));
-                cell1.BackgroundColor = BaseColor.LIGHT_GRAY;
+                cell1.BackgroundColor = BaseColor.PINK;
                 cell1.Border = Rectangle.BOTTOM_BORDER | Rectangle.TOP_BORDER | Rectangle.LEFT_BORDER |
                                Rectangle.RIGHT_BORDER;
                 cell1.BorderWidthBottom = 1f;
@@ -53,7 +53,7 @@ namespace IntegrationLibrary.Core.Service
                 table.AddCell(cell1);
 
                 PdfPCell cell2 = new PdfPCell(new Phrase("Amount", new Font(Font.FontFamily.HELVETICA, 10)));
-                cell2.BackgroundColor = BaseColor.LIGHT_GRAY;
+                cell2.BackgroundColor = BaseColor.PINK;
                 cell2.Border = Rectangle.BOTTOM_BORDER | Rectangle.TOP_BORDER | Rectangle.LEFT_BORDER |
                                Rectangle.RIGHT_BORDER;
                 cell2.BorderWidthBottom = 1f;
@@ -65,11 +65,8 @@ namespace IntegrationLibrary.Core.Service
                 table.AddCell(cell2);
 
 
-                //List<BloodConsumptionConfiguration> bloodConsumptionConfigurations = _service.GetAll();
 
-
-
-                Paragraph para1 = new Paragraph("Report for last: " + bs.ConsumptionPeriodHours  + " days", new Font(Font.FontFamily.HELVETICA, 20));
+                Paragraph para1 = new Paragraph("Report for last: " + bs.ConsumptionPeriodHours.Days  + " days", new Font(Font.FontFamily.HELVETICA, 20));
                 para1.Alignment = Element.ALIGN_CENTER;
                 para1.SpacingAfter = 10;
                 document.Add(para1);
@@ -83,7 +80,7 @@ namespace IntegrationLibrary.Core.Service
                     cell_1.HorizontalAlignment = Element.ALIGN_CENTER;
                     table.AddCell(cell_1);
 
-                    PdfPCell cell_2 = new PdfPCell(new Phrase(bloodUnit.AmountMl.ToString()));
+                    PdfPCell cell_2 = new PdfPCell(new Phrase(bloodUnit.AmountMl.ToString() + "ml"));
                     cell_2.HorizontalAlignment = Element.ALIGN_CENTER;
                     table.AddCell(cell_2);
                 }

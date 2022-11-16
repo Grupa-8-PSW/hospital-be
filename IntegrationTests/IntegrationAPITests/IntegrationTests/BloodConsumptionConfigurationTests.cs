@@ -1,4 +1,4 @@
-using IntegrationTeamTests.Setup;
+/*using IntegrationTeamTests.Setup;
 using System;
 using Xunit;
 using System;
@@ -14,11 +14,16 @@ using IntegrationLibrary.Core.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.DTO;
+using System.Net.Http;
+using Shouldly;
 
 namespace IntegrationTeamTests.Integration
 {
+
     public class BloodConsumptionConfigurationTests: BaseIntegrationTests
     {
+        private readonly HttpClient _httpClient = new() { BaseAddress = new Uri("https://localhost:7133") };
+        
         public BloodConsumptionConfigurationTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
 
         private static BloodConsumptionConfigurationController SetupController(IServiceScope scope)
@@ -26,27 +31,57 @@ namespace IntegrationTeamTests.Integration
             return new BloodConsumptionConfigurationController(scope.ServiceProvider.GetRequiredService<IBloodConsumptionConfigurationService>());
         }
 
+
         [Fact]
-        public void CreateDaily()
+        public async void BloodConsumptionConfiguration()
         {
+            // Arrange
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
             BloodConsumptionReportDTO dto = new BloodConsumptionReportDTO
             {
+                ConsumptionPeriodHours = 12,
+                StartDate = "11/Nov/2022",
+                StartTime = "11:11",
+                FrequencyPeriodInHours = 12
 
             };
 
-            BloodConsumptionConfiguration retVal = controller.CreateConfiguration(dto);
-            Assert.NotNull(retVal);
+            // Act
+            var retVal = controller.CreateConfiguration(dto) as OkObjectResult;
 
+            
+            // Assert
+            BloodConsumptionConfiguration createdBloodConsumptionConfiguration = (BloodConsumptionConfiguration)retVal.Value;
+            
+            Assert.IsType<OkObjectResult>(retVal);
+            Assert.True(ValidateObjectWritenInBase(dto, createdBloodConsumptionConfiguration));
+            
+            
         }
 
+<<<<<<< HEAD
         [Fact]
         public void CheckData()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
         }
+=======
+
+        private bool ValidateObjectWritenInBase(BloodConsumptionReportDTO dto, BloodConsumptionConfiguration retVal)
+        {
+            if (dto.ConsumptionPeriodHours == retVal.ConsumptionPeriodHours
+                && dto.StartDate == retVal.StartDate
+                && dto.StartTime == retVal.StartTime
+                && dto.FrequencyPeriodInHours == retVal.FrequencyPeriodInHours)
+                return true;
+
+            else
+                return false;
+
+        } 
+>>>>>>> ce151d384f548f031285072a936cc0f8f508419d
     }
-}
+}*/
