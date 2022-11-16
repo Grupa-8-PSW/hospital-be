@@ -22,7 +22,7 @@ namespace IntegrationTests.IntegrationAPITests.Mocks
                                       exclusive: false,
                                       autoDelete: false,
                                       arguments: null);
-                BloodBankNews message = new BloodBankNews("text1", "subject1", 2, Array.Empty<byte>(), false, false);
+                BloodBankNews message = new BloodBankNews("text1", "subject1", 2, String.Empty, false, false, null, 1);
                 var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
                 
                 channel.BasicPublish(exchange: "",

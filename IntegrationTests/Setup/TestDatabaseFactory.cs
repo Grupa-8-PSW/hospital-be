@@ -51,7 +51,7 @@ namespace IntegrationTeamTests.Setup
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodBanks\";");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodBankNews\"");
             context.BloodBanks.Add(new BloodBank { Id = 1, Name = "BloodBank1", Email = "email@email.com", Password = "password", ServerAddress = "serverAddress", APIKey = "12331232" });
-            context.BloodBankNews.Add(new BloodBankNews { id = 1, subject = "subject", text = "text", byteArray = Array.Empty<byte>(), archived = false, published = false });
+            context.BloodBankNews.Add(new BloodBankNews { Id = 1, Subject = "subject", Text = "text", ImgSrc=String.Empty, Archived = false, Published = false, BloodBank = null, BloodBankId = 1});
             context.SaveChanges();
         }
 

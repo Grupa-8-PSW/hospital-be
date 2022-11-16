@@ -8,24 +8,30 @@ namespace IntegrationLibrary.Core.Model
 {
     public class BloodBankNews
     {
-        public string text { get; set; }
-        public string subject { get; set; }
-        public int id { get; set; }
+        public string Text { get; set; }
+        public string Subject { get; set; }
+        public int Id { get; set; }
 
-        public byte[] byteArray { get; set; } = Array.Empty<byte>();
+        public string ImgSrc { get; set; }
 
-        public bool published { get; set; }
+        public int BloodBankId { get; set; }  
 
-        public bool archived { get; set; }
+        public BloodBank BloodBank { get; set; }
 
-        public BloodBankNews(string text, string subject, int id, byte[] byteArray, bool published, bool archived)
+        public bool Published { get; set; }
+
+        public bool Archived { get; set; }
+
+        public BloodBankNews(string text, string subject, int id, string imgSrc, bool published, bool archived, BloodBank bloodBank, int bloodBankId)
         {
-            this.text = text;
-            this.subject = subject;
-            this.id = id;
-            this.byteArray = byteArray;
-            this.published = published;
-            this.archived = archived;
+            this.Text = text;
+            this.Subject = subject;
+            this.Id = id;
+            this.ImgSrc = imgSrc;
+            this.Published = published;
+            this.Archived = archived;
+            this.BloodBank = bloodBank;
+            this.BloodBankId = bloodBankId;
         }
 
         public BloodBankNews()
