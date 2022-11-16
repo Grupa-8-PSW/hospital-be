@@ -33,14 +33,7 @@ namespace HospitalAPI.DTO
             RoomId = roomId;
             PatientId = patientId;
             Reason = reason;
-
- /*           StartDate = "";
-            EndDate = "";
-            Active = false;
-            DischargeReason = "";
-            BedId = 0;
- */
-    }
+        }
 
         public TreatmentHistoryDTO()
         {

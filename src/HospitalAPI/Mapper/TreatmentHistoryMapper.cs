@@ -11,6 +11,8 @@ namespace HospitalAPI.Mapper
     {
         public TreatmentHistoryDTO toDTO(TreatmentHistory treatmentHistory)
         {
+            IMapper<Patient, PatientDTO> patientMapper = new PatientMapper();
+
             TreatmentHistoryDTO treatmentHistoryDTO = new TreatmentHistoryDTO();
             treatmentHistoryDTO.Id = treatmentHistory.Id;
             treatmentHistoryDTO.StartDate = treatmentHistory.StartDate.ToString("d", CultureInfo.InvariantCulture);
@@ -18,6 +20,7 @@ namespace HospitalAPI.Mapper
             treatmentHistoryDTO.Active = treatmentHistory.Active;
             treatmentHistoryDTO.DischargeReason = treatmentHistory.DischargeReason;
             treatmentHistoryDTO.PatientId = treatmentHistory.PatientId;
+            treatmentHistoryDTO.Patient = patientMapper.toDTO(treatmentHistory.Patient);
             treatmentHistoryDTO.BedId = treatmentHistory.BedId;
             treatmentHistoryDTO.RoomId = treatmentHistory.Bed.RoomId;
             treatmentHistoryDTO.Reason = treatmentHistory.Reason;
@@ -26,8 +29,8 @@ namespace HospitalAPI.Mapper
 
         public Collection<TreatmentHistoryDTO> toDTO(Collection<TreatmentHistory> models)
         {
-            return (Collection<TreatmentHistoryDTO>)models
-                .Select<TreatmentHistory, TreatmentHistoryDTO>((treatmentHistory) => this.toDTO(treatmentHistory));
+            return new Collection<TreatmentHistoryDTO>(models
+                .Select<TreatmentHistory, TreatmentHistoryDTO>((treatmentHistory) => this.toDTO(treatmentHistory)).ToList());
         }
 
         public TreatmentHistory toModel(TreatmentHistoryDTO dto)

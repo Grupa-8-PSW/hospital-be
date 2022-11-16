@@ -30,6 +30,10 @@ namespace HospitalLibrary.Core.Model
             this.mALE = mALE;
             this.zERO_POSITIVE = zERO_POSITIVE;
         }
+
+        public Patient()
+        {
+        }
     }
 
 }

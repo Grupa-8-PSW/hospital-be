@@ -34,13 +34,14 @@ namespace HospitalTests.HospitalAPITests.Integration
 
 
 
-            Therapy therapy = new Therapy() { Id = 1, WhenPrescribed = new DateTime(), Amount = 50, Reason = "reason1", PrescribedId = 1, DoctorId = 1 };
+            Therapy therapy = new Therapy() { Id = 4, WhenPrescribed = DateTime.UtcNow, Amount = 50, Reason = "reason2", PrescribedId = 1, DoctorId = 1 };
 
 
             var result = ((CreatedAtActionResult)controller.Create(therapy))?.Value as Therapy;
 
             Assert.NotNull(result);
             Assert.True(result.Id == therapy.Id);
+
         }
     }
 }

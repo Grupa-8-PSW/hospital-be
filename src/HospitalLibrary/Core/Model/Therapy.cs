@@ -17,6 +17,8 @@ namespace HospitalLibrary.Core.Model
         public ITherapySubject Prescribed { get; set; }
         public int DoctorId { get; set; }
         public Doctor Doctor { get; set; }
+        public int TreatmentHistoryId { get; set; }
+        public TreatmentHistory TreatmentHistory { get; set; }
 
         public Therapy()
         {
