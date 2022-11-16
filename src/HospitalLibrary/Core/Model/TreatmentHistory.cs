@@ -18,7 +18,7 @@ namespace HospitalLibrary.Core.Model
         public Patient Patient { get; set; }
         public int BedId { get; set; }
         public Bed Bed { get; set; }
-        public String Reason { get; set; }
+        public String? Reason { get; set; }
 
         public TreatmentHistory()
         {

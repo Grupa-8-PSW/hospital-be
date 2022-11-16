@@ -25,8 +25,8 @@ namespace HospitalAPI.Mapper
 
         public Collection<TreatmentHistoryDTO> toDTO(Collection<TreatmentHistory> models)
         {
-            return (Collection<TreatmentHistoryDTO>)models
-                .Select<TreatmentHistory, TreatmentHistoryDTO>((treatmentHistory) => this.toDTO(treatmentHistory));
+            return new Collection<TreatmentHistoryDTO>(models
+                .Select<TreatmentHistory, TreatmentHistoryDTO>((treatmentHistory) => this.toDTO(treatmentHistory)).ToList());
         }
 
         public TreatmentHistory toModel(TreatmentHistoryDTO dto)
