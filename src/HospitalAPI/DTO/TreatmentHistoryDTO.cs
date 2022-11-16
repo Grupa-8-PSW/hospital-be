@@ -14,6 +14,7 @@ namespace HospitalAPI.DTO
         public int? BedId { get; set; }
         public string Reason { get; set; }
         public int RoomId { get; set; }
+        public PatientDTO? Patient { get; set; }
 
         public TreatmentHistoryDTO(int? id, string startDate, string endDate, bool active, string dischargeReason, int patientId, int bedId, string reason, int roomId)
         {

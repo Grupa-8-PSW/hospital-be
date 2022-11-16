@@ -22,7 +22,7 @@ namespace HospitalAPI.Mapper
             treatmentHistoryDTO.PatientId = treatmentHistory.PatientId;
             treatmentHistoryDTO.Patient = patientMapper.toDTO(treatmentHistory.Patient);
             treatmentHistoryDTO.BedId = treatmentHistory.BedId;
-            treatmentHistoryDTO.RoomId = treatmentHistory.Bed.RoomId;
+           // treatmentHistoryDTO.RoomId = treatmentHistory.Bed.RoomId;
             treatmentHistoryDTO.Reason = treatmentHistory.Reason;
             return treatmentHistoryDTO;
         }
