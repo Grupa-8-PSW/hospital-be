@@ -25,5 +25,12 @@ namespace HospitalAPI.Controllers.InternalApp
         {
             return Ok(_mapper.Map<List<PatientDTO>>(_patientService.GetAll()));
         }
+
+
+        [HttpGet("ageStatistic")]
+        public ActionResult GetAgeStatistic()
+        {
+            return Ok(_mapper.Map<AgeStatisticDTO>(_patientService.GetAgeStatistic()));
+        }
     }
 }

@@ -16,6 +16,8 @@ namespace HospitalAPI.DTO
             CreateMap<CreateFeedbackDTO, Feedback>();
 
             CreateMap<Patient, PatientDTO>();
+
+            CreateMap<AgeStatistic, AgeStatisticDTO>();
         }
 
     }
