@@ -3,6 +3,7 @@ using System;
 using IntegrationLibrary.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    partial class IntegrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221116165558_test2")]
+    partial class test2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,26 +111,26 @@ namespace IntegrationLibrary.Migrations
                 });
 
             modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodConsumptionConfiguration", b =>
-            {
-                b.Property<int>("Id")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("integer");
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
 
-                NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                b.Property<TimeSpan>("ConsumptionPeriodHours")
-                    .HasColumnType("interval");
+                    b.Property<TimeSpan>("ConsumptionPeriodHours")
+                        .HasColumnType("interval");
 
-                b.Property<TimeSpan>("FrequencyPeriodInHours")
-                    .HasColumnType("interval");
+                    b.Property<long>("FrequencyPeriodInHours")
+                        .HasColumnType("bigint");
 
-                b.Property<DateTime>("StartDateTime")
-                    .HasColumnType("timestamp with time zone");
+                    b.Property<DateTime>("StartDateTime")
+                        .HasColumnType("timestamp with time zone");
 
-                b.HasKey("Id");
+                    b.HasKey("Id");
 
-                b.ToTable("BloodConsumptionConfiguration");
-            });
+                    b.ToTable("BloodConsumptionConfiguration");
+                });
 #pragma warning restore 612, 618
         }
     }

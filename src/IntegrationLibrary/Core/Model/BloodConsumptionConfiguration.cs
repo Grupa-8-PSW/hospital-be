@@ -7,7 +7,12 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Org.BouncyCastle.Asn1.Cms;
+
 using static Org.BouncyCastle.Bcpg.Attr.ImageAttrib;
+
 
 namespace IntegrationLibrary.Core.Model
 {
@@ -15,6 +20,7 @@ namespace IntegrationLibrary.Core.Model
     {
         public int Id { get; set; }
         [Required]
+
         public DateTime StartDateTime { get; set; }
         public TimeSpan FrequencyPeriodInHours { get; set; }
         public TimeSpan ConsumptionPeriodHours { get; set; }

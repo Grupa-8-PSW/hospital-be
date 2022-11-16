@@ -10,5 +10,9 @@ namespace IntegrationLibrary.Core.Service.Interfaces
     public interface IBloodConsumptionConfigurationService
     {
         public BloodConsumptionConfiguration Create(BloodConsumptionConfiguration bloodConsumptionConfiguration);
+
+        public List<BloodConsumptionConfiguration> GetAll();
+
+        public byte[] GeneratePdf(BloodConsumptionConfiguration bs, List<BloodUnit2> bloodUnits);
     }
 }

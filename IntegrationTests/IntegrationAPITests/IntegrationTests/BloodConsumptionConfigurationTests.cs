@@ -61,6 +61,14 @@ namespace IntegrationTeamTests.Integration
             
         }
 
+<<<<<<< HEAD
+        [Fact]
+        public void CheckData()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+        }
+=======
 
         private bool ValidateObjectWritenInBase(BloodConsumptionReportDTO dto, BloodConsumptionConfiguration retVal)
         {
@@ -74,5 +82,6 @@ namespace IntegrationTeamTests.Integration
                 return false;
 
         } 
+>>>>>>> ce151d384f548f031285072a936cc0f8f508419d
     }
 }
