@@ -39,13 +39,29 @@ namespace HospitalAPI.Security
 
         public async Task SeedAsync()
         {
-            var user = new User()
+            /*var user = new User()
             {
                 UserName = "test",
                 Email = "test@test.com"
             };
-            await _userManager.CreateAsync(user, "test");
+            await _userManager.CreateAsync(user, "12345");
             _userManager.AddToRoleAsync(user, "Patient");
+
+            var user = new User()
+            {
+                UserName = "doctor",
+                Email = "doctor@doctor.com"
+            };
+            await _userManager.CreateAsync(user, "12345");
+            _userManager.AddToRoleAsync(user, "Doctor");*/
+
+            var user = new User()
+            {
+                UserName = "manager",
+                Email = "manager@manager.com"
+            };
+            await _userManager.CreateAsync(user, "12345");
+            _userManager.AddToRoleAsync(user, "Manager");
         }
 
         private async Task<UserDTO> GetUserDTO(User user)
@@ -67,7 +83,7 @@ namespace HospitalAPI.Security
                 Subject = new ClaimsIdentity(new[]
                 {
                     new Claim("Username", user.Username),
-                    new Claim("Role", user.Role)
+                    new Claim(ClaimTypes.Role, user.Role)
                 }),
                 Issuer = issuer,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secret), SecurityAlgorithms.HmacSha512Signature)

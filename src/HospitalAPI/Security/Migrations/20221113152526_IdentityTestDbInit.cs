@@ -4,9 +4,9 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace HospitalAPI.Migrations
+namespace HospitalAPI.Security.Migrations
 {
-    public partial class IdentityInit : Migration
+    public partial class IdentityTestDbInit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

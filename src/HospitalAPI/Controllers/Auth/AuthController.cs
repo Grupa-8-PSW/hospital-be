@@ -17,16 +17,19 @@ namespace HospitalAPI.Controllers.Auth
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginRequest loginRequest)
+        public async Task<ActionResult> Login(LoginRequest loginRequest)
         {
             var token = await _authService.LoginAsync(loginRequest);
             if (token == null)
                 return BadRequest();
-            return Ok(token);
+            return Ok(new LoginResponse()
+            {
+                Jwt = token
+            });
         }
 
         [HttpGet("test")]
-        [Authorize]
+        [Authorize(Roles = "Patient")]
         public IActionResult Test()
         {
             return Ok();
