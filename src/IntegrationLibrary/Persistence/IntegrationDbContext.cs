@@ -19,6 +19,8 @@ namespace IntegrationLibrary.Persistence
                 new BloodBank() { Id = 1, Email = "test@test.com", Name = "testName", ServerAddress = "testServAdd" }
             );
 
+
+
             modelBuilder.SeedBloodBankNews();
         }
 

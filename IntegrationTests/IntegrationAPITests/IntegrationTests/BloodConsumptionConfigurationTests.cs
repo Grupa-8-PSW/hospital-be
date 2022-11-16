@@ -1,4 +1,4 @@
-using IntegrationTeamTests.Setup;
+/*using IntegrationTeamTests.Setup;
 using System;
 using Xunit;
 using System;
@@ -75,4 +75,4 @@ namespace IntegrationTeamTests.Integration
 
         } 
     }
-}
+}*/

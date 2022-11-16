@@ -22,13 +22,9 @@ namespace IntegrationAPI.Controllers
         public IActionResult CreateConfiguration([FromBody] BloodConsumptionReportDTO dto)
         {
 
-            return Ok(_service.Create(new BloodConsumptionConfiguration()
-            {
-                ConsumptionPeriodHours = dto.ConsumptionPeriodHours,
-                FrequencyPeriodInHours = dto.FrequencyPeriodInHours,
-                StartDate = dto.StartDate,
-                StartTime = dto.StartTime
-            }));
+            return Ok(_service.Create(new BloodConsumptionConfiguration(dto)));
+
+            //_service.Create(new BloodConsumptionConfiguration(new TimeSpan(1, 1, 1), new TimeSpan(1,1,1)));
 
         }
     }
