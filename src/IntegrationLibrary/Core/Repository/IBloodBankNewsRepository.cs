@@ -13,5 +13,6 @@ namespace IntegrationLibrary.Core.Repository
         void Create(BloodBankNews bloodBankNews);
         BloodBankNews GetById(int id);
         void Delete(BloodBankNews bloodBankNews);
+        void Update(BloodBankNews bloodBankNews);
     }
 }

@@ -34,6 +34,17 @@ namespace IntegrationLibrary.Core.Model
             this.BloodBankId = bloodBankId;
         }
 
+        public BloodBankNews(string text, string subject, string imgSrc, bool published, bool archived, BloodBank bloodBank, int bloodBankId)
+        {
+            this.Text = text;
+            this.Subject = subject;
+            this.ImgSrc = imgSrc;
+            this.Published = published;
+            this.Archived = archived;
+            this.BloodBank = bloodBank;
+            this.BloodBankId = bloodBankId;
+        }
+
         public BloodBankNews()
         {
         }

@@ -1,5 +1,6 @@
 ﻿using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace IntegrationLibrary.Core.Repository
 {
@@ -27,6 +28,11 @@ namespace IntegrationLibrary.Core.Repository
         public BloodBank GetById(int id)
         {
             return _context.BloodBanks.Find(id);
+        }
+
+        public BloodBank GetByApiKey(string apiKey)
+        {
+            return _context.BloodBanks.FirstOrDefault(b => b.APIKey == apiKey);
         }
 
         public void Delete(BloodBank bloodBank)

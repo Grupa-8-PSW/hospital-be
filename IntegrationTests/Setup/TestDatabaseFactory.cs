@@ -46,12 +46,11 @@ namespace IntegrationTeamTests.Setup
 
         private static void InitializeDatabase(IntegrationDbContext context)
         {
+            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodBanks\";");
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodBankNews\"");
-            context.BloodBanks.Add(new BloodBank { Id = 1, Name = "BloodBank1", Email = "email@email.com", Password = "password", ServerAddress = "serverAddress", APIKey = "12331232" });
-            context.BloodBankNews.Add(new BloodBankNews { Id = 1, Subject = "subject", Text = "text", ImgSrc=String.Empty, Archived = false, Published = false, BloodBank = null, BloodBankId = 1});
+            context.BloodBanks.Add(new BloodBank {  Name = "BloodBank1", Email = "email@email.com", Password = "password", ServerAddress = "serverAddress", APIKey = "1" });
+            context.BloodBankNews.Add(new BloodBankNews {  Subject = "subject", Text = "text", ImgSrc=String.Empty, Archived = false, Published = false, BloodBank = null, BloodBankId = 1});
             context.SaveChanges();
         }
 
