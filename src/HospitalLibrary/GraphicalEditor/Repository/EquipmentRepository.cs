@@ -25,7 +25,7 @@ namespace HospitalLibrary.GraphicalEditor.Repository
 
         public IEnumerable<Equipment> GetEquipmentByRoomId(int id)
         {
-            return _context.Equipments.Where(f => f.RoomId == id);
+            return _context.Equipments.Where(f => f.RoomId == id).ToList();
         }
     }
 }
