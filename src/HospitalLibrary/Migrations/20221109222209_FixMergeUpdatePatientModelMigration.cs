@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace IntegrationLibrary.Persistence.Migrations
+namespace HospitalLibrary.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class FixMergeUpdatePatientModelMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
