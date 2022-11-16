@@ -33,9 +33,9 @@ namespace HospitalTests.HospitalAPITests.Integration
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            TreatmentHistoryDTO treatmentHistoryDTO = new TreatmentHistoryDTO(1, "reason");
+            TreatmentHistoryDTO treatmentHistoryDTO = new TreatmentHistoryDTO(2, 2,"reason");
 
-            var result = ((CreatedAtActionResult)controller.Create(treatmentHistoryDTO, 1))?.Value as TreatmentHistory;
+            var result = ((CreatedAtActionResult)controller.Create(treatmentHistoryDTO))?.Value as TreatmentHistory;
 
             Assert.NotNull(result);
             Assert.IsType<TreatmentHistory>(result);

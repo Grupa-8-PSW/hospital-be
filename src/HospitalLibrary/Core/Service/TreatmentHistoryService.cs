@@ -50,7 +50,6 @@ namespace HospitalLibrary.Core.Service
             Room room = _roomService.GetById(roomId);
             foreach (Bed bed in room.Beds)
             {
-                bed.Available = true;
                 if (bed.Available)
                 {
                     treatmentHistory.Bed = bed;
