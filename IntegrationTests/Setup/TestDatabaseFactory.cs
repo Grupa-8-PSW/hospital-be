@@ -50,11 +50,16 @@ namespace IntegrationTeamTests.Setup
 
             //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodBankNews\"");
             
-            //context.BloodBankNews.Add(new BloodBankNews { id = 1, subject = "subject", text = "text", byteArray = Array.Empty<byte>(), archived = false, published = false });
+           // context.BloodBankNews.Add(new BloodBankNews { id = 1, subject = "subject", text = "text", byteArray = Array.Empty<byte>(), archived = false, published = false });
+
 
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodConsumptionConfiguration\";");
 
-           // context.BloodConsumptionConfiguration.Add(new BloodConsumptionConfiguration { Id = 1, ConsumptionPeriodHours = 12, StartDate = "11/Nov/2022", StartTime = "11:11", FrequencyPeriodInHours=12 });
+
+            DateTime sd = new DateTime(2011, 1, 5, 5, 2, 3);
+            DateTime ss = DateTime.SpecifyKind(sd, DateTimeKind.Utc);
+
+            context.BloodConsumptionConfiguration.Add(new BloodConsumptionConfiguration { ConsumptionPeriodHours = new TimeSpan(1, 2, 1), StartDateTime= ss, FrequencyPeriodInHours=new TimeSpan(1, 2, 3)});
 
 
             context.SaveChanges();

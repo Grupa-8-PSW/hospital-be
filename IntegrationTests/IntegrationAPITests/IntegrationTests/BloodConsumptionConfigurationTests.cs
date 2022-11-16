@@ -1,4 +1,4 @@
-/*using IntegrationTeamTests.Setup;
+using IntegrationTeamTests.Setup;
 using System;
 using Xunit;
 using System;
@@ -43,7 +43,7 @@ namespace IntegrationTeamTests.Integration
             {
                 ConsumptionPeriodHours = 12,
                 StartDate = "11/Nov/2022",
-                StartTime = "11:11",
+                StartTime = "11:11:00",
                 FrequencyPeriodInHours = 12
 
             };
@@ -64,15 +64,15 @@ namespace IntegrationTeamTests.Integration
 
         private bool ValidateObjectWritenInBase(BloodConsumptionReportDTO dto, BloodConsumptionConfiguration retVal)
         {
-            if (dto.ConsumptionPeriodHours == retVal.ConsumptionPeriodHours
-                && dto.StartDate == retVal.StartDate
-                && dto.StartTime == retVal.StartTime
-                && dto.FrequencyPeriodInHours == retVal.FrequencyPeriodInHours)
-                return true;
+            BloodConsumptionConfiguration bloodConsumptionConfiguration = new BloodConsumptionConfiguration(dto);
 
+            if (retVal.StartDateTime.Equals(bloodConsumptionConfiguration.StartDateTime)
+                && retVal.ConsumptionPeriodHours.Equals(bloodConsumptionConfiguration.ConsumptionPeriodHours)
+                && retVal.FrequencyPeriodInHours.Equals(bloodConsumptionConfiguration.FrequencyPeriodInHours))
+                return true;
             else
                 return false;
 
         } 
     }
-}*/
+}
