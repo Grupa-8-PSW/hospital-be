@@ -1,7 +1,11 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalAPI.DTO;
+using HospitalAPI.Mapper;
+using HospitalAPI.Web.Mapper;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.ObjectModel;
 
 namespace HospitalAPI.Controllers.InternalApp
 {
@@ -10,17 +14,20 @@ namespace HospitalAPI.Controllers.InternalApp
     public class BloodController : ControllerBase
     {
         private readonly IBloodService _bloodService;
+        private readonly IMapper<Blood, BloodDTO> _bloodMapper;  
 
-        public BloodController(IBloodService bloodService)
+        public BloodController(IBloodService bloodService, IMapper<Blood, BloodDTO> bloodMapper)
         {
             _bloodService = bloodService;
+            _bloodMapper = bloodMapper;
         }
 
         // api/internal/Blood
         [HttpGet]
         public ActionResult GetAll()
         {
-            return Ok(_bloodService.GetAll());
+            var bloods = new Collection<Blood>(_bloodService.GetAll());
+            return Ok(_bloodMapper.toDTO(bloods));
         }
 
         // api/internal/Blood/1
@@ -33,7 +40,7 @@ namespace HospitalAPI.Controllers.InternalApp
                 return NotFound();
             }
 
-            return Ok(blood);
+            return Ok(_bloodMapper.toDTO(blood));
         }
 
         // api/internal/Blood

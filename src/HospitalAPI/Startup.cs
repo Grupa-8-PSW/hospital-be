@@ -15,6 +15,7 @@ using HospitalAPI.Web.Mapper;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Validation;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
+using HospitalAPI.Mapper;
 
 namespace HospitalAPI
 {
@@ -81,6 +82,8 @@ namespace HospitalAPI
 
             services.AddScoped<IBloodRepository, BloodRepository>();
             services.AddScoped<IBloodService, BloodService>();
+
+            services.AddScoped<IMapper<Blood, BloodDTO>, BloodMapper>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
