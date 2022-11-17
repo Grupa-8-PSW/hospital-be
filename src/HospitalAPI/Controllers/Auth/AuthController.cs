@@ -27,6 +27,15 @@ namespace HospitalAPI.Controllers.Auth
                 Jwt = token
             });
         }
+        [HttpPost("register")]
+        public async Task<ActionResult> Register(RegisterRequest registerRequest)
+        {
+            var ok = _authService.RegisterAsync(registerRequest);
+            if(ok == null)
+                return BadRequest();
+
+            return Ok();
+        }
 
         [HttpGet("test")]
         [Authorize(Roles = "Patient")]

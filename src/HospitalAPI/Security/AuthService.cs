@@ -1,5 +1,9 @@
-﻿using HospitalAPI.Security.Models;
+﻿using AutoMapper;
+using HospitalAPI.Security.Models;
+using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Repository;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -13,17 +17,23 @@ namespace HospitalAPI.Security
         private readonly RoleManager<IdentityRole<int>> _roleManager;
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
+        private readonly IPatientRepository _patientRepository;
+        private readonly IMapper _mapper;
 
         public AuthService(
             SignInManager<User> signInManager, 
             RoleManager<IdentityRole<int>> roleManager,
             UserManager<User> userManager,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IPatientRepository patientRepository,
+            IMapper mapper)
         {
             _signInManager = signInManager;
             _roleManager = roleManager;
             _userManager = userManager;
             _configuration = configuration;
+            _patientRepository = patientRepository;
+            _mapper = mapper;
         }
 
         public async Task<string> LoginAsync(LoginRequest loginRequest)
@@ -35,6 +45,26 @@ namespace HospitalAPI.Security
             if (!res)
                 return null;
             return BuildToken(await GetUserDTO(user));
+        }
+        public async Task<string> RegisterAsync(RegisterRequest registerRequest)
+        {
+            var user = await _userManager.FindByNameAsync(registerRequest.Username);
+            if (user != null)
+                return null;
+            user = await _userManager.FindByEmailAsync(registerRequest.Email);
+            if (user != null)
+                return null;
+            var registerUser = new User()
+            {
+                UserName = registerRequest.Username,
+                Email = registerRequest.Email,
+            };
+
+            await _userManager.CreateAsync(registerUser, registerRequest.Password);
+            _userManager.AddToRoleAsync(registerUser, "Patient");
+            _patientRepository.Create(_mapper.Map<Patient>(registerRequest.RegisterUser));
+
+            return "Ok";
         }
 
         public async Task SeedAsync()
