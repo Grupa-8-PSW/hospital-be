@@ -34,7 +34,8 @@ namespace IntegrationAPI.Controllers
         }
 
         [Route("/api/[controller]/generatePdf")]
-        [HttpPost]
+        
+        [HttpGet]
         public IActionResult GenerateSeveralPdf()
         {
             FileContentResult pdf = null;
@@ -47,10 +48,9 @@ namespace IntegrationAPI.Controllers
                     if ((bcc.Last().StartDateTime.Subtract(bcc.Last().ConsumptionPeriodHours) < unit.consumptionDate) && (unit.consumptionDate < bcc.Last().StartDateTime))
                     {
                         validList.Add(unit);
-                        pdf = File(_service.GeneratePdf(bcc.Last(), validList), "application/vnd", "bloodconsumptionreport.pdf");
                     }
                 }
-                return pdf;
+                return File(_service.GeneratePdf(bcc.Last(), validList), "application/pdf", "bloodconsumptionreport.pdf"); ;
     }
 
         private static List<BloodUnit2> InitializateBloodUnit()
