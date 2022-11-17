@@ -24,8 +24,9 @@ namespace HospitalLibrary.Core.Model
         {
         }
 
-        public Therapy(DateTime whenPrescribed, int amount, string reason, int prescribedId, ITherapySubject prescribed, int doctorId, Doctor doctor)
+        public Therapy(int id, DateTime whenPrescribed, int amount, string reason, int prescribedId, ITherapySubject prescribed, int doctorId, Doctor doctor, int treatmentHistoryId, TreatmentHistory treatmentHistory)
         {
+            Id = id;
             WhenPrescribed = whenPrescribed;
             Amount = amount;
             Reason = reason;
@@ -33,6 +34,8 @@ namespace HospitalLibrary.Core.Model
             Prescribed = prescribed;
             DoctorId = doctorId;
             Doctor = doctor;
+            TreatmentHistoryId = treatmentHistoryId;
+            TreatmentHistory = treatmentHistory;
         }
     }
 }

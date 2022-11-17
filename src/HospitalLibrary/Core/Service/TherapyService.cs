@@ -30,6 +30,7 @@ namespace HospitalLibrary.Core.Service
 
         public bool Create(Therapy therapy)
         {
+            therapy.WhenPrescribed = DateTime.Now;
             _therapyRepository.Create(therapy);
             return true;
         }

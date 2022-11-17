@@ -11,15 +11,17 @@ namespace HospitalLibrary.Core.Model
     { 
         public string Name { get; set; }
         public MedicalDrugType Type {get; set;}
+        public int Amount { get; set; }
 
         public MedicalDrugs()
         {
         }
 
-        public MedicalDrugs(string name, MedicalDrugType type)
+        public MedicalDrugs(string name, MedicalDrugType type, int amount)
         {
             Name = name;
             Type = type;
+            Amount = amount;
         }
 
         public string Print()
