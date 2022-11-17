@@ -1,4 +1,5 @@
 ﻿using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibrary.Core.Repository;
 using System;
 using System.Collections.Generic;
@@ -11,15 +12,36 @@ namespace IntegrationLibrary.Core.Service.Interfaces
     public class BloodBankNewsService : IBloodBankNewsService
     {
         private readonly IBloodBankNewsRepository bloodBankNewsRepository;
+        private readonly IBloodBankRepository bloodBankRepository;
 
-        public BloodBankNewsService(IBloodBankNewsRepository bloodBankNewsRepository)
+        public BloodBankNewsService(IBloodBankNewsRepository bloodBankNewsRepository, IBloodBankRepository bloodBankRepository)
         {
             this.bloodBankNewsRepository = bloodBankNewsRepository;
+            this.bloodBankRepository = bloodBankRepository;
         }
 
-        public void Create(BloodBankNews bloodBankNews)
+        public void ArchiveNews(BloodBankNews bloodBankNews)
         {
-            bloodBankNewsRepository.Create(bloodBankNews);
+            bloodBankNews.Archived = true;
+            bloodBankNewsRepository.Update(bloodBankNews);
+        }
+
+        public void PublishNews(BloodBankNews bloodBankNews)
+        {
+            bloodBankNews.Published = true;
+            bloodBankNewsRepository.Update(bloodBankNews);
+        }
+
+        public void Create(BloodBankNewsDTO bloodBankNewsDTO)
+        {
+            BloodBank bloodBank = bloodBankRepository.GetByApiKey(bloodBankNewsDTO.bloodBankApiKey);
+            if (bloodBank != null)
+            {
+                BloodBankNews bloodBankNews = new BloodBankNews(bloodBankNewsDTO.text, bloodBankNewsDTO.subject, 
+                                                                bloodBankNewsDTO.imgSrc, false, false, bloodBank, bloodBank.Id);
+                bloodBankNewsRepository.Create(bloodBankNews);
+            }
+            
         }
 
         public void Delete(BloodBankNews bloodBankNews)
@@ -34,7 +56,9 @@ namespace IntegrationLibrary.Core.Service.Interfaces
 
         public BloodBankNews GetById(int id)
         {
-            throw new NotImplementedException();
+            return bloodBankNewsRepository.GetById(id);
         }
+
+        
     }
 }
