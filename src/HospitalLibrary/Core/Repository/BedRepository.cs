@@ -17,7 +17,7 @@ namespace HospitalLibrary.Core.Repository
         {
             _context = context;
         }
-
+    //    _context.Beds.Include(b => b.Room).Where(r => r.Id == id).FirstOrDefault<Room>();
         public IEnumerable<Bed> GetAll()
         {
             return _context.Beds.ToList();

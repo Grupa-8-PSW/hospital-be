@@ -58,8 +58,9 @@ namespace HospitalLibrary.Core.Repository
 
         public IEnumerable<Examination> GetByDate(DateTime startTime)
         {
-            return _context.Examinations.Where(ex => ex.StartTime.Date == startTime.Date).ToList();
+            return _context.Examinations.Where(ex => ex.StartTime.ToLocalTime().Date == startTime.ToLocalTime().Date).ToList();
         }
+
         public IEnumerable<Examination> GetByDoctorIdAndDate(int doctorId, DateTime startTime)
         {
             return _context.Examinations.Where(ex => ex.DoctorId == doctorId && ex.StartTime.Date == startTime.Date).ToList();
