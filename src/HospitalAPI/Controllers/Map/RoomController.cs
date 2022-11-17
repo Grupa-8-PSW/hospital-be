@@ -1,11 +1,14 @@
 ﻿using HospitalLibrary.GraphicalEditor.Model.DTO;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers.Map
 {
+
     [Route("api/map/floor/rooms/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Manager")]
     public class RoomController : ControllerBase
     {
         private readonly IRoomService _roomService;

@@ -20,14 +20,12 @@ namespace HospitalAPI.Controllers.PublicApp
         }
         
 
-        // GET: api/Feedback/public
         [HttpGet("public")]
         public ActionResult GetApprovedPublicFeedback()
         {
             return Ok(_mapper.Map<List<PublicFeedbackDTO>>(_feedbackService.GetAllApprovedPublic()));
         }
 
-        // GET: api/Feedback
         [HttpGet]
         [Route ("{id}")]
         public ActionResult Get(int id)
@@ -43,7 +41,6 @@ namespace HospitalAPI.Controllers.PublicApp
             }
         }
 
-        // POST: api/Feedback
         [HttpPost]
         public ActionResult CreateFeedback(CreateFeedbackDTO feedbackDTO)
         {

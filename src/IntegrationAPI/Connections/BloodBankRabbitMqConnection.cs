@@ -23,7 +23,7 @@ namespace IntegrationAPI.Connections
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var factory = new ConnectionFactory { HostName = "localhost", Port = 5672, UserName = "guest", Password = "guest" };
+            /*var factory = new ConnectionFactory { HostName = "localhost", Port = 5672, UserName = "guest", Password = "guest" };
             connection = factory.CreateConnection();
             channel = connection.CreateModel();
             channel.QueueDeclare(queue: "news",
@@ -54,7 +54,7 @@ namespace IntegrationAPI.Connections
             };
             channel.BasicConsume(queue: "news",
                                    autoAck: true,
-                                   consumer: consumer);
+                                   consumer: consumer);*/
             return Task.CompletedTask;
         }
 
