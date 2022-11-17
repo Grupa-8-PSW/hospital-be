@@ -10,6 +10,7 @@ using HospitalLibrary.Core.Model;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Asn1.Cms;
 
 namespace IntegrationAPI.Controllers
@@ -33,26 +34,23 @@ namespace IntegrationAPI.Controllers
         }
 
         [Route("/api/[controller]/generatePdf")]
-        [HttpPost]
+        
+        [HttpGet]
         public IActionResult GenerateSeveralPdf()
         {
             FileContentResult pdf = null;
             var bloodUnits = InitializateBloodUnit();
             List<BloodUnit2> validList = new List<BloodUnit2>();
+            List<BloodConsumptionConfiguration> bcc = _service.GetAll();
 
-            foreach (BloodConsumptionConfiguration bcc in _service.GetAll())
-            {
                 foreach (BloodUnit2 unit in bloodUnits)
                 {
-                    if ((bcc.StartDateTime.Subtract(bcc.ConsumptionPeriodHours) < unit.consumptionDate) && (unit.consumptionDate < bcc.StartDateTime))
+                    if ((bcc.Last().StartDateTime.Subtract(bcc.Last().ConsumptionPeriodHours) < unit.consumptionDate) && (unit.consumptionDate < bcc.Last().StartDateTime))
                     {
                         validList.Add(unit);
-                        pdf = File(_service.GeneratePdf(bcc, validList), "application/vnd", "bloodconsumptionreport.pdf");
                     }
                 }
-            }
-
-            return pdf;
+                return File(_service.GeneratePdf(bcc.Last(), validList), "application/pdf", "bloodconsumptionreport.pdf"); ;
     }
 
         private static List<BloodUnit2> InitializateBloodUnit()
