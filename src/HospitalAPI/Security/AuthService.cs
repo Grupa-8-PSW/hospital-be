@@ -51,9 +51,11 @@ namespace HospitalAPI.Security
             var user = await _userManager.FindByNameAsync(registerRequest.Username);
             if (user != null)
                 return null;
+
             user = await _userManager.FindByEmailAsync(registerRequest.Email);
             if (user != null)
                 return null;
+
             var registerUser = new User()
             {
                 UserName = registerRequest.Username,
