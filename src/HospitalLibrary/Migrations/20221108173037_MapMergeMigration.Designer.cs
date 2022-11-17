@@ -3,6 +3,7 @@ using System;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221108173037_MapMergeMigration")]
+    partial class MapMergeMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -208,25 +210,11 @@ namespace HospitalLibrary.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BloodType")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("integer");
-
                     b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Pin")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -238,115 +226,27 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 1,
-                            BloodType = 0,
-                            Email = "peraperic@gmail.com",
                             FirstName = "Pera",
-                            Gender = 0,
-                            LastName = "Peric",
-                            Pin = "2201000120492"
+                            LastName = "Peric"
                         },
                         new
                         {
                             Id = 2,
-                            BloodType = 7,
-                            Email = "markomarkovic@gmail.com",
                             FirstName = "Marko",
-                            Gender = 0,
-                            LastName = "Markovic",
-                            Pin = "1412995012451"
+                            LastName = "Markovic"
                         },
                         new
                         {
                             Id = 3,
-                            BloodType = 5,
-                            Email = "dusanbaljinac@gmail.com",
                             FirstName = "Dusan",
-                            Gender = 0,
-                            LastName = "Baljinac",
-                            Pin = "2008004124293"
+                            LastName = "Baljinac"
                         },
                         new
                         {
                             Id = 4,
-                            BloodType = 3,
-                            Email = "slobodanradulovic@gmail.com",
                             FirstName = "Slobodan",
-                            Gender = 0,
-                            LastName = "Radulovic",
-                            Pin = "1111978020204"
+                            LastName = "Radulovic"
                         });
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Therapy", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PrescribedId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Reason")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int?>("TreatmentHistoryId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("WhenPrescribed")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
-
-                    b.HasIndex("TreatmentHistoryId");
-
-                    b.ToTable("Therapy");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.TreatmentHistory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Active")
-                        .HasColumnType("boolean");
-
-                    b.Property<int>("BedId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("DischargeReason")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("PatientId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BedId");
-
-                    b.HasIndex("PatientId");
-
-                    b.ToTable("TreatmentHistories");
                 });
 
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Building", b =>
@@ -1534,40 +1434,6 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Therapy", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Doctor", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HospitalLibrary.Core.Model.TreatmentHistory", null)
-                        .WithMany("Therapies")
-                        .HasForeignKey("TreatmentHistoryId");
-
-                    b.Navigation("Doctor");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.TreatmentHistory", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Bed", "Bed")
-                        .WithMany()
-                        .HasForeignKey("BedId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HospitalLibrary.Core.Model.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Bed");
-
-                    b.Navigation("Patient");
-                });
-
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Floor", b =>
                 {
                     b.HasOne("HospitalLibrary.GraphicalEditor.Model.Building", "Building")
@@ -1604,11 +1470,6 @@ namespace HospitalLibrary.Migrations
             modelBuilder.Entity("HospitalLibrary.Core.Model.Patient", b =>
                 {
                     b.Navigation("Feedbacks");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.TreatmentHistory", b =>
-                {
-                    b.Navigation("Therapies");
                 });
 
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Building", b =>

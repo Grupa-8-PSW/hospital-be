@@ -1,5 +1,6 @@
 ﻿using HospitalAPI;
 using HospitalAPI.Security;
+using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -21,18 +22,18 @@ namespace HospitalTests.HospitalAPITests.Setup
 
                 InitializeDatabase(db);
                 InitializeIdentityDatabase(identityDb);
+
+                InitializeDatabase(db);
             });
         }
 
         private static ServiceProvider BuildServiceProvider(IServiceCollection services)
         {
-            var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<HospitalDbContext>));
-            services.Remove(descriptor);
-            services.AddDbContext<HospitalDbContext>(opt => opt.UseNpgsql(CreateConnectionStringForTest()));
 
-            descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<AppIdentityDbContext>));
+            var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<AppIdentityDbContext>));
             services.Remove(descriptor);
             services.AddDbContext<AppIdentityDbContext>(opt => opt.UseNpgsql(CreateConnectionStringForTest()));
+
 
             return services.BuildServiceProvider();
         }
@@ -55,6 +56,5 @@ namespace HospitalTests.HospitalAPITests.Setup
 
             context.SaveChanges();
         }
-
     }
 }

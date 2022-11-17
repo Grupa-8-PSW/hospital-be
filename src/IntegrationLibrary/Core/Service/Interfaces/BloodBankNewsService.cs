@@ -1,26 +1,25 @@
 ﻿using IntegrationLibrary.Core.Model;
-using IntegrationLibrary.Persistence;
+using IntegrationLibrary.Core.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Repository
+namespace IntegrationLibrary.Core.Service.Interfaces
 {
-    public class BloodBankNewsRepository : IBloodBankNewsRepository
+    public class BloodBankNewsService : IBloodBankNewsService
     {
-        private readonly IntegrationDbContext _context;
+        private readonly IBloodBankNewsRepository bloodBankNewsRepository;
 
-        public BloodBankNewsRepository(IntegrationDbContext context)
+        public BloodBankNewsService(IBloodBankNewsRepository bloodBankNewsRepository)
         {
-            _context = context;
+            this.bloodBankNewsRepository = bloodBankNewsRepository;
         }
 
         public void Create(BloodBankNews bloodBankNews)
         {
-            _context.BloodBankNews.Add(bloodBankNews);
-            _context.SaveChanges();
+            bloodBankNewsRepository.Create(bloodBankNews);
         }
 
         public void Delete(BloodBankNews bloodBankNews)
@@ -30,7 +29,7 @@ namespace IntegrationLibrary.Core.Repository
 
         public IEnumerable<BloodBankNews> GetAll()
         {
-            return _context.BloodBankNews.ToList();
+            return bloodBankNewsRepository.GetAll();
         }
 
         public BloodBankNews GetById(int id)

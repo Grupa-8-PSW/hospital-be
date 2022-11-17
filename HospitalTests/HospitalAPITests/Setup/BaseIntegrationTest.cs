@@ -10,6 +10,5 @@ namespace HospitalTests.HospitalAPITests.Setup
         {
             Factory = factory;
         }
-
     }
 }

@@ -1,17 +1,18 @@
-﻿namespace HospitalAPI.DTO
+
+using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Model;
+
+namespace HospitalAPI.DTO
 {
     public class PatientDTO
     {
-        public string FullName { get; set; }
-        public string PhoneNumber { get; set; }
-
-        public string StreetNumber { get; set; }
-
-        public string City { get; set; }
-
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string Email { get; set; }
-    
-        public int BloodType { get; set; }
-
+        public string Pin { get; set; }
+        public Gender Gender { get; set; }
+        public BloodType BloodType { get; set; }
     }
+
 }

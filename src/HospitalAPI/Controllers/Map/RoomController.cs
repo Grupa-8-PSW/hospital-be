@@ -52,6 +52,20 @@ namespace HospitalAPI.Controllers.Map
 
             return Ok(rooms);
         }
+
+        [HttpGet("search")]
+        public IActionResult GetByQuery(string name)
+        {
+            List<RoomDTO> rooms = new();
+            foreach (var room in _roomService.GetAll())
+            {
+                if (room.Name == name)
+                {
+                    rooms.Add(new RoomDTO(room));
+                }
+            }
+            return Ok(rooms);
+        }
     }
 
 }
