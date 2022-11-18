@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace IntegrationLibrary.Core.Repository
 {
@@ -22,6 +23,11 @@ namespace IntegrationLibrary.Core.Repository
             _context.BloodConsumptionConfiguration.Add(bloodConsumptionConfiguration);
             _context.SaveChanges();
             return bloodConsumptionConfiguration;
+        }
+
+        public BloodConsumptionConfiguration FindActiveConfiguration()
+        {
+            return _context.BloodConsumptionConfiguration.FromSqlRaw("select * from BloodConsumptionConfiguration where Id = (select max(Id) from BloodConsumptionConfiguration)").First();
         }
          
         public List<BloodConsumptionConfiguration> GetAll()

@@ -11,6 +11,7 @@ namespace IntegrationLibrary.Core.Repository
     public interface IBloodConsumptionConfigurationRepository
     {
         public BloodConsumptionConfiguration Create(BloodConsumptionConfiguration bloodConsumptionConfiguration);
+        public BloodConsumptionConfiguration FindActiveConfiguration();
         List<BloodConsumptionConfiguration> GetAll();
 
     }
