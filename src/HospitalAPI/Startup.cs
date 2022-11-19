@@ -105,6 +105,8 @@ namespace HospitalAPI
             services.AddScoped<IMedicalDrugRepository, MedicalDrugsRepository>();
 
             services.AddScoped<ITherapyValidation, TherapyValidation>();
+
+            services.AddScoped<IMapper<BloodUnitRequest, BloodUnitRequestDTO>, BloodUnitRequestMapper>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
