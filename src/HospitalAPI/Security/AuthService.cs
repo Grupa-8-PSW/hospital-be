@@ -66,7 +66,7 @@ namespace HospitalAPI.Security
             {
                 var p = _mapper.Map<Patient>(registerRequest.RegisterUser);
                 var patientAllergens = _allergensRepository
-                    .GetAllergensByDtoId(p.Allergens);
+                    .GetAllergensByDtoId(p.Allergens.Select(a => a.Id).ToList());
                 _patientRepository.Create(p, patientAllergens);
             }
             

@@ -21,7 +21,7 @@ using HospitalAPI.Security.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace HospitalAPI
 {

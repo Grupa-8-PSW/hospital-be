@@ -15,16 +15,8 @@ namespace HospitalLibrary.Core.Repository
         {
 
         }
-        public List<Allergen> GetAllergensByDtoId(List<Allergen> allergens)
-        {
-            var allers = new List<Allergen>();
+        public List<Allergen> GetAllergensByDtoId(List<int> ids) => _dbContext.Allergens.Where(a => ids.Contains(a.Id)).ToList();
 
-            foreach (Allergen a in allergens)
-            {
-                allers.Add(GetById(a.Id));
-            }
 
-            return allers;
-        }
     }
 }
