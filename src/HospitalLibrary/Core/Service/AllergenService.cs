@@ -1,6 +1,5 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
-using HospitalLibrary.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +39,15 @@ namespace HospitalLibrary.Core.Service
         public void Update(Allergen allergen)
         {
            _allergenRepositroy.Update(allergen);
+        }
+        public List<Allergen> Transform (List<int> allergens)
+        {
+            List<Allergen> allers = new List<Allergen>();
+            foreach(int a in allergens)
+            {
+                allers.Add(GetById(a));
+            }
+            return allers;
         }
     }
 }

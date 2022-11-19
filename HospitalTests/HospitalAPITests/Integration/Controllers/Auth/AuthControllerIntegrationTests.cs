@@ -1,5 +1,6 @@
 ﻿using HospitalAPI;
 using HospitalAPI.Controllers.Auth;
+using HospitalAPI.DTO;
 using HospitalAPI.Security;
 using HospitalAPI.Security.Models;
 using HospitalTests.HospitalAPITests.Setup;
@@ -40,17 +41,18 @@ namespace HospitalTests.HospitalAPITests.Integration.Controllers.Auth
         }
 
         [Theory]
-        [InlineData("test@gmail.com", "test","12345", typeof(OkObjectResult))]
-        [InlineData("test@gmail.com", "test1","12345", typeof(BadRequestResult))]
-        [InlineData("test1@gmail.com", "test1","12345", typeof(BadRequestResult))]
+        [InlineData("test3@gmail.com", "test3","12345", typeof(OkResult))]
+        [InlineData("markovica@gmail.com", "test1","12345", typeof(BadRequestResult))]
+        [InlineData("test1@gmail.com", "aleksa","12345", typeof(BadRequestResult))]
         public async Task Register(string email, string username,string password, Type resultType)
         {
             // Arange
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
+     
             var registerRequest = new RegisterRequest()
             {
-                RegisterUser = new RegisterUserDTO(),
+                RegisterUser = null,
                 Email = email,
                 Username = username,
                 Password = password,

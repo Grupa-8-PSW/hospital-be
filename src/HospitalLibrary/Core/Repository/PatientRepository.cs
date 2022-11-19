@@ -11,5 +11,11 @@ namespace HospitalLibrary.Core.Repository
 
         }
 
+        public Patient Create(Patient p, List<Allergen> allers)
+        {
+            p.Allergens = allers;
+            return Create(p);
+        }
+
     }
 }

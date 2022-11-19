@@ -50,6 +50,9 @@ namespace HospitalAPI
             services.AddScoped(typeof(IAllergensRepository), typeof(AllergensRepository));
             services.AddScoped(typeof(IAllergenService), typeof(AllergenService));
 
+            services.AddScoped(typeof(IAddressRepository), typeof(AddressRepository));
+            services.AddScoped(typeof(IAddressService), typeof(AddressService));
+
             services.AddAutoMapper(typeof(MappingProfile));
 
             services.AddControllers()

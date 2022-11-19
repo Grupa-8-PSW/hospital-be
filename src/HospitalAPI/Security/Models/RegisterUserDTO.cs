@@ -11,6 +11,7 @@ namespace HospitalAPI.Security.Models
         public string Email { get; set; }
         public string Pin { get; set; }
         public List<AllergenDTO> Allergens { get; set; }
+        public Address Address { get; set; }
         public BloodType BloodType { get; set; }
         public Gender Gender { get; set; }
 

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HospitalAPI.DTO;
 using HospitalAPI.Security.Models;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
@@ -18,6 +19,7 @@ namespace HospitalAPI.Security
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
         private readonly IPatientRepository _patientRepository;
+        private readonly IAllergensRepository _allergensRepository;
         private readonly IMapper _mapper;
 
         public AuthService(
@@ -26,6 +28,7 @@ namespace HospitalAPI.Security
             UserManager<User> userManager,
             IConfiguration configuration,
             IPatientRepository patientRepository,
+            IAllergensRepository allergensRepository,
             IMapper mapper)
         {
             _signInManager = signInManager;
@@ -33,6 +36,7 @@ namespace HospitalAPI.Security
             _userManager = userManager;
             _configuration = configuration;
             _patientRepository = patientRepository;
+            _allergensRepository = allergensRepository;
             _mapper = mapper;
         }
 
@@ -48,29 +52,35 @@ namespace HospitalAPI.Security
         }
         public async Task<string> RegisterAsync(RegisterRequest registerRequest)
         {
-            var user = await _userManager.FindByNameAsync(registerRequest.Username);
-            if (user != null)
-                return null;
-
-            user = await _userManager.FindByEmailAsync(registerRequest.Email);
-            if (user != null)
-                return null;
-
             var registerUser = new User()
             {
                 UserName = registerRequest.Username,
                 Email = registerRequest.Email,
             };
 
-            await _userManager.CreateAsync(registerUser, registerRequest.Password);
-            _userManager.AddToRoleAsync(registerUser, "Patient");
-            _patientRepository.Create(_mapper.Map<Patient>(registerRequest.RegisterUser));
-
+            var result = await _userManager.CreateAsync(registerUser, registerRequest.Password);
+            if (!result.Succeeded)
+                return null;
+            await _userManager.AddToRoleAsync(registerUser, "Patient");
+            if(registerRequest.RegisterUser != null)
+            {
+                var p = _mapper.Map<Patient>(registerRequest.RegisterUser);
+                var patientAllergens = _allergensRepository
+                    .GetAllergensByDtoId(p.Allergens);
+                _patientRepository.Create(p, patientAllergens);
+            }
+            
             return "Ok";
         }
 
         public async Task SeedAsync()
         {
+            /*
+            await _roleManager.CreateAsync(new IdentityRole<int>("Manager"));
+            await _roleManager.CreateAsync(new IdentityRole<int>("Doctor"));
+            await _roleManager.CreateAsync(new IdentityRole<int>("Patient"));
+            */
+
             /*var user = new User()
             {
                 UserName = "test",
@@ -87,6 +97,7 @@ namespace HospitalAPI.Security
             await _userManager.CreateAsync(user, "12345");
             _userManager.AddToRoleAsync(user, "Doctor");*/
 
+            /*
             var user = new User()
             {
                 UserName = "manager",
@@ -94,6 +105,7 @@ namespace HospitalAPI.Security
             };
             await _userManager.CreateAsync(user, "12345");
             _userManager.AddToRoleAsync(user, "Manager");
+            */
         }
 
         private async Task<UserDTO> GetUserDTO(User user)

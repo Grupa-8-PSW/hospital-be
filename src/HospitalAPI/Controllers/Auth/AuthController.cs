@@ -30,7 +30,7 @@ namespace HospitalAPI.Controllers.Auth
         [HttpPost("register")]
         public async Task<ActionResult> Register(RegisterRequest registerRequest)
         {
-            var ok = _authService.RegisterAsync(registerRequest);
+            var ok = await _authService.RegisterAsync(registerRequest);
             if(ok == null)
                 return BadRequest();
 

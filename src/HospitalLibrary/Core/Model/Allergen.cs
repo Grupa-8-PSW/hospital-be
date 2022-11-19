@@ -2,6 +2,7 @@
 {
     public class Allergen : BaseEntityModel
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public List<Patient> Patients { get; set; }
 
@@ -9,6 +10,10 @@
         {
             Id = id;
             Name = name;
+        }
+        public Allergen()
+        {
+            
         }
     }
 

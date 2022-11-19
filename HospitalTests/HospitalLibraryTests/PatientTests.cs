@@ -24,9 +24,9 @@ namespace HospitalTests
         private IPatientRepository CreateStubRepository()
         {
             List<Patient> patients = new List<Patient>();
-            Patient p1 = new Patient(1, "Pera", "Peric", "peraperic@gmail.com", "2201000120492", Gender.MALE, BloodType.ZERO_POSITIVE);
-            Patient p2 = new Patient(2, "Marko", "Markovic", "markomarkovic@gmail.com", "1412995012451", Gender.MALE, BloodType.AB_NEGATIVE);
-            Patient p3 = new Patient(3, "Dusan", "Baljinac", "dusanbaljinac@gmail.com", "2008004124293", Gender.MALE, BloodType.B_NEGATIVE);
+            Patient p1 = new Patient(1, "Pera", "Peric", "peraperic@gmail.com", "2201000120492", Gender.MALE, BloodType.ZERO_POSITIVE, 1);
+            Patient p2 = new Patient(2, "Marko", "Markovic", "markomarkovic@gmail.com", "1412995012451", Gender.MALE, BloodType.AB_NEGATIVE, 2);
+            Patient p3 = new Patient(3, "Dusan", "Baljinac", "dusanbaljinac@gmail.com", "2008004124293", Gender.MALE, BloodType.B_NEGATIVE, 3);
             patients.Add(p1);
             patients.Add(p2);
             patients.Add(p3);

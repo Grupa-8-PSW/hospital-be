@@ -4,6 +4,6 @@ namespace HospitalLibrary.Core.Repository
 {
     public interface IPatientRepository : IEntityRepository<Patient>
     {
-
+        public Patient Create(Patient p, List<Allergen> allers);
     }
 }
