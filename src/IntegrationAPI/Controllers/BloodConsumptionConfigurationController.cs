@@ -39,25 +39,17 @@ namespace IntegrationAPI.Controllers
         public IActionResult GenerateSeveralPdf()
         {
             FileContentResult pdf = null;
-            var bloodUnits = InitializateBloodUnit();
-            List<BloodUnit2> validList = new List<BloodUnit2>();
-            List<BloodConsumptionConfiguration> bcc = _service.GetAll();
-
-                foreach (BloodUnit2 unit in bloodUnits)
-                {
-                    if ((bcc.Last().StartDateTime.Subtract(bcc.Last().ConsumptionPeriodHours) < unit.consumptionDate) && (unit.consumptionDate < bcc.Last().StartDateTime))
-                    {
-                        validList.Add(unit);
-                    }
-                }
-                return File(_service.GeneratePdf(bcc.Last(), validList), "application/pdf", "bloodconsumptionreport.pdf"); ;
+            var validList =  _service.FindValidBloodUnits(BloodUnitsList(), out var configuration);
+            return File(_service.GeneratePdf(configuration.Last(), validList), "application/pdf", "bloodconsumptionreport.pdf"); ;
     }
 
-        private static List<BloodUnit2> InitializateBloodUnit()
+
+
+        private static List<BloodUnit2> BloodUnitsList()
         {
             BloodUnit2 bu1 = new BloodUnit2(1, BloodType.AB_NEGATIVE, 20, DateTime.Now.AddHours(17));
             BloodUnit2 bu2 = new BloodUnit2(2, BloodType.A_NEGATIVE, 150, DateTime.Now.AddDays(12));
-            BloodUnit2 bu3 = new BloodUnit2(3, BloodType.B_NEGATIVE, 200, DateTime.Today);
+            BloodUnit2 bu3 = new BloodUnit2(3, BloodType.B_NEGATIVE, 200, DateTime.Now);
             BloodUnit2 bu4 = new BloodUnit2(4, BloodType.ZERO_NEGATIVE, 450, DateTime.Now.AddHours(20));
             BloodUnit2 bu5 = new BloodUnit2(5, BloodType.A_POSITIVE, 30, DateTime.Now.AddDays(40));
             List<BloodUnit2> buList = new List<BloodUnit2>();
