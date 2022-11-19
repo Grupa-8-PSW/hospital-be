@@ -32,15 +32,20 @@ namespace HospitalTests.HospitalAPITests.Integration
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
+            var resultAllTherapiesBefore = ((OkObjectResult)controller.GetAll())?.Value as IEnumerable<Therapy>;
+            int therapiesBefore = resultAllTherapiesBefore.Count();
 
-
-            Therapy therapy = new Therapy() { Id = 4, WhenPrescribed = DateTime.UtcNow, Amount = 50, Reason = "reason2", PrescribedId = 1, DoctorId = 1 };
+            Therapy therapy = new Therapy() { Id = 4, WhenPrescribed = DateTime.UtcNow, Amount = 50, Reason = "reason2",  DoctorId = 1 };
 
 
             var result = ((CreatedAtActionResult)controller.Create(therapy))?.Value as Therapy;
 
+            var resultAllTherapiesAfter = ((OkObjectResult)controller.GetAll())?.Value as IEnumerable<Therapy>;
+            int therapiesAfter = resultAllTherapiesAfter.Count();
+
             Assert.NotNull(result);
             Assert.True(result.Id == therapy.Id);
+            Assert.True(therapiesBefore + 1 == therapiesAfter);
 
         }
     }

@@ -28,11 +28,16 @@ namespace HospitalLibrary.Settings
         public DbSet<BloodUnitRequest> BloodUnitRequests { get; set; }
 
         public DbSet<Bed> Beds { get; set; }
+        public DbSet<Blood> Bloods { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<MedicalDrugs>()
+                .HasIndex(m => m.Code)
+                .IsUnique();
+
             modelBuilder.SeedMap();
             modelBuilder.SeedPatient();
             modelBuilder.SeedFeedback();
@@ -41,6 +46,11 @@ namespace HospitalLibrary.Settings
             modelBuilder.SeedMedicalDrugs();
             modelBuilder.SeedTreatmentHistory();
             base.OnModelCreating(modelBuilder);
+
+
+            
+            
+        
         }
 
     }

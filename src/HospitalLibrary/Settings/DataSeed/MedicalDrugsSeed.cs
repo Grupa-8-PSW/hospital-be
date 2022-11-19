@@ -14,7 +14,7 @@ namespace HospitalLibrary.Settings.DataSeed
         public static void SeedMedicalDrugs(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<MedicalDrugs>().HasData(
-                new MedicalDrugs() { Id = 1, Name = "Drugs1", Type = MedicalDrugType.PILL });
+                new MedicalDrugs() { Id = 1, Name = "Drugs1", Code = "Code1" });
         }
     }
 }
