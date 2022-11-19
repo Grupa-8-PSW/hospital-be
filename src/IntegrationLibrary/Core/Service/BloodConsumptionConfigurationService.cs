@@ -95,5 +95,20 @@ namespace IntegrationLibrary.Core.Service
 
             }
         }
+
+        public List<BloodUnit2> FindValidBloodUnits(List<BloodUnit2> bloodUnits, out List<BloodConsumptionConfiguration> configuration)
+        {
+            List<BloodUnit2> validList = new List<BloodUnit2>();
+            configuration = _repository.GetAll();
+
+            foreach (BloodUnit2 unit in bloodUnits)
+            {
+                if ((configuration.Last().StartDateTime.Subtract(configuration.Last().ConsumptionPeriodHours) < unit.consumptionDate) &&
+                    (unit.consumptionDate < configuration.Last().StartDateTime))
+                    validList.Add(unit);
+            }
+
+            return validList;
+        }
     }
 }
