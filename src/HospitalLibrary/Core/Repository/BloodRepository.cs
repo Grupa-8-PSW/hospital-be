@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -14,6 +15,11 @@ namespace HospitalLibrary.Core.Repository
         public BloodRepository(HospitalDbContext dbContext): base(dbContext)
         {
 
+        }
+        public Blood GetByBloodType(BloodType bloodType)
+        {
+            Blood blood = _dbContext.Bloods.SingleOrDefault(blood => blood.Type == bloodType);
+            return blood;
         }
 
     }

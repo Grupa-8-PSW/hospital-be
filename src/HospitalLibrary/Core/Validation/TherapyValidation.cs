@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
@@ -11,18 +12,32 @@ namespace HospitalLibrary.Core.Validation
 {
     public class TherapyValidation : ITherapyValidation
     {
-        private readonly IBloodUnitRepository _bloodUnitRepository;
+        private readonly IBloodRepository _bloodRepository;
         private readonly IMedicalDrugRepository _medicalDrugRepository;
 
-        public TherapyValidation(IBloodUnitRepository bloodUnitRepository, IMedicalDrugRepository medicalDrugRepository)
+        public TherapyValidation(IBloodRepository bloodRepository, IMedicalDrugRepository medicalDrugRepository)
         {
-            _bloodUnitRepository = bloodUnitRepository;
+            _bloodRepository = bloodRepository;
             _medicalDrugRepository = medicalDrugRepository;
         }
 
-        public bool ValidateBlood(string bloodType, int amount)
+        public bool ValidateBlood(string bloodTypeName, int amount)
         {
-            throw new NotImplementedException();
+            BloodType bloodType;
+            if(!Enum.TryParse<BloodType>(bloodTypeName, out bloodType))
+            {
+                return false;
+            }
+            Blood blood = _bloodRepository.GetByBloodType(bloodType);
+            if(blood == null)
+            {
+                return false;
+            }
+            if (amount > blood.Quantity)
+            {
+                return false;
+            }
+            return true;
         }
 
         public bool ValidateMedicalDrug(string name, int amount)

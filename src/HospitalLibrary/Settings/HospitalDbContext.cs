@@ -37,6 +37,9 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<MedicalDrugs>()
                 .HasIndex(m => m.Code)
                 .IsUnique();
+            modelBuilder.Entity<Blood>()
+                .HasIndex(b => b.Type)
+                .IsUnique();
 
             modelBuilder.SeedMap();
             modelBuilder.SeedPatient();

@@ -59,7 +59,7 @@ namespace HospitalLibrary.Core.Repository
         public MedicalDrugs GetByCode(string code)
         {
 
-            MedicalDrugs medicalDrugs = _context.MedicalDrugs.Single(m => m.Code == code);
+            MedicalDrugs medicalDrugs = _context.MedicalDrugs.SingleOrDefault(m => m.Code == code);
             return medicalDrugs;
         }
     }
