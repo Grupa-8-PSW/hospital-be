@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
 using HospitalAPI.DTO;
+using HospitalAPI.Security.Models;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace HospitalAPI.Controllers.PublicApp
 {
@@ -12,9 +16,14 @@ namespace HospitalAPI.Controllers.PublicApp
     {
         private readonly IMapper _mapper;
         private readonly IFeedbackService _feedbackService;
+        private readonly IPatientService _patientService;
+        private readonly UserManager<User> _userManager;
 
-        public FeedbackController(IFeedbackService feedbackService, IMapper mapper)
+        public FeedbackController(IFeedbackService feedbackService, IMapper mapper,
+            UserManager<User> userManager, IPatientService patientService)
         {
+            _patientService = patientService;
+            _userManager = userManager;
             _mapper = mapper;
             _feedbackService = feedbackService;
         }
@@ -31,7 +40,7 @@ namespace HospitalAPI.Controllers.PublicApp
         public ActionResult Get(int id)
         {
             var feedback = _feedbackService.GetById(id);
-            if(feedback is not null)
+            if(feedback is not null && feedback.IsPublic == true)
             {
                 return Ok(_mapper.Map<PublicFeedbackDTO>(feedback));
             }
@@ -42,11 +51,11 @@ namespace HospitalAPI.Controllers.PublicApp
         }
 
         [HttpPost]
+        [Authorize(Roles = "Patient")]
         public ActionResult CreateFeedback(CreateFeedbackDTO feedbackDTO)
         {
             var newFeedback = _feedbackService.Create(_mapper.Map<Feedback>(feedbackDTO));
             return CreatedAtAction(nameof(Get), new { id = newFeedback.Id }, _mapper.Map<PublicFeedbackDTO>(newFeedback));
         }
-
     }
 }

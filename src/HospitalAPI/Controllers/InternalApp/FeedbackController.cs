@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using HospitalAPI.DTO;
+using HospitalAPI.Security.Models;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers.InternalApp
