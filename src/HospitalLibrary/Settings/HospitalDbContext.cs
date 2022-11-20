@@ -26,7 +26,6 @@ namespace HospitalLibrary.Settings
         public DbSet<BloodUnit> BloodUnits { get; set; }
         public DbSet<MedicalDrugs> MedicalDrugs { get; set; }
         public DbSet<BloodUnitRequest> BloodUnitRequests { get; set; }
-
         public DbSet<Bed> Beds { get; set; }
         public DbSet<Blood> Bloods { get; set; }
 
@@ -48,6 +47,7 @@ namespace HospitalLibrary.Settings
             modelBuilder.SeedDoctor();
             modelBuilder.SeedMedicalDrugs();
             modelBuilder.SeedTreatmentHistory();
+            modelBuilder.SeedBlood();
             base.OnModelCreating(modelBuilder);
 
 

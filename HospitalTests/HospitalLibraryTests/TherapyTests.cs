@@ -19,7 +19,7 @@ namespace HospitalTests.HospitalLibraryTests
         [Fact]
         public void Create_therapy()
         {
-            TherapyService therapyService = new TherapyService(CreateTherapyStubRepository());
+            TherapyService therapyService = null;// new TherapyService(CreateTherapyStubRepository());
 
             Therapy therapy = new Therapy();
 

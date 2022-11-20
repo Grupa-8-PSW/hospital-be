@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Repository
 {
-    public class BloodUnitRequestRepository
+    public class BloodUnitRequestRepository : IBloodUnitRequestRepository
     {
         private readonly HospitalDbContext _context;
 

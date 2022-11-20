@@ -30,7 +30,10 @@ namespace HospitalAPI.Mapper
         public BloodUnitRequest toModel(BloodUnitRequestDTO dto)
         {
             BloodUnitRequest bloodUnitRequest = new BloodUnitRequest();
-            bloodUnitRequest.Id = dto.Id;
+            if (dto.Id.HasValue)
+            {
+                bloodUnitRequest.Id = dto.Id.Value;
+            }
             BloodType bloodType;
             if (!Enum.TryParse<BloodType>(dto.Type, out bloodType))
             {
@@ -39,7 +42,7 @@ namespace HospitalAPI.Mapper
             bloodUnitRequest.Type = bloodType;
             bloodUnitRequest.AmountL = dto.Amount;
             bloodUnitRequest.Reason = dto.Reason;
-            bloodUnitRequest.CreationDate = DateTime.ParseExact(dto.CreationDate, "dd/MM/yyyy", null);  
+            bloodUnitRequest.CreationDate = DateTime.ParseExact(dto.CreationDate, "dd/MM/yyyy", null).ToUniversalTime();  
             return bloodUnitRequest;
         }
 

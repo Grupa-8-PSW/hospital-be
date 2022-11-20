@@ -4,7 +4,7 @@ namespace HospitalAPI.DTO
 {
     public class BloodUnitRequestDTO
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string Type { get; set; }
         public int Amount { get; set; }
         public string Reason { get; set; }
