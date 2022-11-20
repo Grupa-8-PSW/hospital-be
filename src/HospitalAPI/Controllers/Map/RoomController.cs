@@ -66,7 +66,7 @@ namespace HospitalAPI.Controllers.Map
         public IActionResult GetAvailableTerminsForTransfer(EquipmentTransferDTO dto)
         {
             var rooms = _roomService.GetTransferedEquipment(dto);
-            var examinations = _examinationService.GetAll();
+          
             if (rooms == null)
             {
                 return NotFound();

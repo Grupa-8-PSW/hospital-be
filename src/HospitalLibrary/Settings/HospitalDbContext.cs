@@ -24,7 +24,7 @@ namespace HospitalLibrary.Settings
         public DbSet<TreatmentHistory> TreatmentHistories { get; set; }
 
 
-        public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
+        public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true); }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -16,6 +16,16 @@ namespace HospitalLibrary.Settings.DataSeed
                 new Building() { Id = 3, X = 400, Y = 600, Width = 400, Height = 130, Color = "gray", Name = "Tre", Floors = new List<Floor>() }
             );
 
+            modelBuilder.Entity<Doctor>().HasData(
+                new Doctor() { Id = 1, FirstName = "Pera", LastName = "Peric", RoomId = 1, StartWork = new DateTime(2022, 11, 22, 10, 10, 10), EndWork = new DateTime(2022, 11, 22, 18, 10, 10) },
+                new Doctor() { Id = 2, FirstName = "Sergej", LastName = "Milinkovic-Savic", RoomId = 1, StartWork = new DateTime(2022, 11, 22, 10, 10, 10), EndWork = new DateTime(2022, 11, 22, 19, 10, 10) }
+             );
+
+            modelBuilder.Entity<Examination>().HasData(
+                new Examination() { Id = 1, DoctorId = 1, PatientId = 1, RoomId = 1,  StartTime = new DateTime(2022, 11, 22, 10, 10, 10), Duration = 200 },
+                new Examination() { Id = 2, DoctorId = 2, PatientId = 2, RoomId = 2, StartTime = new DateTime(2022, 11, 22, 14, 10, 10), Duration = 100 }
+             );
+
             /*
             modelBuilder.Entity<MapBuilding>().HasData(
                 new MapBuilding() { Id = 1, X = 100, Y = 100, Width = 450, Height = 150, Color = "gray", BuildingId = 1 },

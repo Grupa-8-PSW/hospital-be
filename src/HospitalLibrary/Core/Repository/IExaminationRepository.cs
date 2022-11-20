@@ -19,6 +19,6 @@ namespace HospitalLibrary.Core.Repository
 
         IEnumerable<Examination> GetByDate(DateTime startTime);
         IEnumerable<Examination> GetByDoctorIdAndDate(int doctorId, DateTime startTime);
-
+        IEnumerable<Examination> GetByRoomId(int roomId);
     }
 }

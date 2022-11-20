@@ -67,7 +67,7 @@ namespace HospitalLibrary.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("EndWork")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -81,13 +81,33 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("StartWork")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
                     b.HasIndex("RoomId");
 
                     b.ToTable("Doctors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            EndWork = new DateTime(2022, 11, 22, 18, 10, 10, 0, DateTimeKind.Unspecified),
+                            FirstName = "Pera",
+                            LastName = "Peric",
+                            RoomId = 1,
+                            StartWork = new DateTime(2022, 11, 22, 10, 10, 10, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            EndWork = new DateTime(2022, 11, 22, 19, 10, 10, 0, DateTimeKind.Unspecified),
+                            FirstName = "Sergej",
+                            LastName = "Milinkovic-Savic",
+                            RoomId = 1,
+                            StartWork = new DateTime(2022, 11, 22, 10, 10, 10, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Examination", b =>
@@ -111,7 +131,7 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("StartTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -122,6 +142,26 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("Examinations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DoctorId = 1,
+                            Duration = 200,
+                            PatientId = 1,
+                            RoomId = 1,
+                            StartTime = new DateTime(2022, 11, 22, 10, 10, 10, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DoctorId = 2,
+                            Duration = 100,
+                            PatientId = 2,
+                            RoomId = 2,
+                            StartTime = new DateTime(2022, 11, 22, 14, 10, 10, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Feedback", b =>
@@ -302,7 +342,7 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("WhenPrescribed")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -332,13 +372,13 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("EndDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("PatientId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 

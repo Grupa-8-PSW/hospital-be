@@ -15,6 +15,7 @@ namespace HospitalLibrary.GraphicalEditor.Service
 
         private readonly IExaminationRepository _examinationRepository;
 
+        
         public RoomService(IRoomRepository roomRepository, IExaminationRepository examinationRepository) 
         {
             _roomRepository = roomRepository;
@@ -47,7 +48,7 @@ namespace HospitalLibrary.GraphicalEditor.Service
 
         public IEnumerable<Examination> GetTransferedEquipment(EquipmentTransferDTO dto)
         {
-           
+            _examinationRepository.GetAll();
             return null;
         }
     }

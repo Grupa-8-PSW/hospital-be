@@ -31,6 +31,7 @@ namespace HospitalLibrary.GraphicalEditor.Model.DTO
             Color = room.Color;
             Name = room.Name;
             FloorId = room.FloorId;
+            Type = room.Type;
         }
     }
 }

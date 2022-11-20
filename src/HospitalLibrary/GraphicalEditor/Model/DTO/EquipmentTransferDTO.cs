@@ -13,5 +13,11 @@ namespace HospitalLibrary.GraphicalEditor.Model.DTO
         public int FromRoomId { get; set; }
 
         public int ToRoomId { get; set; }
+
+        public DateTime StartDate { get; set; }
+
+        public DateTime EndDate { get; set; }
+
+        public int Duration { get; set; }
     }
 }

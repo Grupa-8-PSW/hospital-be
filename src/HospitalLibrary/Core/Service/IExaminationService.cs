@@ -16,5 +16,6 @@ namespace HospitalLibrary.Core.Service
         void Delete(Examination examination);
         IEnumerable<Examination> GetByDate(DateTime startTime);
         IEnumerable<Examination> GetByDoctorIdAndDate(int doctorId, DateTime startTime);
+        IEnumerable<Examination> GetByRoomId(int roomId);
     }
 }
