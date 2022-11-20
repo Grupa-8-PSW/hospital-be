@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.GraphicalEditor.Model;
+using HospitalLibrary.GraphicalEditor.Model.DTO;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 using HospitalLibrary.Settings;
 
@@ -27,5 +28,11 @@ namespace HospitalLibrary.GraphicalEditor.Repository
         {
             return _context.Rooms.Where(f => f.FloorId == id);
         }
+
+        public IEnumerable<Room> GetTransferedEquipment(EquipmentTransferDTO dto)
+        {
+            return null;
+        }
+
     }
 }

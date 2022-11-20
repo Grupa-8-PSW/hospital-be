@@ -18,12 +18,7 @@ namespace HospitalAPI.Controllers.Map
         [HttpGet]
         public ActionResult GetAll()
         {
-            List<RoomDTO> rooms = new();
-            foreach (var room in _roomService.GetAll())
-            {
-                rooms.Add(new RoomDTO(room));
-            }
-            return Ok(rooms);
+            return Ok(_roomService.GetAll());
         }
 
         [HttpGet("{id}")]
@@ -61,6 +56,18 @@ namespace HospitalAPI.Controllers.Map
                     rooms.Add(new RoomDTO(room));
                 }
             }
+            return Ok(rooms);
+        }
+
+        [HttpGet("get/transferedEquipment")]
+        public IActionResult GetAvailableTerminsForTransfer(EquipmentTransferDTO dto)
+        {
+            var rooms = _roomService.GetTransferedEquipment(dto);
+            if (rooms == null)
+            {
+                return NotFound();
+            }
+
             return Ok(rooms);
         }
     }

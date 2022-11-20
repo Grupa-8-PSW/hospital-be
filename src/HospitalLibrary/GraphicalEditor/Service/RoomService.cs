@@ -1,4 +1,7 @@
-﻿using HospitalLibrary.GraphicalEditor.Model;
+﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Repository;
+using HospitalLibrary.GraphicalEditor.Model;
+using HospitalLibrary.GraphicalEditor.Model.DTO;
 using HospitalLibrary.GraphicalEditor.Repository;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
@@ -9,9 +12,12 @@ namespace HospitalLibrary.GraphicalEditor.Service
     {
         private readonly IRoomRepository _roomRepository;
 
-        public RoomService(IRoomRepository roomRepository)
+        private readonly IExaminationRepository _examinationRepository;
+
+        public RoomService(IRoomRepository roomRepository, IExaminationRepository examinationRepository) 
         {
             _roomRepository = roomRepository;
+            _examinationRepository = examinationRepository;
         }
 
         public IEnumerable<Room> GetAll()
@@ -36,6 +42,11 @@ namespace HospitalLibrary.GraphicalEditor.Service
                 return null;
             }
 
+        }
+
+        public IEnumerable<Examination> GetTransferedEquipment(EquipmentTransferDTO dto)
+        {
+            return null;
         }
     }
 }
