@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.GraphicalEditor.Model.DTO;
+﻿using HospitalLibrary.Core.Service;
+using HospitalLibrary.GraphicalEditor.Model.DTO;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,8 @@ namespace HospitalAPI.Controllers.Map
     public class RoomController : ControllerBase
     {
         private readonly IRoomService _roomService;
+
+        private readonly IExaminationService _examinationService;
 
         public RoomController(IRoomService roomService)
         {
@@ -63,11 +66,11 @@ namespace HospitalAPI.Controllers.Map
         public IActionResult GetAvailableTerminsForTransfer(EquipmentTransferDTO dto)
         {
             var rooms = _roomService.GetTransferedEquipment(dto);
+            var examinations = _examinationService.GetAll();
             if (rooms == null)
             {
                 return NotFound();
-            }
-
+            } 
             return Ok(rooms);
         }
     }

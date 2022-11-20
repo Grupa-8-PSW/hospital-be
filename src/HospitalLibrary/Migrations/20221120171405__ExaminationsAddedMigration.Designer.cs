@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221108005324_ExaminationMigration")]
-    partial class ExaminationMigration
+    [Migration("20221120171405__ExaminationsAddedMigration")]
+    partial class _ExaminationsAddedMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,27 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("RoomsId");
 
                     b.ToTable("FloorRoom");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Bed", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Available")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Bed");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
@@ -189,11 +210,25 @@ namespace HospitalLibrary.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("BloodType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("Gender")
+                        .HasColumnType("integer");
+
                     b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Pin")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -205,27 +240,115 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 1,
+                            BloodType = 0,
+                            Email = "peraperic@gmail.com",
                             FirstName = "Pera",
-                            LastName = "Peric"
+                            Gender = 0,
+                            LastName = "Peric",
+                            Pin = "2201000120492"
                         },
                         new
                         {
                             Id = 2,
+                            BloodType = 7,
+                            Email = "markomarkovic@gmail.com",
                             FirstName = "Marko",
-                            LastName = "Markovic"
+                            Gender = 0,
+                            LastName = "Markovic",
+                            Pin = "1412995012451"
                         },
                         new
                         {
                             Id = 3,
+                            BloodType = 5,
+                            Email = "dusanbaljinac@gmail.com",
                             FirstName = "Dusan",
-                            LastName = "Baljinac"
+                            Gender = 0,
+                            LastName = "Baljinac",
+                            Pin = "2008004124293"
                         },
                         new
                         {
                             Id = 4,
+                            BloodType = 3,
+                            Email = "slobodanradulovic@gmail.com",
                             FirstName = "Slobodan",
-                            LastName = "Radulovic"
+                            Gender = 0,
+                            LastName = "Radulovic",
+                            Pin = "1111978020204"
                         });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Therapy", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PrescribedId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("TreatmentHistoryId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("WhenPrescribed")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("TreatmentHistoryId");
+
+                    b.ToTable("Therapy");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.TreatmentHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("BedId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("DischargeReason")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BedId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("TreatmentHistories");
                 });
 
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Building", b =>
@@ -290,6 +413,213 @@ namespace HospitalLibrary.Migrations
                             Width = 400,
                             X = 400,
                             Y = 600
+                        });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Equipment", b =>
+                {
+                    b.Property<int>("EquipmentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("EquipmentId"));
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("EquipmentId");
+
+                    b.ToTable("Equipments");
+
+                    b.HasData(
+                        new
+                        {
+                            EquipmentId = 1,
+                            Amount = 2,
+                            Name = "Krevet",
+                            RoomId = 1
+                        },
+                        new
+                        {
+                            EquipmentId = 2,
+                            Amount = 2,
+                            Name = "Stetoskop",
+                            RoomId = 1
+                        },
+                        new
+                        {
+                            EquipmentId = 3,
+                            Amount = 4,
+                            Name = "Stolica",
+                            RoomId = 1
+                        },
+                        new
+                        {
+                            EquipmentId = 4,
+                            Amount = 20,
+                            Name = "Stolica",
+                            RoomId = 2
+                        },
+                        new
+                        {
+                            EquipmentId = 5,
+                            Amount = 2,
+                            Name = "Aparat za kafu",
+                            RoomId = 2
+                        },
+                        new
+                        {
+                            EquipmentId = 6,
+                            Amount = 4,
+                            Name = "Fotelja",
+                            RoomId = 2
+                        },
+                        new
+                        {
+                            EquipmentId = 7,
+                            Amount = 2,
+                            Name = "Spric za ispiranje usiju",
+                            RoomId = 3
+                        },
+                        new
+                        {
+                            EquipmentId = 8,
+                            Amount = 3,
+                            Name = "Otoskop",
+                            RoomId = 3
+                        },
+                        new
+                        {
+                            EquipmentId = 9,
+                            Amount = 2,
+                            Name = "Stetoskop",
+                            RoomId = 4
+                        },
+                        new
+                        {
+                            EquipmentId = 10,
+                            Amount = 3,
+                            Name = "Bolnicki krevet",
+                            RoomId = 4
+                        },
+                        new
+                        {
+                            EquipmentId = 11,
+                            Amount = 2,
+                            Name = "Aparat za merenje pritiska",
+                            RoomId = 4
+                        },
+                        new
+                        {
+                            EquipmentId = 12,
+                            Amount = 4,
+                            Name = "Stolica",
+                            RoomId = 5
+                        },
+                        new
+                        {
+                            EquipmentId = 13,
+                            Amount = 50,
+                            Name = "Zavoji",
+                            RoomId = 6
+                        },
+                        new
+                        {
+                            EquipmentId = 14,
+                            Amount = 24,
+                            Name = "Spricevi",
+                            RoomId = 6
+                        },
+                        new
+                        {
+                            EquipmentId = 15,
+                            Amount = 12,
+                            Name = "Gips",
+                            RoomId = 6
+                        },
+                        new
+                        {
+                            EquipmentId = 16,
+                            Amount = 200,
+                            Name = "Flasteri",
+                            RoomId = 6
+                        },
+                        new
+                        {
+                            EquipmentId = 17,
+                            Amount = 20,
+                            Name = "Bolnicki krevet",
+                            RoomId = 7
+                        },
+                        new
+                        {
+                            EquipmentId = 18,
+                            Amount = 20,
+                            Name = "Infuzija",
+                            RoomId = 7
+                        },
+                        new
+                        {
+                            EquipmentId = 19,
+                            Amount = 20,
+                            Name = "Stolica",
+                            RoomId = 8
+                        },
+                        new
+                        {
+                            EquipmentId = 20,
+                            Amount = 2,
+                            Name = "Stetoskop",
+                            RoomId = 9
+                        },
+                        new
+                        {
+                            EquipmentId = 21,
+                            Amount = 4,
+                            Name = "Stolica",
+                            RoomId = 10
+                        },
+                        new
+                        {
+                            EquipmentId = 22,
+                            Amount = 2,
+                            Name = "Krevet",
+                            RoomId = 11
+                        },
+                        new
+                        {
+                            EquipmentId = 23,
+                            Amount = 2,
+                            Name = "Stetoskop",
+                            RoomId = 12
+                        },
+                        new
+                        {
+                            EquipmentId = 24,
+                            Amount = 4,
+                            Name = "Infuzija",
+                            RoomId = 13
+                        },
+                        new
+                        {
+                            EquipmentId = 25,
+                            Amount = 1,
+                            Name = "Fotelja",
+                            RoomId = 13
+                        },
+                        new
+                        {
+                            EquipmentId = 26,
+                            Amount = 20,
+                            Name = "Stolica",
+                            RoomId = 13
                         });
                 });
 
@@ -421,6 +751,303 @@ namespace HospitalLibrary.Migrations
                         });
                 });
 
+            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Form", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("EndHourSaturday")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("EndHourSunday")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("EndHourWorkDay")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("StartHourSaturday")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("StartHourSunday")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("StartHourWorkDay")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Forms");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Neuroloske operacije i zahvati",
+                            EndHourSaturday = "17:00h",
+                            EndHourSunday = "CLOSED",
+                            EndHourWorkDay = "17:00h",
+                            Name = "101,Neurohirurgija",
+                            RoomId = 1,
+                            StartHourSaturday = "12:00h",
+                            StartHourSunday = "CLOSED",
+                            StartHourWorkDay = "8:00h"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Opustanje za radnike i posetioce",
+                            EndHourSaturday = "17:00h",
+                            EndHourSunday = "CLOSED",
+                            EndHourWorkDay = "17:00h",
+                            Name = "102,Kafeterija",
+                            RoomId = 2,
+                            StartHourSaturday = "12:00h",
+                            StartHourSunday = "CLOSED",
+                            StartHourWorkDay = "10:00h"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "UHO,GRLO,NOS",
+                            EndHourSaturday = "17:00h",
+                            EndHourSunday = "CLOSED",
+                            EndHourWorkDay = "17:00h",
+                            Name = "103,Otorinolaringologija",
+                            RoomId = 3,
+                            StartHourSaturday = "12:00h",
+                            StartHourSunday = "CLOSED",
+                            StartHourWorkDay = "10:00h"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Pregled misica i povreda",
+                            EndHourSaturday = "17:00h",
+                            EndHourSunday = "CLOSED",
+                            EndHourWorkDay = "17:00h",
+                            Name = "201,Fizioterapeut",
+                            RoomId = 4,
+                            StartHourSaturday = "12:00h",
+                            StartHourSunday = "CLOSED",
+                            StartHourWorkDay = "10:00h"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Pregledi za decu",
+                            EndHourSaturday = "17:00h",
+                            EndHourSunday = "CLOSED",
+                            EndHourWorkDay = "17:00h",
+                            Name = "202,Stomatologija",
+                            RoomId = 5,
+                            StartHourSaturday = "12:00h",
+                            StartHourSunday = "CLOSED",
+                            StartHourWorkDay = "10:00h"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Stanje robe u objektu",
+                            EndHourSaturday = "17:00h",
+                            EndHourSunday = "CLOSED",
+                            EndHourWorkDay = "17:00h",
+                            Name = "301,Magacin",
+                            RoomId = 6,
+                            StartHourSaturday = "12:00h",
+                            StartHourSunday = "CLOSED",
+                            StartHourWorkDay = "10:00h"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "Kreveti i sve potrebno za oporavku",
+                            EndHourSaturday = "17:00h",
+                            EndHourSunday = "CLOSED",
+                            EndHourWorkDay = "17:00h",
+                            Name = "302,Opsta nega",
+                            RoomId = 7,
+                            StartHourSaturday = "12:00h",
+                            StartHourSunday = "CLOSED",
+                            StartHourWorkDay = "10:00h"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Description = "Stolice i fotelje za cekanje",
+                            EndHourSaturday = "17:00h",
+                            EndHourSunday = "CLOSED",
+                            EndHourWorkDay = "17:00h",
+                            Name = "303,Cekaonica",
+                            RoomId = 8,
+                            StartHourSaturday = "12:00h",
+                            StartHourSunday = "CLOSED",
+                            StartHourWorkDay = "10:00h"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Description = "...",
+                            EndHourSaturday = "17:00h",
+                            EndHourSunday = "CLOSED",
+                            EndHourWorkDay = "17:00h",
+                            Name = "101a,Kardiologija",
+                            RoomId = 9,
+                            StartHourSaturday = "12:00h",
+                            StartHourSunday = "CLOSED",
+                            StartHourWorkDay = "10:00h"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Description = "...",
+                            EndHourSaturday = "17:00h",
+                            EndHourSunday = "CLOSED",
+                            EndHourWorkDay = "17:00h",
+                            Name = "102a,Vaskularne bolesti",
+                            RoomId = 10,
+                            StartHourSaturday = "12:00h",
+                            StartHourSunday = "CLOSED",
+                            StartHourWorkDay = "10:00h"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Description = "...,...,...",
+                            EndHourSaturday = "17:00h",
+                            EndHourSunday = "CLOSED",
+                            EndHourWorkDay = "17:00h",
+                            Name = "103a,Hirurgija",
+                            RoomId = 11,
+                            StartHourSaturday = "12:00h",
+                            StartHourSunday = "CLOSED",
+                            StartHourWorkDay = "10:00h"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Description = "... ... ... ...",
+                            EndHourSaturday = "17:00h",
+                            EndHourSunday = "CLOSED",
+                            EndHourWorkDay = "17:00h",
+                            Name = "201a,Papirologija",
+                            RoomId = 12,
+                            StartHourSaturday = "12:00h",
+                            StartHourSunday = "CLOSED",
+                            StartHourWorkDay = "10:00h"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Description = "...",
+                            EndHourSaturday = "17:00h",
+                            EndHourSunday = "CLOSED",
+                            EndHourWorkDay = "17:00h",
+                            Name = "202a,Prijavna soba",
+                            RoomId = 13,
+                            StartHourSaturday = "12:00h",
+                            StartHourSunday = "CLOSED",
+                            StartHourWorkDay = "10:00h"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Description = "...",
+                            EndHourSaturday = "17:00h",
+                            EndHourSunday = "CLOSED",
+                            EndHourWorkDay = "17:00h",
+                            Name = "203a,Uplasta/isplata",
+                            RoomId = 14,
+                            StartHourSaturday = "12:00h",
+                            StartHourSunday = "CLOSED",
+                            StartHourWorkDay = "10:00h"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Description = "...",
+                            EndHourSaturday = "17:00h",
+                            EndHourSunday = "CLOSED",
+                            EndHourWorkDay = "17:00h",
+                            Name = "204a,Izgubljeno/nadjeno",
+                            RoomId = 15,
+                            StartHourSaturday = "12:00h",
+                            StartHourSunday = "CLOSED",
+                            StartHourWorkDay = "10:00h"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Description = "...",
+                            EndHourSaturday = "17:00h",
+                            EndHourSunday = "CLOSED",
+                            EndHourWorkDay = "17:00h",
+                            Name = "101b,Onkologija",
+                            RoomId = 16,
+                            StartHourSaturday = "12:00h",
+                            StartHourSunday = "CLOSED",
+                            StartHourWorkDay = "10:00h"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Description = "Operacija endokrinog sistema",
+                            EndHourSaturday = "17:00h",
+                            EndHourSunday = "CLOSED",
+                            EndHourWorkDay = "17:00h",
+                            Name = "102b,Endokrinologija",
+                            RoomId = 17,
+                            StartHourSaturday = "12:00h",
+                            StartHourSunday = "CLOSED",
+                            StartHourWorkDay = "10:00h"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Description = "...",
+                            EndHourSaturday = "17:00h",
+                            EndHourSunday = "CLOSED",
+                            EndHourWorkDay = "17:00h",
+                            Name = "201b,Gastronomija",
+                            RoomId = 18,
+                            StartHourSaturday = "12:00h",
+                            StartHourSunday = "CLOSED",
+                            StartHourWorkDay = "10:00h"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Description = "...",
+                            EndHourSaturday = "17:00h",
+                            EndHourSunday = "CLOSED",
+                            EndHourWorkDay = "17:00h",
+                            Name = "301b,Magacin",
+                            RoomId = 19,
+                            StartHourSaturday = "12:00h",
+                            StartHourSunday = "CLOSED",
+                            StartHourWorkDay = "10:00h"
+                        });
+                });
+
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Map.MapBuilding", b =>
                 {
                     b.Property<int>("Id")
@@ -491,6 +1118,51 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("MapFloors");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Map.MapForm", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("EndHourSaturday")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("EndHourSunday")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("EndHourWorkDay")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("StartHourSaturday")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("StartHourSunday")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("StartHourWorkDay")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MapForms");
+                });
+
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Map.MapRoom", b =>
                 {
                     b.Property<int>("Id")
@@ -542,6 +1214,9 @@ namespace HospitalLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
                     b.Property<int>("Width")
                         .HasColumnType("integer");
 
@@ -562,7 +1237,8 @@ namespace HospitalLibrary.Migrations
                             Color = "blue",
                             FloorId = 1,
                             Height = 160,
-                            Name = "Pedijatrija",
+                            Name = "Neurohirurgija",
+                            Type = 3,
                             Width = 260,
                             X = 0,
                             Y = 0
@@ -574,6 +1250,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 1,
                             Height = 140,
                             Name = "Kafeterija",
+                            Type = 2,
                             Width = 220,
                             X = 0,
                             Y = 338
@@ -585,6 +1262,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 1,
                             Height = 180,
                             Name = "Otorinolaringologija",
+                            Type = 0,
                             Width = 300,
                             X = 237,
                             Y = 0
@@ -596,6 +1274,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 2,
                             Height = 100,
                             Name = "Fizioterapeut",
+                            Type = 0,
                             Width = 200,
                             X = 270,
                             Y = 378
@@ -607,6 +1286,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 2,
                             Height = 180,
                             Name = "Stomatologija",
+                            Type = 0,
                             Width = 360,
                             X = 0,
                             Y = 0
@@ -618,6 +1298,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 3,
                             Height = 180,
                             Name = "Magacin",
+                            Type = 4,
                             Width = 260,
                             X = 0,
                             Y = 0
@@ -629,6 +1310,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 3,
                             Height = 140,
                             Name = "Opsta nega",
+                            Type = 0,
                             Width = 220,
                             X = 0,
                             Y = 338
@@ -640,6 +1322,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 3,
                             Height = 140,
                             Name = "Cekaonica",
+                            Type = 0,
                             Width = 220,
                             X = 330,
                             Y = 158
@@ -651,6 +1334,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 4,
                             Height = 170,
                             Name = "Kardiologija",
+                            Type = 3,
                             Width = 320,
                             X = 0,
                             Y = 0
@@ -662,6 +1346,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 4,
                             Height = 140,
                             Name = "Vaskularne bolesti",
+                            Type = 0,
                             Width = 220,
                             X = 0,
                             Y = 365
@@ -673,6 +1358,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 4,
                             Height = 140,
                             Name = "Hirurgija",
+                            Type = 3,
                             Width = 220,
                             X = 245,
                             Y = 0
@@ -684,6 +1370,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 5,
                             Height = 140,
                             Name = "Papirologija",
+                            Type = 0,
                             Width = 220,
                             X = 0,
                             Y = 0
@@ -695,6 +1382,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 5,
                             Height = 140,
                             Name = "Prijavna soba",
+                            Type = 0,
                             Width = 220,
                             X = 200,
                             Y = 0
@@ -706,6 +1394,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 5,
                             Height = 140,
                             Name = "Uplasta/isplata",
+                            Type = 0,
                             Width = 220,
                             X = 0,
                             Y = 350
@@ -717,6 +1406,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 5,
                             Height = 140,
                             Name = "Izgubljeno/nadjeno",
+                            Type = 0,
                             Width = 220,
                             X = 200,
                             Y = 350
@@ -728,6 +1418,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 6,
                             Height = 190,
                             Name = "Onkologija",
+                            Type = 0,
                             Width = 320,
                             X = 0,
                             Y = 0
@@ -738,7 +1429,8 @@ namespace HospitalLibrary.Migrations
                             Color = "blue",
                             FloorId = 6,
                             Height = 240,
-                            Name = "Onkologija",
+                            Name = "Endokrinologija",
+                            Type = 3,
                             Width = 250,
                             X = 200,
                             Y = 300
@@ -750,6 +1442,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 7,
                             Height = 280,
                             Name = "Gastronomija",
+                            Type = 0,
                             Width = 420,
                             X = 50,
                             Y = 100
@@ -761,6 +1454,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 8,
                             Height = 170,
                             Name = "Magacin",
+                            Type = 4,
                             Width = 320,
                             X = 100,
                             Y = 138
@@ -780,6 +1474,17 @@ namespace HospitalLibrary.Migrations
                         .HasForeignKey("RoomsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Bed", b =>
+                {
+                    b.HasOne("HospitalLibrary.GraphicalEditor.Model.Room", "Room")
+                        .WithMany("Beds")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
@@ -831,6 +1536,40 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Patient");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Therapy", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HospitalLibrary.Core.Model.TreatmentHistory", null)
+                        .WithMany("Therapies")
+                        .HasForeignKey("TreatmentHistoryId");
+
+                    b.Navigation("Doctor");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.TreatmentHistory", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Bed", "Bed")
+                        .WithMany()
+                        .HasForeignKey("BedId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HospitalLibrary.Core.Model.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bed");
+
+                    b.Navigation("Patient");
+                });
+
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Floor", b =>
                 {
                     b.HasOne("HospitalLibrary.GraphicalEditor.Model.Building", "Building")
@@ -869,6 +1608,11 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Feedbacks");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.TreatmentHistory", b =>
+                {
+                    b.Navigation("Therapies");
+                });
+
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Building", b =>
                 {
                     b.Navigation("Floors");
@@ -881,6 +1625,11 @@ namespace HospitalLibrary.Migrations
                 {
                     b.Navigation("Map")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Room", b =>
+                {
+                    b.Navigation("Beds");
                 });
 #pragma warning restore 612, 618
         }

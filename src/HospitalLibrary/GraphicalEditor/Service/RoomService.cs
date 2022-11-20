@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Core.Service;
 using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Model.DTO;
 using HospitalLibrary.GraphicalEditor.Repository;
@@ -46,6 +47,7 @@ namespace HospitalLibrary.GraphicalEditor.Service
 
         public IEnumerable<Examination> GetTransferedEquipment(EquipmentTransferDTO dto)
         {
+           
             return null;
         }
     }

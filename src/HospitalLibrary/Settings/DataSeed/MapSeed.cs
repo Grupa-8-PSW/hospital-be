@@ -2,6 +2,7 @@
 using HospitalLibrary.GraphicalEditor.Model;
 using Microsoft.EntityFrameworkCore;
 using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Model;
 
 namespace HospitalLibrary.Settings.DataSeed
 {
@@ -14,6 +15,7 @@ namespace HospitalLibrary.Settings.DataSeed
                 new Building() { Id = 2, X = 600, Y = 100, Width = 150, Height = 450, Color = "gray", Name = "Too", Floors = new List<Floor>() },
                 new Building() { Id = 3, X = 400, Y = 600, Width = 400, Height = 130, Color = "gray", Name = "Tre", Floors = new List<Floor>() }
             );
+
             /*
             modelBuilder.Entity<MapBuilding>().HasData(
                 new MapBuilding() { Id = 1, X = 100, Y = 100, Width = 450, Height = 150, Color = "gray", BuildingId = 1 },
