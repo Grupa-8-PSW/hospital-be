@@ -4,7 +4,7 @@
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class FixMergeUpdatePatientModelMigration : Migration
+    public partial class AddLazyLoadingToBedsAndRoom1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

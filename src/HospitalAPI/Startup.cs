@@ -83,6 +83,7 @@ namespace HospitalAPI
             services.AddScoped<IExaminationRepository, ExaminationRepository>();
 
             services.AddScoped<IMapper<Examination, ExaminationDTO>, ExaminationMapper>();
+            services.AddScoped<IMapper<TreatmentHistory, TreatmentHistoryDTO>, TreatmentHistoryMapper>();
 
             services.AddScoped<IValidation, ExaminationValidation>();
 
@@ -90,6 +91,14 @@ namespace HospitalAPI
             services.AddScoped<IBloodService, BloodService>();
 
             services.AddScoped<IMapper<Blood, BloodDTO>, BloodMapper>();
+
+            services.AddScoped<ITreatmentHistoryService, TreatmentHistoryService>();
+            services.AddScoped<ITreatmentHistoryRepository, TreatmentHistoryRepository>();
+
+            services.AddScoped<IBedRepository, BedRepository>();
+
+            services.AddScoped<ITherapyRepository, TherapyRepository>();
+            services.AddScoped<ITherapyService, TherapyService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
