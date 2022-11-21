@@ -25,37 +25,45 @@ namespace IntegrationAPI.Connections
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             var factory = new ConnectionFactory { HostName = "localhost", Port = 5672, UserName = "guest", Password = "guest" };
-            connection = factory.CreateConnection();
-            channel = connection.CreateModel();
-            channel.QueueDeclare(queue: "news",
-                                  durable: false,
-                                  exclusive: false,
-                                  autoDelete: false,
-                                  arguments: null);
-            var consumer = new EventingBasicConsumer(channel);
-            consumer.Received += (model, ea) =>
+            try
             {
-                byte[] body = ea.Body.ToArray();
-                var jsonMessage = Encoding.UTF8.GetString(body);
-                BloodBankNewsDTO message;
-                try
+                connection = factory.CreateConnection();
+                channel = connection.CreateModel();
+                channel.QueueDeclare(queue: "news",
+                                      durable: false,
+                                      exclusive: false,
+                                      autoDelete: false,
+                                      arguments: null);
+                var consumer = new EventingBasicConsumer(channel);
+                consumer.Received += (model, ea) =>
                 {
-                    message = JsonConvert.DeserializeObject<BloodBankNewsDTO>(jsonMessage);
-                    using(var scope = serviceProvider.CreateScope())
+                    byte[] body = ea.Body.ToArray();
+                    var jsonMessage = Encoding.UTF8.GetString(body);
+                    BloodBankNewsDTO message;
+                    try
                     {
-                        var scopedService = scope.ServiceProvider.GetRequiredService<IBloodBankNewsService>();
-                        scopedService.Create(message);
+                        message = JsonConvert.DeserializeObject<BloodBankNewsDTO>(jsonMessage);
+                        using (var scope = serviceProvider.CreateScope())
+                        {
+                            var scopedService = scope.ServiceProvider.GetRequiredService<IBloodBankNewsService>();
+                            scopedService.Create(message);
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                    }
 
-            };
-            channel.BasicConsume(queue: "news",
-                                   autoAck: true,
-                                   consumer: consumer);
+                };
+                channel.BasicConsume(queue: "news",
+                                       autoAck: true,
+                                       consumer: consumer);
+            }
+            catch (Exception)
+            {
+
+                
+            }
             return Task.CompletedTask;
         }
 

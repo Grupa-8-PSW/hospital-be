@@ -8,6 +8,8 @@ using IntegrationLibrary.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using IntegrationLibrary.Core.Service.Interfaces;
+using IntegrationAPI.ConnectionService;
+using HospitalAPI.Connections;
 
 namespace IntegrationAPI
 {
@@ -45,6 +47,8 @@ namespace IntegrationAPI
             services.AddScoped<IBloodBankHTTPConnection, BloodBankHTTPConnection>();
             services.AddScoped<IBloodBankNewsRepository, BloodBankNewsRepository>();
             services.AddScoped<IBloodBankNewsService, BloodBankNewsService>();
+            services.AddScoped<IHospitalHTTPConnectionService, HospitalHTTPConnectionService>();
+            services.AddScoped<IHospitalHTTPConnection, HospitalHTTPConnection>();
             services.AddTransient<ExceptionMiddleware>();
         }
 
@@ -77,9 +81,7 @@ namespace IntegrationAPI
                 endpoints.MapControllers();
             });
 
-
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-
         }
 
     }

@@ -114,6 +114,7 @@ namespace IntegrationLibrary.Migrations
                 });
 
 
+
             modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodBankNews", b =>
                 {
                     b.HasOne("IntegrationLibrary.Core.Model.BloodBank", "BloodBank")
@@ -151,7 +152,7 @@ namespace IntegrationLibrary.Migrations
                         });
 #pragma warning restore 612, 618
 
-                });
+            });
         }
     }
 }
