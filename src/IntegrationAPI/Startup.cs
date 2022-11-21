@@ -31,6 +31,8 @@ namespace IntegrationAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IntegrationAPI", Version = "v1" });
             });
 
+            services.AddScoped<IBloodConsumptionConfigurationRepository, BloodConsumptionConfigurationRepository>();
+            services.AddScoped<IBloodConsumptionConfigurationService, BloodConsumptionConfigurationService>();
             services.AddHostedService<BloodBankRabbitMqConnection>();
 
             services.AddScoped<IBloodBankConnectionService, BloodBankConnectionService>();
@@ -48,6 +50,8 @@ namespace IntegrationAPI
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
             app.UseCors(builder =>
             {
                 builder
@@ -72,6 +76,10 @@ namespace IntegrationAPI
             {
                 endpoints.MapControllers();
             });
+
+
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
         }
 
     }

@@ -19,6 +19,8 @@ using IntegrationLibrary.Core.Model;
 using Shouldly;
 using IntegrationLibrary.Core.Model.DTO;
 using System.Collections;
+using HospitalAPI;
+using Startup = IntegrationAPI.Startup;
 
 namespace IntegrationTeamTests.Integration
 {
@@ -56,6 +58,7 @@ namespace IntegrationTeamTests.Integration
             RabbitMqPublisherMock.Send(message);
             await Task.Delay(1000);
             await rabbitConnection.StopAsync(CancellationToken.None);
+
 
             int newsCountAfter = GetAllBloodBankNews().Count();
             return (newsCountAfter - newsCountBefore) > 0;
@@ -116,6 +119,7 @@ namespace IntegrationTeamTests.Integration
 
     }
 
+
     public class BloodBankNewsTestData : IEnumerable<object[]>
     {
         public IEnumerator<object[]> GetEnumerator()
@@ -130,3 +134,5 @@ namespace IntegrationTeamTests.Integration
     }
 
 }
+
+ 
