@@ -62,16 +62,11 @@ namespace HospitalAPI.Controllers.Map
             return Ok(rooms);
         }
 
-        [HttpGet("get/transferedEquipment")]
+        [HttpPost("get/transferedEquipment")]
         public IActionResult GetAvailableTerminsForTransfer(EquipmentTransferDTO dto)
         {
-            var freeSpaces = _roomService.GetTransferedEquipment(dto);
-
-            if (freeSpaces == null)
-            {
-                return NotFound();
-            } 
-            return Ok(freeSpaces);
+            List<FreeSpaceDTO> freeSpace = _roomService.GetTransferedEquipment(dto);
+            return Ok(freeSpace); 
         }
     }
 
