@@ -40,8 +40,8 @@ namespace IntegrationAPI.Controllers
         {
             FileContentResult pdf = null;
             var validList =  _service.FindValidBloodUnits(BloodUnitsList(), out var configuration);
-            return File(_service.GeneratePdf(configuration.Last(), validList), "application/pdf", "bloodconsumptionreport.pdf"); ;
-    }
+            return File(_service.GeneratePdf(configuration.Last(), validList), "application/pdf", "bloodconsumptionreport.pdf");
+        }
 
 
 

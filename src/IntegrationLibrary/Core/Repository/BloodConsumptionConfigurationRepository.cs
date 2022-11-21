@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace IntegrationLibrary.Core.Repository
 {
@@ -27,13 +29,24 @@ namespace IntegrationLibrary.Core.Repository
 
         public BloodConsumptionConfiguration FindActiveConfiguration()
         {
-            return _context.BloodConsumptionConfiguration.FromSqlRaw("select * from BloodConsumptionConfiguration where Id = (select max(Id) from BloodConsumptionConfiguration)").First();
+            BloodConsumptionConfiguration? toRet = _context.BloodConsumptionConfiguration.FromSqlRaw("select * from \"BloodConsumptionConfiguration\" where \"Id\" = (select max(\"Id\") from \"BloodConsumptionConfiguration\")").FirstOrDefault();
+            if (toRet == null)
+            {
+                return null;
+            }
+
+            return toRet;
         }
          
         public List<BloodConsumptionConfiguration> GetAll()
         {
             return _context.BloodConsumptionConfiguration.ToList();
+        }
 
+        public void Update(BloodConsumptionConfiguration newBloodConsumptionConfiguration)
+        {
+            _context.BloodConsumptionConfiguration.Update(newBloodConsumptionConfiguration);
+            _context.SaveChanges();
         }
     }
 }

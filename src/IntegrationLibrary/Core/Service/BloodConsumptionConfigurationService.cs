@@ -30,6 +30,11 @@ namespace IntegrationLibrary.Core.Service
             return _repository.GetAll();
         }
 
+        public BloodConsumptionConfiguration FindActiveConfiguration()
+        {
+            return _repository.FindActiveConfiguration();
+        }
+
         public byte[] GeneratePdf(BloodConsumptionConfiguration bs, List<BloodUnit2> bloodUnits)
         {
             using (MemoryStream ms = new MemoryStream())
@@ -37,6 +42,7 @@ namespace IntegrationLibrary.Core.Service
                 Document document = new Document(PageSize.A4, 25, 25, 30, 30);
 
                 PdfWriter writer = PdfWriter.GetInstance(document, ms);
+                writer.Open();
                 document.Open();
                 PdfPTable table = new PdfPTable(2);
 
@@ -103,12 +109,17 @@ namespace IntegrationLibrary.Core.Service
 
             foreach (BloodUnit2 unit in bloodUnits)
             {
-                if ((configuration.Last().StartDateTime.Subtract(configuration.Last().ConsumptionPeriodHours) < unit.consumptionDate) &&
-                    (unit.consumptionDate < configuration.Last().StartDateTime))
+                if ((configuration.Last().NextSendingTime.Subtract(configuration.Last().ConsumptionPeriodHours) < unit.consumptionDate) &&
+                    (unit.consumptionDate < configuration.Last().NextSendingTime))
                     validList.Add(unit);
             }
 
             return validList;
+        }
+
+        public void Update(BloodConsumptionConfiguration newBloodConsumptionConfiguration)
+        {
+            _repository.Update(newBloodConsumptionConfiguration);
         }
     }
 }

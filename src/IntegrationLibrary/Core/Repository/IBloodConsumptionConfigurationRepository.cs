@@ -13,6 +13,7 @@ namespace IntegrationLibrary.Core.Repository
         public BloodConsumptionConfiguration Create(BloodConsumptionConfiguration bloodConsumptionConfiguration);
         public BloodConsumptionConfiguration FindActiveConfiguration();
         List<BloodConsumptionConfiguration> GetAll();
+        public void Update(BloodConsumptionConfiguration newBloodConsumptionConfiguration);
 
     }
 }

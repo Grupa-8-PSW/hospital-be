@@ -14,6 +14,10 @@ namespace IntegrationLibrary.Core.Service.Interfaces
         public List<BloodConsumptionConfiguration> GetAll();
 
         public byte[] GeneratePdf(BloodConsumptionConfiguration bs, List<BloodUnit2> bloodUnits);
+
+        public BloodConsumptionConfiguration FindActiveConfiguration();
         public List<BloodUnit2> FindValidBloodUnits(List<BloodUnit2> bloodUnits, out List<BloodConsumptionConfiguration> configuration);
+
+        public void Update(BloodConsumptionConfiguration newBloodConsumptionConfiguration);
     }
 }

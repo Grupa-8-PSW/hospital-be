@@ -50,6 +50,8 @@ namespace IntegrationAPI
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
             app.UseCors(builder =>
             {
                 builder
@@ -75,7 +77,7 @@ namespace IntegrationAPI
                 endpoints.MapControllers();
             });
 
-            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+            
         }
 
     }
