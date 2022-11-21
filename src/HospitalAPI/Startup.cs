@@ -102,6 +102,23 @@ namespace HospitalAPI
 
             services.AddScoped<AuthService>();
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "InternAllow",
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:4200")
+                          .AllowAnyHeader().AllowAnyMethod();
+                      });
+                options.AddPolicy(name: "PublicAllow",
+                policy =>
+                {
+                    policy.AllowAnyOrigin()
+                         .AllowAnyMethod()
+                         .AllowAnyHeader();
+                });
+            });
+
             services.AddIdentity<User, IdentityRole<int>>(options =>
             {
                 options.Password.RequireDigit = false;
@@ -139,14 +156,7 @@ namespace HospitalAPI
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors(builder =>
-            {
-                builder
-                    .AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-            });
-
+          
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -155,6 +165,9 @@ namespace HospitalAPI
             }
 
             app.UseRouting();
+
+            app.UseCors("PublicAllow");
+            app.UseCors("InternAllow");
 
             app.UseAuthentication();
             app.UseAuthorization();

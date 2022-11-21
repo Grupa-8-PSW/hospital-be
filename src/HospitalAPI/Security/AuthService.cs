@@ -40,10 +40,26 @@ namespace HospitalAPI.Security
             _mapper = mapper;
         }
 
-        public async Task<string> LoginAsync(LoginRequest loginRequest)
+        public async Task<string> LoginInternAsync(LoginRequest loginRequest)
         {
             var user = await _userManager.FindByNameAsync(loginRequest.Username);
             if (user == null)
+                return null;
+            var rolename = await _userManager.GetRolesAsync(user);
+            if (rolename.First() == "Patient")
+                return null;
+            var res = await _userManager.CheckPasswordAsync(user, loginRequest.Password);
+            if (!res)
+                return null;
+            return BuildToken(await GetUserDTO(user));
+        }
+        public async Task<string> LoginPublicAsync(LoginRequest loginRequest)
+        {
+            var user = await _userManager.FindByNameAsync(loginRequest.Username);
+            if (user == null)
+                return null;
+            var rolename = await _userManager.GetRolesAsync(user);
+            if (rolename.First() == "Manager" || rolename.First() == "Doctor")
                 return null;
             var res = await _userManager.CheckPasswordAsync(user, loginRequest.Password);
             if (!res)

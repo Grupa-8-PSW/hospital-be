@@ -34,7 +34,7 @@ namespace HospitalTests.HospitalAPITests.Integration.Controllers.Auth
             };
 
             // Act
-            var result = await controller.Login(loginRequest);
+            var result = await controller.LoginIntern(loginRequest);
 
             // Assert
             result.ShouldBeOfType(resultType);

@@ -4,11 +4,13 @@ using HospitalAPI.Security.Models;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers.InternalApp
 {
+    [EnableCors("InternAllow")]
     [Route("api/internal/[controller]")]
     [Authorize(Roles = "Manager")]
     [ApiController]

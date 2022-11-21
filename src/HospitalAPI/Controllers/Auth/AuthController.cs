@@ -1,6 +1,7 @@
 ﻿using HospitalAPI.Security;
 using HospitalAPI.Security.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers.Auth
@@ -16,10 +17,11 @@ namespace HospitalAPI.Controllers.Auth
             _authService = authService;
         }
 
-        [HttpPost("login")]
-        public async Task<ActionResult> Login(LoginRequest loginRequest)
+        [EnableCors("InternAllow")]
+        [HttpPost("intern/login")]
+        public async Task<ActionResult> LoginIntern(LoginRequest loginRequest)
         {
-            var token = await _authService.LoginAsync(loginRequest);
+            var token = await _authService.LoginInternAsync(loginRequest);
             if (token == null)
                 return BadRequest();
             return Ok(new LoginResponse()
@@ -27,6 +29,19 @@ namespace HospitalAPI.Controllers.Auth
                 Jwt = token
             });
         }
+        [EnableCors("PublicAllow")]
+        [HttpPost("public/login")]
+        public async Task<ActionResult> LoginPublic(LoginRequest loginRequest)
+        {
+            var token = await _authService.LoginPublicAsync(loginRequest);
+            if (token == null)
+                return BadRequest();
+            return Ok(new LoginResponse()
+            {
+                Jwt = token
+            });
+        }
+        [EnableCors("PublicAllow")]
         [HttpPost("register")]
         public async Task<ActionResult> Register(RegisterRequest registerRequest)
         {
