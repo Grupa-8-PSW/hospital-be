@@ -1,26 +1,20 @@
-﻿using HospitalAPI.Connections;
-using HospitalAPI.DTO;
-using HospitalAPI.Web.Mapper;
-using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Service;
+﻿using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Model.DTO;
+using IntegrationLibrary.Core.Service.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HospitalAPI.Controllers.InternalApp
+namespace IntegrationAPI.Controllers
 {
-    [Route("api/internal/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class BloodUnitRequestController : ControllerBase
     {
         private readonly IBloodUnitRequestService _bloodUnitRequestService;
-        private readonly IMapper<BloodUnitRequest, BloodUnitRequestDTO> _bloodUnitRequestMapper;
-        private readonly IBloodUnitRequestHTTPConnection _bloodUnitRequestHTTPConnection;
 
-        public BloodUnitRequestController(IBloodUnitRequestService bloodUnitRequestService, IMapper<BloodUnitRequest, BloodUnitRequestDTO> bloodUnitRequestMapper, IBloodUnitRequestHTTPConnection bloodUnitRequestHTTPConnection)
+        public BloodUnitRequestController(IBloodUnitRequestService bloodUnitRequestService)
         {
             _bloodUnitRequestService = bloodUnitRequestService;
-            _bloodUnitRequestMapper = bloodUnitRequestMapper;
-            _bloodUnitRequestHTTPConnection = bloodUnitRequestHTTPConnection;
         }
 
         // GET: api/rooms
@@ -53,18 +47,15 @@ namespace HospitalAPI.Controllers.InternalApp
                 return BadRequest(ModelState);
             }
 
-            BloodUnitRequest bloodUnitRequest = _bloodUnitRequestMapper.toModel(bloodUnitRequestDTO);
+            BloodUnitRequest bloodUnitRequest = bloodUnitRequestDTO.toModel();
 
 
             bool succes = _bloodUnitRequestService.Create(bloodUnitRequest);
             if (!succes)
             {
-                return BadRequest("Poruka .....");
+                return BadRequest("Error in creating new blood unit request");
             }
-            _bloodUnitRequestHTTPConnection.CreateBloodUnitRequestIntegration(bloodUnitRequestDTO);
             return CreatedAtAction("GetById", new { id = bloodUnitRequest.Id }, bloodUnitRequest);
         }
-
-        
     }
 }

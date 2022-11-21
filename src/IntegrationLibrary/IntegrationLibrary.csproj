@@ -7,13 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\**" />
     <Compile Remove="Persistence\Repository\**" />
     <Compile Remove="SharedModel\**" />
-    <EmbeddedResource Remove="Migrations\**" />
     <EmbeddedResource Remove="Persistence\Repository\**" />
     <EmbeddedResource Remove="SharedModel\**" />
-    <None Remove="Migrations\**" />
     <None Remove="Persistence\Repository\**" />
     <None Remove="SharedModel\**" />
   </ItemGroup>

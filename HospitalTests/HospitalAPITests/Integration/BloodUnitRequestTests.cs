@@ -14,6 +14,7 @@ using HospitalAPI.Controllers.InternalApp;
 using AutoMapper;
 using HospitalAPI.DTO;
 using HospitalAPI.Web.Mapper;
+using HospitalAPI.Connections;
 
 namespace HospitalTests.HospitalAPITests.Integration
 {
@@ -22,7 +23,7 @@ namespace HospitalTests.HospitalAPITests.Integration
         public BloodUnitRequestTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
         private static BloodUnitRequestController SetupController(IServiceScope scope)
         {
-            return new BloodUnitRequestController(scope.ServiceProvider.GetRequiredService<IBloodUnitRequestService>(), scope.ServiceProvider.GetRequiredService<IMapper<BloodUnitRequest, BloodUnitRequestDTO>>());
+            return new BloodUnitRequestController(scope.ServiceProvider.GetRequiredService<IBloodUnitRequestService>(), scope.ServiceProvider.GetRequiredService<IMapper<BloodUnitRequest, BloodUnitRequestDTO>>(), scope.ServiceProvider.GetRequiredService<IBloodUnitRequestHTTPConnection>());
         }
 
 

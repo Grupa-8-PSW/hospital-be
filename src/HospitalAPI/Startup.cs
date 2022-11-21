@@ -16,6 +16,7 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Validation;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 using HospitalAPI.Mapper;
+using HospitalAPI.Connections;
 
 namespace HospitalAPI
 {
@@ -110,6 +111,8 @@ namespace HospitalAPI
 
             services.AddScoped<IBloodUnitRequestRepository, BloodUnitRequestRepository>();
             services.AddScoped<IBloodUnitRequestService, BloodUnitRequestService>();
+
+            services.AddScoped<IBloodUnitRequestHTTPConnection, BloodUnitRequestHTTPConnection>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
