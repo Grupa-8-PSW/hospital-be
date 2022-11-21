@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Repository
 {
-    public class TreatmentHistoryRepository
+    public class TreatmentHistoryRepository : ITreatmentHistoryRepository
     {
         private readonly HospitalDbContext _context;
 
@@ -20,7 +20,7 @@ namespace HospitalLibrary.Core.Repository
 
         public IEnumerable<TreatmentHistory> GetAll()
         {
-            return _context.TreatmentHistories.ToList();
+            return _context.TreatmentHistories.Include(th => th.Patient).ToList();
         }
 
         public TreatmentHistory GetById(int id)

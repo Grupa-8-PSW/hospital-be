@@ -20,7 +20,8 @@ namespace HospitalLibrary.GraphicalEditor.Model
 
         public virtual ICollection<Floor> Floors { get; set; }
 
-        public ICollection<Bed> Beds { get; set; }
+        public virtual ICollection<Bed> Beds { get; set; }
         public RoomType Type { get; set; }
+
     }
 }

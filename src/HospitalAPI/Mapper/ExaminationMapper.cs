@@ -23,8 +23,9 @@ namespace HospitalAPI.Web.Mapper
 
         public Collection<ExaminationDTO> toDTO(Collection<Examination> models)
         {
-            return (Collection<ExaminationDTO>)models
-                .Select<Examination, ExaminationDTO>((examination) => this.toDTO(examination));
+            return new Collection<ExaminationDTO>(models
+                .Select<Examination, ExaminationDTO>((examination) => this.toDTO(examination))
+                .ToList<ExaminationDTO>());
         }
 
         public Examination toModel(ExaminationDTO dto)

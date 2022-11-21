@@ -10,7 +10,7 @@ namespace HospitalLibrary.Core.Model
     {
         public int Id { get; set; }
         public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public bool Active { get; set; }
         public string DischargeReason { get; set; }
         public IEnumerable<Therapy> Therapies { get; set; }
@@ -18,13 +18,15 @@ namespace HospitalLibrary.Core.Model
         public Patient Patient { get; set; }
         public int BedId { get; set; }
         public Bed Bed { get; set; }
+        public String? Reason { get; set; }
 
         public TreatmentHistory()
         {
         }
 
-        public TreatmentHistory(DateTime startDate, DateTime endDate, bool active, string dischargeReason, IEnumerable<Therapy> therapies, int patientId, Patient patient, int bedId, Bed bed)
+        public TreatmentHistory(int id, DateTime startDate, DateTime endDate, bool active, string dischargeReason, IEnumerable<Therapy> therapies, int patientId, Patient patient, int bedId, Bed bed, string reason)
         {
+            Id = id;
             StartDate = startDate;
             EndDate = endDate;
             Active = active;
@@ -34,6 +36,7 @@ namespace HospitalLibrary.Core.Model
             Patient = patient;
             BedId = bedId;
             Bed = bed;
+            Reason = reason;
         }
     }
 }

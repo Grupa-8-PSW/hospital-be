@@ -113,40 +113,7 @@ namespace IntegrationLibrary.Migrations
                         });
                 });
 
-            modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodBankNews", b =>
-            {
-                b.HasOne("IntegrationLibrary.Core.Model.BloodBank", "BloodBank")
-                    .WithMany()
-                    .HasForeignKey("BloodBankId")
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .IsRequired();
 
-                b.Navigation("BloodBank");
-            });
-            modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodConsumptionConfiguration", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<TimeSpan>("ConsumptionPeriodHours")
-                        .HasColumnType("interval");
-
-                    b.Property<TimeSpan>("FrequencyPeriodInHours")
-                        .HasColumnType("interval");
-
-                    b.Property<DateTime>("NextSendingTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("StartDateTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BloodConsumptionConfiguration");
-                });
 #pragma warning restore 612, 618
         }
     }
