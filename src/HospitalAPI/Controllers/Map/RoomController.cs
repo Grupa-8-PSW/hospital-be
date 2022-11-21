@@ -65,13 +65,13 @@ namespace HospitalAPI.Controllers.Map
         [HttpGet("get/transferedEquipment")]
         public IActionResult GetAvailableTerminsForTransfer(EquipmentTransferDTO dto)
         {
-            var rooms = _roomService.GetTransferedEquipment(dto);
-          
-            if (rooms == null)
+            var freeSpaces = _roomService.GetTransferedEquipment(dto);
+
+            if (freeSpaces == null)
             {
                 return NotFound();
             } 
-            return Ok(rooms);
+            return Ok(freeSpaces);
         }
     }
 
