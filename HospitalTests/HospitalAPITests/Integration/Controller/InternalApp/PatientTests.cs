@@ -21,12 +21,12 @@ namespace HospitalTests.HospitalAPITests.Integration.Controller.InternalApp
         }
 
         [Fact]
-        public void Retrieves_age_statistic()
+        public void Retrieves_statistic()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((OkObjectResult)controller.GetAgeStatistic())?.Value as AgeStatisticDTO;
+            var result = ((OkObjectResult)controller.GetStatistic())?.Value as StatisticDTO;
 
             result.ShouldNotBeNull();
         }

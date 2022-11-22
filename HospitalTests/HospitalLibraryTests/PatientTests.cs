@@ -26,12 +26,37 @@ namespace HospitalTests
         {
             PatientService service = new PatientService(CreateStubRepository());
 
-            AgeStatistic statistic = service.GetAgeStatistic();
+            AgeStatistic statistic = service.GetAgeStatistic(service.GetAll());
 
             statistic.ShouldNotBeNull();
             statistic.ZeroToEighteen.ShouldBeLessThanOrEqualTo(1);
             statistic.NineteenToSixtyFour.ShouldBeLessThanOrEqualTo(2);
             statistic.SixtyFivePlus.ShouldBeGreaterThanOrEqualTo(0);
+        }
+
+        [Fact]
+        public void Creates_valid_gender_statistic()
+        {
+            PatientService service = new PatientService(CreateStubRepository());
+
+            GenderStatistic statistic = service.GetGenderStatistic(service.GetAll());
+
+            statistic.ShouldNotBeNull();
+            statistic.Male.ShouldBe(3);
+            statistic.Female.ShouldBe(0);
+        }
+
+        [Fact]
+        public void Creates_valid_blood_type_statistic()
+        {
+            PatientService service = new PatientService(CreateStubRepository());
+
+            BloodTypeStatistic statistic = service.GetBloodTypeStatistic(service.GetAll());
+
+            statistic.ShouldNotBeNull();
+            statistic.ZeroPositive.ShouldBe(1);
+            statistic.BNegative.ShouldBe(2);
+            statistic.APositive.ShouldBe(0);
         }
 
         [Fact]
@@ -48,7 +73,7 @@ namespace HospitalTests
         {
             List<Patient> patients = new List<Patient>();
             Patient p1 = new Patient(1, "Pera", "Peric", "peraperic@gmail.com", "2201000120492", Gender.MALE, BloodType.ZERO_POSITIVE);
-            Patient p2 = new Patient(2, "Marko", "Markovic", "markomarkovic@gmail.com", "1412995012451", Gender.MALE, BloodType.AB_NEGATIVE);
+            Patient p2 = new Patient(2, "Marko", "Markovic", "markomarkovic@gmail.com", "1412995012451", Gender.MALE, BloodType.B_NEGATIVE);
             Patient p3 = new Patient(3, "Dusan", "Baljinac", "dusanbaljinac@gmail.com", "2008004124293", Gender.MALE, BloodType.B_NEGATIVE);
             patients.Add(p1);
             patients.Add(p2);

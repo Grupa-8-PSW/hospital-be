@@ -22,11 +22,17 @@ namespace HospitalLibrary.Core.Service
 
         public void Delete(int id) => _patientRepository.Delete(id);
 
-        public AgeStatistic GetAgeStatistic()
+        public Statistic GetStatistic()
+        {
+            List<Patient> patients = GetAll();
+            return new Statistic(GetAgeStatistic(patients), GetGenderStatistic(patients), GetBloodTypeStatistic(patients));
+        }
+
+        public AgeStatistic GetAgeStatistic(List<Patient> patients)
         {
             AgeStatistic statistic = new AgeStatistic();
 
-            foreach(Patient p in GetAll())
+            foreach(Patient p in patients)
             {
                 int age = CalculateAgeFromPin(p);
                 switch (age)
@@ -62,6 +68,64 @@ namespace HospitalLibrary.Core.Service
 
             DateTime birthDate = DateTime.Parse(fullBirthYear + "-" + p.Pin.Substring(2, 2) + "-" + p.Pin.Substring(0, 2));
             return new DateTime(dateNow.Subtract(birthDate).Ticks).Year - 1;
+        }
+
+        public GenderStatistic GetGenderStatistic(List<Patient> patients)
+        {
+            GenderStatistic statistic = new GenderStatistic();
+
+            foreach (Patient p in patients)
+            {
+                switch (p.Gender)
+                {
+                    case Enums.Gender.MALE:
+                        statistic.Male++;
+                        break;
+                    case Enums.Gender.FEMALE:
+                        statistic.Female++;
+                        break;
+                }
+            }
+
+            return statistic;
+        }
+
+        public BloodTypeStatistic GetBloodTypeStatistic(List<Patient> patients)
+        {
+            BloodTypeStatistic statistic = new BloodTypeStatistic();
+
+            foreach (Patient p in patients)
+            {
+                switch (p.BloodType)
+                {
+                    case Enums.BloodType.ZERO_POSITIVE:
+                        statistic.ZeroPositive++;
+                        break;
+                    case Enums.BloodType.ZERO_NEGATIVE:
+                        statistic.ZeroNegative++;
+                        break;
+                    case Enums.BloodType.A_POSITIVE:
+                        statistic.APositive++;
+                        break;
+                    case Enums.BloodType.A_NEGATIVE:
+                        statistic.ANegative++;
+                        break;
+                    case Enums.BloodType.B_POSITIVE:
+                        statistic.BPositive++;
+                        break;
+                    case Enums.BloodType.B_NEGATIVE:
+                        statistic.BNegative++;
+                        break;
+                    case Enums.BloodType.AB_POSITIVE:
+                        statistic.ABPositive++;
+                        break;
+                    case Enums.BloodType.AB_NEGATIVE:
+                        statistic.ABNegative++;
+                        break;
+                }
+            }
+
+            return statistic;
         }
     }
 }
