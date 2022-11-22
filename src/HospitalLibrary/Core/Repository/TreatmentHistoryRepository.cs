@@ -56,5 +56,14 @@ namespace HospitalLibrary.Core.Repository
             _context.SaveChanges();
         }
 
+        public TreatmentHistory GetByIdEager(int id)
+        {
+            return _context.TreatmentHistories
+                .Include(th => th.Patient)
+                .Include(th => th.Bed)
+                .Include(th => th.Therapies)
+                .ThenInclude(t => t.Prescribed)
+                .First((th) => th.Id == id);
+        }
     }
 }

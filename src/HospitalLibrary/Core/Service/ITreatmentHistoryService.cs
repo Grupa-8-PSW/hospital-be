@@ -15,5 +15,6 @@ namespace HospitalLibrary.Core.Service
         public bool Create(TreatmentHistory treatmentHistory, int roomId);
         public bool Update(TreatmentHistory treatmentHistory);
         public void Delete(TreatmentHistory treatmentHistory);
+        public TreatmentHistory GetByIdEager(int id);
     }
 }

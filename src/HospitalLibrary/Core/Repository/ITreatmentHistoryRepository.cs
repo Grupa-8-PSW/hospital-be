@@ -14,5 +14,6 @@ namespace HospitalLibrary.Core.Repository
         public void Create(TreatmentHistory doctor);
         public void Update(TreatmentHistory doctor);
         public void Delete(TreatmentHistory doctor);
+        public TreatmentHistory GetByIdEager(int id);
     }
 }
