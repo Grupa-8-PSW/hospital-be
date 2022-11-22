@@ -1,15 +1,17 @@
-﻿using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Repository;
+﻿using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Repository;
+using IntegrationLibrary.Core.Service.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.Service
+namespace IntegrationLibrary.Core.Service
 {
-    public class BloodUnitRequestService : IBloodUnitRequestService
-    {
+    public class BloodUnitRequestService : IBloodUnitRequestService { 
+        public BloodUnitRequestService() { }
+
         private readonly IBloodUnitRequestRepository _bloodUnitRequestRepository;
 
         public BloodUnitRequestService(IBloodUnitRequestRepository bloodUnitRequestRepository)
@@ -32,7 +34,5 @@ namespace HospitalLibrary.Core.Service
             _bloodUnitRequestRepository.Create(bloodUnitRequest);
             return true;
         }
-
-        
     }
 }

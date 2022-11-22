@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -13,8 +14,8 @@ namespace HospitalLibrary.Core.Model
         public DateTime WhenPrescribed { get; set; }
         public int Amount { get; set; }
         public string Reason { get; set; }
-        public int PrescribedId { get; set; }
-        public ITherapySubject Prescribed { get; set; }
+        public TherapyType TherapyType { get; set; }
+        public string TherapySubject { get; set; }      //medical drug name or blood type MedicalDrugs
         public int DoctorId { get; set; }
         public Doctor Doctor { get; set; }
         public int TreatmentHistoryId { get; set; }
@@ -24,15 +25,18 @@ namespace HospitalLibrary.Core.Model
         {
         }
 
-        public Therapy(DateTime whenPrescribed, int amount, string reason, int prescribedId, ITherapySubject prescribed, int doctorId, Doctor doctor)
+        public Therapy(int id, DateTime whenPrescribed, int amount, string reason, TherapyType therapyType, string therapySubject, int doctorId, Doctor doctor, int treatmentHistoryId, TreatmentHistory treatmentHistory)
         {
+            Id = id;
             WhenPrescribed = whenPrescribed;
             Amount = amount;
             Reason = reason;
-            PrescribedId = prescribedId;
-            Prescribed = prescribed;
+            TherapyType = therapyType;
+            TherapySubject = therapySubject;
             DoctorId = doctorId;
             Doctor = doctor;
+            TreatmentHistoryId = treatmentHistoryId;
+            TreatmentHistory = treatmentHistory;
         }
     }
 }

@@ -1,18 +1,18 @@
-﻿using HospitalLibrary.Core.Model;
-using HospitalLibrary.Settings;
+﻿using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.Repository
+namespace IntegrationLibrary.Core.Repository
 {
     public class BloodUnitRequestRepository : IBloodUnitRequestRepository
     {
-        private readonly HospitalDbContext _context;
+        private readonly IntegrationDbContext _context;
 
-        public BloodUnitRequestRepository(HospitalDbContext context)
+        public BloodUnitRequestRepository(IntegrationDbContext context)
         {
             _context = context;
         }

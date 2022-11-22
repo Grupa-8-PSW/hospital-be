@@ -17,6 +17,7 @@ using HospitalLibrary.Core.Validation;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 using HospitalAPI.Mapper;
 using HospitalLibrary.Core.Util;
+using HospitalAPI.Connections;
 
 namespace HospitalAPI
 {
@@ -86,7 +87,7 @@ namespace HospitalAPI
             services.AddScoped<IMapper<Examination, ExaminationDTO>, ExaminationMapper>();
             services.AddScoped<IMapper<TreatmentHistory, TreatmentHistoryDTO>, TreatmentHistoryMapper>();
 
-            services.AddScoped<IValidation, ExaminationValidation>();
+            services.AddScoped<IExaminationValidation, ExaminationValidation>();
 
             services.AddScoped<IBloodRepository, BloodRepository>();
             services.AddScoped<IBloodService, BloodService>();
@@ -100,6 +101,19 @@ namespace HospitalAPI
 
             services.AddScoped<ITherapyRepository, TherapyRepository>();
             services.AddScoped<ITherapyService, TherapyService>();
+
+            services.AddScoped<IBloodUnitRepository, BloodUnitRepository>();
+
+            services.AddScoped<IMedicalDrugRepository, MedicalDrugsRepository>();
+
+            services.AddScoped<ITherapyValidation, TherapyValidation>();
+
+            services.AddScoped<IMapper<BloodUnitRequest, BloodUnitRequestDTO>, BloodUnitRequestMapper>();
+
+            services.AddScoped<IBloodUnitRequestRepository, BloodUnitRequestRepository>();
+            services.AddScoped<IBloodUnitRequestService, BloodUnitRequestService>();
+
+            services.AddScoped<IBloodUnitRequestHTTPConnection, BloodUnitRequestHTTPConnection>();
 
         }
 

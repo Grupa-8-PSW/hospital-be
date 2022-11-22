@@ -7,19 +7,23 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Model
 {
-    public class MedicalDrugs : ITherapySubject
+    public class MedicalDrugs 
     { 
+        public int Id { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
-        public MedicalDrugType Type {get; set;}
+        public int Amount { get; set; }
 
         public MedicalDrugs()
         {
         }
 
-        public MedicalDrugs(string name, MedicalDrugType type)
+        public MedicalDrugs(int id, string code, string name, int amount)
         {
+            Id = id;
+            Code = code;
             Name = name;
-            Type = type;
+            Amount = amount;
         }
 
         public string Print()

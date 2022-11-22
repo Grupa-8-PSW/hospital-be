@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
+using HospitalLibrary.Core.Enums;
 
 namespace HospitalLibrary.Core.Repository
 {
@@ -55,6 +56,8 @@ namespace HospitalLibrary.Core.Repository
             _context.Therapies.Remove(therapy);
             _context.SaveChanges();
         }
+
+        
 
        
     }

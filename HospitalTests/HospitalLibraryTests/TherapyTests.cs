@@ -19,7 +19,7 @@ namespace HospitalTests.HospitalLibraryTests
         [Fact]
         public void Create_therapy()
         {
-            TherapyService therapyService = new TherapyService(CreateTherapyStubRepository());
+            TherapyService therapyService = null;// new TherapyService(CreateTherapyStubRepository());
 
             Therapy therapy = new Therapy();
 
@@ -39,10 +39,10 @@ namespace HospitalTests.HospitalLibraryTests
             List<Therapy> allTherapies = new List<Therapy>();
 
             Doctor doctor1 = new Doctor() { Id = 1, FirstName = "firstName", LastName = "lastName", RoomId = 0, Room = null, StartWork = new DateTime(), EndWork = new DateTime() };
-            BloodUnit unit = new BloodUnit() { Id = 1, BloodType = BloodType.A_NEGATIVE, AmountMl = 200 };
+            BloodUnit unit = new BloodUnit() { Id = 1, BloodType = BloodType.A_NEGATIVE, Amount = 200 };
 
 
-            allTherapies.Add(new Therapy() { Id = 1, WhenPrescribed = new DateTime(), Amount = 50, Reason = "reason1", PrescribedId = 1, Prescribed = unit, DoctorId = 1, Doctor = doctor1 });
+            allTherapies.Add(new Therapy() { Id = 1, WhenPrescribed = new DateTime(), Amount = 50, Reason = "reason1",  DoctorId = 1, Doctor = doctor1 });
 
 
             stubRepository.Setup(r => r.GetAll()).Returns(allTherapies);

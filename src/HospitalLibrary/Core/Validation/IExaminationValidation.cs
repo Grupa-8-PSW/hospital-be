@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Validation
 {
-    public interface IValidation
+    public interface IExaminationValidation
     {
         bool Validate(int doctorId, DateTime startTime, int duration);
 

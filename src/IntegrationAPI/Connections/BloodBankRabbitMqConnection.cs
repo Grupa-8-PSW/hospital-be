@@ -24,7 +24,7 @@ namespace IntegrationAPI.Connections
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             var factory = new ConnectionFactory { HostName = "localhost", Port = 5672, UserName = "guest", Password = "guest" };
-            connection = factory.CreateConnection();
+            connection = factory.CreateConnection();//try catch jer baca error
             channel = connection.CreateModel();
             channel.QueueDeclare(queue: "news",
                                   durable: false,
