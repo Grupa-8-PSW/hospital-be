@@ -64,39 +64,35 @@ namespace HospitalLibrary.GraphicalEditor.Service
             List<FreeSpaceDTO> filteredFreeSpaces = new List<FreeSpaceDTO>();
 
 
-            while (startDate < endDate)
+            foreach (Examination exam in fromRoomExaminations)
             {
-                foreach (Examination exam in fromRoomExaminations)
+                DateTime endExaminationTimeForFromRoom = exam.StartTime.AddMinutes(exam.Duration);
+                if (startDateTemp.AddHours(dto.Duration) < exam.StartTime)
                 {
-                    DateTime endExaminationTimeForFromRoom = exam.StartTime.AddMinutes(exam.Duration);
-                    if (startDateTemp.AddHours(dto.Duration) < exam.StartTime)
-                    {
-                        freeSpace.StartTime = startDate;
-                        freeSpace.EndTime = exam.StartTime;
-                        freeSpacesFromRoom.Add(freeSpace);
-                    }
-                    startDate = endExaminationTimeForFromRoom;
+                    freeSpace.StartTime = startDate;
+                    freeSpace.EndTime = exam.StartTime;
+                    freeSpacesFromRoom.Add(freeSpace);
                 }
+                startDate = endExaminationTimeForFromRoom;
             }
-
+            
+            
             startDate = dto.StartDate;
             startDateTemp = dto.StartDate;
             endDate = dto.EndDate;
 
-            while (startDate < endDate)
+            foreach (Examination exam2 in toRoomExaminations)
             {
-                foreach (Examination exam2 in toRoomExaminations)
+                DateTime endExaminationTimeForToRoom = exam2.StartTime.AddMinutes(exam2.Duration);
+                if (startDateTemp.AddHours(dto.Duration) < exam2.StartTime)
                 {
-                    DateTime endExaminationTimeForToRoom = exam2.StartTime.AddMinutes(exam2.Duration);
-                    if (startDateTemp.AddHours(dto.Duration) < exam2.StartTime)
-                    {
-                        freeSpace.StartTime = startDate;
-                        freeSpace.EndTime = exam2.StartTime;
-                        freeSpacesToRoom.Add(freeSpace);
-                    }
-                    startDate = endExaminationTimeForToRoom;
+                    freeSpace.StartTime = startDate;
+                    freeSpace.EndTime = exam2.StartTime;
+                    freeSpacesToRoom.Add(freeSpace);
                 }
+                startDate = endExaminationTimeForToRoom;
             }
+           
 
             foreach (FreeSpaceDTO freeSpaceFrom in freeSpacesFromRoom)
             {
@@ -111,7 +107,7 @@ namespace HospitalLibrary.GraphicalEditor.Service
                         filteredFreeSpaces.Add(freeSpaceTo);
                     }
                 }
-            }
+            } 
 
             return filteredFreeSpaces;
         }
