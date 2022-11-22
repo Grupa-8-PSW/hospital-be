@@ -3,6 +3,7 @@ using System;
 using IntegrationLibrary.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    partial class IntegrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221121150952_fullMigration")]
+    partial class fullMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,7 +64,7 @@ namespace IntegrationLibrary.Migrations
                             Email = "test@test.com",
                             Name = "testName",
                             Password = "unknown",
-                            ServerAddress = "htttp://localhost:8081/"
+                            ServerAddress = "testServAdd"
                         });
                 });
 
@@ -137,6 +139,33 @@ namespace IntegrationLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BloodConsumptionConfiguration");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodUnitRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BloodUnitRequests");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodBankNews", b =>

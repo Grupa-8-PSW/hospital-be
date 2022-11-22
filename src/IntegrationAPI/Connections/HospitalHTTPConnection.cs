@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using IntegrationLibrary.Core.Model;
 using RestSharp;
 using IntegrationLibrary.Core.Model.DTO;
 using Newtonsoft.Json;
@@ -24,6 +25,27 @@ namespace HospitalAPI.Connections
 
             List<BloodUnitRequestDTO> result = JsonConvert.DeserializeObject<List<BloodUnitRequestDTO>>( response.Content);
             return result;
+        }
+
+        public List<BloodUnitDTO> GetAllBloodUnits()
+        {
+            var client = new RestClient("http://localhost:5174/api/internal/BloodUnit");
+            var request = new RestRequest();
+
+
+            RestResponse response = client.Get(request);
+
+            List<BloodUnitDTO> result = JsonConvert.DeserializeObject<List<BloodUnitDTO>>(response.Content);
+            return result;
+
+        }
+
+        public void ChangeRequestStatus(BloodUnitRequestDTO bloodUnitRequestDto)
+        {
+            var client = new RestClient("http://localhost:5174");
+            var request = new RestRequest("/api/internal/BloodUnitRequest/" + bloodUnitRequestDto.Id, Method.Put);
+            request.AddJsonBody(bloodUnitRequestDto);
+            client.Execute(request);
         }
     }
 }

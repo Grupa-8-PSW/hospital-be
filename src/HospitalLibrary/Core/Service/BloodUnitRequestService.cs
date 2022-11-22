@@ -33,6 +33,12 @@ namespace HospitalLibrary.Core.Service
             return true;
         }
 
-        
+        public void Update(BloodUnitRequest bloodUnitRequest)
+        {
+            _bloodUnitRequestRepository.Update(bloodUnitRequest);
+        }
+
+
+
     }
 }

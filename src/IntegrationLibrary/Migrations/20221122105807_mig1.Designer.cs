@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221120185455_config_update_migration")]
-    partial class config_update_migration
+    [Migration("20221122105807_mig1")]
+    partial class mig1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -64,49 +64,55 @@ namespace IntegrationLibrary.Migrations
                             Email = "test@test.com",
                             Name = "testName",
                             Password = "unknown",
-                            ServerAddress = "testServAdd"
+                            ServerAddress = "htttp://localhost:8081/"
                         });
                 });
 
             modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodBankNews", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("archived")
+                    b.Property<bool>("Archived")
                         .HasColumnType("boolean");
 
-                    b.Property<byte[]>("byteArray")
-                        .IsRequired()
-                        .HasColumnType("bytea");
+                    b.Property<int>("BloodBankId")
+                        .HasColumnType("integer");
 
-                    b.Property<bool>("published")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("subject")
+                    b.Property<string>("ImgSrc")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("text")
+                    b.Property<bool>("Published")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Subject")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("id");
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BloodBankId");
 
                     b.ToTable("BloodBankNews");
 
                     b.HasData(
                         new
                         {
-                            id = 1,
-                            archived = false,
-                            byteArray = new byte[0],
-                            published = false,
-                            subject = "subject1",
-                            text = "text"
+                            Id = 1,
+                            Archived = false,
+                            BloodBankId = 1,
+                            ImgSrc = "",
+                            Published = false,
+                            Subject = "subject1",
+                            Text = "text"
                         });
                 });
 
@@ -133,6 +139,17 @@ namespace IntegrationLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BloodConsumptionConfiguration");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodBankNews", b =>
+                {
+                    b.HasOne("IntegrationLibrary.Core.Model.BloodBank", "BloodBank")
+                        .WithMany()
+                        .HasForeignKey("BloodBankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BloodBank");
                 });
 #pragma warning restore 612, 618
         }

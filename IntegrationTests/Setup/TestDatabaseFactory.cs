@@ -54,8 +54,7 @@ namespace IntegrationTeamTests.Setup
             context.BloodBanks.Add(new BloodBank {  Name = "BloodBank1", Email = "email@email.com", Password = "password", ServerAddress = "serverAddress", APIKey = "1" });
             context.BloodBankNews.Add(new BloodBankNews {  Subject = "subject", Text = "text", ImgSrc=String.Empty, Archived = false, Published = false, BloodBank = null, BloodBankId = 1});
             
-           // context.BloodBankNews.Add(new BloodBankNews { id = 1, subject = "subject", text = "text", byteArray = Array.Empty<byte>(), archived = false, published = false });
-
+           
 
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodConsumptionConfiguration\";");
 
@@ -64,6 +63,14 @@ namespace IntegrationTeamTests.Setup
             DateTime ss = DateTime.SpecifyKind(sd, DateTimeKind.Utc);
 
             context.BloodConsumptionConfiguration.Add(new BloodConsumptionConfiguration { ConsumptionPeriodHours = new TimeSpan(1, 2, 1), StartDateTime= ss, FrequencyPeriodInHours=new TimeSpan(1, 2, 3)});
+
+            context.BloodBanks.Add(new BloodBank { Name = "BloodBank1", Email = "email@email.com", Password = "password", ServerAddress = "serverAddress", APIKey = "1" });
+            context.BloodBankNews.Add(new BloodBankNews { Subject = "subject", Text = "text", ImgSrc = String.Empty, Archived = false, Published = false, BloodBank = null, BloodBankId = 1 });
+
+            //context.BloodBankNews.Add(new BloodBankNews { id = 1, subject = "subject", text = "text", byteArray = Array.Empty<byte>(), archived = false, published = false });
+
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodConsumptionConfiguration\";");
+
 
             context.SaveChanges();
         }

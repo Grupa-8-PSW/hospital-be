@@ -46,7 +46,7 @@ namespace IntegrationTeamTests.Integration
         }
 
 
-        private async Task<bool> ArrangeRabbitMq(BloodBankNewsDTO message) 
+        private async Task<bool> ArrangeRabbitMq(BloodBankNewsDTO message)
         {
             using var scope = Factory.Services.CreateScope();
             BloodBankRabbitMqConnection rabbitConnection = SetupRabbitMqConnection(scope);
@@ -135,4 +135,3 @@ namespace IntegrationTeamTests.Integration
 
 }
 
- 
