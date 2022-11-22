@@ -12,23 +12,30 @@ using System.Threading.Tasks;
 namespace HospitalLibrary.Core.Util
 {
     public class ParagraphInfo
-    {
-        public Section Section { get; set; }
+    { 
         public string Name { get; set; }
         public string Style { get; set; }
         public string BookmarkName { get; set; }
         public ParagraphAlignment? Allignment { get; set; }
         public string? Text { get; set; }
+        public Unit FontSize { get; set; } = 16;
+        public Unit SpaceAfter { get; set; } = "0cm";
+        public Unit SpaceBefore { get; set; } = "0cm";
+        public Color FontColor { get; set; } = Color.Parse("#0BDA51");
 
-        public ParagraphInfo(Section section, string style, string bookmarkName, string name, 
+        public ParagraphInfo(string style, string bookmarkName, string name, 
             ParagraphAlignment? allignment = null, string? text = null)
         {
-            Section = section;
             Name = name;
             Style = style;
             BookmarkName = bookmarkName;
             Allignment = allignment;
             Text = text;
+        }
+
+        public ParagraphInfo()
+        {
+
         }
     }
 
@@ -44,13 +51,11 @@ namespace HospitalLibrary.Core.Util
 
     public class PDFUtils
     {
-        public static Document CreateDocumentWithSection(string title, string subject, string author)
+        public static Document CreateDocumentWithSection(string title)
         {
             Document document = new Document();
             document.Info.Title = title;
-            document.Info.Subject = subject;
-            document.Info.Author = author;
-
+            document.DefaultPageSetup.PageFormat = PageFormat.A4;
             DefineStyles(document);
 
             Section section = document.AddSection();
@@ -60,6 +65,7 @@ namespace HospitalLibrary.Core.Util
 
         public static void RenderAndSaveDocument(Document document, string filename)
         {
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
             PdfDocumentRenderer renderer = new PdfDocumentRenderer(true);
             renderer.Document = document;
 
@@ -67,13 +73,13 @@ namespace HospitalLibrary.Core.Util
 
             renderer.PdfDocument.Save(filename);
 
-            Process.Start(filename);
+            Process.Start(new ProcessStartInfo { FileName = filename, UseShellExecute = true });
         }
 
         /// <summary>
         /// Defines the styles used in the document.
         /// </summary>
-        public static void DefineStyles(Document document)
+        private static void DefineStyles(Document document)
         {
             // Get the predefined style Normal.
             Style style = document.Styles["Normal"];
@@ -90,7 +96,7 @@ namespace HospitalLibrary.Core.Util
             style.Font.Name = "Tahoma";
             style.Font.Size = 14;
             style.Font.Bold = true;
-            style.Font.Color = Colors.DarkBlue;
+            style.Font.Color = Colors.LimeGreen;
             style.ParagraphFormat.PageBreakBefore = true;
             style.ParagraphFormat.SpaceAfter = 6;
 
@@ -103,6 +109,13 @@ namespace HospitalLibrary.Core.Util
 
             style = document.Styles["Heading3"];
             style.Font.Size = 10;
+            style.Font.Bold = true;
+            style.Font.Italic = true;
+            style.ParagraphFormat.SpaceBefore = 6;
+            style.ParagraphFormat.SpaceAfter = 3;
+
+            style = document.Styles["Heading4"];
+            style.Font.Size = 8;
             style.Font.Bold = true;
             style.Font.Italic = true;
             style.ParagraphFormat.SpaceBefore = 6;
@@ -124,20 +137,22 @@ namespace HospitalLibrary.Core.Util
             // Create a new style called TOC based on style Normal
             style = document.Styles.AddStyle("TOC", "Normal");
             style.ParagraphFormat.AddTabStop("16cm", TabAlignment.Right, TabLeader.Dots);
-            style.ParagraphFormat.Font.Color = Colors.Blue;
+            style.ParagraphFormat.Font.Color = Colors.LimeGreen;
         }
 
-        public static void DefineParagraph(ParagraphInfo paragraphInfo)
+        public static Paragraph DefineParagraph(ParagraphInfo paragraphInfo, Section section)
         {
-            Paragraph paragraph = paragraphInfo.Section.AddParagraph(paragraphInfo.Name, paragraphInfo.Style);
+            Paragraph paragraph = section.AddParagraph(paragraphInfo.Name, paragraphInfo.Style);
             paragraph.AddBookmark(paragraphInfo.BookmarkName);
             if (paragraphInfo.Allignment.HasValue) paragraph.Format.Alignment = paragraphInfo.Allignment.Value;
-            if (paragraphInfo.Text != null) paragraph.AddText(paragraphInfo.Text); 
+            if (paragraphInfo.Text != null) paragraph.AddText(paragraphInfo.Text);
+
+            return paragraph;
         }
 
-        public static void DefineTable(Document document, string[] columns, RowInfo[] rows)
+        public static void DefineTable(Document document, string[] columns, List<RowInfo> rows)
         {
-            if (rows.Length != 0 && (columns.Length != rows[0].CellsText.Length))
+            if (rows.Count != 0 && (columns.Length != rows[0].CellsText.Length))
             {
                 throw new Exception("Number of columns must be same as number of cells per row.");    
             }
@@ -145,13 +160,16 @@ namespace HospitalLibrary.Core.Util
             Table table = new Table();
             table.Borders.Width = 0.75;
 
-            // row num coll
-            Column column = table.AddColumn(Unit.FromCentimeter(2));
-            column.Format.Alignment = ParagraphAlignment.Center;
+            // Calculating column width
+            int sectionWidth = (int)document.DefaultPageSetup.PageWidth 
+                - (int)document.DefaultPageSetup.LeftMargin 
+                - (int)document.DefaultPageSetup.RightMargin;
+            float columnWidth = sectionWidth / columns.Length;
 
-            foreach (string col in columns)
+            foreach (string _ in columns)
             {
-                table.AddColumn(Unit.FromCentimeter(5));
+                Column addedCol = table.AddColumn(Unit.FromCentimeter(5));
+                addedCol.Width = columnWidth;
             }
 
             Row row = table.AddRow();
@@ -163,7 +181,7 @@ namespace HospitalLibrary.Core.Util
                 cell.AddParagraph(columns[i]);
             }
 
-            for (int i = 0; i < rows.Length; i++)
+            for (int i = 0; i < rows.Count; i++)
             {
                 row = table.AddRow();
                 
@@ -175,8 +193,8 @@ namespace HospitalLibrary.Core.Util
 
             }
 
-            table.SetEdge(0, 0, 2, 3, Edge.Box, BorderStyle.Single, 1.5, Colors.Black);
-
+            table.SetEdge(0, 0, columns.Length, rows.Count, Edge.Box, BorderStyle.Single, 1.5, Colors.Black);
+            
             document.LastSection.Add(table);
         }
     }

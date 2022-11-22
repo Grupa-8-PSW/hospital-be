@@ -16,6 +16,7 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Validation;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 using HospitalAPI.Mapper;
+using HospitalLibrary.Core.Util;
 
 namespace HospitalAPI
 {
@@ -99,6 +100,7 @@ namespace HospitalAPI
 
             services.AddScoped<ITherapyRepository, TherapyRepository>();
             services.AddScoped<ITherapyService, TherapyService>();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

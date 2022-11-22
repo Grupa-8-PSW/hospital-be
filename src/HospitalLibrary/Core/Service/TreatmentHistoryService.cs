@@ -1,9 +1,12 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Core.Util;
 using HospitalLibrary.Core.Validation;
 using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
+using MailKit;
+using MigraDoc.DocumentObjectModel;
 using MimeKit.IO.Filters;
 using System;
 using System.Collections.Generic;
@@ -19,7 +22,6 @@ namespace HospitalLibrary.Core.Service
         private readonly IRoomService _roomService;
         private readonly IPatientService _patientService;
         private readonly IBedRepository _bedRepository;
-
         public TreatmentHistoryService(ITreatmentHistoryRepository treatmentHistoryRepository, IRoomService roomService,
             IPatientService patientService, IBedRepository bedRepository)
         {
@@ -74,6 +76,10 @@ namespace HospitalLibrary.Core.Service
         public void Delete(TreatmentHistory treatmentHistory)
         {
             _treatmentHistoryRepository.Delete(treatmentHistory);
+        }
+        public TreatmentHistory GetByIdEager(int id)
+        {
+            return _treatmentHistoryRepository.GetByIdEager(id);
         }
 
     }
