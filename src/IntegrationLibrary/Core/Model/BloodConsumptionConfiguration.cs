@@ -26,7 +26,6 @@ namespace IntegrationLibrary.Core.Model
         public TimeSpan ConsumptionPeriodHours { get; set; }
 
 
-
         public BloodConsumptionConfiguration(int id, DateTime startDateTime, TimeSpan frequencyPeriodInHours, TimeSpan consumptionPeriodHours)
         {
             this.Id = id;
@@ -55,7 +54,8 @@ namespace IntegrationLibrary.Core.Model
         public BloodConsumptionConfiguration(BloodConsumptionReportDTO dto)
         {
             String dateTimeFormat = "dd/MMM/yyyy HH:mm:ss";
-            this.StartDateTime = DateTime.ParseExact(dto.StartDate+" "+dto.StartTime, dateTimeFormat, new CultureInfo("en-GB")).ToUniversalTime();
+            var StartDateTime1 = DateTime.ParseExact(dto.StartDate+" "+dto.StartTime, dateTimeFormat, new CultureInfo("en-GB")).ToUniversalTime();
+            this.StartDateTime = DateTime.SpecifyKind(StartDateTime1, DateTimeKind.Utc);
             
             this.ConsumptionPeriodHours = new TimeSpan((int)dto.ConsumptionPeriodHours, 0, 0);
             this.FrequencyPeriodInHours = new TimeSpan((int)dto.FrequencyPeriodInHours, 0, 0);

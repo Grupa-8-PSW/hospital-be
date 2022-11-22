@@ -1,21 +1,13 @@
 using IntegrationTeamTests.Setup;
-using System;
 using Xunit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using IntegrationAPI.Controllers;
-using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using IntegrationAPI;
 using IntegrationLibrary.Core.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.DTO;
-using System.Net.Http;
-using Shouldly;
+
 
 namespace IntegrationTeamTests.Integration
 {
@@ -33,7 +25,7 @@ namespace IntegrationTeamTests.Integration
 
 
         [Fact]
-        public async void BloodConsumptionConfiguration()
+        public async void CreatingBloodConsumptionConfiguration()
         {
             // Arrange
             using var scope = Factory.Services.CreateScope();
@@ -58,17 +50,9 @@ namespace IntegrationTeamTests.Integration
             Assert.IsType<OkObjectResult>(retVal);
             Assert.True(ValidateObjectWritenInBase(dto, createdBloodConsumptionConfiguration));
             
-            
         }
 
-<<<<<<< HEAD
-        [Fact]
-        public void CheckData()
-        {
-            using var scope = Factory.Services.CreateScope();
-            var controller = SetupController(scope);
-        }
-=======
+
 
         private bool ValidateObjectWritenInBase(BloodConsumptionReportDTO dto, BloodConsumptionConfiguration retVal)
         {
@@ -81,7 +65,7 @@ namespace IntegrationTeamTests.Integration
             else
                 return false;
 
-        } 
->>>>>>> ce151d384f548f031285072a936cc0f8f508419d
+        }
+
     }
 }

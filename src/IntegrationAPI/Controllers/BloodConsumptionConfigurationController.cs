@@ -30,6 +30,7 @@ namespace IntegrationAPI.Controllers
         [HttpPost]
         public IActionResult CreateConfiguration([FromBody] BloodConsumptionReportDTO dto)
         {
+            BloodConsumptionConfigurationValidator.Validate(dto);
             return Ok(_service.Create(new BloodConsumptionConfiguration(dto)));
         }
 
@@ -38,7 +39,7 @@ namespace IntegrationAPI.Controllers
         [HttpGet]
         public IActionResult GenerateSeveralPdf()
         {
-            FileContentResult pdf = null;
+           // FileContentResult pdf = null;
             var bloodUnits = InitializateBloodUnit();
             List<BloodUnit2> validList = new List<BloodUnit2>();
             List<BloodConsumptionConfiguration> bcc = _service.GetAll();
