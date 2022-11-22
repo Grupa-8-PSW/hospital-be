@@ -5,6 +5,6 @@ namespace HospitalLibrary.Core.Model
     public class BaseEntityModel
     {
         [Key]
-        public int Id { get; protected set; }
+        public virtual int Id { get; set; }
     }
 }

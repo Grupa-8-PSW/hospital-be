@@ -14,7 +14,9 @@ using HospitalAPI.Web.Dto;
 using HospitalAPI.Web.Mapper;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Validation;
-
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
+using HospitalAPI.Mapper;
+using HospitalAPI.Connections;
 
 namespace HospitalAPI
 {
@@ -82,8 +84,35 @@ namespace HospitalAPI
             services.AddScoped<IExaminationRepository, ExaminationRepository>();
 
             services.AddScoped<IMapper<Examination, ExaminationDTO>, ExaminationMapper>();
+            services.AddScoped<IMapper<TreatmentHistory, TreatmentHistoryDTO>, TreatmentHistoryMapper>();
 
-            services.AddScoped<IValidation, ExaminationValidation>();
+            services.AddScoped<IExaminationValidation, ExaminationValidation>();
+
+            services.AddScoped<IBloodRepository, BloodRepository>();
+            services.AddScoped<IBloodService, BloodService>();
+
+            services.AddScoped<IMapper<Blood, BloodDTO>, BloodMapper>();
+
+            services.AddScoped<ITreatmentHistoryService, TreatmentHistoryService>();
+            services.AddScoped<ITreatmentHistoryRepository, TreatmentHistoryRepository>();
+
+            services.AddScoped<IBedRepository, BedRepository>();
+
+            services.AddScoped<ITherapyRepository, TherapyRepository>();
+            services.AddScoped<ITherapyService, TherapyService>();
+
+            services.AddScoped<IBloodUnitRepository, BloodUnitRepository>();
+
+            services.AddScoped<IMedicalDrugRepository, MedicalDrugsRepository>();
+
+            services.AddScoped<ITherapyValidation, TherapyValidation>();
+
+            services.AddScoped<IMapper<BloodUnitRequest, BloodUnitRequestDTO>, BloodUnitRequestMapper>();
+
+            services.AddScoped<IBloodUnitRequestRepository, BloodUnitRequestRepository>();
+            services.AddScoped<IBloodUnitRequestService, BloodUnitRequestService>();
+
+            services.AddScoped<IBloodUnitRequestHTTPConnection, BloodUnitRequestHTTPConnection>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
