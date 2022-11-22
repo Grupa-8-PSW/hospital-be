@@ -28,6 +28,7 @@ namespace IntegrationAPI
                 options.UseNpgsql(Configuration.GetConnectionString("IntegrationDB")));
 
             services.AddControllers();
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IntegrationAPI", Version = "v1" });

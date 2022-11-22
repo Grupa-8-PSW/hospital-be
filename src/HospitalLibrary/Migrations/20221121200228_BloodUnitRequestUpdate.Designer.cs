@@ -3,6 +3,7 @@ using System;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221121200228_BloodUnitRequestUpdate")]
+    partial class BloodUnitRequestUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -204,9 +206,6 @@ namespace HospitalLibrary.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("ManagerComment")
                         .IsRequired()
                         .HasColumnType("text");
@@ -215,15 +214,13 @@ namespace HospitalLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("integer");
+                    b.Property<bool>("Rejected")
+                        .HasColumnType("boolean");
 
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
 
                     b.ToTable("BloodUnitRequests");
                 });
@@ -263,20 +260,20 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 1,
-                            EndWork = new DateTime(2022, 11, 21, 21, 41, 0, 569, DateTimeKind.Utc).AddTicks(2161),
+                            EndWork = new DateTime(2022, 11, 21, 20, 2, 27, 380, DateTimeKind.Utc).AddTicks(2235),
                             FirstName = "firstName",
                             LastName = "lastName",
                             RoomId = 1,
-                            StartWork = new DateTime(2022, 11, 21, 21, 41, 0, 569, DateTimeKind.Utc).AddTicks(2160)
+                            StartWork = new DateTime(2022, 11, 21, 20, 2, 27, 380, DateTimeKind.Utc).AddTicks(2234)
                         },
                         new
                         {
                             Id = 2,
-                            EndWork = new DateTime(2022, 11, 21, 21, 41, 0, 569, DateTimeKind.Utc).AddTicks(2163),
+                            EndWork = new DateTime(2022, 11, 21, 20, 2, 27, 380, DateTimeKind.Utc).AddTicks(2237),
                             FirstName = "firstNam2",
                             LastName = "lastName2",
                             RoomId = 1,
-                            StartWork = new DateTime(2022, 11, 21, 21, 41, 0, 569, DateTimeKind.Utc).AddTicks(2163)
+                            StartWork = new DateTime(2022, 11, 21, 20, 2, 27, 380, DateTimeKind.Utc).AddTicks(2237)
                         });
                 });
 
@@ -558,9 +555,9 @@ namespace HospitalLibrary.Migrations
                             Active = true,
                             BedId = 1,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2022, 11, 21, 21, 41, 0, 569, DateTimeKind.Utc).AddTicks(2194),
+                            EndDate = new DateTime(2022, 11, 21, 20, 2, 27, 380, DateTimeKind.Utc).AddTicks(2304),
                             PatientId = 1,
-                            StartDate = new DateTime(2022, 11, 21, 21, 41, 0, 569, DateTimeKind.Utc).AddTicks(2193)
+                            StartDate = new DateTime(2022, 11, 21, 20, 2, 27, 380, DateTimeKind.Utc).AddTicks(2304)
                         },
                         new
                         {
@@ -568,9 +565,9 @@ namespace HospitalLibrary.Migrations
                             Active = true,
                             BedId = 2,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2022, 11, 21, 21, 41, 0, 569, DateTimeKind.Utc).AddTicks(2198),
+                            EndDate = new DateTime(2022, 11, 21, 20, 2, 27, 380, DateTimeKind.Utc).AddTicks(2310),
                             PatientId = 2,
-                            StartDate = new DateTime(2022, 11, 21, 21, 41, 0, 569, DateTimeKind.Utc).AddTicks(2198)
+                            StartDate = new DateTime(2022, 11, 21, 20, 2, 27, 380, DateTimeKind.Utc).AddTicks(2309)
                         },
                         new
                         {
@@ -578,9 +575,9 @@ namespace HospitalLibrary.Migrations
                             Active = true,
                             BedId = 3,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2022, 11, 21, 21, 41, 0, 569, DateTimeKind.Utc).AddTicks(2200),
+                            EndDate = new DateTime(2022, 11, 21, 20, 2, 27, 380, DateTimeKind.Utc).AddTicks(2312),
                             PatientId = 3,
-                            StartDate = new DateTime(2022, 11, 21, 21, 41, 0, 569, DateTimeKind.Utc).AddTicks(2200)
+                            StartDate = new DateTime(2022, 11, 21, 20, 2, 27, 380, DateTimeKind.Utc).AddTicks(2311)
                         });
                 });
 
@@ -1718,17 +1715,6 @@ namespace HospitalLibrary.Migrations
                         .IsRequired();
 
                     b.Navigation("Room");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.BloodUnitRequest", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Doctor", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>

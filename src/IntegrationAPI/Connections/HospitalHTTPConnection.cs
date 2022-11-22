@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RestSharp;
 using IntegrationLibrary.Core.Model.DTO;
+using Newtonsoft.Json;
 
 namespace HospitalAPI.Connections
 {
@@ -20,7 +21,9 @@ namespace HospitalAPI.Connections
 
 
             RestResponse response = client.Get(request);
-            return JsonSerializer.Deserialize<List<BloodUnitRequestDTO>>(response.Content);
+
+            List<BloodUnitRequestDTO> result = JsonConvert.DeserializeObject<List<BloodUnitRequestDTO>>( response.Content);
+            return result;
         }
     }
 }
