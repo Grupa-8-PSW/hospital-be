@@ -1,4 +1,5 @@
-﻿using HospitalAPI.Connections;
+﻿using System.Web.Http.Cors;
+using HospitalAPI.Connections;
 using HospitalAPI.DTO;
 using HospitalAPI.Web.Mapper;
 using HospitalLibrary.Core.Model;
@@ -75,6 +76,15 @@ namespace HospitalAPI.Controllers.InternalApp
             return Ok();
 
 
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public ActionResult ChangeRequestStatus(BloodUnitRequestDTO bloodUnitRequestDto)
+        {
+            BloodUnitRequest bloodUnitRequest = _bloodUnitRequestMapper.toModel(bloodUnitRequestDto);
+            _bloodUnitRequestService.Update(bloodUnitRequest);
+            return Ok();
         }
 
         

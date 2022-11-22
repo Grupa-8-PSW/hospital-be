@@ -25,5 +25,12 @@ namespace IntegrationAPI.Controllers
             return Ok(hospitalHTTPConnectionService.GetAllBloodUnitRequests());
         }
 
+        [HttpPut]
+        public ActionResult ChangeRequestStatus([FromBody] BloodUnitRequestDTO bloodUnitRequestDto)
+        {
+            hospitalHTTPConnectionService.ChangeRequestStatus(bloodUnitRequestDto);
+            return Ok();
+        }
+
     }
 }

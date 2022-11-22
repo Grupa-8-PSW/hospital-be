@@ -39,6 +39,7 @@ namespace HospitalLibrary.Core.Service
             _bloodUnitRequestRepository.Update(bloodUnitRequest);
         }
 
+
         public void UpdateUnclearRequest(BloodUnitRequest bloodUnitRequest)
         {
             if(bloodUnitRequest.Status == BloodUnitRequestStatus.REVIEWAGAIN || bloodUnitRequest.Status == BloodUnitRequestStatus.WAITING)
@@ -46,5 +47,6 @@ namespace HospitalLibrary.Core.Service
                 _bloodUnitRequestRepository.Update(bloodUnitRequest);
             }
         }
+
     }
 }
