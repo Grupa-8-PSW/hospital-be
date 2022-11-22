@@ -3,6 +3,7 @@ using System;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221119000734_UpdateReasonOfTreatmentColumn")]
+    partial class UpdateReasonOfTreatmentColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,134 +63,38 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 1,
-                            Available = false,
+                            Available = true,
                             RoomId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Available = false,
+                            Available = true,
                             RoomId = 1
                         },
                         new
                         {
                             Id = 3,
-                            Available = true,
-                            RoomId = 1
+                            Available = false,
+                            RoomId = 2
                         },
                         new
                         {
                             Id = 4,
-                            Available = false,
-                            RoomId = 1
+                            Available = true,
+                            RoomId = 2
                         },
                         new
                         {
                             Id = 5,
-                            Available = true,
+                            Available = false,
                             RoomId = 3
                         },
                         new
                         {
                             Id = 6,
-                            Available = true,
+                            Available = false,
                             RoomId = 3
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Available = true,
-                            RoomId = 3
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Available = true,
-                            RoomId = 3
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Available = true,
-                            RoomId = 3
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Available = true,
-                            RoomId = 3
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Available = true,
-                            RoomId = 9
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Available = true,
-                            RoomId = 9
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Available = true,
-                            RoomId = 9
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Available = true,
-                            RoomId = 9
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Available = true,
-                            RoomId = 16
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Available = true,
-                            RoomId = 16
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Available = true,
-                            RoomId = 16
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Available = true,
-                            RoomId = 16
-                        },
-                        new
-                        {
-                            Id = 19,
-                            Available = true,
-                            RoomId = 17
-                        },
-                        new
-                        {
-                            Id = 20,
-                            Available = true,
-                            RoomId = 17
-                        },
-                        new
-                        {
-                            Id = 21,
-                            Available = true,
-                            RoomId = 17
-                        },
-                        new
-                        {
-                            Id = 22,
-                            Available = true,
-                            RoomId = 17
                         });
                 });
 
@@ -253,20 +159,20 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 1,
-                            EndWork = new DateTime(2022, 11, 22, 18, 55, 9, 657, DateTimeKind.Utc).AddTicks(2895),
+                            EndWork = new DateTime(2022, 11, 19, 0, 7, 30, 597, DateTimeKind.Utc).AddTicks(1847),
                             FirstName = "firstName",
                             LastName = "lastName",
                             RoomId = 1,
-                            StartWork = new DateTime(2022, 11, 22, 18, 55, 9, 657, DateTimeKind.Utc).AddTicks(2893)
+                            StartWork = new DateTime(2022, 11, 19, 0, 7, 30, 597, DateTimeKind.Utc).AddTicks(1845)
                         },
                         new
                         {
                             Id = 2,
-                            EndWork = new DateTime(2022, 11, 22, 18, 55, 9, 657, DateTimeKind.Utc).AddTicks(2901),
+                            EndWork = new DateTime(2022, 11, 19, 0, 7, 30, 597, DateTimeKind.Utc).AddTicks(1851),
                             FirstName = "firstNam2",
                             LastName = "lastName2",
                             RoomId = 1,
-                            StartWork = new DateTime(2022, 11, 22, 18, 55, 9, 657, DateTimeKind.Utc).AddTicks(2898)
+                            StartWork = new DateTime(2022, 11, 19, 0, 7, 30, 597, DateTimeKind.Utc).AddTicks(1850)
                         });
                 });
 
@@ -443,30 +349,6 @@ namespace HospitalLibrary.Migrations
                             Id = 4,
                             FirstName = "Slobodan",
                             LastName = "Radulovic"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            FirstName = "Mika",
-                            LastName = "Mikic"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            FirstName = "Ana",
-                            LastName = "Anic"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            FirstName = "Andjela",
-                            LastName = "Andjelic"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            FirstName = "Slobodan",
-                            LastName = "Slobic"
                         });
                 });
 
@@ -536,9 +418,6 @@ namespace HospitalLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("RoomId")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -547,8 +426,6 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("BedId");
 
                     b.HasIndex("PatientId");
-
-                    b.HasIndex("RoomId");
 
                     b.ToTable("TreatmentHistories");
 
@@ -559,11 +436,10 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 1,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2022, 11, 22, 18, 55, 9, 657, DateTimeKind.Utc).AddTicks(3094),
+                            EndDate = new DateTime(2022, 11, 19, 0, 7, 30, 597, DateTimeKind.Utc).AddTicks(2031),
                             PatientId = 1,
                             Reason = "reason1",
-                            RoomId = 1,
-                            StartDate = new DateTime(2022, 11, 22, 18, 55, 9, 657, DateTimeKind.Utc).AddTicks(3090)
+                            StartDate = new DateTime(2022, 11, 19, 0, 7, 30, 597, DateTimeKind.Utc).AddTicks(2030)
                         },
                         new
                         {
@@ -571,56 +447,21 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 2,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2022, 11, 22, 18, 55, 9, 657, DateTimeKind.Utc).AddTicks(3110),
+                            EndDate = new DateTime(2022, 11, 19, 0, 7, 30, 597, DateTimeKind.Utc).AddTicks(2053),
                             PatientId = 2,
                             Reason = "reason2",
-                            RoomId = 1,
-                            StartDate = new DateTime(2022, 11, 22, 18, 55, 9, 657, DateTimeKind.Utc).AddTicks(3109)
+                            StartDate = new DateTime(2022, 11, 19, 0, 7, 30, 597, DateTimeKind.Utc).AddTicks(2052)
                         },
                         new
                         {
                             Id = 3,
                             Active = false,
-                            BedId = 4,
+                            BedId = 3,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2022, 11, 22, 18, 55, 9, 657, DateTimeKind.Utc).AddTicks(3114),
+                            EndDate = new DateTime(2022, 11, 19, 0, 7, 30, 597, DateTimeKind.Utc).AddTicks(2059),
                             PatientId = 3,
                             Reason = "reason3",
-                            RoomId = 2,
-                            StartDate = new DateTime(2022, 11, 22, 18, 55, 9, 657, DateTimeKind.Utc).AddTicks(3113)
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Active = true,
-                            BedId = 1,
-                            DischargeReason = "abc",
-                            PatientId = 1,
-                            Reason = "reason1",
-                            RoomId = 1,
-                            StartDate = new DateTime(2022, 11, 22, 18, 55, 9, 657, DateTimeKind.Utc).AddTicks(3117)
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Active = true,
-                            BedId = 2,
-                            DischargeReason = "abc",
-                            PatientId = 2,
-                            Reason = "reason2",
-                            RoomId = 1,
-                            StartDate = new DateTime(2022, 11, 22, 18, 55, 9, 657, DateTimeKind.Utc).AddTicks(3120)
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Active = true,
-                            BedId = 4,
-                            DischargeReason = "abc",
-                            PatientId = 3,
-                            Reason = "reason3",
-                            RoomId = 2,
-                            StartDate = new DateTime(2022, 11, 22, 18, 55, 9, 657, DateTimeKind.Utc).AddTicks(3123)
+                            StartDate = new DateTime(2022, 11, 19, 0, 7, 30, 597, DateTimeKind.Utc).AddTicks(2058)
                         });
                 });
 
@@ -1786,11 +1627,13 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Bed", b =>
                 {
-                    b.HasOne("HospitalLibrary.GraphicalEditor.Model.Room", null)
+                    b.HasOne("HospitalLibrary.GraphicalEditor.Model.Room", "Room")
                         .WithMany("Beds")
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
@@ -1883,17 +1726,9 @@ namespace HospitalLibrary.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HospitalLibrary.GraphicalEditor.Model.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Bed");
 
                     b.Navigation("Patient");
-
-                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Floor", b =>

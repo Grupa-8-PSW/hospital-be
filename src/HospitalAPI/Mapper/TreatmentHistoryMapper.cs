@@ -22,7 +22,7 @@ namespace HospitalAPI.Mapper
             treatmentHistoryDTO.PatientId = treatmentHistory.PatientId;
             treatmentHistoryDTO.Patient = patientMapper.toDTO(treatmentHistory.Patient);
             treatmentHistoryDTO.BedId = treatmentHistory.BedId;
-           // treatmentHistoryDTO.RoomId = treatmentHistory.Bed.RoomId;
+            treatmentHistoryDTO.RoomId = treatmentHistory.RoomId;
             treatmentHistoryDTO.Reason = treatmentHistory.Reason;
             return treatmentHistoryDTO;
         }
@@ -41,13 +41,14 @@ namespace HospitalAPI.Mapper
                 treatmentHistory.Id = dto.Id.Value;
             }
 
-          //  treatmentHistory.StartDate = DateTime.ParseExact(dto.StartDate, "dd/MM/yyyy", null); //DateTime.Parse(dto.StartTime, null, System.Globalization.DateTimeStyles.RoundtripKind);
-          //  treatmentHistory.EndDate = DateTime.ParseExact(dto.EndDate, "dd/MM/yyyy", null); 
+            treatmentHistory.StartDate = (dto.StartDate == null) ? new DateTime() : DateTime.ParseExact(dto.StartDate, "MM/dd/yyyy", null); //DateTime.Parse(dto.StartTime, null, System.Globalization.DateTimeStyles.RoundtripKind);
+            treatmentHistory.EndDate = (dto.EndDate == null) ? null : DateTime.ParseExact(dto.EndDate, "MM/dd/yyyy", null); 
             treatmentHistory.Active = (dto.Active == null) ? false : true;
             treatmentHistory.DischargeReason = (dto.DischargeReason == null) ? "" : dto.DischargeReason;
             //Therapies? Patient? Bed?
             treatmentHistory.PatientId = dto.PatientId;
             treatmentHistory.BedId = (dto.BedId == null) ? 0 : dto.BedId.Value;
+            treatmentHistory.RoomId = dto.RoomId;
             treatmentHistory.Reason = dto.Reason;
       
             return treatmentHistory;

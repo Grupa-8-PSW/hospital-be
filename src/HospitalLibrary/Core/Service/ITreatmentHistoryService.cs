@@ -12,8 +12,9 @@ namespace HospitalLibrary.Core.Service
     {
         public IEnumerable<TreatmentHistory> GetAll();
         public TreatmentHistory GetById(int id);
-        public bool Create(TreatmentHistory treatmentHistory, int roomId);
+        public bool Create(TreatmentHistory treatmentHistory);
         public bool Update(TreatmentHistory treatmentHistory);
         public void Delete(TreatmentHistory treatmentHistory);
+        bool FinishTreatmentHistory(TreatmentHistory treatmentHistory);
     }
 }

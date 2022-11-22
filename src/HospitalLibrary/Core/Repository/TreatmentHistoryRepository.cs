@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -25,8 +26,8 @@ namespace HospitalLibrary.Core.Repository
 
         public TreatmentHistory GetById(int id)
         {
-            return _context.TreatmentHistories.Find(id);
-        }
+            return _context.TreatmentHistories.Include(th => th.Patient).Include(th => th.Bed).Where(th => th.Id == id).FirstOrDefault<TreatmentHistory>();
+        }                                               //i bed
 
         public void Create(TreatmentHistory treatmentHistory)
         {
