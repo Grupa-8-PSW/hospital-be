@@ -38,7 +38,7 @@ namespace HospitalAPI.Controllers.InternalApp
                 return NotFound();
             }
 
-            return Ok(bloodUnitRequest);
+            return Ok(_bloodUnitRequestMapper.toDTO(bloodUnitRequest));
         }
 
 
@@ -60,6 +60,21 @@ namespace HospitalAPI.Controllers.InternalApp
                 return BadRequest("Poruka .....");
             }
             return CreatedAtAction("GetById", new { id = bloodUnitRequest.Id }, bloodUnitRequest);
+        }
+        [Route("updateUnclearRequest")]
+        [HttpPut]
+        public ActionResult UpdateUnclearRequest(BloodUnitRequestDTO bloodUnitRequestDTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            BloodUnitRequest bloodUnitRequest = _bloodUnitRequestMapper.toModel(bloodUnitRequestDTO);
+            _bloodUnitRequestService.UpdateUnclearRequest(bloodUnitRequest);
+            return Ok();
+
+
         }
 
         

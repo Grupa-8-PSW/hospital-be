@@ -12,5 +12,7 @@ namespace HospitalLibrary.Core.Service
         IEnumerable<BloodUnitRequest> GetAll();
         BloodUnitRequest GetById(int id);
         bool Create(BloodUnitRequest bloodUnitRequest);
+        void Update(BloodUnitRequest bloodUnitRequest);
+        void UpdateUnclearRequest(BloodUnitRequest bloodUnitRequest);
     }
 }

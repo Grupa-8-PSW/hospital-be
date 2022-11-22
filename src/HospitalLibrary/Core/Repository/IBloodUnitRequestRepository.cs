@@ -12,5 +12,6 @@ namespace HospitalLibrary.Core.Repository
         IEnumerable<BloodUnitRequest> GetAll();
         BloodUnitRequest GetById(int id);
         void Create(BloodUnitRequest bloodUnitRequest);
+        void Update(BloodUnitRequest bloodUnitRequest);
     }
 }

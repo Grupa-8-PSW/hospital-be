@@ -29,8 +29,6 @@ namespace HospitalAPI.Connections
             RestResponse response = client.Post(request);
             return JsonSerializer.Deserialize<BloodUnitRequestDTO>(response.Content);
         }
-
-
     }
 }
 
