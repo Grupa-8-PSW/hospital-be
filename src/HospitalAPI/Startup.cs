@@ -113,6 +113,11 @@ namespace HospitalAPI
             services.AddScoped<IBloodUnitRequestService, BloodUnitRequestService>();
 
             services.AddScoped<IBloodUnitRequestHTTPConnection, BloodUnitRequestHTTPConnection>();
+
+            services.AddScoped<IBloodUnitRepository, BloodUnitRepository>();
+            services.AddScoped<IBloodUnitService, BloodUnitService>();
+
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

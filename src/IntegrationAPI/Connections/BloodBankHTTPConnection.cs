@@ -13,6 +13,7 @@ using IntegrationLibrary.Core.Service;
 using IntegrationLibrary.Core.Service.Interfaces;
 using HospitalLibrary.Core.Enums;
 using static iTextSharp.text.pdf.AcroFields;
+using IntegrationAPI.ConnectionService.Interface;
 
 namespace IntegrationAPI.Connections
 {
@@ -21,10 +22,12 @@ namespace IntegrationAPI.Connections
 
         private readonly IBloodConsumptionConfigurationService _service;
         private readonly IBloodBankService _bankService;
+        //private readonly IHospitalHTTPConnectionService _hospitalHTTPConnectionService;
         private String api = "reports/sendReports";
 
         public BloodBankHTTPConnection(IServiceScopeFactory factory)
         {
+           // _hospitalHTTPConnectionService = hospitalHTTPConnectionService;
             _service = factory.CreateScope().ServiceProvider
                 .GetRequiredService<IBloodConsumptionConfigurationService>();
 
@@ -66,13 +69,13 @@ namespace IntegrationAPI.Connections
                 }
                 else
                 {
-                    delay = await CheckIfServerCrashed(now, bcc, delay);
+                   // delay = await CheckIfServerCrashed(now, bcc, delay);
 
                     delay = CreateInitialDelay(now, bcc, delay);
 
                     delay = CheckIfStartTime(now, bcc, delay);
 
-                    delay = await SendToBanks(now, bcc, delay);
+                   // delay = await SendToBanks(now, bcc, delay);
                 }
 
                 await Task.Delay(delay, stoppingToken);
@@ -81,12 +84,12 @@ namespace IntegrationAPI.Connections
             while(!stoppingToken.IsCancellationRequested);
         }
 
-        private async Task<TimeSpan> SendToBanks(DateTime now, BloodConsumptionConfiguration bcc, TimeSpan delay)
+     /*   private async Task<TimeSpan> SendToBanks(DateTime now, BloodConsumptionConfiguration bcc, TimeSpan delay)
         {
             if (now.Hour == bcc.NextSendingTime.Hour && now.Minute == bcc.NextSendingTime.Minute)
             {
                 Guid uniqueSuffix = Guid.NewGuid();
-                byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(BloodUnitsList(), out var configuration));
+                byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(_hospitalHTTPConnectionService.GetAllBloodUnits(), out var configuration));
                 using (var stream = File.Create("./Reports/bloodConsumptionReport" + uniqueSuffix + ".PDF"))
                 {
                 }
@@ -100,7 +103,7 @@ namespace IntegrationAPI.Connections
             }
 
             return delay;
-        }
+        }*/
 
         private TimeSpan CheckIfStartTime(DateTime now, BloodConsumptionConfiguration bcc, TimeSpan delay)
         {
@@ -126,7 +129,7 @@ namespace IntegrationAPI.Connections
             return delay;
         }
 
-        private async Task<TimeSpan> CheckIfServerCrashed(DateTime now, BloodConsumptionConfiguration bcc, TimeSpan delay)
+   /*     private async Task<TimeSpan> CheckIfServerCrashed(DateTime now, BloodConsumptionConfiguration bcc, TimeSpan delay)
         {
             if (now > bcc.NextSendingTime)
             {
@@ -134,7 +137,7 @@ namespace IntegrationAPI.Connections
                 bcc.NextSendingTime = DateTime.SpecifyKind(bcc.NextSendingTime, DateTimeKind.Utc);
                 _service.Update(bcc);
                 Guid uniqueSuffix = Guid.NewGuid();
-                byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(BloodUnitsList(), out var configuration));
+                byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(_hospitalHTTPConnectionService.GetAllBloodUnits(), out var configuration));
                 using (var stream = File.Create("./Reports/bloodConsumptionReport" + uniqueSuffix + ".PDF"))
                 {
                 }
@@ -144,7 +147,7 @@ namespace IntegrationAPI.Connections
             }
 
             return delay;
-        }
+        }*/
 
         private void SendUrlToBloodBanks(string url)
         {
@@ -167,21 +170,6 @@ namespace IntegrationAPI.Connections
             }
         }
 
-        private static List<BloodUnit2> BloodUnitsList()
-        {
-            BloodUnit2 bu1 = new BloodUnit2(1, BloodType.AB_NEGATIVE, 20, DateTime.Now.AddHours(-30));
-            BloodUnit2 bu2 = new BloodUnit2(2, BloodType.A_NEGATIVE, 150, DateTime.Now.AddDays(12));
-            BloodUnit2 bu3 = new BloodUnit2(3, BloodType.B_NEGATIVE, 200, DateTime.Now);
-            BloodUnit2 bu4 = new BloodUnit2(4, BloodType.ZERO_NEGATIVE, 450, DateTime.Now.AddHours(-28));
-            BloodUnit2 bu5 = new BloodUnit2(5, BloodType.A_POSITIVE, 30, DateTime.Now.AddDays(40));
-            List<BloodUnit2> buList = new List<BloodUnit2>();
-            buList.Add(bu1);
-            buList.Add(bu2);
-            buList.Add(bu3);
-            buList.Add(bu4);
-            buList.Add(bu5);
-            return buList;
-        }
 
         private async Task<string> Upload(Guid g)
         {
