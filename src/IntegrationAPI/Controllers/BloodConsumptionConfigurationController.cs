@@ -39,11 +39,10 @@ namespace IntegrationAPI.Controllers
         public IActionResult GenerateSeveralPdf()
         {
             FileContentResult pdf = null;
+
             var validList =  _service.FindValidBloodUnits(BloodUnitsList(), out var configuration);
             return File(_service.GeneratePdf(configuration.Last(), validList), "application/pdf", "bloodconsumptionreport.pdf");
         }
-
-
 
         private static List<BloodUnit2> BloodUnitsList()
         {

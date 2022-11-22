@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221121030243_BloodUnitRequest")]
-    partial class BloodUnitRequest
+    [Migration("20221121201158_BloodBankNewsUpdate")]
+    partial class BloodBankNewsUpdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -70,47 +70,53 @@ namespace IntegrationLibrary.Migrations
 
             modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodBankNews", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("archived")
+                    b.Property<bool>("Archived")
                         .HasColumnType("boolean");
 
-                    b.Property<byte[]>("byteArray")
-                        .IsRequired()
-                        .HasColumnType("bytea");
+                    b.Property<int>("BloodBankId")
+                        .HasColumnType("integer");
 
-                    b.Property<bool>("published")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("subject")
+                    b.Property<string>("ImgSrc")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("text")
+                    b.Property<bool>("Published")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Subject")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("id");
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BloodBankId");
 
                     b.ToTable("BloodBankNews");
 
                     b.HasData(
                         new
                         {
-                            id = 1,
-                            archived = false,
-                            byteArray = new byte[0],
-                            published = false,
-                            subject = "subject1",
-                            text = "text"
+                            Id = 1,
+                            Archived = false,
+                            BloodBankId = 1,
+                            ImgSrc = "",
+                            Published = false,
+                            Subject = "subject1",
+                            Text = "text"
                         });
                 });
 
-            modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodUnitRequest", b =>
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodConsumptionConfiguration", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -118,23 +124,32 @@ namespace IntegrationLibrary.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Amount")
-                        .HasColumnType("integer");
+                    b.Property<TimeSpan>("ConsumptionPeriodHours")
+                        .HasColumnType("interval");
 
-                    b.Property<DateTime>("CreationDate")
+                    b.Property<TimeSpan>("FrequencyPeriodInHours")
+                        .HasColumnType("interval");
+
+                    b.Property<DateTime>("NextSendingTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Reason")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<DateTime>("StartDateTime")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
-                    b.ToTable("BloodUnitRequests");
+                    b.ToTable("BloodConsumptionConfiguration");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodBankNews", b =>
+                {
+                    b.HasOne("IntegrationLibrary.Core.Model.BloodBank", "BloodBank")
+                        .WithMany()
+                        .HasForeignKey("BloodBankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BloodBank");
                 });
 #pragma warning restore 612, 618
         }

@@ -14,13 +14,11 @@ namespace HospitalAPI.Controllers.InternalApp
     {
         private readonly IBloodUnitRequestService _bloodUnitRequestService;
         private readonly IMapper<BloodUnitRequest, BloodUnitRequestDTO> _bloodUnitRequestMapper;
-        private readonly IBloodUnitRequestHTTPConnection _bloodUnitRequestHTTPConnection;
 
-        public BloodUnitRequestController(IBloodUnitRequestService bloodUnitRequestService, IMapper<BloodUnitRequest, BloodUnitRequestDTO> bloodUnitRequestMapper, IBloodUnitRequestHTTPConnection bloodUnitRequestHTTPConnection)
+        public BloodUnitRequestController(IBloodUnitRequestService bloodUnitRequestService, IMapper<BloodUnitRequest, BloodUnitRequestDTO> bloodUnitRequestMapper)
         {
             _bloodUnitRequestService = bloodUnitRequestService;
             _bloodUnitRequestMapper = bloodUnitRequestMapper;
-            _bloodUnitRequestHTTPConnection = bloodUnitRequestHTTPConnection;
         }
 
         // GET: api/rooms
@@ -61,7 +59,6 @@ namespace HospitalAPI.Controllers.InternalApp
             {
                 return BadRequest("Poruka .....");
             }
-            _bloodUnitRequestHTTPConnection.CreateBloodUnitRequestIntegration(bloodUnitRequestDTO);
             return CreatedAtAction("GetById", new { id = bloodUnitRequest.Id }, bloodUnitRequest);
         }
 

@@ -25,6 +25,7 @@ namespace IntegrationLibrary.Core.Model
         public TimeSpan FrequencyPeriodInHours { get; set; }
         public TimeSpan ConsumptionPeriodHours { get; set; }
 
+
         public DateTime NextSendingTime { get; set; }
 
 
@@ -61,6 +62,7 @@ namespace IntegrationLibrary.Core.Model
             this.ConsumptionPeriodHours = new TimeSpan((int)dto.ConsumptionPeriodHours, 0, 0);
             this.FrequencyPeriodInHours = new TimeSpan((int)dto.FrequencyPeriodInHours, 0, 0);
             this.NextSendingTime = this.StartDateTime + this.FrequencyPeriodInHours;
+
         }
 
     }

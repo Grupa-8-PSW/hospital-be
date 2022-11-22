@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
 
 namespace IntegrationLibrary.Core.Repository
 {
@@ -37,16 +39,19 @@ namespace IntegrationLibrary.Core.Repository
 
             return toRet;
         }
+
          
         public List<BloodConsumptionConfiguration> GetAll()
         {
             return _context.BloodConsumptionConfiguration.ToList();
+
         }
 
         public void Update(BloodConsumptionConfiguration newBloodConsumptionConfiguration)
         {
             _context.BloodConsumptionConfiguration.Update(newBloodConsumptionConfiguration);
             _context.SaveChanges();
+
         }
     }
 }

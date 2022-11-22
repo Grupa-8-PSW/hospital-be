@@ -9,7 +9,6 @@ namespace IntegrationLibrary.Persistence
         public DbSet<BloodBank> BloodBanks { get; set; }
         public DbSet<BloodConsumptionConfiguration> BloodConsumptionConfiguration { get; set; }
         public DbSet<BloodBankNews> BloodBankNews { get; set; }
-        public DbSet<BloodUnitRequest> BloodUnitRequests { get; set; }
         public IntegrationDbContext(DbContextOptions options): base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
