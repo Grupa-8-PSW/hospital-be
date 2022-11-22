@@ -32,5 +32,11 @@ namespace HospitalLibrary.Core.Repository
             _context.BloodUnitRequests.Add(bloodUnitRequest);
             _context.SaveChanges();
         }
+
+        public void Update(BloodUnitRequest bloodUnitRequest)
+        {
+            _context.Update(bloodUnitRequest);
+            _context.SaveChanges();
+        }
     }
 }
