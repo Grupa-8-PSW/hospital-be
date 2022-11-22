@@ -51,15 +51,12 @@ namespace HospitalAPI.Controllers.Map
         }
 
         [HttpGet("search")]
-        public IActionResult GetByQuery(string name)
+        public IActionResult Search(string? name)
         {
             List<RoomDTO> rooms = new();
-            foreach (var room in _roomService.GetAll())
+            foreach (var room in _roomService.Search(name.Trim().ToLower()))
             {
-                if (room.Name == name)
-                {
-                    rooms.Add(new RoomDTO(room));
-                }
+                rooms.Add(new RoomDTO(room));
             }
             return Ok(rooms);
         }

@@ -38,6 +38,7 @@ namespace HospitalTests.HospitalAPITests.Setup
 
         private static void InitializeDatabase(HospitalDbContext context)
         {
+            //context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
             //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Rooms\";");
