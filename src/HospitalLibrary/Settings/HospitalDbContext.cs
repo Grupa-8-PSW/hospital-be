@@ -22,6 +22,8 @@ namespace HospitalLibrary.Settings
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Examination> Examinations { get; set; }
         public DbSet<TreatmentHistory> TreatmentHistories { get; set; }
+        public DbSet<Allergen> Allergens { get; set; }
+        public DbSet<Address> Addresses{ get; set; }
         public DbSet<Therapy> Therapies { get; set; }
         public DbSet<BloodUnit> BloodUnits { get; set; }
         public DbSet<MedicalDrugs> MedicalDrugs { get; set; }
@@ -41,8 +43,11 @@ namespace HospitalLibrary.Settings
                 .IsUnique();
 
             modelBuilder.SeedMap();
+            modelBuilder.SeedAddress();
+            modelBuilder.SeedDoctor();
             modelBuilder.SeedPatient();
             modelBuilder.SeedFeedback();
+            modelBuilder.SeedAllergen();
             modelBuilder.SeedBed();
             modelBuilder.SeedDoctor();
             modelBuilder.SeedMedicalDrugs();

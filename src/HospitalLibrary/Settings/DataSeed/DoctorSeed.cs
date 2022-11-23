@@ -13,8 +13,8 @@ namespace HospitalLibrary.Settings.DataSeed
         public static void SeedDoctor(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Doctor>().HasData(
-                new Doctor() { Id = 1, FirstName = "firstName", LastName = "lastName", RoomId = 1, StartWork = DateTime.UtcNow, EndWork = DateTime.UtcNow },
-                new Doctor() { Id = 2, FirstName = "firstNam2", LastName = "lastName2", RoomId = 1, StartWork = DateTime.UtcNow, EndWork = DateTime.UtcNow });
+                new Doctor() { Id = 1, FirstName = "Zeljko", LastName = "Babic", RoomId = 1, StartWork = new DateTime(1998, 04, 30, 7, 0, 0, DateTimeKind.Utc), EndWork = new DateTime(1998, 04, 30, 15, 0, 0, DateTimeKind.Utc) },
+                new Doctor() { Id = 2, FirstName = "Bora", LastName = "Stevanovic", RoomId = 2, StartWork = new DateTime(1998, 04, 30, 8, 0, 0, DateTimeKind.Utc), EndWork = new DateTime(1998, 04, 30, 16, 0, 0, DateTimeKind.Utc) });      
         }
     }
 }

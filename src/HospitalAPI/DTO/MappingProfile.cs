@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HospitalAPI.Security.Models;
 using HospitalLibrary.Core.Model;
 
 namespace HospitalAPI.DTO
@@ -15,7 +16,18 @@ namespace HospitalAPI.DTO
 
             CreateMap<CreateFeedbackDTO, Feedback>();
 
+            CreateMap<Allergen, AllergenDTO>();
+
+            CreateMap<AllergenDTO, Allergen>();
+
             CreateMap<Patient, PatientDTO>();
+
+            CreateMap<Doctor, DoctorDTO>();
+
+            CreateMap<RegisterUserDTO, Patient>()
+                .ForMember(f => f.Allergens, o => o.MapFrom(f => f.Allergens));
+
+            CreateMap<Statistic, StatisticDTO>();
         }
 
     }

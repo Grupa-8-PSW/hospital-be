@@ -8,6 +8,9 @@ using IntegrationLibrary.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using IntegrationLibrary.Core.Service.Interfaces;
+using IntegrationAPI.Security;
+using Microsoft.AspNetCore.Authentication;
+using RestSharp;
 
 namespace IntegrationAPI
 {
@@ -47,6 +50,13 @@ namespace IntegrationAPI
             services.AddScoped<IBloodUnitRequestService, BloodUnitRequestService>();
 
             services.AddTransient<ExceptionMiddleware>();
+
+            services.AddScoped<IHospitalAPIClient, HospitalAPIClient>();
+
+            services.AddAuthentication("Default")
+                .AddScheme<AuthenticationSchemeOptions, AuthHandler>("Default", null);
+            services.AddAuthorization();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -69,6 +79,9 @@ namespace IntegrationAPI
             app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseRouting();
+
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

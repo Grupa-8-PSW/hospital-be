@@ -15,6 +15,14 @@ using HospitalAPI.Web.Mapper;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Validation;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
+using Microsoft.AspNetCore.Identity;
+using HospitalAPI.Security;
+using HospitalAPI.Security.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 using HospitalAPI.Mapper;
 using HospitalAPI.Connections;
 
@@ -31,14 +39,22 @@ namespace HospitalAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<HospitalDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")));
             services.AddControllers();
+
+            services.AddDbContext<HospitalDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")));
+            services.AddDbContext<AppIdentityDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")));
 
             services.AddScoped(typeof(IFeedbackService), typeof(FeedbackService));
             services.AddScoped(typeof(IPatientService), typeof(PatientService));
 
             services.AddScoped(typeof(IFeedbackRepository), typeof(FeedbackRepository));
             services.AddScoped(typeof(IPatientRepository), typeof(PatientRepository));
+
+            services.AddScoped(typeof(IAllergensRepository), typeof(AllergensRepository));
+            services.AddScoped(typeof(IAllergenService), typeof(AllergenService));
+
+            services.AddScoped(typeof(IAddressRepository), typeof(AddressRepository));
+            services.AddScoped(typeof(IAddressService), typeof(AddressService));
 
             services.AddAutoMapper(typeof(MappingProfile));
 
@@ -107,6 +123,7 @@ namespace HospitalAPI
             services.AddScoped<IMedicalDrugsRepository, MedicalDrugsRepository>();
             services.AddScoped<IMedicalDrugsService, MedicalDrugsService>();
 
+            services.AddScoped<AuthService>();
             services.AddScoped<ITherapyValidation, TherapyValidation>();
 
             services.AddScoped<IMapper<BloodUnitRequest, BloodUnitRequestDTO>, BloodUnitRequestMapper>();
@@ -118,18 +135,63 @@ namespace HospitalAPI
 
 
             services.AddScoped<IMapper<Therapy, TherapyDTO>, TherapyMapper>();
+        
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "InternAllow",
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:4200")
+                          .AllowAnyHeader().AllowAnyMethod();
+                      });
+                options.AddPolicy(name: "PublicAllow",
+                policy =>
+                {
+                    policy.AllowAnyOrigin()
+                         .AllowAnyMethod()
+                         .AllowAnyHeader();
+                });
+            });
+
+            services.AddIdentity<User, IdentityRole<int>>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 5;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.SignIn.RequireConfirmedEmail = false;
+            })
+                .AddEntityFrameworkStores<AppIdentityDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o =>
+            {
+                o.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = Configuration["Jwt:ValidIssuer"],
+                    //ValidAudience = Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Secret"])),
+                    ValidateIssuer = true,
+                    ValidateAudience = false,
+                    ValidateLifetime = false,
+                    ValidateIssuerSigningKey = true
+                };
+            });
+            services.AddAuthentication();
+            services.AddAuthorization();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors(builder =>
-            {
-                builder
-                    .AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-            });
-
+          
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -139,6 +201,10 @@ namespace HospitalAPI
 
             app.UseRouting();
 
+            app.UseCors("PublicAllow");
+            app.UseCors("InternAllow");
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
