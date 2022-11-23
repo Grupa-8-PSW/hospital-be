@@ -19,5 +19,7 @@ namespace HospitalLibrary.GraphicalEditor.Model.DTO
         public DateTime EndDate { get; set; }
 
         public int Duration { get; set; }
+
+        public string EquipmentName { get; set; }
     }
 }
