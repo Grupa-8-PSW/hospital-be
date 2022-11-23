@@ -1,4 +1,5 @@
 ﻿using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Service.Interfaces;
 using Microsoft.AspNetCore.Connections;
@@ -36,10 +37,10 @@ namespace IntegrationAPI.Connections
             {
                 byte[] body = ea.Body.ToArray();
                 var jsonMessage = Encoding.UTF8.GetString(body);
-                BloodBankNews message;
+                BloodBankNewsDTO message;
                 try
                 {
-                    message = JsonConvert.DeserializeObject<BloodBankNews>(jsonMessage);
+                    message = JsonConvert.DeserializeObject<BloodBankNewsDTO>(jsonMessage);
                     using(var scope = serviceProvider.CreateScope())
                     {
                         var scopedService = scope.ServiceProvider.GetRequiredService<IBloodBankNewsService>();

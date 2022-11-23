@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using RestSharp.Serializers.Json;
@@ -26,8 +27,8 @@ namespace HospitalLibrary.Core.Repository
 
         public TreatmentHistory GetById(int id)
         {
-            return _context.TreatmentHistories.Find(id);
-        }
+            return _context.TreatmentHistories.Include(th => th.Patient).Include(th => th.Bed).Where(th => th.Id == id).FirstOrDefault<TreatmentHistory>();
+        }                                               //i bed
 
         public void Create(TreatmentHistory treatmentHistory)
         {
@@ -57,6 +58,17 @@ namespace HospitalLibrary.Core.Repository
             _context.SaveChanges();
         }
 
-        
+        public IEnumerable<TreatmentHistory> GetAllActive()
+        {
+            return _context.TreatmentHistories.Include(th => th.Active == true).ToList();
+        }
+
+        public IEnumerable<Patient> GetPatientsWithoutActiveTreatmentHistory()
+        {
+            return _context.Patients.Except(from th in _context.TreatmentHistories
+                     where th.Active == true
+                     select th.Patient).ToList();
+        }
+
     }
 }
