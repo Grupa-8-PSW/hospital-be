@@ -148,7 +148,7 @@ namespace HospitalLibrary.Migrations
                         {
                             Id = 1,
                             DoctorId = 1,
-                            Duration = 30,
+                            Duration = 300,
                             PatientId = 1,
                             RoomId = 1,
                             StartTime = new DateTime(2022, 11, 22, 2, 0, 0, 0, DateTimeKind.Utc)
@@ -160,16 +160,16 @@ namespace HospitalLibrary.Migrations
                             Duration = 120,
                             PatientId = 2,
                             RoomId = 2,
-                            StartTime = new DateTime(2022, 11, 22, 5, 30, 0, 0, DateTimeKind.Utc)
+                            StartTime = new DateTime(2022, 11, 22, 7, 30, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
                             Id = 3,
                             DoctorId = 1,
-                            Duration = 60,
+                            Duration = 420,
                             PatientId = 3,
                             RoomId = 1,
-                            StartTime = new DateTime(2022, 11, 22, 9, 30, 0, 0, DateTimeKind.Utc)
+                            StartTime = new DateTime(2022, 11, 22, 11, 30, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
@@ -178,7 +178,7 @@ namespace HospitalLibrary.Migrations
                             Duration = 150,
                             PatientId = 4,
                             RoomId = 2,
-                            StartTime = new DateTime(2022, 11, 22, 12, 30, 0, 0, DateTimeKind.Utc)
+                            StartTime = new DateTime(2022, 11, 22, 20, 30, 0, 0, DateTimeKind.Utc)
                         });
                 });
 

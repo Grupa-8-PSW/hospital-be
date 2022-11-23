@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221123015453_ExaminationsChangedMigration")]
-    partial class ExaminationsChangedMigration
+    [Migration("20221123125011__ExaminationsUpdatedMigration")]
+    partial class _ExaminationsUpdatedMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -150,10 +150,10 @@ namespace HospitalLibrary.Migrations
                         {
                             Id = 1,
                             DoctorId = 1,
-                            Duration = 180,
+                            Duration = 300,
                             PatientId = 1,
                             RoomId = 1,
-                            StartTime = new DateTime(2022, 11, 22, 10, 10, 10, 0, DateTimeKind.Utc)
+                            StartTime = new DateTime(2022, 11, 22, 2, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
@@ -162,43 +162,25 @@ namespace HospitalLibrary.Migrations
                             Duration = 120,
                             PatientId = 2,
                             RoomId = 2,
-                            StartTime = new DateTime(2022, 11, 21, 7, 30, 0, 0, DateTimeKind.Utc)
+                            StartTime = new DateTime(2022, 11, 22, 7, 30, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
                             Id = 3,
                             DoctorId = 1,
-                            Duration = 300,
+                            Duration = 420,
                             PatientId = 3,
-                            RoomId = 3,
-                            StartTime = new DateTime(2022, 11, 24, 4, 30, 0, 0, DateTimeKind.Utc)
-                        },
-                        new
-                        {
-                            Id = 4,
-                            DoctorId = 2,
-                            Duration = 60,
-                            PatientId = 4,
-                            RoomId = 4,
-                            StartTime = new DateTime(2022, 11, 25, 5, 30, 0, 0, DateTimeKind.Utc)
-                        },
-                        new
-                        {
-                            Id = 5,
-                            DoctorId = 2,
-                            Duration = 90,
-                            PatientId = 1,
                             RoomId = 1,
                             StartTime = new DateTime(2022, 11, 22, 11, 30, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
-                            Id = 6,
+                            Id = 4,
                             DoctorId = 2,
-                            Duration = 60,
-                            PatientId = 2,
+                            Duration = 150,
+                            PatientId = 4,
                             RoomId = 2,
-                            StartTime = new DateTime(2022, 11, 23, 11, 30, 0, 0, DateTimeKind.Utc)
+                            StartTime = new DateTime(2022, 11, 22, 20, 30, 0, 0, DateTimeKind.Utc)
                         });
                 });
 
