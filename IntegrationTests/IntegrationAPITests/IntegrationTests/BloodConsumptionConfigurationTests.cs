@@ -38,11 +38,10 @@ namespace IntegrationTeamTests.Integration
 
             };
 
-            Assert.True(true);
 
             // Act
             var retVal = controller.CreateConfiguration(dto) as OkObjectResult;
-
+            
 
             //Assert
             BloodConsumptionConfiguration createdBloodConsumptionConfiguration = (BloodConsumptionConfiguration)retVal.Value;
@@ -50,6 +49,8 @@ namespace IntegrationTeamTests.Integration
             Assert.True(ValidateObjectWritenInBase(dto, createdBloodConsumptionConfiguration));
 
         }
+
+
         private bool ValidateObjectWritenInBase(BloodConsumptionReportDTO dto, BloodConsumptionConfiguration retVal)
         {
             BloodConsumptionConfiguration bloodConsumptionConfiguration = new BloodConsumptionConfiguration(dto);
