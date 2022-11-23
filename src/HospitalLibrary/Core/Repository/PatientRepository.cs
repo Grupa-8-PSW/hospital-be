@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
+using Org.BouncyCastle.Crypto;
 
 namespace HospitalLibrary.Core.Repository
 {
@@ -15,7 +16,7 @@ namespace HospitalLibrary.Core.Repository
         {
             p.Allergens = allers;
             return Create(p);
-        }
 
+        }
     }
 }

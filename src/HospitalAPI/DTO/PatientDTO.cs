@@ -12,6 +12,7 @@ namespace HospitalAPI.DTO
         public string Pin { get; set; }
         public Gender Gender { get; set; }
         public BloodType BloodType { get; set; }
+        public int SelectedDoctorId { get; set; }
     }
 
 }

@@ -95,25 +95,27 @@ namespace HospitalAPI.Security
             await _roleManager.CreateAsync(new IdentityRole<int>("Manager"));
             await _roleManager.CreateAsync(new IdentityRole<int>("Doctor"));
             await _roleManager.CreateAsync(new IdentityRole<int>("Patient"));
+            
             */
-
-            /*var user = new User()
+            /*
+            var user = new User()
             {
                 UserName = "test",
                 Email = "test@test.com"
             };
             await _userManager.CreateAsync(user, "12345");
             _userManager.AddToRoleAsync(user, "Patient");
-
+            */
+            /*
             var user = new User()
             {
                 UserName = "doctor",
                 Email = "doctor@doctor.com"
             };
             await _userManager.CreateAsync(user, "12345");
-            _userManager.AddToRoleAsync(user, "Doctor");*/
+            _userManager.AddToRoleAsync(user, "Doctor");
 
-            /*
+            *
             var user = new User()
             {
                 UserName = "manager",

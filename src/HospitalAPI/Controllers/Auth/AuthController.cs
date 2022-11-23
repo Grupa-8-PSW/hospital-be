@@ -41,7 +41,7 @@ namespace HospitalAPI.Controllers.Auth
                 Jwt = token
             });
         }
-        [EnableCors("PublicAllow")]
+     //   [EnableCors("PublicAllow")]
         [HttpPost("register")]
         public async Task<ActionResult> Register(RegisterRequest registerRequest)
         {
