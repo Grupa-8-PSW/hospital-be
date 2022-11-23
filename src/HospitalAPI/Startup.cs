@@ -129,7 +129,7 @@ namespace HospitalAPI
             services.AddScoped<IBloodUnitRequestService, BloodUnitRequestService>();
 
             services.AddScoped<IBloodUnitRequestHTTPConnection, BloodUnitRequestHTTPConnection>();
-            services.AddScoped<IValidation, ExaminationValidation>();
+            services.AddScoped<IExaminationValidation, ExaminationValidation>();
 
             services.AddScoped<AuthService>();
 

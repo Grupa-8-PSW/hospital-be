@@ -45,6 +45,13 @@ namespace HospitalLibrary.Core.Model
             this.zERO_POSITIVE = zERO_POSITIVE;
         }
 
+        public Patient(int id, string firstName, string lastName)
+        {
+            this.Id = id;
+            this.FirstName = firstName;
+            this.LastName = lastName;
+        }
+
         public Patient()
         {
         }

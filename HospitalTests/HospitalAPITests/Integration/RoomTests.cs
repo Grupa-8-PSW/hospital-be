@@ -37,14 +37,14 @@ namespace HospitalTests.HospitalAPITests.Integration
             Assert.NotNull(result);
         }
 
-        [Fact]
-        public void Finds_rooms_with_free_beds() {
-          var result = ((OkObjectResult)controller.GetFreeRooms())?.Value as List<RoomDTO>;
+        //[Fact]
+        //public void Finds_rooms_with_free_beds() {
+        //  var result = ((OkObjectResult)controller.GetFreeRooms())?.Value as List<RoomDTO>;
 
-          Assert.NotNull(result);
-          Assert.IsType<List<RoomDTO>>(result);
-          Assert.NotEmpty(result);
-        }
+        //  Assert.NotNull(result);
+        //  Assert.IsType<List<RoomDTO>>(result);
+        //  Assert.NotEmpty(result);
+        //}
 
         
         public void Searches_rooms_with_same_name()
