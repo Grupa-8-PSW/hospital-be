@@ -38,7 +38,6 @@ namespace HospitalAPI.Connections
 
             List<BloodUnitDTO> result = JsonConvert.DeserializeObject<List<BloodUnitDTO>>(response.Content);
             return result;
-
         }
 
         public void ChangeRequestStatus(BloodUnitRequestDTO bloodUnitRequestDto)

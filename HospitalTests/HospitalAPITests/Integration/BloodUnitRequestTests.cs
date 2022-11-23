@@ -75,6 +75,49 @@ namespace HospitalTests.HospitalAPITests.Integration
             Assert.True(ValidateValuesInBase(updated, createdForUpdate));
         }
 
+        [Theory]
+        [ClassData(typeof(BloodUnitRequestTestData))]
+        public void Manager_approve_blood_unit_request(BloodUnitRequestDTO bloodUnitRequest, bool expectedDataBasechange)
+        {
+            //ARANGE
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            BloodUnitRequest? createdRequest;
+            BloodUnitRequestDTO createdForUpdate = ArrangeRequestForUpdate(out createdRequest, bloodUnitRequest);
+            createdForUpdate.Status = BloodUnitRequestStatus.APPROVED;
+
+
+            //ACT
+            var retVal = controller.ChangeRequestStatus(createdForUpdate) as OkResult;
+            BloodUnitRequestDTO updated = ((OkObjectResult)controller.GetById(createdRequest.Id))?.Value as BloodUnitRequestDTO;
+
+            //ASSERT
+            Assert.IsType<OkResult>(retVal);
+            Assert.True(ValidateValuesInBase(updated, createdForUpdate));
+        }
+
+        [Theory]
+        [ClassData(typeof(BloodUnitRequestTestData))]
+        public void Manager_reject_blood_unit_request(BloodUnitRequestDTO bloodUnitRequest, bool expectedDataBasechange)
+        {
+            //ARANGE
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            BloodUnitRequest? createdRequest;
+            BloodUnitRequestDTO createdForUpdate = ArrangeRequestForUpdate(out createdRequest, bloodUnitRequest);
+            createdForUpdate.Status = BloodUnitRequestStatus.REJECTED;
+
+
+            //ACT
+            var retVal = controller.ChangeRequestStatus(createdForUpdate) as OkResult;
+            BloodUnitRequestDTO updated = ((OkObjectResult)controller.GetById(createdRequest.Id))?.Value as BloodUnitRequestDTO;
+
+            //ASSERT
+            Assert.IsType<OkResult>(retVal);
+            Assert.True(ValidateValuesInBase(updated, createdForUpdate));
+        }
+
+
         private bool ValidateValuesInBase(BloodUnitRequestDTO? updated, BloodUnitRequestDTO createdForUpdate)
         {
             if (updated.Status.Equals(createdForUpdate.Status) && 

@@ -1,6 +1,8 @@
 ﻿using System.Drawing.Text;
+using HospitalAPI.DTO;
 using HospitalAPI.Mapper;
 using HospitalAPI.Web.Mapper;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Mvc;
 
