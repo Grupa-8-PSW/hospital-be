@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IntegrationLibrary.Core.Model.DTO;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace IntegrationLibrary.Core.Service
 {
@@ -20,6 +21,7 @@ namespace IntegrationLibrary.Core.Service
         {
             _repository = repo;
         }
+
 
         public BloodConsumptionConfiguration Create(BloodConsumptionConfiguration bloodConsumptionConfiguration)
         {

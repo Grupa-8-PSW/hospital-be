@@ -40,8 +40,6 @@ namespace IntegrationAPI.Controllers
         [HttpGet]
         public IActionResult GenerateSeveralPdf()
         {
-            FileContentResult pdf = null;
-
             var validList =  _service.FindValidBloodUnits(_hospitalHTTPConnectionService.GetAllBloodUnits(), out var configuration);
             return File(_service.GeneratePdf(configuration.Last(), validList), "application/pdf", "bloodconsumptionreport.pdf");
         }
