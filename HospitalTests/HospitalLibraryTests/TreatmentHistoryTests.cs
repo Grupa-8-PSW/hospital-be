@@ -2,6 +2,7 @@
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.Core.Util;
 using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 using HospitalLibrary.GraphicalEditor.Service;
@@ -56,24 +57,6 @@ namespace HospitalTests.HospitalLibraryTests
            }
         */
 
-        [Fact]
-        public void Generates_summarizing_report()
-        {
-            var treatmentHistoryStubRepo = CreateTreatmentHistoryStubRepo();
-            string fileName = treatmentHistoryStubRepo.GetById(1).Patient.FirstName
-               + treatmentHistoryStubRepo.GetById(1).Patient.LastName
-               + "_report.pdf";
-            TreatmentHistoryService treatmentHistoryService = new TreatmentHistoryService(
-                treatmentHistoryStubRepo,
-                null,
-                null,
-                null);
-
-            treatmentHistoryService.GenerateSummarizingReport(treatmentHistoryStubRepo.GetById(1));
-           
-            File.Exists(@"C:\\Temp\" + fileName).ShouldBeTrue();
-        } 
-
         private static IRoomRepository CreateRoomStubRepository()
         {
             var stubRepository = new Mock<IRoomRepository>();
@@ -106,85 +89,6 @@ namespace HospitalTests.HospitalLibraryTests
             stubRepository.Setup(r => r.GetFreeRooms()).Returns(allRooms);
 
             return stubRepository.Object;
-        }
-
-        private static ITreatmentHistoryRepository CreateTreatmentHistoryStubRepo()
-        {
-            var treatmentHistoryStubRepository = new Mock<ITreatmentHistoryRepository>();
-
-            TreatmentHistory th1 = new TreatmentHistory()
-            {
-                Id = 1,
-                Active = false,
-                Bed = null,
-                Reason = "Headache",
-                DischargeReason = "Patient recovered.",
-                StartDate = new DateTime(2022, 10, 15),
-                EndDate = new DateTime(2022, 11, 17),
-                BedId = 1,
-                Patient = CreatePatientStubRepo().GetById(1),
-                Therapies = CreateTherapyStubRepo().GetAll()
-            };
-
-            treatmentHistoryStubRepository.Setup(repo => repo.GetById(1)).Returns(th1);
-
-            return treatmentHistoryStubRepository.Object;
-        }
-
-        private static IPatientRepository CreatePatientStubRepo()
-        {
-            var patientStubRepository = new Mock<IPatientRepository>();
-            Patient patient1 = new Patient()
-            {
-                Id = 1,
-                FirstName = "Dragan",
-                LastName = "Kovacevic",
-            };
-            Patient patient2 = new Patient()
-            {
-                Id = 2,
-                FirstName = "Svetlana",
-                LastName = "Todorovic",
-            };
-            List<Patient> patients = new List<Patient>();
-            patients.Add(patient1);
-            patients.Add(patient2);
-            patientStubRepository.Setup(repo => repo.GetAll()).Returns(patients);
-            patientStubRepository.Setup(repo => repo.GetById(1)).Returns(patient1);
-            patientStubRepository.Setup(repo => repo.GetById(2)).Returns(patient2);
-
-            return patientStubRepository.Object;
-        }
-
-        private static ITherapyRepository CreateTherapyStubRepo()
-        {
-            var therapyStubRepo = new Mock<ITherapyRepository>();
-
-            Therapy t1 = new Therapy()
-            {
-                Id = 1,
-                Amount = 2,
-                Prescribed = new MedicalDrugs() { Id = 1, Name = "Bromazepam 500mg", Type = MedicalDrugType.PILL },
-                Reason = "Headache",
-                WhenPrescribed = new DateTime(2022, 11, 2),
-            };
-
-            Therapy t2 = new Therapy()
-            {
-                Id = 2,
-                Amount = 1,
-                Prescribed = new BloodUnit() { Id = 1, AmountMl = 500, BloodType = BloodType.A_POSITIVE },
-                Reason = "Blood loss",
-                WhenPrescribed = new DateTime(2022, 11, 8),
-            };
-            List<Therapy> therapies = new List<Therapy>();
-            therapies.Add(t1);
-            therapies.Add(t2);
-            therapyStubRepo.Setup(repo => repo.GetAll()).Returns(therapies);
-            therapyStubRepo.Setup(repo => repo.GetById(1)).Returns(t1);
-            therapyStubRepo.Setup(repo => repo.GetById(2)).Returns(t2);
-
-            return therapyStubRepo.Object;
         }
 
     }

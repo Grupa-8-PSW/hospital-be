@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Model;
 using MigraDoc.DocumentObjectModel;
 using System;
 using System.Collections.Generic;
@@ -66,7 +67,7 @@ namespace HospitalLibrary.Core.Util
 
         public void AddBloodTherapy()
         {
-            var bloodTherapies = TreatmentHistory.Therapies.Where(therapy => therapy.Prescribed is BloodUnit);
+            var bloodTherapies = TreatmentHistory.Therapies.Where(therapy => therapy.TherapyType == TherapyType.BLOOD_THERAPY);
             if (!bloodTherapies.Any())
             {
                 AddParagraph(new ParagraphInfo()
@@ -80,18 +81,16 @@ namespace HospitalLibrary.Core.Util
                 });
                 return;
             }
-            string[] bloodTherapyColumns = { "Date Prescribed", "Amount[Units]",
-                "BloodType", "Unit Quantity[Ml]", "Reason" };
+            string[] bloodTherapyColumns = { "Date Prescribed", "Amount",
+                "BloodType", "Reason" };
             List<RowInfo> bloodRows = new List<RowInfo>();
             bloodRows = bloodTherapies.Select(therapy =>
             {
-                BloodUnit subject = (BloodUnit)therapy.Prescribed;
                 string whenPrescribed = therapy.WhenPrescribed.ToString("dd/MM/yyyy");
                 string amount = therapy.Amount.ToString();
-                string bloodType = subject.BloodType.ToString();
-                string amountMl = subject.AmountMl.ToString();
+                string bloodType = therapy.TherapySubject;
                 string reason = therapy.Reason;
-                string[] cellsText = { whenPrescribed, amount, bloodType, amountMl, reason };
+                string[] cellsText = { whenPrescribed, amount, bloodType, reason };
                 return new RowInfo(cellsText);
             }).ToList();
             PDFUtils.DefineTable(Document, bloodTherapyColumns, bloodRows);
@@ -99,7 +98,7 @@ namespace HospitalLibrary.Core.Util
 
         public void AddMedicalDrugsTherapy()
         {
-            var medicalDrugsTherapies = TreatmentHistory.Therapies.Where(therapy => therapy.Prescribed is MedicalDrugs);
+            var medicalDrugsTherapies = TreatmentHistory.Therapies.Where(therapy => therapy.TherapyType == TherapyType.MEDICAL_DRUG_THERAPY);
             if (!medicalDrugsTherapies.Any())
             {
                 AddParagraph(new ParagraphInfo()
@@ -115,17 +114,15 @@ namespace HospitalLibrary.Core.Util
             }
 
             string[] medicalDrugsTherapyColumns = { "Date Prescribed", "Amount",
-                "Drug Name", "Drug Type", "Reason" };
+                "Drug Name", "Reason" };
             List<RowInfo> medicalDrugsRows = new List<RowInfo>();
             medicalDrugsRows = medicalDrugsTherapies.Select(therapy =>
             {
-                MedicalDrugs subject = (MedicalDrugs)therapy.Prescribed;
                 string whenPrescribed = therapy.WhenPrescribed.ToString("dd/MM/yyyy");
                 string amount = therapy.Amount.ToString();
-                string bloodType = subject.Name.ToString();
-                string amountMl = subject.Type.ToString();
+                string drugName = therapy.TherapySubject;
                 string reason = therapy.Reason;
-                string[] cellsText = { whenPrescribed, amount, bloodType, amountMl, reason };
+                string[] cellsText = { whenPrescribed, amount, drugName, reason };
                 return new RowInfo(cellsText);
             }).ToList();
             PDFUtils.DefineTable(Document, medicalDrugsTherapyColumns, medicalDrugsRows);

@@ -62,7 +62,6 @@ namespace HospitalLibrary.Core.Repository
                 .Include(th => th.Patient)
                 .Include(th => th.Bed)
                 .Include(th => th.Therapies)
-                .ThenInclude(t => t.Prescribed)
                 .First((th) => th.Id == id);
         }
     }
