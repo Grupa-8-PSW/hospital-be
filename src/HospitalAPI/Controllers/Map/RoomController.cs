@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.GraphicalEditor.Model.DTO;
+﻿using HospitalLibrary.GraphicalEditor.Model;
+using HospitalLibrary.GraphicalEditor.Model.DTO;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -54,12 +55,13 @@ namespace HospitalAPI.Controllers.Map
         public IActionResult Search(string? name)
         {
             List<RoomDTO> rooms = new();
-            foreach (var room in _roomService.Search(name.Trim().ToLower()))
+            foreach (var room in _roomService.Search(name))
             {
                 rooms.Add(new RoomDTO(room));
             }
             return Ok(rooms);
         }
+
     }
 
 }

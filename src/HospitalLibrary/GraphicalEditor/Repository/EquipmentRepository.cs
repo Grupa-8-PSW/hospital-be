@@ -27,5 +27,18 @@ namespace HospitalLibrary.GraphicalEditor.Repository
         {
             return _context.Equipments.Where(f => f.RoomId == id);
         }
+
+        public IEnumerable<Equipment> Search(string name)
+        {
+            IQueryable<Equipment> query = _context.Equipments;
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                query = query.Where(r => r.Name.ToLower().Contains(name.Trim().ToLower()));
+            }
+
+            return query.ToList();
+        }
+
     }
 }

@@ -24,7 +24,7 @@ namespace HospitalLibrary.GraphicalEditor.Repository
 
             if (!string.IsNullOrEmpty(name))
             {
-                query = query.Where(r => r.Name.ToLower().Contains(name));
+                query = query.Where(r => r.Name.ToLower().Contains(name.Trim().ToLower()));
             }
 
             return query.ToList();
