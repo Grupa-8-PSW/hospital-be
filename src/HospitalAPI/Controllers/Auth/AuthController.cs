@@ -28,6 +28,13 @@ namespace HospitalAPI.Controllers.Auth
             });
         }
 
+        [HttpGet("validate")]
+        [Authorize]
+        public IActionResult ValidateAuth()
+        {
+            return Ok();
+        }
+
         [HttpGet("test")]
         [Authorize(Roles = "Patient")]
         public IActionResult Test()

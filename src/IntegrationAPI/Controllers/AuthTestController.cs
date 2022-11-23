@@ -9,7 +9,7 @@ namespace IntegrationAPI.Controllers
     {
 
         [HttpGet]
-        [Authorize(Roles = "Manager")]
+        [Authorize]
         public IActionResult Test()
         {
             return Ok();
