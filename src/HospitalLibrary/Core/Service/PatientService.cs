@@ -135,5 +135,13 @@ namespace HospitalLibrary.Core.Service
 
             return statistic;
         }
+
+        public Patient CreateAndAddAllergens(Patient patient, List<Allergen> allers)
+        {
+            patient.Allergens = allers;
+            return _patientRepository.Create(patient);
+        }
+
+
     }
 }

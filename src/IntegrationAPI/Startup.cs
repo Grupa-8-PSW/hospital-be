@@ -8,9 +8,9 @@ using IntegrationLibrary.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using IntegrationLibrary.Core.Service.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using IntegrationAPI.Security;
+using Microsoft.AspNetCore.Authentication;
+using RestSharp;
 
 namespace IntegrationAPI
 {
@@ -48,25 +48,10 @@ namespace IntegrationAPI
             services.AddScoped<IBloodBankNewsService, BloodBankNewsService>();
             services.AddTransient<ExceptionMiddleware>();
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(o =>
-            {
-                o.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidIssuer = Configuration["Jwt:ValidIssuer"],
-                    //ValidAudience = Configuration["Jwt:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Secret"])),
-                    ValidateIssuer = true,
-                    ValidateAudience = false,
-                    ValidateLifetime = false,
-                    ValidateIssuerSigningKey = true
-                };
-            });
-            services.AddAuthentication();
+            services.AddScoped<IHospitalAPIClient, HospitalAPIClient>();
+
+            services.AddAuthentication("Default")
+                .AddScheme<AuthenticationSchemeOptions, AuthHandler>("Default", null);
             services.AddAuthorization();
 
         }
@@ -91,6 +76,7 @@ namespace IntegrationAPI
             app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseRouting();
+
 
             app.UseAuthentication();
             app.UseAuthorization();

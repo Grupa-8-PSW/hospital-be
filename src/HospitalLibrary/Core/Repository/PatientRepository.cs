@@ -1,4 +1,4 @@
-﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Crypto;
