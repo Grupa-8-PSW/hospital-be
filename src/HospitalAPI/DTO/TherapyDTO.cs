@@ -6,7 +6,7 @@ namespace HospitalAPI.DTO
     public class TherapyDTO
     {
         public int? Id { get; set; }
-        public string WhenPrescribed { get; set; }
+        public string? WhenPrescribed { get; set; }
         public int Amount { get; set; }
         public string Reason { get; set; }
         public string TherapyType { get; set; }

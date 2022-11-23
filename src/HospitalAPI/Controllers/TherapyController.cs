@@ -18,9 +18,9 @@ namespace HospitalAPI.Controllers
     public class TherapyController : ControllerBase
     {
         private readonly ITherapyService _therapyService;
-        private readonly TherapyMapper _therapyMapper;
+        private readonly IMapper<Therapy, TherapyDTO> _therapyMapper;
 
-        public TherapyController(ITherapyService therapyService, TherapyMapper therapyMapper)
+        public TherapyController(ITherapyService therapyService, IMapper<Therapy, TherapyDTO> therapyMapper)
         {
             _therapyService = therapyService;
             _therapyMapper = therapyMapper;

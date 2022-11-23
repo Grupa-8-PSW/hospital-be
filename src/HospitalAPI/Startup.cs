@@ -103,7 +103,8 @@ namespace HospitalAPI
 
             services.AddScoped<IBloodUnitRepository, BloodUnitRepository>();
 
-            services.AddScoped<IMedicalDrugRepository, MedicalDrugsRepository>();
+            services.AddScoped<IMedicalDrugsRepository, MedicalDrugsRepository>();
+            services.AddScoped<IMedicalDrugsService, MedicalDrugsService>();
 
             services.AddScoped<ITherapyValidation, TherapyValidation>();
 

@@ -14,6 +14,8 @@ using HospitalAPI.Controllers;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Enums;
+using HospitalAPI.DTO;
+using HospitalAPI.Web.Mapper;
 
 namespace HospitalTests.HospitalAPITests.Integration
 {
@@ -22,7 +24,7 @@ namespace HospitalTests.HospitalAPITests.Integration
         public TherapyTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
         private static TherapyController SetupController(IServiceScope scope)
         {
-            return new TherapyController(scope.ServiceProvider.GetRequiredService<ITherapyService>());
+            return new TherapyController(scope.ServiceProvider.GetRequiredService<ITherapyService>(), scope.ServiceProvider.GetRequiredService<IMapper<Therapy, TherapyDTO>>());
         }
 
 
@@ -35,7 +37,7 @@ namespace HospitalTests.HospitalAPITests.Integration
             var resultAllTherapiesBefore = ((OkObjectResult)controller.GetAll())?.Value as IEnumerable<Therapy>;
             int therapiesBefore = resultAllTherapiesBefore.Count();
 
-            Therapy therapy = new Therapy() { Id = 4, WhenPrescribed = DateTime.UtcNow, Amount = 50, Reason = "reason2",  DoctorId = 1 };
+            TherapyDTO therapy = new TherapyDTO() { Id = 4, WhenPrescribed = "11/11/2022", Amount = 50, Reason = "reason2",  DoctorId = 1 };
 
 
             var result = ((CreatedAtActionResult)controller.Create(therapy))?.Value as Therapy;

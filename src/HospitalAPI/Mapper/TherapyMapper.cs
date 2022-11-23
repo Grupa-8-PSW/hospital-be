@@ -40,11 +40,14 @@ namespace HospitalAPI.Mapper
             {
                 therapy.Id = dto.Id.Value;
             }
-            therapy.WhenPrescribed = DateTime.ParseExact(dto.WhenPrescribed, "dd/MM/yyyy", null).ToUniversalTime();
+            if(dto.WhenPrescribed != null)
+            {
+                therapy.WhenPrescribed = DateTime.ParseExact(dto.WhenPrescribed, "dd/MM/yyyy", null).ToUniversalTime();
+            }
             therapy.Amount = dto.Amount;
             therapy.Reason = dto.Reason;
             TherapyType therapyType;
-            if (!Enum.TryParse<TherapyType>(dto.TherapySubject, out therapyType))
+            if (!Enum.TryParse<TherapyType>(dto.TherapyType, out therapyType))
             {
                 return null;
             }
