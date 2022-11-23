@@ -22,7 +22,7 @@ namespace HospitalLibrary.Settings.DataSeed
              );
 
             modelBuilder.Entity<Examination>().HasData(
-                new Examination() { Id = 1, DoctorId = 1, PatientId = 1, RoomId = 1,  StartTime = new DateTime(2022, 11, 22, 2, 00, 00, DateTimeKind.Utc), Duration = 300 },
+                new Examination() { Id = 1, DoctorId = 1, PatientId = 1, RoomId = 1, StartTime = new DateTime(2022, 11, 22, 2, 00, 00, DateTimeKind.Utc), Duration = 300 },
                 new Examination() { Id = 2, DoctorId = 2, PatientId = 2, RoomId = 2, StartTime = new DateTime(2022, 11, 22, 7, 30, 00, DateTimeKind.Utc), Duration = 120 },
                 new Examination() { Id = 3, DoctorId = 1, PatientId = 3, RoomId = 1, StartTime = new DateTime(2022, 11, 22, 11, 30, 00, DateTimeKind.Utc), Duration = 420 },
                 new Examination() { Id = 4, DoctorId = 2, PatientId = 4, RoomId = 2, StartTime = new DateTime(2022, 11, 22, 20, 30, 00, DateTimeKind.Utc), Duration = 150 }
