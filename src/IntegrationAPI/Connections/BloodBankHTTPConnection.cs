@@ -29,7 +29,6 @@ namespace IntegrationAPI.Connections
 
         public BloodBankHTTPConnection(IServiceScopeFactory factory)
         {
-            
             _service = factory.CreateScope().ServiceProvider
                 .GetRequiredService<IBloodConsumptionConfigurationService>();
 
@@ -38,7 +37,7 @@ namespace IntegrationAPI.Connections
             _bloodUnitService = factory.CreateScope().ServiceProvider.GetRequiredService<IHospitalHTTPConnection>();
         }
 
-        public bool CheckForSpecificBloodType(BloodBank bloodBank, string bloodType) 
+        public bool CheckForSpecificBloodType(BloodBank bloodBank, string bloodType)
         {
             RestClient restClient = BloodBankConnectionValidator.ValidateURL(bloodBank.ServerAddress + "/bloodBanks/checkForBloodType");
             RestRequest request = new RestRequest();
@@ -85,15 +84,15 @@ namespace IntegrationAPI.Connections
                 await Task.Delay(delay, stoppingToken);
 
             }
-            while(!stoppingToken.IsCancellationRequested);
+            while (!stoppingToken.IsCancellationRequested);
         }
+
 
         private async Task<TimeSpan> SendToBanks(DateTime now, BloodConsumptionConfiguration bcc, TimeSpan delay)
         {
             if (now.Hour == bcc.NextSendingTime.Hour && now.Minute == bcc.NextSendingTime.Minute)
             {
                 Guid uniqueSuffix = Guid.NewGuid();
-                
                 //var scopedService = scope.ServiceProvider.GetRequiredService<IBloodBankHTTPConnection>();
                 byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(_bloodUnitService.GetAllBloodUnits(), out var configuration));
                 using (var stream = File.Create("./Reports/bloodConsumptionReport" + uniqueSuffix + ".PDF"))

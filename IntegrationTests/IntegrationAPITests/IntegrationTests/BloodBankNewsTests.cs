@@ -129,7 +129,7 @@ namespace IntegrationTeamTests.Integration
             yield return new object[] { messageWithValidApiKey, true };
             yield return new object[] { messageWithInvalidApiKey, false };
         }
-
+            
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
