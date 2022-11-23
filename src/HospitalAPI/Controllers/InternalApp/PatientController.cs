@@ -2,10 +2,12 @@ using AutoMapper;
 using HospitalAPI.DTO;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers.InternalApp
 {
+    [EnableCors("InternAllow")]
     [Route("api/internal/[controller]")]
     [ApiController]
     public class PatientController : ControllerBase

@@ -4,6 +4,5 @@ namespace HospitalLibrary.Core.Repository
 {
     public interface IPatientRepository : IEntityRepository<Patient>
     {
-
     }
 }

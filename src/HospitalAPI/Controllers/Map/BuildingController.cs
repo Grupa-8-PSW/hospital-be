@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.GraphicalEditor.Model.DTO;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +8,7 @@ namespace HospitalAPI.Controllers.Map
 {
     [Route("api/map/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Manager")]
     public class BuildingController : ControllerBase
     {
         private readonly IBuildingService _buildingService;

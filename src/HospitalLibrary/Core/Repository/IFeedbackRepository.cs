@@ -6,5 +6,6 @@ namespace HospitalLibrary.Core.Repository
     {
         public List<Feedback> GetAllPublic();
         public List<Feedback> GetAllApprovedPublic();
+
     }
 }
