@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IntegrationLibrary.Core.Model.DTO;
 
 namespace IntegrationLibrary.Core.Service
 {
@@ -37,7 +38,7 @@ namespace IntegrationLibrary.Core.Service
         }
 
 
-        public byte[] GeneratePdf(BloodConsumptionConfiguration bs, List<BloodUnit2> bloodUnits)
+        public byte[] GeneratePdf(BloodConsumptionConfiguration bs, List<BloodUnitDTO> bloodUnits)
         {
             using (MemoryStream ms = new MemoryStream())
             {
@@ -77,21 +78,21 @@ namespace IntegrationLibrary.Core.Service
 
 
 
-                Paragraph para1 = new Paragraph("Report for last: " + bs.ConsumptionPeriodHours.Days  + " days", new Font(Font.FontFamily.HELVETICA, 20));
+                Paragraph para1 = new Paragraph("Report for last: " + bs.ConsumptionPeriodHours.Days  + " days" + " and " + bs.ConsumptionPeriodHours.Hours  + " hours ", new Font(Font.FontFamily.HELVETICA, 20));
                 para1.Alignment = Element.ALIGN_CENTER;
                 para1.SpacingAfter = 10;
                 document.Add(para1);
 
 
 
-                foreach (BloodUnit2 bloodUnit in bloodUnits)
+                foreach (BloodUnitDTO bloodUnit in bloodUnits)
                 {
 
                     PdfPCell cell_1 = new PdfPCell(new Phrase(bloodUnit.BloodType.ToString()));
                     cell_1.HorizontalAlignment = Element.ALIGN_CENTER;
                     table.AddCell(cell_1);
 
-                    PdfPCell cell_2 = new PdfPCell(new Phrase(bloodUnit.AmountMl.ToString() + "ml"));
+                    PdfPCell cell_2 = new PdfPCell(new Phrase(bloodUnit.Amount.ToString() + "ml"));
                     cell_2.HorizontalAlignment = Element.ALIGN_CENTER;
                     table.AddCell(cell_2);
                 }
@@ -108,15 +109,15 @@ namespace IntegrationLibrary.Core.Service
         }
 
 
-        public List<BloodUnit2> FindValidBloodUnits(List<BloodUnit2> bloodUnits, out List<BloodConsumptionConfiguration> configuration)
+        public List<BloodUnitDTO> FindValidBloodUnits(List<BloodUnitDTO> bloodUnits, out List<BloodConsumptionConfiguration> configuration)
         {
-            List<BloodUnit2> validList = new List<BloodUnit2>();
+            List<BloodUnitDTO> validList = new List<BloodUnitDTO>();
             configuration = _repository.GetAll();
 
-            foreach (BloodUnit2 unit in bloodUnits)
+            foreach (BloodUnitDTO unit in bloodUnits)
             {
-                if ((configuration.Last().NextSendingTime.Subtract(configuration.Last().ConsumptionPeriodHours) < unit.consumptionDate) &&
-                    (unit.consumptionDate < configuration.Last().NextSendingTime))
+                if ((configuration.Last().NextSendingTime.Subtract(configuration.Last().ConsumptionPeriodHours) < unit.DatePrescribed) &&
+                    (unit.DatePrescribed < configuration.Last().NextSendingTime))
                     validList.Add(unit);
             }
 

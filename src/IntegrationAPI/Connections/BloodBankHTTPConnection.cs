@@ -13,6 +13,9 @@ using IntegrationLibrary.Core.Service;
 using IntegrationLibrary.Core.Service.Interfaces;
 using HospitalLibrary.Core.Enums;
 using static iTextSharp.text.pdf.AcroFields;
+using IntegrationAPI.ConnectionService.Interface;
+using Microsoft.Extensions.DependencyInjection;
+using HospitalAPI.Connections;
 
 namespace IntegrationAPI.Connections
 {
@@ -21,14 +24,18 @@ namespace IntegrationAPI.Connections
 
         private readonly IBloodConsumptionConfigurationService _service;
         private readonly IBloodBankService _bankService;
+        private readonly IHospitalHTTPConnection _bloodUnitService;
         private String api = "reports/sendReports";
 
         public BloodBankHTTPConnection(IServiceScopeFactory factory)
         {
+            
             _service = factory.CreateScope().ServiceProvider
                 .GetRequiredService<IBloodConsumptionConfigurationService>();
 
             _bankService = factory.CreateScope().ServiceProvider.GetRequiredService<IBloodBankService>();
+
+            _bloodUnitService = factory.CreateScope().ServiceProvider.GetRequiredService<IHospitalHTTPConnection>();
         }
 
         public bool CheckForSpecificBloodType(BloodBank bloodBank, string bloodType) 
@@ -86,7 +93,9 @@ namespace IntegrationAPI.Connections
             if (now.Hour == bcc.NextSendingTime.Hour && now.Minute == bcc.NextSendingTime.Minute)
             {
                 Guid uniqueSuffix = Guid.NewGuid();
-                byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(BloodUnitsList(), out var configuration));
+                
+                //var scopedService = scope.ServiceProvider.GetRequiredService<IBloodBankHTTPConnection>();
+                byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(_bloodUnitService.GetAllBloodUnits(), out var configuration));
                 using (var stream = File.Create("./Reports/bloodConsumptionReport" + uniqueSuffix + ".PDF"))
                 {
                 }
@@ -134,7 +143,7 @@ namespace IntegrationAPI.Connections
                 bcc.NextSendingTime = DateTime.SpecifyKind(bcc.NextSendingTime, DateTimeKind.Utc);
                 _service.Update(bcc);
                 Guid uniqueSuffix = Guid.NewGuid();
-                byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(BloodUnitsList(), out var configuration));
+                byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(_bloodUnitService.GetAllBloodUnits(), out var configuration));
                 using (var stream = File.Create("./Reports/bloodConsumptionReport" + uniqueSuffix + ".PDF"))
                 {
                 }
@@ -167,21 +176,6 @@ namespace IntegrationAPI.Connections
             }
         }
 
-        private static List<BloodUnit2> BloodUnitsList()
-        {
-            BloodUnit2 bu1 = new BloodUnit2(1, BloodType.AB_NEGATIVE, 20, DateTime.Now.AddHours(-30));
-            BloodUnit2 bu2 = new BloodUnit2(2, BloodType.A_NEGATIVE, 150, DateTime.Now.AddDays(12));
-            BloodUnit2 bu3 = new BloodUnit2(3, BloodType.B_NEGATIVE, 200, DateTime.Now);
-            BloodUnit2 bu4 = new BloodUnit2(4, BloodType.ZERO_NEGATIVE, 450, DateTime.Now.AddHours(-28));
-            BloodUnit2 bu5 = new BloodUnit2(5, BloodType.A_POSITIVE, 30, DateTime.Now.AddDays(40));
-            List<BloodUnit2> buList = new List<BloodUnit2>();
-            buList.Add(bu1);
-            buList.Add(bu2);
-            buList.Add(bu3);
-            buList.Add(bu4);
-            buList.Add(bu5);
-            return buList;
-        }
 
         private async Task<string> Upload(Guid g)
         {

@@ -11,7 +11,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HospitalLibrary.Core.Model;
+using HospitalLibrary.Settings;
 using Startup = IntegrationAPI.Startup;
+using HospitalLibrary.Core.Enums;
+using BloodUnit = HospitalLibrary.Core.Model.BloodUnit;
 
 namespace IntegrationTeamTests.Setup
 {
@@ -22,10 +26,12 @@ namespace IntegrationTeamTests.Setup
             builder.ConfigureServices(services =>
             {
                 using var scope = BuildServiceProvider(services).CreateScope();
+
                 var scopedServices = scope.ServiceProvider;
                 var db = scopedServices.GetRequiredService<IntegrationDbContext>();
-
+                
                 InitializeDatabase(db);
+                
             });
         }
 
@@ -51,25 +57,17 @@ namespace IntegrationTeamTests.Setup
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
-            context.BloodBanks.Add(new BloodBank {  Name = "BloodBank1", Email = "email@email.com", Password = "password", ServerAddress = "serverAddress", APIKey = "1" });
-            context.BloodBankNews.Add(new BloodBankNews {  Subject = "subject", Text = "text", ImgSrc=String.Empty, Archived = false, Published = false, BloodBank = null, BloodBankId = 1});
-            
-           
-
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodConsumptionConfiguration\";");
-
 
             DateTime sd = new DateTime(2011, 1, 5, 5, 2, 3);
             DateTime ss = DateTime.SpecifyKind(sd, DateTimeKind.Utc);
 
             context.BloodConsumptionConfiguration.Add(new BloodConsumptionConfiguration { ConsumptionPeriodHours = new TimeSpan(1, 2, 1), StartDateTime= ss, FrequencyPeriodInHours=new TimeSpan(1, 2, 3)});
 
-            context.BloodBanks.Add(new BloodBank { Name = "BloodBank1", Email = "email@email.com", Password = "password", ServerAddress = "serverAddress", APIKey = "1" });
             context.BloodBankNews.Add(new BloodBankNews { Subject = "subject", Text = "text", ImgSrc = String.Empty, Archived = false, Published = false, BloodBank = null, BloodBankId = 1 });
 
-            //context.BloodBankNews.Add(new BloodBankNews { id = 1, subject = "subject", text = "text", byteArray = Array.Empty<byte>(), archived = false, published = false });
-
+           
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodConsumptionConfiguration\";");
+
 
 
             context.SaveChanges();
