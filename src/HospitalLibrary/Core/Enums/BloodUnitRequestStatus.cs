@@ -10,6 +10,7 @@ namespace HospitalLibrary.Core.Enums
     {
         REJECTED,
         APPROVED,
-        WAITING
+        WAITING,
+        REVIEWAGAIN
     }
 }
