@@ -12,5 +12,7 @@ namespace HospitalLibrary.Core.Service
         public void Update(Patient patient);
         public void Delete(int id);
         public Statistic GetStatistic();
+
+        public Statistic GetPatientStatisticForSelectedDoctor(int id);
     }
 }

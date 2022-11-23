@@ -30,6 +30,12 @@ namespace HospitalLibrary.Core.Service
             return new Statistic(GetAgeStatistic(patients), GetGenderStatistic(patients), GetBloodTypeStatistic(patients));
         }
 
+        public Statistic GetPatientStatisticForSelectedDoctor(int id)
+        {
+            List<Patient> patients = GetBySelectedDoctorId(id);
+            return new Statistic(GetAgeStatistic(patients), GetGenderStatistic(patients), GetBloodTypeStatistic(patients));
+        }
+
         public AgeStatistic GetAgeStatistic(List<Patient> patients)
         {
             AgeStatistic statistic = new AgeStatistic();

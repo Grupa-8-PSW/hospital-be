@@ -17,7 +17,6 @@ namespace HospitalLibrary.Core.Model
         public string LastName { get; set; }
         public int RoomId { get; set; }
         public Room Room { get; set; }
-
         public DateTime StartWork { get; set; }
         public DateTime EndWork { get; set; }
 
@@ -26,7 +25,7 @@ namespace HospitalLibrary.Core.Model
         {
         }
 
-        public Doctor(int id, string firstName, string lastName, int roomId, Room room, DateTime startWork, DateTime endWork,DoctorSpecialization specialization)
+        public Doctor(int id, string firstName, string lastName, int roomId, Room room, DateTime startWork, DateTime endWork, DoctorSpecialization specialization)
         {
             Id = id;
             FirstName = firstName;

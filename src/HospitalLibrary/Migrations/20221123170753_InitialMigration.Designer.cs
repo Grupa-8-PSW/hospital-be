@@ -3,6 +3,7 @@ using System;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221123170753_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -203,28 +205,6 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("Doctors");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            EndWork = new DateTime(1998, 4, 30, 15, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Zeljko",
-                            LastName = "Babic",
-                            RoomId = 1,
-                            Specialization = 0,
-                            StartWork = new DateTime(1998, 4, 30, 7, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            Id = 2,
-                            EndWork = new DateTime(1998, 4, 30, 16, 0, 0, 0, DateTimeKind.Unspecified),
-                            FirstName = "Bora",
-                            LastName = "Stevanovic",
-                            RoomId = 2,
-                            Specialization = 0,
-                            StartWork = new DateTime(1998, 4, 30, 8, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Examination", b =>
@@ -377,8 +357,6 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.HasIndex("SelectedDoctorId");
-
                     b.ToTable("Patients");
 
                     b.HasData(
@@ -392,7 +370,7 @@ namespace HospitalLibrary.Migrations
                             Gender = 0,
                             LastName = "Peric",
                             Pin = "2201000120492",
-                            SelectedDoctorId = 1
+                            SelectedDoctorId = 22
                         },
                         new
                         {
@@ -404,7 +382,7 @@ namespace HospitalLibrary.Migrations
                             Gender = 0,
                             LastName = "Markovic",
                             Pin = "1412995012451",
-                            SelectedDoctorId = 2
+                            SelectedDoctorId = 22
                         },
                         new
                         {
@@ -416,7 +394,7 @@ namespace HospitalLibrary.Migrations
                             Gender = 0,
                             LastName = "Baljinac",
                             Pin = "2008004124293",
-                            SelectedDoctorId = 1
+                            SelectedDoctorId = 22
                         },
                         new
                         {
@@ -428,7 +406,7 @@ namespace HospitalLibrary.Migrations
                             Gender = 0,
                             LastName = "Radulovic",
                             Pin = "1111978020204",
-                            SelectedDoctorId = 2
+                            SelectedDoctorId = 22
                         });
                 });
 
@@ -1712,15 +1690,7 @@ namespace HospitalLibrary.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HospitalLibrary.Core.Model.Doctor", "selectedDoctor")
-                        .WithMany()
-                        .HasForeignKey("SelectedDoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Address");
-
-                    b.Navigation("selectedDoctor");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Therapy", b =>

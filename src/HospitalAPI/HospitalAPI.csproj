@@ -29,4 +29,8 @@
     <ProjectReference Include="..\HospitalLibrary\HospitalLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Security\Migrations\" />
+  </ItemGroup>
+
 </Project>
