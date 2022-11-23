@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221118233705_Initial")]
-    partial class Initial
+    [Migration("20221123173315_ChangedPatientAndDoctorSeed")]
+    partial class ChangedPatientAndDoctorSeed
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -194,6 +194,9 @@ namespace HospitalLibrary.Migrations
                     b.Property<int>("RoomId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("Specialization")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("StartWork")
                         .HasColumnType("timestamp with time zone");
 
@@ -202,6 +205,28 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("Doctors");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            EndWork = new DateTime(1998, 4, 30, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Zeljko",
+                            LastName = "Babic",
+                            RoomId = 1,
+                            Specialization = 0,
+                            StartWork = new DateTime(1998, 4, 30, 7, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            EndWork = new DateTime(1998, 4, 30, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Bora",
+                            LastName = "Stevanovic",
+                            RoomId = 2,
+                            Specialization = 0,
+                            StartWork = new DateTime(1998, 4, 30, 8, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Examination", b =>
@@ -347,9 +372,14 @@ namespace HospitalLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("SelectedDoctorId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
+
+                    b.HasIndex("SelectedDoctorId");
 
                     b.ToTable("Patients");
 
@@ -363,7 +393,8 @@ namespace HospitalLibrary.Migrations
                             FirstName = "Pera",
                             Gender = 0,
                             LastName = "Peric",
-                            Pin = "2201000120492"
+                            Pin = "2201000120492",
+                            SelectedDoctorId = 1
                         },
                         new
                         {
@@ -374,7 +405,8 @@ namespace HospitalLibrary.Migrations
                             FirstName = "Marko",
                             Gender = 0,
                             LastName = "Markovic",
-                            Pin = "1412995012451"
+                            Pin = "1412995012451",
+                            SelectedDoctorId = 2
                         },
                         new
                         {
@@ -385,7 +417,8 @@ namespace HospitalLibrary.Migrations
                             FirstName = "Dusan",
                             Gender = 0,
                             LastName = "Baljinac",
-                            Pin = "2008004124293"
+                            Pin = "2008004124293",
+                            SelectedDoctorId = 1
                         },
                         new
                         {
@@ -396,7 +429,8 @@ namespace HospitalLibrary.Migrations
                             FirstName = "Slobodan",
                             Gender = 0,
                             LastName = "Radulovic",
-                            Pin = "1111978020204"
+                            Pin = "1111978020204",
+                            SelectedDoctorId = 2
                         });
                 });
 
@@ -1680,7 +1714,15 @@ namespace HospitalLibrary.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("HospitalLibrary.Core.Model.Doctor", "selectedDoctor")
+                        .WithMany()
+                        .HasForeignKey("SelectedDoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Address");
+
+                    b.Navigation("selectedDoctor");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Therapy", b =>

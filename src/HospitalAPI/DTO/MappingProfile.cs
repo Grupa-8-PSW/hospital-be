@@ -22,9 +22,12 @@ namespace HospitalAPI.DTO
 
             CreateMap<Patient, PatientDTO>();
 
+            CreateMap<Doctor, DoctorDTO>();
+
             CreateMap<RegisterUserDTO, Patient>()
                 .ForMember(f => f.Allergens, o => o.MapFrom(f => f.Allergens));
 
+            CreateMap<Statistic, StatisticDTO>();
         }
 
     }

@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using HospitalAPI.Security.Models;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;

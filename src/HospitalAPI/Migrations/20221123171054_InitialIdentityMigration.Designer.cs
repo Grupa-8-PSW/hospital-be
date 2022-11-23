@@ -9,11 +9,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace HospitalAPI.Security.Migrations
+namespace HospitalAPI.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20221113152526_IdentityTestDbInit")]
-    partial class IdentityTestDbInit
+    [Migration("20221123171054_InitialIdentityMigration")]
+    partial class InitialIdentityMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
