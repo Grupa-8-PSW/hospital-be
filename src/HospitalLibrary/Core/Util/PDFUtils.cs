@@ -49,7 +49,7 @@ namespace HospitalLibrary.Core.Util
         }
     }
 
-    public class PDFUtils
+    public static class PDFUtils
     {
         public static Document CreateDocumentWithSection(string title)
         {

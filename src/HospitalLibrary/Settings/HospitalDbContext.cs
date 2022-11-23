@@ -48,10 +48,9 @@ namespace HospitalLibrary.Settings
             modelBuilder.SeedMedicalDrugs();
             modelBuilder.SeedTreatmentHistory();
             modelBuilder.SeedBlood();
-            base.OnModelCreating(modelBuilder);
-
-
+            modelBuilder.SeedTherapy();
             
+            base.OnModelCreating(modelBuilder);  
             
         
         }

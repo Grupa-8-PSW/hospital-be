@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class BloodUnitRequestModel : Migration
+    public partial class Full : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -371,7 +371,8 @@ namespace HospitalLibrary.Migrations
                     DischargeReason = table.Column<string>(type: "text", nullable: false),
                     PatientId = table.Column<int>(type: "integer", nullable: false),
                     BedId = table.Column<int>(type: "integer", nullable: false),
-                    Reason = table.Column<string>(type: "text", nullable: true)
+                    RoomId = table.Column<int>(type: "integer", nullable: false),
+                    Reason = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -386,6 +387,12 @@ namespace HospitalLibrary.Migrations
                         name: "FK_TreatmentHistories_Patients_PatientId",
                         column: x => x.PatientId,
                         principalTable: "Patients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TreatmentHistories_Rooms_RoomId",
+                        column: x => x.RoomId,
+                        principalTable: "Rooms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -454,6 +461,21 @@ namespace HospitalLibrary.Migrations
                         principalTable: "TreatmentHistories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Bloods",
+                columns: new[] { "Id", "Quantity", "Type" },
+                values: new object[,]
+                {
+                    { 1, 100, 0 },
+                    { 2, 100, 1 },
+                    { 3, 100, 2 },
+                    { 4, 100, 3 },
+                    { 5, 100, 4 },
+                    { 6, 100, 5 },
+                    { 7, 100, 6 },
+                    { 8, 100, 7 }
                 });
 
             migrationBuilder.InsertData(
@@ -538,7 +560,11 @@ namespace HospitalLibrary.Migrations
                     { 1, "Pera", "Peric" },
                     { 2, "Marko", "Markovic" },
                     { 3, "Dusan", "Baljinac" },
-                    { 4, "Slobodan", "Radulovic" }
+                    { 4, "Slobodan", "Radulovic" },
+                    { 5, "Mika", "Mikic" },
+                    { 6, "Ana", "Anic" },
+                    { 7, "Andjela", "Andjelic" },
+                    { 8, "Slobodan", "Slobic" }
                 });
 
             migrationBuilder.InsertData(
@@ -572,12 +598,28 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "Id", "Available", "RoomId" },
                 values: new object[,]
                 {
-                    { 1, true, 1 },
-                    { 2, true, 1 },
-                    { 3, false, 2 },
-                    { 4, true, 2 },
-                    { 5, false, 3 },
-                    { 6, false, 3 }
+                    { 1, false, 1 },
+                    { 2, false, 1 },
+                    { 3, true, 1 },
+                    { 4, false, 1 },
+                    { 5, true, 3 },
+                    { 6, true, 3 },
+                    { 7, true, 3 },
+                    { 8, true, 3 },
+                    { 9, true, 3 },
+                    { 10, true, 3 },
+                    { 11, true, 9 },
+                    { 12, true, 9 },
+                    { 13, true, 9 },
+                    { 14, true, 9 },
+                    { 15, true, 16 },
+                    { 16, true, 16 },
+                    { 17, true, 16 },
+                    { 18, true, 16 },
+                    { 19, true, 17 },
+                    { 20, true, 17 },
+                    { 21, true, 17 },
+                    { 22, true, 17 }
                 });
 
             migrationBuilder.InsertData(
@@ -585,8 +627,8 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "Id", "EndWork", "FirstName", "LastName", "RoomId", "StartWork" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2022, 11, 19, 23, 13, 32, 730, DateTimeKind.Utc).AddTicks(81), "firstName", "lastName", 1, new DateTime(2022, 11, 19, 23, 13, 32, 730, DateTimeKind.Utc).AddTicks(79) },
-                    { 2, new DateTime(2022, 11, 19, 23, 13, 32, 730, DateTimeKind.Utc).AddTicks(86), "firstNam2", "lastName2", 1, new DateTime(2022, 11, 19, 23, 13, 32, 730, DateTimeKind.Utc).AddTicks(85) }
+                    { 1, new DateTime(2022, 11, 23, 9, 35, 6, 917, DateTimeKind.Utc).AddTicks(820), "firstName", "lastName", 1, new DateTime(2022, 11, 23, 9, 35, 6, 917, DateTimeKind.Utc).AddTicks(819) },
+                    { 2, new DateTime(2022, 11, 23, 9, 35, 6, 917, DateTimeKind.Utc).AddTicks(821), "firstNam2", "lastName2", 1, new DateTime(2022, 11, 23, 9, 35, 6, 917, DateTimeKind.Utc).AddTicks(821) }
                 });
 
             migrationBuilder.InsertData(
@@ -617,12 +659,15 @@ namespace HospitalLibrary.Migrations
 
             migrationBuilder.InsertData(
                 table: "TreatmentHistories",
-                columns: new[] { "Id", "Active", "BedId", "DischargeReason", "EndDate", "PatientId", "Reason", "StartDate" },
+                columns: new[] { "Id", "Active", "BedId", "DischargeReason", "EndDate", "PatientId", "Reason", "RoomId", "StartDate" },
                 values: new object[,]
                 {
-                    { 1, true, 1, "abc", new DateTime(2022, 11, 19, 23, 13, 32, 730, DateTimeKind.Utc).AddTicks(166), 1, null, new DateTime(2022, 11, 19, 23, 13, 32, 730, DateTimeKind.Utc).AddTicks(165) },
-                    { 2, true, 2, "abc", new DateTime(2022, 11, 19, 23, 13, 32, 730, DateTimeKind.Utc).AddTicks(174), 2, null, new DateTime(2022, 11, 19, 23, 13, 32, 730, DateTimeKind.Utc).AddTicks(173) },
-                    { 3, true, 3, "abc", new DateTime(2022, 11, 19, 23, 13, 32, 730, DateTimeKind.Utc).AddTicks(177), 3, null, new DateTime(2022, 11, 19, 23, 13, 32, 730, DateTimeKind.Utc).AddTicks(176) }
+                    { 1, false, 1, "abc", new DateTime(2022, 11, 23, 9, 35, 6, 917, DateTimeKind.Utc).AddTicks(844), 1, "reason1", 1, new DateTime(2022, 11, 23, 9, 35, 6, 917, DateTimeKind.Utc).AddTicks(844) },
+                    { 2, false, 2, "abc", new DateTime(2022, 11, 23, 9, 35, 6, 917, DateTimeKind.Utc).AddTicks(848), 2, "reason2", 1, new DateTime(2022, 11, 23, 9, 35, 6, 917, DateTimeKind.Utc).AddTicks(848) },
+                    { 3, false, 4, "abc", new DateTime(2022, 11, 23, 9, 35, 6, 917, DateTimeKind.Utc).AddTicks(850), 3, "reason3", 2, new DateTime(2022, 11, 23, 9, 35, 6, 917, DateTimeKind.Utc).AddTicks(849) },
+                    { 4, true, 1, "abc", null, 1, "reason1", 1, new DateTime(2022, 11, 23, 9, 35, 6, 917, DateTimeKind.Utc).AddTicks(851) },
+                    { 5, true, 2, "abc", null, 2, "reason2", 1, new DateTime(2022, 11, 23, 9, 35, 6, 917, DateTimeKind.Utc).AddTicks(852) },
+                    { 6, true, 4, "abc", null, 3, "reason3", 2, new DateTime(2022, 11, 23, 9, 35, 6, 917, DateTimeKind.Utc).AddTicks(853) }
                 });
 
             migrationBuilder.CreateIndex(
@@ -708,6 +753,11 @@ namespace HospitalLibrary.Migrations
                 name: "IX_TreatmentHistories_PatientId",
                 table: "TreatmentHistories",
                 column: "PatientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TreatmentHistories_RoomId",
+                table: "TreatmentHistories",
+                column: "RoomId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
