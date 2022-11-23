@@ -1,14 +1,12 @@
-using AutoMapper;
+﻿using AutoMapper;
 using HospitalAPI.DTO;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HospitalAPI.Controllers.InternalApp
+namespace HospitalAPI.Controllers.PublicApp
 {
-    [EnableCors("InternAllow")]
-    [Route("api/internal/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class PatientController : ControllerBase
     {
@@ -20,19 +18,22 @@ namespace HospitalAPI.Controllers.InternalApp
             _mapper = mapper;
             _patientService = patientService;
         }
+        
 
-        // GET: api/Patient
         [HttpGet]
-        public ActionResult GetAll()
+        [Route ("{id}")]
+        public ActionResult Get(int id)
         {
-            return Ok(_mapper.Map<List<PatientDTO>>(_patientService.GetAll()));
+            var patient = _patientService.GetById(id);
+            if(patient is not null)
+            {
+                return Ok(_mapper.Map<PatientDTO>(patient));
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
-
-        [HttpGet("ageStatistic")]
-        public ActionResult GetAgeStatistic()
-        {
-            return Ok(_mapper.Map<AgeStatisticDTO>(_patientService.GetAgeStatistic()));
-        }
     }
 }

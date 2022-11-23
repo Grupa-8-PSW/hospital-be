@@ -1,6 +1,8 @@
 ﻿using HospitalAPI;
 using HospitalLibrary.GraphicalEditor.Model;
 using HospitalAPI.Security;
+using HospitalAPI.Security;
+using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -19,23 +21,28 @@ namespace HospitalTests.HospitalAPITests.Setup
                 var scopedServices = scope.ServiceProvider;
                 var db = scopedServices.GetRequiredService<HospitalDbContext>();
 
+
                 InitializeDatabase(db);
+
                 var identityDb = scopedServices.GetRequiredService<AppIdentityDbContext>();
 
                 InitializeDatabase(db);
                 InitializeIdentityDatabase(identityDb);
+
+
+                InitializeDatabase(db);
             });
         }
 
         private static ServiceProvider BuildServiceProvider(IServiceCollection services)
         {
-            var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<HospitalDbContext>));
-            services.Remove(descriptor);
-            services.AddDbContext<HospitalDbContext>(opt => opt.UseNpgsql(CreateConnectionStringForTest()));
 
-            descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<AppIdentityDbContext>));
+
+            var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<AppIdentityDbContext>));
             services.Remove(descriptor);
             services.AddDbContext<AppIdentityDbContext>(opt => opt.UseNpgsql(CreateConnectionStringForTest()));
+
+
 
             return services.BuildServiceProvider();
         }
@@ -48,12 +55,6 @@ namespace HospitalTests.HospitalAPITests.Setup
         private static void InitializeDatabase(HospitalDbContext context)
         {
             context.Database.EnsureCreated();
-
-            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Rooms\";");
-            //context.Rooms.Add(new Room { Id = 1, FloorId = 1, Name = "11" });
-            //context.Rooms.Add(new Room { Id = 2, FloorId = 1, Name = "12" });
-            //context.Rooms.Add(new Room { Id = 3, FloorId = 2, Name = "21" });
-            //context.Rooms.Add(new Room { Id = 4, FloorId = 3, Name = "31" });
 
             context.SaveChanges();
         }

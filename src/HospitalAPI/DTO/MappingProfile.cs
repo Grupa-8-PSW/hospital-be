@@ -27,6 +27,8 @@ namespace HospitalAPI.DTO
             CreateMap<RegisterUserDTO, Patient>()
                 .ForMember(f => f.Allergens, o => o.MapFrom(f => f.Allergens));
 
+
+            CreateMap<AgeStatistic, AgeStatisticDTO>();
         }
 
     }
