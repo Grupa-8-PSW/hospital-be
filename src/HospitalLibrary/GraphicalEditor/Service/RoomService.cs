@@ -55,9 +55,8 @@ namespace HospitalLibrary.GraphicalEditor.Service
         {
             IEnumerable<Examination> fromRoomExaminations = _examinationRepository.GetByRoomId(dto.FromRoomId);
             IEnumerable<Examination> toRoomExaminations = _examinationRepository.GetByRoomId(dto.ToRoomId);
-            DateTime startDate = dto.StartDate;
-            DateTime startDateTemp = dto.StartDate;
-            DateTime endDate = dto.EndDate;
+            DateTime startDate = dto.StartDate.AddHours(1);
+            DateTime endDate = dto.EndDate.AddHours(1);
             List<FreeSpaceDTO> freeSpacesFromRoom = new List<FreeSpaceDTO>();
             List<FreeSpaceDTO> freeSpacesToRoom = new List<FreeSpaceDTO>();
             List<FreeSpaceDTO> filteredFreeSpaces = new List<FreeSpaceDTO>();
@@ -66,53 +65,55 @@ namespace HospitalLibrary.GraphicalEditor.Service
 
             foreach (Examination exam in fromRoomExaminations)
             {
-                DateTime endExaminationTimeForFromRoom = exam.StartTime.AddMinutes(exam.Duration);
-                while (startDate <= exam.StartTime)
+                
+                while (startDate < exam.StartTime)
                 {
                     FreeSpaceDTO freeSpace = new FreeSpaceDTO();
                     freeSpace.StartTime = startDate;
                     freeSpace.EndTime = startDate.AddHours(dto.Duration);
                     freeSpacesFromRoom.Add(freeSpace);
-                    startDate = startDate.AddHours(dto.Duration);
+                    startDate = startDate.AddHours(0.5);
                 }
-                startDate = endExaminationTimeForFromRoom;
+                startDate = startDate.AddMinutes(exam.Duration);
+
             }
 
-            while (startDate <= endDate)
+            while (startDate < endDate)
             {
                 FreeSpaceDTO freeSpace2 = new FreeSpaceDTO();
                 freeSpace2.StartTime = startDate;
                 freeSpace2.EndTime = startDate.AddHours(dto.Duration);
                 freeSpacesFromRoom.Add(freeSpace2);
-                startDate = startDate.AddHours(dto.Duration);
+                startDate = startDate.AddHours(0.5);
             }
 
 
-            startDate = dto.StartDate;
-            startDateTemp = dto.StartDate;
-            endDate = dto.EndDate;
+            startDate = dto.StartDate.AddHours(1);
+            endDate = dto.EndDate.AddHours(1);
 
             foreach (Examination exam in toRoomExaminations)
             {
-                DateTime endExaminationTimeForToRoom = exam.StartTime.AddMinutes(exam.Duration);
-                while (startDate <= exam.StartTime)
+                
+                while (startDate < exam.StartTime)
                 {
                     FreeSpaceDTO freeSpace = new FreeSpaceDTO();
                     freeSpace.StartTime = startDate;
                     freeSpace.EndTime = startDate.AddHours(dto.Duration);
                     freeSpacesToRoom.Add(freeSpace);
-                    startDate = startDate.AddHours(dto.Duration);
+                    startDate = startDate.AddHours(0.5);
                 }
-                startDate = endExaminationTimeForToRoom;
+
+                startDate = startDate.AddMinutes(exam.Duration);
+                
             }
 
-            while (startDate <= endDate)
+            while (startDate < endDate)
             {
                 FreeSpaceDTO freeSpace2 = new FreeSpaceDTO();
                 freeSpace2.StartTime = startDate;
                 freeSpace2.EndTime = startDate.AddHours(dto.Duration);
                 freeSpacesToRoom.Add(freeSpace2);
-                startDate = startDate.AddHours(dto.Duration);
+                startDate = startDate.AddHours(0.5);
             }
 
 

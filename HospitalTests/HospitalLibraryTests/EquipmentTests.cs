@@ -45,7 +45,7 @@ namespace HospitalTests.HospitalLibraryTests
             var equipments = ((OkObjectResult)controller.GetEquipmentByRoomId(1)).Value as List<EquipmentDTO>;
 
             Assert.NotNull(equipments);
-            Assert.Equal(2, equipments.Count);
+            Assert.Equal(1, equipments.Count);
         }
 
 

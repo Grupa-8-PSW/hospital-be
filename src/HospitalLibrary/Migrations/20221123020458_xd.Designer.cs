@@ -3,6 +3,7 @@ using System;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221123020458_xd")]
+    partial class xd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,10 +150,10 @@ namespace HospitalLibrary.Migrations
                         {
                             Id = 1,
                             DoctorId = 1,
-                            Duration = 30,
+                            Duration = 180,
                             PatientId = 1,
                             RoomId = 1,
-                            StartTime = new DateTime(2022, 11, 22, 2, 0, 0, 0, DateTimeKind.Utc)
+                            StartTime = new DateTime(2022, 11, 22, 10, 0, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
@@ -160,25 +162,25 @@ namespace HospitalLibrary.Migrations
                             Duration = 120,
                             PatientId = 2,
                             RoomId = 2,
-                            StartTime = new DateTime(2022, 11, 22, 5, 30, 0, 0, DateTimeKind.Utc)
+                            StartTime = new DateTime(2022, 11, 21, 12, 30, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
                             Id = 3,
                             DoctorId = 1,
-                            Duration = 60,
+                            Duration = 300,
                             PatientId = 3,
                             RoomId = 1,
-                            StartTime = new DateTime(2022, 11, 22, 9, 30, 0, 0, DateTimeKind.Utc)
+                            StartTime = new DateTime(2022, 11, 23, 4, 30, 0, 0, DateTimeKind.Utc)
                         },
                         new
                         {
                             Id = 4,
                             DoctorId = 2,
-                            Duration = 150,
+                            Duration = 60,
                             PatientId = 4,
                             RoomId = 2,
-                            StartTime = new DateTime(2022, 11, 22, 12, 30, 0, 0, DateTimeKind.Utc)
+                            StartTime = new DateTime(2022, 11, 21, 5, 30, 0, 0, DateTimeKind.Utc)
                         });
                 });
 

@@ -22,12 +22,10 @@ namespace HospitalLibrary.Settings.DataSeed
              );
 
             modelBuilder.Entity<Examination>().HasData(
-                new Examination() { Id = 1, DoctorId = 1, PatientId = 1, RoomId = 1,  StartTime = new DateTime(2022, 11, 22, 10, 10, 10, DateTimeKind.Utc), Duration = 200 },
-                new Examination() { Id = 2, DoctorId = 2, PatientId = 2, RoomId = 2, StartTime = new DateTime(2022, 11, 21, 7, 30, 00, DateTimeKind.Utc), Duration = 100 },
-                new Examination() { Id = 3, DoctorId = 1, PatientId = 3, RoomId = 3, StartTime = new DateTime(2022, 11, 24, 4, 30, 00, DateTimeKind.Utc), Duration = 300 },
-                new Examination() { Id = 4, DoctorId = 2, PatientId = 4, RoomId = 4, StartTime = new DateTime(2022, 11, 25, 5, 30, 00, DateTimeKind.Utc), Duration = 60 },
-                new Examination() { Id = 5, DoctorId = 2, PatientId = 1, RoomId = 1, StartTime = new DateTime(2022, 11, 22, 11, 30, 00, DateTimeKind.Utc), Duration = 60 },
-                new Examination() { Id = 6, DoctorId = 2, PatientId = 2, RoomId = 2, StartTime = new DateTime(2022, 11, 23, 11, 30, 00, DateTimeKind.Utc), Duration = 60 }
+                new Examination() { Id = 1, DoctorId = 1, PatientId = 1, RoomId = 1,  StartTime = new DateTime(2022, 11, 22, 2, 00, 00, DateTimeKind.Utc), Duration = 30 },
+                new Examination() { Id = 2, DoctorId = 2, PatientId = 2, RoomId = 2, StartTime = new DateTime(2022, 11, 22, 5, 30, 00, DateTimeKind.Utc), Duration = 120 },
+                new Examination() { Id = 3, DoctorId = 1, PatientId = 3, RoomId = 1, StartTime = new DateTime(2022, 11, 22, 9, 30, 00, DateTimeKind.Utc), Duration = 60 },
+                new Examination() { Id = 4, DoctorId = 2, PatientId = 4, RoomId = 2, StartTime = new DateTime(2022, 11, 22, 12, 30, 00, DateTimeKind.Utc), Duration = 150 }
              );
 
             /*
