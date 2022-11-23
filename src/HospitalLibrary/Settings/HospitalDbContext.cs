@@ -29,6 +29,10 @@ namespace HospitalLibrary.Settings
         public DbSet<Bed> Beds { get; set; }
         public DbSet<Blood> Bloods { get; set; }
 
+        public DbSet<Allergen> Allergens { get; set; }
+        public DbSet<Address> Addresses{ get; set; }
+
+
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -41,6 +45,7 @@ namespace HospitalLibrary.Settings
                 .IsUnique();
 
             modelBuilder.SeedMap();
+            modelBuilder.SeedAddress();
             modelBuilder.SeedPatient();
             modelBuilder.SeedFeedback();
             modelBuilder.SeedBed();
@@ -48,6 +53,9 @@ namespace HospitalLibrary.Settings
             modelBuilder.SeedMedicalDrugs();
             modelBuilder.SeedTreatmentHistory();
             modelBuilder.SeedBlood();
+
+            modelBuilder.SeedAllergen();
+
             base.OnModelCreating(modelBuilder);
 
 
