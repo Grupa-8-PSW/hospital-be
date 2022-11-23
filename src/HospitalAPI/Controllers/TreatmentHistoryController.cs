@@ -8,6 +8,7 @@ using HospitalLibrary.Core.Util;
 using HospitalLibrary.GraphicalEditor.Model.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using System.Collections.ObjectModel;
 using System.Net;
 
@@ -145,7 +146,7 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpGet("generateReport/{id}")]
-        public ActionResult DownloadTreatmentReport(int id)
+        public async Task<ActionResult> DownloadTreatmentReport(int id)
         {
             try
             {
@@ -176,10 +177,13 @@ namespace HospitalAPI.Controllers
                     return new JsonResult(new SimpleResponse(HttpStatusCode.InternalServerError,
                         new { Message = "Failed to generate report." }));
                 }
-
-                var content = new FileStream(pdfPath, FileMode.Open, FileAccess.Read, FileShare.Read);
-                var response = File(content, "application/octet-stream");
-                return response;
+                byte[] content = await System.IO.File.ReadAllBytesAsync(pdfPath);
+                var cd = new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = fileName
+                };
+                Response.Headers.Add(HeaderNames.ContentDisposition, cd.ToString());
+                return File(content, "application/pdf");
             }
             catch (Exception ex)
             {

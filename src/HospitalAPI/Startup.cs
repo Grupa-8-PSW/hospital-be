@@ -124,7 +124,8 @@ namespace HospitalAPI
                 builder
                     .AllowAnyOrigin()
                     .AllowAnyMethod()
-                    .AllowAnyHeader();
+                    .AllowAnyHeader()
+                    .WithExposedHeaders("content-disposition");
             });
 
             if (env.IsDevelopment())
