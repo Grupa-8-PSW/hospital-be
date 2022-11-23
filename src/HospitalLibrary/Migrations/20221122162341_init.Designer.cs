@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221122110122_ime_migracije")]
-    partial class ime_migracije
+    [Migration("20221122162341_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -265,22 +265,20 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 1,
-
-                            EndWork = new DateTime(2022, 11, 22, 11, 1, 21, 503, DateTimeKind.Utc).AddTicks(3569),
+                            EndWork = new DateTime(2022, 11, 22, 16, 23, 41, 164, DateTimeKind.Utc).AddTicks(766),
                             FirstName = "firstName",
                             LastName = "lastName",
                             RoomId = 1,
-                            StartWork = new DateTime(2022, 11, 22, 11, 1, 21, 503, DateTimeKind.Utc).AddTicks(3568)
+                            StartWork = new DateTime(2022, 11, 22, 16, 23, 41, 164, DateTimeKind.Utc).AddTicks(765)
                         },
                         new
                         {
                             Id = 2,
-
-                            EndWork = new DateTime(2022, 11, 22, 11, 1, 21, 503, DateTimeKind.Utc).AddTicks(3571),
+                            EndWork = new DateTime(2022, 11, 22, 16, 23, 41, 164, DateTimeKind.Utc).AddTicks(767),
                             FirstName = "firstNam2",
                             LastName = "lastName2",
                             RoomId = 1,
-                            StartWork = new DateTime(2022, 11, 22, 11, 1, 21, 503, DateTimeKind.Utc).AddTicks(3571)
+                            StartWork = new DateTime(2022, 11, 22, 16, 23, 41, 164, DateTimeKind.Utc).AddTicks(767)
                         });
                 });
 
@@ -562,10 +560,9 @@ namespace HospitalLibrary.Migrations
                             Active = true,
                             BedId = 1,
                             DischargeReason = "abc",
-
-                            EndDate = new DateTime(2022, 11, 22, 11, 1, 21, 503, DateTimeKind.Utc).AddTicks(3595),
+                            EndDate = new DateTime(2022, 11, 22, 16, 23, 41, 164, DateTimeKind.Utc).AddTicks(792),
                             PatientId = 1,
-                            StartDate = new DateTime(2022, 11, 22, 11, 1, 21, 503, DateTimeKind.Utc).AddTicks(3595)
+                            StartDate = new DateTime(2022, 11, 22, 16, 23, 41, 164, DateTimeKind.Utc).AddTicks(791)
                         },
                         new
                         {
@@ -573,9 +570,9 @@ namespace HospitalLibrary.Migrations
                             Active = true,
                             BedId = 2,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2022, 11, 22, 11, 1, 21, 503, DateTimeKind.Utc).AddTicks(3599),
+                            EndDate = new DateTime(2022, 11, 22, 16, 23, 41, 164, DateTimeKind.Utc).AddTicks(796),
                             PatientId = 2,
-                            StartDate = new DateTime(2022, 11, 22, 11, 1, 21, 503, DateTimeKind.Utc).AddTicks(3599)
+                            StartDate = new DateTime(2022, 11, 22, 16, 23, 41, 164, DateTimeKind.Utc).AddTicks(796)
                         },
                         new
                         {
@@ -583,9 +580,9 @@ namespace HospitalLibrary.Migrations
                             Active = true,
                             BedId = 3,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2022, 11, 22, 11, 1, 21, 503, DateTimeKind.Utc).AddTicks(3601),
+                            EndDate = new DateTime(2022, 11, 22, 16, 23, 41, 164, DateTimeKind.Utc).AddTicks(798),
                             PatientId = 3,
-                            StartDate = new DateTime(2022, 11, 22, 11, 1, 21, 503, DateTimeKind.Utc).AddTicks(3601)
+                            StartDate = new DateTime(2022, 11, 22, 16, 23, 41, 164, DateTimeKind.Utc).AddTicks(797)
                         });
                 });
 

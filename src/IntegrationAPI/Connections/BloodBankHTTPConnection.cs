@@ -29,7 +29,6 @@ namespace IntegrationAPI.Connections
 
         public BloodBankHTTPConnection(IServiceScopeFactory factory)
         {
-
             _service = factory.CreateScope().ServiceProvider
                 .GetRequiredService<IBloodConsumptionConfigurationService>();
 
@@ -88,12 +87,12 @@ namespace IntegrationAPI.Connections
             while (!stoppingToken.IsCancellationRequested);
         }
 
-        public async Task<TimeSpan> SendToBanks(DateTime now, BloodConsumptionConfiguration bcc, TimeSpan delay)
+
+        private async Task<TimeSpan> SendToBanks(DateTime now, BloodConsumptionConfiguration bcc, TimeSpan delay)
         {
             if (now.Hour == bcc.NextSendingTime.Hour && now.Minute == bcc.NextSendingTime.Minute)
             {
                 Guid uniqueSuffix = Guid.NewGuid();
-
                 //var scopedService = scope.ServiceProvider.GetRequiredService<IBloodBankHTTPConnection>();
                 byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(_bloodUnitService.GetAllBloodUnits(), out var configuration));
                 using (var stream = File.Create("./Reports/bloodConsumptionReport" + uniqueSuffix + ".PDF"))

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IntegrationLibrary.Core.Model.DTO;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace IntegrationLibrary.Core.Service
 {
@@ -20,6 +21,7 @@ namespace IntegrationLibrary.Core.Service
         {
             _repository = repo;
         }
+
 
         public BloodConsumptionConfiguration Create(BloodConsumptionConfiguration bloodConsumptionConfiguration)
         {
@@ -42,6 +44,7 @@ namespace IntegrationLibrary.Core.Service
         {
             using (MemoryStream ms = new MemoryStream())
             {
+
                 Document document = new Document(PageSize.A4, 25, 25, 30, 30);
 
                 PdfWriter writer = PdfWriter.GetInstance(document, ms);
@@ -115,8 +118,8 @@ namespace IntegrationLibrary.Core.Service
 
             foreach (BloodUnitDTO unit in bloodUnits)
             {
-                if ((configuration.Last().NextSendingTime.Subtract(configuration.Last().ConsumptionPeriodHours) < unit.DatePrescribed) &&
-                    (unit.DatePrescribed < configuration.Last().NextSendingTime))
+                if ((configuration.Last().StartDateTime.Subtract(configuration.Last().ConsumptionPeriodHours) < unit.DatePrescribed) &&
+                    (unit.DatePrescribed < configuration.Last().StartDateTime))
                     validList.Add(unit);
             }
 
