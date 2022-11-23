@@ -67,7 +67,7 @@ namespace HospitalTests
             int ageOfFirstPatient = service.CalculateAgeFromPin(service.GetById(1));
 
             ageOfFirstPatient.ShouldBeGreaterThanOrEqualTo(22);
-
+        }
         public void Create_patient_and_add_allergens()
         {
             var service = new PatientService(CreateStubRepository());
