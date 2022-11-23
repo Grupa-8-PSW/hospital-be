@@ -41,9 +41,9 @@ namespace HospitalTests.HospitalAPITests.Integration
         [Fact]
         public void Retrieves_All_Blood_Units()
         {
-            IEnumerable<BloodUnit> allNews = GetAllBloodUnits();
+            IEnumerable<BloodUnit> allBloodUnits = GetAllBloodUnits();
 
-            allNews.ShouldNotBeNull();
+            allBloodUnits.ShouldNotBeNull();
         }
 
     }
