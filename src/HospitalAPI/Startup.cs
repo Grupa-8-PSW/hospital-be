@@ -83,6 +83,7 @@ namespace HospitalAPI
 
             services.AddScoped<IMapper<Examination, ExaminationDTO>, ExaminationMapper>();
             services.AddScoped<IMapper<TreatmentHistory, TreatmentHistoryDTO>, TreatmentHistoryMapper>();
+            services.AddScoped<IMapper<Patient, PatientDTO>, PatientMapper>();  //mozda se ponovi pri merge
 
             services.AddScoped<IValidation, ExaminationValidation>();
 

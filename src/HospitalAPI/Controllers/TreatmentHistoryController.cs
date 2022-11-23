@@ -1,4 +1,5 @@
-﻿using HospitalAPI.DTO;
+﻿using AutoMapper;
+using HospitalAPI.DTO;
 using HospitalAPI.Mapper;
 using HospitalAPI.Web.Dto;
 using HospitalAPI.Web.Mapper;
@@ -18,11 +19,15 @@ namespace HospitalAPI.Controllers
         private readonly ITreatmentHistoryService _treatmentHistoryService;
         //      private readonly IDoctorService _doctorService;
         private readonly IMapper<TreatmentHistory, TreatmentHistoryDTO> _treatmentHistoryMapper;
+        private readonly IMapper _patientMapper;
 
-        public TreatmentHistoryController(ITreatmentHistoryService treatmentHistoryService, IMapper<TreatmentHistory, TreatmentHistoryDTO> mapper)
+        public TreatmentHistoryController(ITreatmentHistoryService treatmentHistoryService, 
+            IMapper<TreatmentHistory, TreatmentHistoryDTO> mapper,
+            IMapper patientMapper)
         {
             _treatmentHistoryService = treatmentHistoryService;
             _treatmentHistoryMapper = mapper;
+            _patientMapper = patientMapper;
         }
 
         // GET: api/rooms
@@ -141,5 +146,19 @@ namespace HospitalAPI.Controllers
             _treatmentHistoryService.Delete(examination);
             return NoContent();
         }
+
+        [HttpGet("withoutActiveTreatment")]
+        public ActionResult GetPatientsWithoutActiveTreatmentHistory()
+        {
+            List<Patient> patients = _treatmentHistoryService.GetPatientsWithoutActiveTreatmentHistory().ToList();
+            var patientsDTO = _patientMapper.Map<List<PatientDTO>>(patients);
+            return Ok(patientsDTO);
+        }
+
+      /*  [HttpGet]
+        public ActionResult GetAll()
+        {
+            return Ok(_mapper.Map<List<PatientDTO>>(_patientService.GetAll()));
+        }*/
     }
 }

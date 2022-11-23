@@ -57,5 +57,17 @@ namespace HospitalLibrary.Core.Repository
             _context.SaveChanges();
         }
 
+        public IEnumerable<TreatmentHistory> GetAllActive()
+        {
+            return _context.TreatmentHistories.Include(th => th.Active == true).ToList();
+        }
+
+        public IEnumerable<Patient> GetPatientsWithoutActiveTreatmentHistory()
+        {
+            return _context.Patients.Except(from th in _context.TreatmentHistories
+                     where th.Active == true
+                     select th.Patient).ToList();
+        }
+
     }
 }
