@@ -53,10 +53,13 @@ namespace IntegrationTeamTests.Setup
 
             context.BloodBanks.Add(new BloodBank { Name = "BloodBank1", Email = "email@email.com", Password = "password", ServerAddress = "serverAddress", APIKey = "1" });
             context.BloodBankNews.Add(new BloodBankNews { Subject = "subject", Text = "text", ImgSrc = String.Empty, Archived = false, Published = false, BloodBank = null, BloodBankId = 1 });
-
+            String dt = "2022-11-23 19:00:00+01";
+            DateTime date = DateTime.Parse(dt);
+            context.BloodConsumptionConfiguration.Add(
+                new BloodConsumptionConfiguration(10, date, TimeSpan.FromHours(3), TimeSpan.FromHours(50)));
             //context.BloodBankNews.Add(new BloodBankNews { id = 1, subject = "subject", text = "text", byteArray = Array.Empty<byte>(), archived = false, published = false });
 
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodConsumptionConfiguration\";");
+            // context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodConsumptionConfiguration\";");
 
             // context.BloodConsumptionConfiguration.Add(new BloodConsumptionConfiguration { Id = 1, ConsumptionPeriodHours = 12, StartDate = "11/Nov/2022", StartTime = "11:11", FrequencyPeriodInHours=12 });
 

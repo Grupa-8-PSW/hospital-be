@@ -91,6 +91,22 @@ namespace HospitalTests.HospitalAPITests.Integration
                      && updated.Reason == createdForUpdate.Reason
             );
         }
+
+        private IEnumerable<BloodUnitRequest> getAllBloodUnitRequests()
+        {
+            using var scope = Factory.Services.CreateScope();
+            BloodUnitRequestController controller = SetupController(scope);
+
+            return ((OkObjectResult)controller.GetAll())?.Value as IEnumerable<BloodUnitRequest>;
+        }
+
+        [Fact]
+        public void Retrieves_All_Blood_Unit_Requests()
+        {
+            IEnumerable<BloodUnitRequest> allRequests = getAllBloodUnitRequests();
+
+            allRequests.ShouldNotBeNull();
+        }
     }
     public class BloodUnitRequestTestData : IEnumerable<object[]>
     {
