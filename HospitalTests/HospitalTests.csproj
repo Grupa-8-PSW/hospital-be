@@ -30,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="HospitalAPITests\Integration\Controllers\PublicApp\" />
     <Folder Include="HospitalLibraryTests\" />
   </ItemGroup>
 
