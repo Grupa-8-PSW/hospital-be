@@ -22,5 +22,11 @@ namespace HospitalLibrary.Core.Service
 
         public void Delete(int id) => _patientRepository.Delete(id);
 
+        public Patient CreateAndAddAllergens(Patient patient, List<Allergen> allers)
+        {
+            patient.Allergens = allers;
+            return _patientRepository.Create(patient);
+        }
+
     }
 }

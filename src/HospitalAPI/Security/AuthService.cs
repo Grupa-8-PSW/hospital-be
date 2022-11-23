@@ -3,6 +3,7 @@ using HospitalAPI.DTO;
 using HospitalAPI.Security.Models;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -18,8 +19,8 @@ namespace HospitalAPI.Security
         private readonly RoleManager<IdentityRole<int>> _roleManager;
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
-        private readonly IPatientRepository _patientRepository;
         private readonly IAllergensRepository _allergensRepository;
+        private readonly IPatientService _patientService;
         private readonly IMapper _mapper;
 
         public AuthService(
@@ -27,16 +28,16 @@ namespace HospitalAPI.Security
             RoleManager<IdentityRole<int>> roleManager,
             UserManager<User> userManager,
             IConfiguration configuration,
-            IPatientRepository patientRepository,
             IAllergensRepository allergensRepository,
+            IPatientService patientService,
             IMapper mapper)
         {
             _signInManager = signInManager;
             _roleManager = roleManager;
             _userManager = userManager;
             _configuration = configuration;
-            _patientRepository = patientRepository;
             _allergensRepository = allergensRepository;
+            _patientService = patientService;
             _mapper = mapper;
         }
 
@@ -83,7 +84,7 @@ namespace HospitalAPI.Security
                 var p = _mapper.Map<Patient>(registerRequest.RegisterUser);
                 var patientAllergens = _allergensRepository
                     .GetAllergensByDtoId(p.Allergens.Select(a => a.Id).ToList());
-                _patientRepository.Create(p, patientAllergens);
+                _patientService.CreateAndAddAllergens(p, patientAllergens);
             }
             
             return "Ok";
