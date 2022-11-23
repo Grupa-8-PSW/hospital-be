@@ -17,7 +17,11 @@ using IntegrationLibrary.Core.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using IntegrationLibrary.Core.Model;
 using Shouldly;
-/*
+using IntegrationLibrary.Core.Model.DTO;
+using System.Collections;
+using HospitalAPI;
+using Startup = IntegrationAPI.Startup;
+
 namespace IntegrationTeamTests.Integration
 {
     public class BloodBankNewsTests : BaseIntegrationTests
@@ -34,25 +38,100 @@ namespace IntegrationTeamTests.Integration
             return new BloodBankNewsController(scope.ServiceProvider.GetRequiredService<IBloodBankNewsService>());
         }
 
-        [Fact]
-        public async Task Receives_BloodBank_News()
+        private IEnumerable<BloodBankNews> GetAllBloodBankNews()
         {
-            //ARANGE
+            using var scope = Factory.Services.CreateScope();
+            BloodBankNewsController controller = SetupController(scope);
+            return ((OkObjectResult)controller.GetAll())?.Value as IEnumerable<BloodBankNews>;
+        }
+
+
+        private async Task<bool> ArrangeRabbitMq(BloodBankNewsDTO message)
+        {
             using var scope = Factory.Services.CreateScope();
             BloodBankRabbitMqConnection rabbitConnection = SetupRabbitMqConnection(scope);
             BloodBankNewsController controller = SetupController(scope);
-            var allNews = ((OkObjectResult)controller.GetAll())?.Value as IEnumerable<BloodBankNews>;
-            int newsCountBefore = allNews.Count();
 
-            //ACT
+            int newsCountBefore = GetAllBloodBankNews().Count();
+
             await rabbitConnection.StartAsync(CancellationToken.None);
-            RabbitMqPublisherMock.Send();
+            RabbitMqPublisherMock.Send(message);
             await Task.Delay(1000);
             await rabbitConnection.StopAsync(CancellationToken.None);
-            int newsCountAfter = (((OkObjectResult)controller.GetAll())?.Value as IEnumerable<BloodBankNews>).Count();
+
+
+            int newsCountAfter = GetAllBloodBankNews().Count();
+            return (newsCountAfter - newsCountBefore) > 0;
+        }
+
+
+        [Fact]
+        public void Retrieves_All_News()
+        {
+            IEnumerable<BloodBankNews> allNews = GetAllBloodBankNews();
+
+            allNews.ShouldNotBeNull();
+        }
+
+
+        [Theory]
+        [ClassData(typeof(BloodBankNewsTestData))]
+        public async Task Receives_BloodBank_News(BloodBankNewsDTO message, bool expected)
+        {
+            //ARRANGE AND ACT
+            bool changed = await ArrangeRabbitMq(message);
 
             //ASSERT
-            newsCountAfter.ShouldBe(newsCountBefore + 1);
+            changed.ShouldBe(expected);
         }
+
+
+        [Fact]
+        public void Publishes_BloodBank_News()
+        {
+            using var scope = Factory.Services.CreateScope();
+            BloodBankNewsController controller = SetupController(scope);
+            BloodBankNews bloodBankNews = ((OkObjectResult)controller.GetById(1))?.Value as BloodBankNews;
+
+            controller.PublishNews(bloodBankNews);
+            bloodBankNews = ((OkObjectResult)controller.GetById(1))?.Value as BloodBankNews;
+
+            bloodBankNews.Published.ShouldBeTrue();
+
+
+        }
+        [Fact]
+        public void Archives_BloodBank_News()
+        {
+            using var scope = Factory.Services.CreateScope();
+            BloodBankNewsController controller = SetupController(scope);
+            BloodBankNews bloodBankNews = ((OkObjectResult)controller.GetById(1))?.Value as BloodBankNews;
+            int newsCountBefore = GetAllBloodBankNews().Count();
+
+            controller.ArchiveNews(bloodBankNews);
+            int newsCountAfter = GetAllBloodBankNews().Count();
+
+            newsCountAfter.ShouldBe(newsCountBefore - 1);
+
+        }
+
+
+
     }
-} */
+
+
+    public class BloodBankNewsTestData : IEnumerable<object[]>
+    {
+        public IEnumerator<object[]> GetEnumerator()
+        {
+            BloodBankNewsDTO messageWithValidApiKey = new() { text = "text", bloodBankApiKey = "1", imgSrc = "", subject = "subject" };
+            BloodBankNewsDTO messageWithInvalidApiKey = new() { text = "text", bloodBankApiKey = "invalid", imgSrc = "", subject = "subject" };
+            yield return new object[] { messageWithValidApiKey, true };
+            yield return new object[] { messageWithInvalidApiKey, false };
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    }
+
+}
+

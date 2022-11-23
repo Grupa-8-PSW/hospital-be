@@ -13,5 +13,7 @@ namespace IntegrationLibrary.Core.Repository
         void Create(BloodBank bloodBank);
         BloodBank GetById(int id);
         void Delete(BloodBank bloodBank);
+        BloodBank GetByApiKey(string apiKey);
+
     }
 }

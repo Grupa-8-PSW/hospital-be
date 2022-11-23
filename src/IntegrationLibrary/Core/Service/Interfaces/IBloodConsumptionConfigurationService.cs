@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IntegrationLibrary.Core.Model.DTO;
 
 namespace IntegrationLibrary.Core.Service.Interfaces
 {
@@ -13,6 +14,13 @@ namespace IntegrationLibrary.Core.Service.Interfaces
 
         public List<BloodConsumptionConfiguration> GetAll();
 
-        public byte[] GeneratePdf(BloodConsumptionConfiguration bs, List<BloodUnit2> bloodUnits);
+        public byte[] GeneratePdf(BloodConsumptionConfiguration bs, List<BloodUnitDTO> bloodUnits);
+
+
+        public BloodConsumptionConfiguration FindActiveConfiguration();
+        public List<BloodUnitDTO> FindValidBloodUnits(List<BloodUnitDTO> bloodUnits, out List<BloodConsumptionConfiguration> configuration);
+
+        public void Update(BloodConsumptionConfiguration newBloodConsumptionConfiguration);
+
     }
 }
