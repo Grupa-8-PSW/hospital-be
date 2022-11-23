@@ -8,6 +8,7 @@ using IntegrationLibrary.Core.Model;
 using RestSharp;
 using IntegrationLibrary.Core.Model.DTO;
 using Newtonsoft.Json;
+using HospitalLibrary.Core.Model;
 
 namespace HospitalAPI.Connections
 {
@@ -37,7 +38,6 @@ namespace HospitalAPI.Connections
 
             List<BloodUnitDTO> result = JsonConvert.DeserializeObject<List<BloodUnitDTO>>(response.Content);
             return result;
-
         }
 
         public void ChangeRequestStatus(BloodUnitRequestDTO bloodUnitRequestDto)
@@ -47,6 +47,8 @@ namespace HospitalAPI.Connections
             request.AddJsonBody(bloodUnitRequestDto);
             client.Execute(request);
         }
+
+        
     }
 }
 

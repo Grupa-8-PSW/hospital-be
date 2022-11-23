@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
+using HospitalLibrary.Core.Model;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.DTO;
 

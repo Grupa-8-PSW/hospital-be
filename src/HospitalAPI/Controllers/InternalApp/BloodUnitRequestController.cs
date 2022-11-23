@@ -22,6 +22,11 @@ namespace HospitalAPI.Controllers.InternalApp
             _bloodUnitRequestMapper = bloodUnitRequestMapper;
         }
 
+        public BloodUnitRequestController(IBloodUnitRequestService bloodUnitRequestService)
+        {
+            _bloodUnitRequestService = bloodUnitRequestService;
+        }
+
         // GET: api/rooms
         [HttpGet]
         public ActionResult GetAll()

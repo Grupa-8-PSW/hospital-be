@@ -32,5 +32,16 @@ namespace IntegrationAPI.Controllers
             return Ok();
         }
 
+        [HttpGet("{id}")]
+        public ActionResult GetDoctorById(int id)
+        {
+            return Ok(hospitalHTTPConnectionService.GetDoctorById(id));
+        }
+        [HttpGet("/getAllDoctors")]
+        public ActionResult GetAllDoctors()
+        {
+            return Ok(hospitalHTTPConnectionService.GetAllDoctors());
+        }
+
     }
 }

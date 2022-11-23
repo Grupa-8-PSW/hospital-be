@@ -32,16 +32,17 @@ namespace IntegrationTeamTests.Integration
             BloodConsumptionReportDTO dto = new BloodConsumptionReportDTO()
             {
                 ConsumptionPeriodHours = 12,
-                StartDate = "11/Nov/2022",
+                StartDate = "11/Nov/2023",
                 StartTime = "11:11:00",
                 FrequencyPeriodInHours = 12
 
             };
 
-            Assert.True(true);
+
 
             // Act
             var retVal = controller.CreateConfiguration(dto) as OkObjectResult;
+            
 
 
             //Assert
@@ -50,7 +51,6 @@ namespace IntegrationTeamTests.Integration
             Assert.True(ValidateObjectWritenInBase(dto, createdBloodConsumptionConfiguration));
 
         }
-
 
 
         private bool ValidateObjectWritenInBase(BloodConsumptionReportDTO dto, BloodConsumptionConfiguration retVal)

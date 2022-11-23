@@ -52,6 +52,81 @@ namespace HospitalTests.HospitalAPITests.Integration
             Assert.True(bloodUnitRequestBefore + 1 == bloodUnitRequestAfter);
         }
 
+
+        [Theory]
+        [ClassData(typeof(BloodUnitRequestTestData))]
+        public void Manager_updates_blood_unit_request(BloodUnitRequestDTO bloodUnitRequest, bool expectedDataBasechange)
+        {
+            //ARANGE
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            BloodUnitRequest? createdRequest;
+            BloodUnitRequestDTO createdForUpdate = ArrangeRequestForUpdate(out createdRequest, bloodUnitRequest);
+            createdForUpdate.Status = BloodUnitRequestStatus.REVIEWAGAIN;
+            createdForUpdate.ManagerComment = "comment";
+
+
+            //ACT
+            var retVal = controller.ChangeRequestStatus(createdForUpdate) as OkResult;
+            BloodUnitRequestDTO updated = ((OkObjectResult)controller.GetById(createdRequest.Id))?.Value as BloodUnitRequestDTO;
+
+            //ASSERT
+            Assert.IsType<OkResult>(retVal);
+            Assert.True(ValidateValuesInBase(updated, createdForUpdate));
+        }
+
+        [Theory]
+        [ClassData(typeof(BloodUnitRequestTestData))]
+        public void Manager_approve_blood_unit_request(BloodUnitRequestDTO bloodUnitRequest, bool expectedDataBasechange)
+        {
+            //ARANGE
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            BloodUnitRequest? createdRequest;
+            BloodUnitRequestDTO createdForUpdate = ArrangeRequestForUpdate(out createdRequest, bloodUnitRequest);
+            createdForUpdate.Status = BloodUnitRequestStatus.APPROVED;
+
+
+            //ACT
+            var retVal = controller.ChangeRequestStatus(createdForUpdate) as OkResult;
+            BloodUnitRequestDTO updated = ((OkObjectResult)controller.GetById(createdRequest.Id))?.Value as BloodUnitRequestDTO;
+
+            //ASSERT
+            Assert.IsType<OkResult>(retVal);
+            Assert.True(ValidateValuesInBase(updated, createdForUpdate));
+        }
+
+        [Theory]
+        [ClassData(typeof(BloodUnitRequestTestData))]
+        public void Manager_reject_blood_unit_request(BloodUnitRequestDTO bloodUnitRequest, bool expectedDataBasechange)
+        {
+            //ARANGE
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            BloodUnitRequest? createdRequest;
+            BloodUnitRequestDTO createdForUpdate = ArrangeRequestForUpdate(out createdRequest, bloodUnitRequest);
+            createdForUpdate.Status = BloodUnitRequestStatus.REJECTED;
+
+
+            //ACT
+            var retVal = controller.ChangeRequestStatus(createdForUpdate) as OkResult;
+            BloodUnitRequestDTO updated = ((OkObjectResult)controller.GetById(createdRequest.Id))?.Value as BloodUnitRequestDTO;
+
+            //ASSERT
+            Assert.IsType<OkResult>(retVal);
+            Assert.True(ValidateValuesInBase(updated, createdForUpdate));
+        }
+
+
+        private bool ValidateValuesInBase(BloodUnitRequestDTO? updated, BloodUnitRequestDTO createdForUpdate)
+        {
+            if (updated.Status.Equals(createdForUpdate.Status) && 
+                updated.ManagerComment.Equals(createdForUpdate.ManagerComment))
+                return true;
+            else
+                return false;
+        }
+
         [Theory]
         [ClassData(typeof(BloodUnitRequestTestData))]
         public void Doctor_updates_blood_unit_request(BloodUnitRequestDTO bloodUnitRequest, bool expectedDataBasechange)
@@ -91,6 +166,22 @@ namespace HospitalTests.HospitalAPITests.Integration
                      && updated.Reason == createdForUpdate.Reason
             );
         }
+
+        private IEnumerable<BloodUnitRequest> getAllBloodUnitRequests()
+        {
+            using var scope = Factory.Services.CreateScope();
+            BloodUnitRequestController controller = SetupController(scope);
+
+            return ((OkObjectResult)controller.GetAll())?.Value as IEnumerable<BloodUnitRequest>;
+        }
+
+        [Fact]
+        public void Retrieves_All_Blood_Unit_Requests()
+        {
+            IEnumerable<BloodUnitRequest> allRequests = getAllBloodUnitRequests();
+
+            allRequests.ShouldNotBeNull();
+        }
     }
     public class BloodUnitRequestTestData : IEnumerable<object[]>
     {
@@ -108,5 +199,6 @@ namespace HospitalTests.HospitalAPITests.Integration
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
     }
 }
