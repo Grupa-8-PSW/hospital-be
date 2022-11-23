@@ -14,6 +14,8 @@ namespace HospitalLibrary.Core.Service
 
         public List<Patient> GetAll() => _patientRepository.GetAll();
 
+        public List<Patient> GetBySelectedDoctorId(int id) => _patientRepository.GetBySelectedDoctorId(id).ToList();
+
         public Patient GetById(int id) => _patientRepository.GetById(id);
 
         public Patient Create(Patient patient) => _patientRepository.Create(patient);
@@ -21,6 +23,8 @@ namespace HospitalLibrary.Core.Service
         public void Update(Patient patient) => _patientRepository.Update(patient);
 
         public void Delete(int id) => _patientRepository.Delete(id);
+
+        
 
     }
 }

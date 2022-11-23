@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
+using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Crypto;
 
 namespace HospitalLibrary.Core.Repository
@@ -18,5 +19,9 @@ namespace HospitalLibrary.Core.Repository
             return Create(p);
 
         }
+        public IEnumerable<Patient> GetBySelectedDoctorId(int id) { 
+            return _dbContext.Patients.Where(p => p.SelectedDoctorId == id).ToList();
+        } 
+
     }
 }

@@ -22,7 +22,10 @@ namespace HospitalLibrary.Core.Service
         {
             return _doctorRepository.GetAll();
         }
-
+        public IEnumerable<Doctor> GetAllGeneralPracticioners()
+        {
+            return _doctorRepository.GetAllGeneralPracticioners();
+        }
         public Doctor GetById(int id)
         {
             return _doctorRepository.GetById(id);
