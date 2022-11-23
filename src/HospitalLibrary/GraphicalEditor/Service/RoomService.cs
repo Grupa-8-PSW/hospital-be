@@ -1,4 +1,4 @@
-﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Repository;
@@ -22,6 +22,11 @@ namespace HospitalLibrary.GraphicalEditor.Service
         public IEnumerable<Room> GetAll()
         {
             return _roomRepository.GetAll();
+        }
+
+        public IEnumerable<Room> Search(string name)
+        {
+            return _roomRepository.Search(name);
         }
 
         public Room GetById(int id)

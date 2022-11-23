@@ -38,17 +38,81 @@ namespace HospitalTests.HospitalAPITests.Integration
         }
 
         [Fact]
-        public void Finds_rooms_with_free_beds()
+        public void Finds_rooms_with_free_beds() {
+          var result = ((OkObjectResult)controller.GetFreeRooms())?.Value as List<RoomDTO>;
+
+          Assert.NotNull(result);
+          Assert.IsType<List<RoomDTO>>(result);
+          Assert.NotEmpty(result);
+        }
+
+        
+        public void Searches_rooms_with_same_name()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            var result = ((OkObjectResult)controller.Search("Magacin"))?.Value as List<RoomDTO>;
+
+            Assert.NotNull(result);
+            Assert.IsType<List<RoomDTO>>(result);
+            Assert.True(result.Count.Equals(2));
+            Assert.True(result[0].Name.Equals("Magacin"));
+        }
+
+        [Fact]
+        public void Searches_all_rooms_with_empty_string()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((OkObjectResult)controller.GetFreeRooms())?.Value as List<RoomDTO>;
+            var result = ((OkObjectResult)controller.Search(""))?.Value as List<RoomDTO>;
 
             Assert.NotNull(result);
             Assert.IsType<List<RoomDTO>>(result);
-            Assert.NotEmpty(result);
+            Assert.True(result.Count.Equals(19));
+            Assert.True(result[0].Name.Equals("Pedijatrija"));
         }
 
+        [Fact]
+        public void Searches_room_trimmed()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.Search(" Hirurgija "))?.Value as List<RoomDTO>;
+
+            Assert.NotNull(result);
+            Assert.IsType<List<RoomDTO>>(result);
+            Assert.True(result.Count.Equals(1));
+            Assert.True(result[0].Name.Equals("Hirurgija"));
+        }
+
+        [Fact]
+        public void Searches_room_truncated()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.Search("Kafe"))?.Value as List<RoomDTO>;
+
+            Assert.NotNull(result);
+            Assert.IsType<List<RoomDTO>>(result);
+            Assert.True(result.Count.Equals(1));
+            Assert.True(result[0].Name.Equals("Kafeterija"));
+        }
+
+        [Fact]
+        public void Searches_room_lowercase()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.Search("fizio"))?.Value as List<RoomDTO>;
+
+            Assert.NotNull(result);
+            Assert.IsType<List<RoomDTO>>(result);
+            Assert.True(result.Count.Equals(1));
+            Assert.True(result[0].Name.Equals("Fizioterapeut"));
+        }
     }
 }

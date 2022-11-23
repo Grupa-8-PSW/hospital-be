@@ -27,5 +27,10 @@ namespace HospitalLibrary.GraphicalEditor.Service
         {
             return _equRepository.GetEquipmentByRoomId(id);
         }
+
+        public IEnumerable<Equipment> Search(string name, int? amount)
+        {
+            return _equRepository.Search(name, amount);
+        }
     }
 }

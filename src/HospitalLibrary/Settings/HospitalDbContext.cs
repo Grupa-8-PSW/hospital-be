@@ -28,6 +28,8 @@ namespace HospitalLibrary.Settings
         public DbSet<BloodUnitRequest> BloodUnitRequests { get; set; }
         public DbSet<Blood> Bloods { get; set; }
         public DbSet<Bed> Beds { get; set; }
+        public DbSet<Allergen> Allergens { get; set; }
+        public DbSet<Address> Addresses{ get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
@@ -41,6 +43,8 @@ namespace HospitalLibrary.Settings
                 .IsUnique();
 
             modelBuilder.SeedMap();
+            modelBuilder.SeedAddress();
+            modelBuilder.SeedDoctor();
             modelBuilder.SeedPatient();
             modelBuilder.SeedFeedback();
             modelBuilder.SeedBed();
@@ -49,10 +53,10 @@ namespace HospitalLibrary.Settings
             modelBuilder.SeedTreatmentHistory();
             modelBuilder.SeedBlood();
             modelBuilder.SeedTherapy();
+            modelBuilder.SeedAllergen();
             
             base.OnModelCreating(modelBuilder);  
-            
-        
+
         }
 
     }
