@@ -24,7 +24,7 @@ namespace HospitalLibrary.GraphicalEditor.Repository
             return _context.Equipments.ToList();
         }
 
-        public IEnumerable<Equipment> GetEquipmentByRoomIdAndName(int id)
+        public IEnumerable<Equipment> GetEquipmentByRoomId(int id)
         {
             return _context.Equipments.Where(f => f.RoomId == id).ToList();
         }
@@ -37,7 +37,7 @@ namespace HospitalLibrary.GraphicalEditor.Repository
 
         public Equipment GetEquipmentByRoomIdAndName(int roomId, string name)
         {
-            return (Equipment)_context.Equipments.Where(f => f.RoomId == roomId && f.Name == name);
+            return (Equipment)_context.Equipments.Where(f => (f.RoomId == roomId && f.Name == name));
         }
        
         public void Create(Equipment equip)

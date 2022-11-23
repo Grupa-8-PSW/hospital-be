@@ -11,7 +11,7 @@ namespace HospitalLibrary.GraphicalEditor.Repository.Interfaces
     {
         IEnumerable<Equipment> GetAll();
 
-        IEnumerable<Equipment> GetEquipmentByRoomIdAndName(int id);
+        IEnumerable<Equipment> GetEquipmentByRoomId(int id);
 
         Equipment GetEquipmentByRoomIdAndName(int roomId, string name);
 
