@@ -18,9 +18,11 @@ namespace IntegrationAPI.Controllers
         private readonly ICredentialGenerator _credentialGenerator;
         
         
-        public BloodBanksController(IBloodBankService bloodBankService1)
+        public BloodBanksController(IBloodBankService bloodBankService1, IEmailService emailService, ICredentialGenerator credentialGenerator)
         {
             this._bloodBankService = bloodBankService1;
+            this._emailService = emailService;
+            this._credentialGenerator = credentialGenerator;
         }
 
 

@@ -10,6 +10,10 @@ using Microsoft.OpenApi.Models;
 using IntegrationLibrary.Core.Service.Interfaces;
 using IntegrationAPI.ConnectionService;
 using HospitalAPI.Connections;
+using IntegrationLibrary.Core.Model;
+using IntegrationAPI.Mapper;
+using IntegrationLibrary.Core.Model.DTO;
+using static IntegrationAPI.Mapper.IMapper;
 
 namespace IntegrationAPI
 {
@@ -28,7 +32,7 @@ namespace IntegrationAPI
                 options.UseNpgsql(Configuration.GetConnectionString("IntegrationDB")));
 
             services.AddControllers();
-            
+          
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IntegrationAPI", Version = "v1" });
@@ -50,6 +54,7 @@ namespace IntegrationAPI
             services.AddScoped<IBloodBankNewsService, BloodBankNewsService>();
             services.AddScoped<IHospitalHTTPConnectionService, HospitalHTTPConnectionService>();
             services.AddScoped<IHospitalHTTPConnection, HospitalHTTPConnection>();
+            services.AddScoped<IMapper<BloodBankNews, BloodBankNewsDTO>, BloodBankNewsMapper>();
             services.AddTransient<ExceptionMiddleware>();
         }
 

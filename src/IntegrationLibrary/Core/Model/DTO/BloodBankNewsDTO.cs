@@ -8,24 +8,18 @@ namespace IntegrationLibrary.Core.Model.DTO
 {
     public class BloodBankNewsDTO
     {
+        public string Text { get; set; }
+        public string Subject { get; set; }
+        public int Id { get; set; }
 
-        public string text { get; set; }
-        public string subject { get; set; }
+        public string ImgSrc { get; set; }
 
-        public string imgSrc { get; set; }
+        public int BloodBankId { get; set; }
 
-        public string bloodBankApiKey { get; set; }
+        public BloodBank BloodBank { get; set; }
 
-        public BloodBankNewsDTO(string text, string subject, string imgSrc, string bloodBankApiKey)
-        {
-            this.text = text;
-            this.subject = subject;
-            this.imgSrc = imgSrc;
-            this.bloodBankApiKey = bloodBankApiKey;
-        }
-        public BloodBankNewsDTO()
-        {
+        public bool Published { get; set; }
 
-        }
+        public bool Archived { get; set; }
     }
 }

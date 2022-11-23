@@ -56,10 +56,6 @@ namespace IntegrationTeamTests.Setup
 
             //context.BloodBankNews.Add(new BloodBankNews { id = 1, subject = "subject", text = "text", byteArray = Array.Empty<byte>(), archived = false, published = false });
 
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodConsumptionConfiguration\";");
-
-            // context.BloodConsumptionConfiguration.Add(new BloodConsumptionConfiguration { Id = 1, ConsumptionPeriodHours = 12, StartDate = "11/Nov/2022", StartTime = "11:11", FrequencyPeriodInHours=12 });
-
             context.SaveChanges();
         }
 

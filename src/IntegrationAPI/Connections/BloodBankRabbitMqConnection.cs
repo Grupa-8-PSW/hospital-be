@@ -39,10 +39,10 @@ namespace IntegrationAPI.Connections
                 {
                     byte[] body = ea.Body.ToArray();
                     var jsonMessage = Encoding.UTF8.GetString(body);
-                    BloodBankNewsDTO message;
+                    BloodBankNewsMessageDTO message;
                     try
                     {
-                        message = JsonConvert.DeserializeObject<BloodBankNewsDTO>(jsonMessage);
+                        message = JsonConvert.DeserializeObject<BloodBankNewsMessageDTO>(jsonMessage);
                         using (var scope = serviceProvider.CreateScope())
                         {
                             var scopedService = scope.ServiceProvider.GetRequiredService<IBloodBankNewsService>();
