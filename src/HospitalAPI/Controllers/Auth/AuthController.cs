@@ -29,6 +29,7 @@ namespace HospitalAPI.Controllers.Auth
                 Jwt = token
             });
         }
+
         [EnableCors("PublicAllow")]
         [HttpPost("public/login")]
         public async Task<ActionResult> LoginPublic(LoginRequest loginRequest)
@@ -41,6 +42,7 @@ namespace HospitalAPI.Controllers.Auth
                 Jwt = token
             });
         }
+
         [EnableCors("PublicAllow")]
         [HttpPost("register")]
         public async Task<ActionResult> Register(RegisterRequest registerRequest)
@@ -59,18 +61,5 @@ namespace HospitalAPI.Controllers.Auth
             return Ok();
         }
 
-        [HttpGet("test")]
-        [Authorize(Roles = "Patient")]
-        public IActionResult Test()
-        {
-            return Ok();
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Seed()
-        {
-            await _authService.SeedAsync();
-            return Ok();
-        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using HospitalAPI;
 using HospitalAPI.Controllers.Auth;
-using HospitalAPI.DTO;
 using HospitalAPI.Security;
 using HospitalAPI.Security.Models;
 using HospitalTests.HospitalAPITests.Setup;

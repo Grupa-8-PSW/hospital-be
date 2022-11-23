@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
-using HospitalAPI.DTO;
 using HospitalAPI.Security.Models;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -15,8 +13,6 @@ namespace HospitalAPI.Security
 {
     public class AuthService
     {
-        private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<IdentityRole<int>> _roleManager;
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
         private readonly IAllergensRepository _allergensRepository;
@@ -32,8 +28,6 @@ namespace HospitalAPI.Security
             IPatientService patientService,
             IMapper mapper)
         {
-            _signInManager = signInManager;
-            _roleManager = roleManager;
             _userManager = userManager;
             _configuration = configuration;
             _allergensRepository = allergensRepository;
@@ -54,6 +48,7 @@ namespace HospitalAPI.Security
                 return null;
             return BuildToken(await GetUserDTO(user));
         }
+
         public async Task<string> LoginPublicAsync(LoginRequest loginRequest)
         {
             var user = await _userManager.FindByNameAsync(loginRequest.Username);
@@ -67,6 +62,7 @@ namespace HospitalAPI.Security
                 return null;
             return BuildToken(await GetUserDTO(user));
         }
+
         public async Task<string> RegisterAsync(RegisterRequest registerRequest)
         {
             var registerUser = new User()
@@ -88,41 +84,6 @@ namespace HospitalAPI.Security
             }
             
             return "Ok";
-        }
-
-        public async Task SeedAsync()
-        {
-            /*
-            await _roleManager.CreateAsync(new IdentityRole<int>("Manager"));
-            await _roleManager.CreateAsync(new IdentityRole<int>("Doctor"));
-            await _roleManager.CreateAsync(new IdentityRole<int>("Patient"));
-            */
-
-            /*var user = new User()
-            {
-                UserName = "test",
-                Email = "test@test.com"
-            };
-            await _userManager.CreateAsync(user, "12345");
-            _userManager.AddToRoleAsync(user, "Patient");
-
-            var user = new User()
-            {
-                UserName = "doctor",
-                Email = "doctor@doctor.com"
-            };
-            await _userManager.CreateAsync(user, "12345");
-            _userManager.AddToRoleAsync(user, "Doctor");*/
-
-            /*
-            var user = new User()
-            {
-                UserName = "manager",
-                Email = "manager@manager.com"
-            };
-            await _userManager.CreateAsync(user, "12345");
-            _userManager.AddToRoleAsync(user, "Manager");
-            */
         }
 
         private async Task<UserDTO> GetUserDTO(User user)
