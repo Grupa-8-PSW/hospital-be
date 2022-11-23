@@ -41,11 +41,11 @@ namespace HospitalAPI.Controllers.Map
         }
 
         [HttpGet("search")]
-        public IActionResult Search(string? name)
+        public IActionResult Search(string? name, int? amount)
         {
             List<RoomDTO> rooms = new();
 
-            foreach (var item in _equipmentService.Search(name))
+            foreach (var item in _equipmentService.Search(name, amount))
             {
                 rooms.Add(new RoomDTO(_roomService.GetById(item.RoomId)));
             }

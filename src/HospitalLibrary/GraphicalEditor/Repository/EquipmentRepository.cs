@@ -28,13 +28,18 @@ namespace HospitalLibrary.GraphicalEditor.Repository
             return _context.Equipments.Where(f => f.RoomId == id);
         }
 
-        public IEnumerable<Equipment> Search(string name)
+        public IEnumerable<Equipment> Search(string name, int? amount)
         {
             IQueryable<Equipment> query = _context.Equipments;
 
             if (!string.IsNullOrEmpty(name))
             {
                 query = query.Where(r => r.Name.ToLower().Contains(name.Trim().ToLower()));
+            }
+
+            if (amount != null)
+            {
+                query = query.Where(r => r.Amount >= amount);
             }
 
             return query.ToList();
