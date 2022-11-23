@@ -207,7 +207,7 @@ namespace HospitalLibrary.Core.Util
             AddParagraph(new ParagraphInfo()
             {
                 Allignment = ParagraphAlignment.Center,
-                Name = treatmentHistory.EndDate.Value.ToString("dd/MM/yyyy"),
+                Name = DateTime.Now.ToString("dd/MM/yyyy"),
                 BookmarkName = "Generated",
                 Style = "Heading2",
                 SpaceBefore = "1.5cm"
