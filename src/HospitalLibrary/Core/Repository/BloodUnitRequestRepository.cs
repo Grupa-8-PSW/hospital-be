@@ -19,7 +19,7 @@ namespace HospitalLibrary.Core.Repository
 
         public IEnumerable<BloodUnitRequest> GetAll()
         {
-            return _context.BloodUnitRequests.ToList();
+            return _context.BloodUnitRequests.ToList().OrderBy(x => x.Id);
         }
 
         public BloodUnitRequest GetById(int id)
@@ -35,7 +35,9 @@ namespace HospitalLibrary.Core.Repository
 
         public void Update(BloodUnitRequest bloodUnitRequest)
         {
-            _context.Update(bloodUnitRequest);
+
+            _context.ChangeTracker.Clear();
+            _context.BloodUnitRequests.Update(bloodUnitRequest);
             _context.SaveChanges();
         }
     }

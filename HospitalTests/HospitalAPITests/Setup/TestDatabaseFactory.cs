@@ -36,13 +36,13 @@ namespace HospitalTests.HospitalAPITests.Setup
 
         private static string CreateConnectionStringForTest()
         {
-            return "Host=localhost;Database=HospitalTestDb;Username=postgres;Password=loki123;";
+            return "Host=localhost;Database=HospitalTestDb;Username=postgres;Password=password;";
         }
 
         private static void InitializeDatabase(HospitalDbContext context)
         {
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodUnitRequests\";");
             context.Database.EnsureCreated();
-
 
             //context.Doctors.Add( new Doctor() { Id = 1, FirstName = "firstName", LastName = "lastName", RoomId = 1, StartWork = new DateTime(), EndWork = new DateTime() });
             //context.MedicalDrugs.Add( new MedicalDrugs() { Id = 1, Name = "Drugs1", Type = MedicalDrugType.PILL });

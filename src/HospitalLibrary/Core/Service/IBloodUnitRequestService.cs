@@ -13,5 +13,8 @@ namespace HospitalLibrary.Core.Service
         BloodUnitRequest GetById(int id);
         bool Create(BloodUnitRequest bloodUnitRequest);
         void Update(BloodUnitRequest bloodUnitRequest);
+
+        void UpdateUnclearRequest(BloodUnitRequest bloodUnitRequest);
+
     }
 }
