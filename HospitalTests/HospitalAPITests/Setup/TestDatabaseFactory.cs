@@ -50,8 +50,12 @@ namespace HospitalTests.HospitalAPITests.Setup
 
         private static void InitializeDatabase(HospitalDbContext context)
         {
+<<<<<<< HEAD
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodUnitRequests\";");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodUnits\";");
+=======
+            //context.Database.EnsureDeleted();
+>>>>>>> 4addd3d9fd52b77c8be88d680c2e3dc301c3a87a
             context.Database.EnsureCreated();
             
 

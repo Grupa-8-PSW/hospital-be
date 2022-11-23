@@ -20,6 +20,18 @@ namespace HospitalLibrary.GraphicalEditor.Repository
             return _context.Rooms.ToList();
         }
 
+        public IEnumerable<Room> Search(string name)
+        {
+            IQueryable<Room> query = _context.Rooms;
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                query = query.Where(r => r.Name.ToLower().Contains(name.Trim().ToLower()));
+            }
+
+            return query.ToList();
+        }
+
         public Room GetById(int id)
         {
             return _context.Rooms.Include(r => r.Beds).Where(r => r.Id == id).FirstOrDefault<Room>();// Find(id);

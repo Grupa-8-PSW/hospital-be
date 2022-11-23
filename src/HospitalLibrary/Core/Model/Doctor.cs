@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.GraphicalEditor.Model;
+﻿using HospitalLibrary.Core.Enums;
+using HospitalLibrary.GraphicalEditor.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,16 +17,15 @@ namespace HospitalLibrary.Core.Model
         public string LastName { get; set; }
         public int RoomId { get; set; }
         public Room Room { get; set; }
-
         public DateTime StartWork { get; set; }
         public DateTime EndWork { get; set; }
 
-
+        public DoctorSpecialization Specialization { get; set; }
         public Doctor()
         {
         }
 
-        public Doctor(int id, string firstName, string lastName, int roomId, Room room, DateTime startWork, DateTime endWork)
+        public Doctor(int id, string firstName, string lastName, int roomId, Room room, DateTime startWork, DateTime endWork, DoctorSpecialization specialization)
         {
             Id = id;
             FirstName = firstName;
@@ -34,6 +34,7 @@ namespace HospitalLibrary.Core.Model
             Room = room;
             StartWork = startWork;
             EndWork = endWork;
+            Specialization = specialization;
         }
     }
 }

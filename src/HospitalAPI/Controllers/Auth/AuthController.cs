@@ -1,4 +1,4 @@
-﻿using HospitalAPI.Security;
+using HospitalAPI.Security;
 using HospitalAPI.Security.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;

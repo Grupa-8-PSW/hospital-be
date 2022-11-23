@@ -1,7 +1,11 @@
+<<<<<<< HEAD
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Repository;
+=======
+﻿using HospitalLibrary.GraphicalEditor.Model;
+>>>>>>> 4addd3d9fd52b77c8be88d680c2e3dc301c3a87a
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using System.Collections.Immutable;
@@ -22,6 +26,11 @@ namespace HospitalLibrary.GraphicalEditor.Service
         public IEnumerable<Room> GetAll()
         {
             return _roomRepository.GetAll();
+        }
+
+        public IEnumerable<Room> Search(string name)
+        {
+            return _roomRepository.Search(name);
         }
 
         public Room GetById(int id)

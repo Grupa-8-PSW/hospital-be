@@ -3,7 +3,10 @@ using HospitalAPI.Controllers.Map;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Model.DTO;
+<<<<<<< HEAD
 using HospitalLibrary.GraphicalEditor.Service;
+=======
+>>>>>>> 4addd3d9fd52b77c8be88d680c2e3dc301c3a87a
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using HospitalTests.HospitalAPITests.Setup;
 using Microsoft.AspNetCore.Mvc;
@@ -37,11 +40,16 @@ namespace HospitalTests.HospitalAPITests.Integration
         }
 
         [Fact]
+<<<<<<< HEAD
         public void Finds_rooms_with_free_beds()
+=======
+        public void Searches_rooms_with_same_name()
+>>>>>>> 4addd3d9fd52b77c8be88d680c2e3dc301c3a87a
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
+<<<<<<< HEAD
             var result = ((OkObjectResult)controller.GetFreeRooms())?.Value as List<RoomDTO>;
 
             Assert.NotNull(result);
@@ -49,5 +57,70 @@ namespace HospitalTests.HospitalAPITests.Integration
             Assert.NotEmpty(result);
         }
 
+=======
+            var result = ((OkObjectResult)controller.Search("Magacin"))?.Value as List<RoomDTO>;
+
+            Assert.NotNull(result);
+            Assert.IsType<List<RoomDTO>>(result);
+            Assert.True(result.Count.Equals(2));
+            Assert.True(result[0].Name.Equals("Magacin"));
+        }
+
+        [Fact]
+        public void Searches_all_rooms_with_empty_string()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.Search(""))?.Value as List<RoomDTO>;
+
+            Assert.NotNull(result);
+            Assert.IsType<List<RoomDTO>>(result);
+            Assert.True(result.Count.Equals(19));
+            Assert.True(result[0].Name.Equals("Pedijatrija"));
+        }
+
+        [Fact]
+        public void Searches_room_trimmed()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.Search(" Hirurgija "))?.Value as List<RoomDTO>;
+
+            Assert.NotNull(result);
+            Assert.IsType<List<RoomDTO>>(result);
+            Assert.True(result.Count.Equals(1));
+            Assert.True(result[0].Name.Equals("Hirurgija"));
+        }
+
+        [Fact]
+        public void Searches_room_truncated()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.Search("Kafe"))?.Value as List<RoomDTO>;
+
+            Assert.NotNull(result);
+            Assert.IsType<List<RoomDTO>>(result);
+            Assert.True(result.Count.Equals(1));
+            Assert.True(result[0].Name.Equals("Kafeterija"));
+        }
+
+        [Fact]
+        public void Searches_room_lowercase()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.Search("fizio"))?.Value as List<RoomDTO>;
+
+            Assert.NotNull(result);
+            Assert.IsType<List<RoomDTO>>(result);
+            Assert.True(result.Count.Equals(1));
+            Assert.True(result[0].Name.Equals("Fizioterapeut"));
+        }
+>>>>>>> 4addd3d9fd52b77c8be88d680c2e3dc301c3a87a
     }
 }

@@ -9,11 +9,12 @@ namespace HospitalAPI.Controllers.Map
     [ApiController]
     public class EquipmentController : ControllerBase
     {
-      
+        private readonly IRoomService _roomService;
         private readonly IEquipmentService _equipmentService;
 
-        public EquipmentController(IEquipmentService equipmentService)
+        public EquipmentController(IRoomService roomService, IEquipmentService equipmentService)
         {
+            _roomService = roomService;
             _equipmentService = equipmentService;
         }
 
@@ -37,6 +38,18 @@ namespace HospitalAPI.Controllers.Map
                 equipments.Add(new EquipmentDTO(equ));
             }
             return Ok(equipments);
+        }
+
+        [HttpGet("search")]
+        public IActionResult Search(string? name, int? amount)
+        {
+            List<RoomDTO> rooms = new();
+
+            foreach (var item in _equipmentService.Search(name, amount))
+            {
+                rooms.Add(new RoomDTO(_roomService.GetById(item.RoomId)));
+            }
+            return Ok(rooms);
         }
     }
     

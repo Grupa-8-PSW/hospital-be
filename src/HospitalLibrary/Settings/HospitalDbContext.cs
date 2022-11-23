@@ -46,6 +46,7 @@ namespace HospitalLibrary.Settings
 
             modelBuilder.SeedMap();
             modelBuilder.SeedAddress();
+            modelBuilder.SeedDoctor();
             modelBuilder.SeedPatient();
             modelBuilder.SeedFeedback();
             modelBuilder.SeedBed();

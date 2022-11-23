@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.GraphicalEditor.Model.DTO;
+﻿using HospitalLibrary.GraphicalEditor.Model;
+using HospitalLibrary.GraphicalEditor.Model.DTO;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -54,19 +55,17 @@ namespace HospitalAPI.Controllers.Map
         }
 
         [HttpGet("search")]
-        public IActionResult GetByQuery(string name)
+        public IActionResult Search(string? name)
         {
             List<RoomDTO> rooms = new();
-            foreach (var room in _roomService.GetAll())
+            foreach (var room in _roomService.Search(name))
             {
-                if (room.Name == name)
-                {
-                    rooms.Add(new RoomDTO(room));
-                }
+                rooms.Add(new RoomDTO(room));
             }
             return Ok(rooms);
         }
 
+<<<<<<< HEAD
         [HttpGet("free")]
         public IActionResult GetFreeRooms()
         {
@@ -77,6 +76,8 @@ namespace HospitalAPI.Controllers.Map
             }
             return Ok(rooms);
         }
+=======
+>>>>>>> 4addd3d9fd52b77c8be88d680c2e3dc301c3a87a
     }
 
 }

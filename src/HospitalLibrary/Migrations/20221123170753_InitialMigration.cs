@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -162,7 +162,8 @@ namespace HospitalLibrary.Migrations
                     Pin = table.Column<string>(type: "text", nullable: false),
                     Gender = table.Column<int>(type: "integer", nullable: false),
                     BloodType = table.Column<int>(type: "integer", nullable: false),
-                    AddressId = table.Column<int>(type: "integer", nullable: false)
+                    AddressId = table.Column<int>(type: "integer", nullable: false),
+                    SelectedDoctorId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -254,7 +255,8 @@ namespace HospitalLibrary.Migrations
                     LastName = table.Column<string>(type: "text", nullable: false),
                     RoomId = table.Column<int>(type: "integer", nullable: false),
                     StartWork = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    EndWork = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    EndWork = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Specialization = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -590,13 +592,13 @@ namespace HospitalLibrary.Migrations
 
             migrationBuilder.InsertData(
                 table: "Patients",
-                columns: new[] { "Id", "AddressId", "BloodType", "Email", "FirstName", "Gender", "LastName", "Pin" },
+                columns: new[] { "Id", "AddressId", "BloodType", "Email", "FirstName", "Gender", "LastName", "Pin", "SelectedDoctorId" },
                 values: new object[,]
                 {
-                    { 1, 1, 0, "peraperic@gmail.com", "Pera", 0, "Peric", "2201000120492" },
-                    { 2, 2, 7, "markomarkovic@gmail.com", "Marko", 0, "Markovic", "1412995012451" },
-                    { 3, 3, 5, "dusanbaljinac@gmail.com", "Dusan", 0, "Baljinac", "2008004124293" },
-                    { 4, 4, 3, "slobodanradulovic@gmail.com", "Slobodan", 0, "Radulovic", "1111978020204" }
+                    { 1, 1, 0, "peraperic@gmail.com", "Pera", 0, "Peric", "2201000120492", 22 },
+                    { 2, 2, 7, "markomarkovic@gmail.com", "Marko", 0, "Markovic", "1412995012451", 22 },
+                    { 3, 3, 5, "dusanbaljinac@gmail.com", "Dusan", 0, "Baljinac", "2008004124293", 22 },
+                    { 4, 4, 3, "slobodanradulovic@gmail.com", "Slobodan", 0, "Radulovic", "1111978020204", 22 }
                 });
 
             migrationBuilder.InsertData(
