@@ -40,7 +40,7 @@ namespace HospitalTests.HospitalAPITests.Integration.Controllers.Auth
         }
 
         [Theory]
-        [InlineData("test8@gmail.com", "test8","12345", typeof(OkResult))]
+        [InlineData("test11@gmail.com", "test11","12345", typeof(OkResult))]
         [InlineData("markovica@gmail.com", "test1","12345", typeof(BadRequestResult))]
         [InlineData("test1@gmail.com", "aleksa","12345", typeof(BadRequestResult))]
         public async Task Register(string email, string username,string password, Type resultType)
