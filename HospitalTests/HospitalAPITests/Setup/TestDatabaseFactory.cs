@@ -1,4 +1,5 @@
 ﻿using HospitalAPI;
+using HospitalLibrary.GraphicalEditor.Model;
 using HospitalAPI.Security;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Hosting;
@@ -17,6 +18,8 @@ namespace HospitalTests.HospitalAPITests.Setup
                 using var scope = BuildServiceProvider(services).CreateScope();
                 var scopedServices = scope.ServiceProvider;
                 var db = scopedServices.GetRequiredService<HospitalDbContext>();
+
+                InitializeDatabase(db);
                 var identityDb = scopedServices.GetRequiredService<AppIdentityDbContext>();
 
                 InitializeDatabase(db);
@@ -46,6 +49,12 @@ namespace HospitalTests.HospitalAPITests.Setup
         {
             context.Database.EnsureCreated();
 
+            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Rooms\";");
+            //context.Rooms.Add(new Room { Id = 1, FloorId = 1, Name = "11" });
+            //context.Rooms.Add(new Room { Id = 2, FloorId = 1, Name = "12" });
+            //context.Rooms.Add(new Room { Id = 3, FloorId = 2, Name = "21" });
+            //context.Rooms.Add(new Room { Id = 4, FloorId = 3, Name = "31" });
+
             context.SaveChanges();
         }
 
@@ -55,6 +64,5 @@ namespace HospitalTests.HospitalAPITests.Setup
 
             context.SaveChanges();
         }
-
     }
 }

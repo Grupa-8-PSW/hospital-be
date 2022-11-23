@@ -30,7 +30,7 @@ namespace IntegrationLibrary.Core.Repository
 
         public IEnumerable<BloodBankNews> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.BloodBankNews.ToList();
         }
 
         public BloodBankNews GetById(int id)

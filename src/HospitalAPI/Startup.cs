@@ -21,6 +21,7 @@ using HospitalAPI.Security.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace HospitalAPI
 {
@@ -46,6 +47,12 @@ namespace HospitalAPI
             services.AddScoped(typeof(IFeedbackRepository), typeof(FeedbackRepository));
             services.AddScoped(typeof(IPatientRepository), typeof(PatientRepository));
 
+            services.AddScoped(typeof(IAllergensRepository), typeof(AllergensRepository));
+            services.AddScoped(typeof(IAllergenService), typeof(AllergenService));
+
+            services.AddScoped(typeof(IAddressRepository), typeof(AddressRepository));
+            services.AddScoped(typeof(IAddressService), typeof(AddressService));
+
             services.AddAutoMapper(typeof(MappingProfile));
 
             services.AddControllers()
@@ -68,6 +75,12 @@ namespace HospitalAPI
             services.AddScoped<IRoomService, RoomService>();
             services.AddScoped<IRoomRepository, RoomRepository>();
 
+            services.AddScoped<IFormService, FormService>();
+            services.AddScoped<IFormRepository, FormRepository>();
+
+            services.AddScoped<IEquipmentService, EquipmentService>();
+            services.AddScoped<IEquipmentRepository, EquipmentRepository>();
+
             services.AddScoped<IMapBuildingService, MapBuildingService>();
             services.AddScoped<IMapBuildingRepository, MapBuildingRepository>();
 
@@ -88,6 +101,23 @@ namespace HospitalAPI
             services.AddScoped<IValidation, ExaminationValidation>();
 
             services.AddScoped<AuthService>();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "InternAllow",
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:4200")
+                          .AllowAnyHeader().AllowAnyMethod();
+                      });
+                options.AddPolicy(name: "PublicAllow",
+                policy =>
+                {
+                    policy.AllowAnyOrigin()
+                         .AllowAnyMethod()
+                         .AllowAnyHeader();
+                });
+            });
 
             services.AddIdentity<User, IdentityRole<int>>(options =>
             {
@@ -126,14 +156,7 @@ namespace HospitalAPI
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors(builder =>
-            {
-                builder
-                    .AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-            });
-
+          
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -142,6 +165,9 @@ namespace HospitalAPI
             }
 
             app.UseRouting();
+
+            app.UseCors("PublicAllow");
+            app.UseCors("InternAllow");
 
             app.UseAuthentication();
             app.UseAuthorization();

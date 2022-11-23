@@ -1,5 +1,6 @@
 ﻿using HospitalAPI;
 using HospitalAPI.Controllers.Auth;
+using HospitalAPI.DTO;
 using HospitalAPI.Security;
 using HospitalAPI.Security.Models;
 using HospitalTests.HospitalAPITests.Setup;
@@ -33,7 +34,32 @@ namespace HospitalTests.HospitalAPITests.Integration.Controllers.Auth
             };
 
             // Act
-            var result = await controller.Login(loginRequest);
+            var result = await controller.LoginIntern(loginRequest);
+
+            // Assert
+            result.ShouldBeOfType(resultType);
+        }
+
+        [Theory]
+        [InlineData("test8@gmail.com", "test8","12345", typeof(OkResult))]
+        [InlineData("markovica@gmail.com", "test1","12345", typeof(BadRequestResult))]
+        [InlineData("test1@gmail.com", "aleksa","12345", typeof(BadRequestResult))]
+        public async Task Register(string email, string username,string password, Type resultType)
+        {
+            // Arange
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+     
+            var registerRequest = new RegisterRequest()
+            {
+                RegisterUser = null,
+                Email = email,
+                Username = username,
+                Password = password,
+            };
+
+            // Act
+            var result = await controller.Register(registerRequest);
 
             // Assert
             result.ShouldBeOfType(resultType);
