@@ -118,8 +118,8 @@ namespace IntegrationLibrary.Core.Service
 
             foreach (BloodUnitDTO unit in bloodUnits)
             {
-                if ((configuration.Last().NextSendingTime.Subtract(configuration.Last().ConsumptionPeriodHours) < unit.DatePrescribed) &&
-                    (unit.DatePrescribed < configuration.Last().NextSendingTime))
+                if ((configuration.Last().StartDateTime.Subtract(configuration.Last().ConsumptionPeriodHours) < unit.DatePrescribed) &&
+                    (unit.DatePrescribed < configuration.Last().StartDateTime))
                     validList.Add(unit);
             }
 
