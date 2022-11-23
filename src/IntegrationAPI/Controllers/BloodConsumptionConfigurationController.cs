@@ -22,6 +22,8 @@ namespace IntegrationAPI.Controllers
     {
         private readonly IBloodConsumptionConfigurationService _service;
         private readonly IHospitalHTTPConnectionService _hospitalHTTPConnectionService;
+        private IBloodConsumptionConfigurationService bloodConsumptionConfigurationService;
+
 
         public BloodConsumptionConfigurationController(IBloodConsumptionConfigurationService service, IHospitalHTTPConnectionService hospitalHTTPConnectionService)
         {
@@ -33,6 +35,7 @@ namespace IntegrationAPI.Controllers
         [HttpPost]
         public IActionResult CreateConfiguration([FromBody] BloodConsumptionReportDTO dto)
         {
+            BloodConsumptionConfigurationValidator.Validate(dto);
             return Ok(_service.Create(new BloodConsumptionConfiguration(dto)));
         }
 
@@ -40,10 +43,9 @@ namespace IntegrationAPI.Controllers
         [HttpGet]
         public IActionResult GenerateSeveralPdf()
         {
-            FileContentResult pdf = null;
-
             var validList =  _service.FindValidBloodUnits(_hospitalHTTPConnectionService.GetAllBloodUnits(), out var configuration);
             return File(_service.GeneratePdf(configuration.Last(), validList), "application/pdf", "bloodconsumptionreport.pdf");
+
         }
     }
 }

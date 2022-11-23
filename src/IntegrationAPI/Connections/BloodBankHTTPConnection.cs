@@ -14,6 +14,8 @@ using IntegrationLibrary.Core.Service.Interfaces;
 using HospitalLibrary.Core.Enums;
 using static iTextSharp.text.pdf.AcroFields;
 using IntegrationAPI.ConnectionService.Interface;
+using Microsoft.Extensions.DependencyInjection;
+using HospitalAPI.Connections;
 
 namespace IntegrationAPI.Connections
 {
@@ -22,16 +24,18 @@ namespace IntegrationAPI.Connections
 
         private readonly IBloodConsumptionConfigurationService _service;
         private readonly IBloodBankService _bankService;
-        //private readonly IHospitalHTTPConnectionService _hospitalHTTPConnectionService;
+        private readonly IHospitalHTTPConnection _bloodUnitService;
         private String api = "reports/sendReports";
 
         public BloodBankHTTPConnection(IServiceScopeFactory factory)
         {
-           // _hospitalHTTPConnectionService = hospitalHTTPConnectionService;
+            
             _service = factory.CreateScope().ServiceProvider
                 .GetRequiredService<IBloodConsumptionConfigurationService>();
 
             _bankService = factory.CreateScope().ServiceProvider.GetRequiredService<IBloodBankService>();
+
+            _bloodUnitService = factory.CreateScope().ServiceProvider.GetRequiredService<IHospitalHTTPConnection>();
         }
 
         public bool CheckForSpecificBloodType(BloodBank bloodBank, string bloodType) 
@@ -69,13 +73,13 @@ namespace IntegrationAPI.Connections
                 }
                 else
                 {
-                   // delay = await CheckIfServerCrashed(now, bcc, delay);
+                    delay = await CheckIfServerCrashed(now, bcc, delay);
 
                     delay = CreateInitialDelay(now, bcc, delay);
 
                     delay = CheckIfStartTime(now, bcc, delay);
 
-                   // delay = await SendToBanks(now, bcc, delay);
+                    delay = await SendToBanks(now, bcc, delay);
                 }
 
                 await Task.Delay(delay, stoppingToken);
@@ -84,12 +88,14 @@ namespace IntegrationAPI.Connections
             while(!stoppingToken.IsCancellationRequested);
         }
 
-     /*   private async Task<TimeSpan> SendToBanks(DateTime now, BloodConsumptionConfiguration bcc, TimeSpan delay)
+        private async Task<TimeSpan> SendToBanks(DateTime now, BloodConsumptionConfiguration bcc, TimeSpan delay)
         {
             if (now.Hour == bcc.NextSendingTime.Hour && now.Minute == bcc.NextSendingTime.Minute)
             {
                 Guid uniqueSuffix = Guid.NewGuid();
-                byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(_hospitalHTTPConnectionService.GetAllBloodUnits(), out var configuration));
+                
+                //var scopedService = scope.ServiceProvider.GetRequiredService<IBloodBankHTTPConnection>();
+                byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(_bloodUnitService.GetAllBloodUnits(), out var configuration));
                 using (var stream = File.Create("./Reports/bloodConsumptionReport" + uniqueSuffix + ".PDF"))
                 {
                 }
@@ -103,7 +109,7 @@ namespace IntegrationAPI.Connections
             }
 
             return delay;
-        }*/
+        }
 
         private TimeSpan CheckIfStartTime(DateTime now, BloodConsumptionConfiguration bcc, TimeSpan delay)
         {
@@ -129,7 +135,7 @@ namespace IntegrationAPI.Connections
             return delay;
         }
 
-   /*     private async Task<TimeSpan> CheckIfServerCrashed(DateTime now, BloodConsumptionConfiguration bcc, TimeSpan delay)
+        private async Task<TimeSpan> CheckIfServerCrashed(DateTime now, BloodConsumptionConfiguration bcc, TimeSpan delay)
         {
             if (now > bcc.NextSendingTime)
             {
@@ -137,7 +143,7 @@ namespace IntegrationAPI.Connections
                 bcc.NextSendingTime = DateTime.SpecifyKind(bcc.NextSendingTime, DateTimeKind.Utc);
                 _service.Update(bcc);
                 Guid uniqueSuffix = Guid.NewGuid();
-                byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(_hospitalHTTPConnectionService.GetAllBloodUnits(), out var configuration));
+                byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(_bloodUnitService.GetAllBloodUnits(), out var configuration));
                 using (var stream = File.Create("./Reports/bloodConsumptionReport" + uniqueSuffix + ".PDF"))
                 {
                 }
@@ -147,7 +153,7 @@ namespace IntegrationAPI.Connections
             }
 
             return delay;
-        }*/
+        }
 
         private void SendUrlToBloodBanks(string url)
         {

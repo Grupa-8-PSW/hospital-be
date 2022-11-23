@@ -57,6 +57,7 @@ namespace IntegrationLibrary.Core.Model
         public BloodConsumptionConfiguration(BloodConsumptionReportDTO dto)
         {
             String dateTimeFormat = "dd/MMM/yyyy HH:mm:ss";
+
             var StartDateTime1 = DateTime.ParseExact(dto.StartDate + " " + dto.StartTime, dateTimeFormat, new CultureInfo("en-GB"));
             this.StartDateTime = DateTime.SpecifyKind(StartDateTime1, DateTimeKind.Utc);
             this.ConsumptionPeriodHours = new TimeSpan((int)dto.ConsumptionPeriodHours, 0, 0);
