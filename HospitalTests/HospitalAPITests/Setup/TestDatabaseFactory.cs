@@ -1,5 +1,6 @@
 ﻿using HospitalAPI;
 using HospitalLibrary.GraphicalEditor.Model;
+using HospitalAPI.Security;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -19,6 +20,10 @@ namespace HospitalTests.HospitalAPITests.Setup
                 var db = scopedServices.GetRequiredService<HospitalDbContext>();
 
                 InitializeDatabase(db);
+                var identityDb = scopedServices.GetRequiredService<AppIdentityDbContext>();
+
+                InitializeDatabase(db);
+                InitializeIdentityDatabase(identityDb);
             });
         }
 
@@ -26,8 +31,12 @@ namespace HospitalTests.HospitalAPITests.Setup
         {
             var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<HospitalDbContext>));
             services.Remove(descriptor);
-
             services.AddDbContext<HospitalDbContext>(opt => opt.UseNpgsql(CreateConnectionStringForTest()));
+
+            descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<AppIdentityDbContext>));
+            services.Remove(descriptor);
+            services.AddDbContext<AppIdentityDbContext>(opt => opt.UseNpgsql(CreateConnectionStringForTest()));
+
             return services.BuildServiceProvider();
         }
 
@@ -45,6 +54,13 @@ namespace HospitalTests.HospitalAPITests.Setup
             //context.Rooms.Add(new Room { Id = 2, FloorId = 1, Name = "12" });
             //context.Rooms.Add(new Room { Id = 3, FloorId = 2, Name = "21" });
             //context.Rooms.Add(new Room { Id = 4, FloorId = 3, Name = "31" });
+
+            context.SaveChanges();
+        }
+
+        private static void InitializeIdentityDatabase(AppIdentityDbContext context)
+        {
+            context.Database.EnsureCreated();
 
             context.SaveChanges();
         }
