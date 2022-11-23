@@ -9,7 +9,7 @@ using IntegrationAPI.ExceptionHandler.Validators;
 
 namespace IntegrationAPI.Connections
 {
-    public class BloodBankHTTPConnection : IBloodBankHTTPConnection
+    public class BloodBankHTTPConnection : BackgroundService, IBloodBankHTTPConnection
     {
         public bool CheckForSpecificBloodType(BloodBank bloodBank, string bloodType) 
         {
@@ -30,6 +30,11 @@ namespace IntegrationAPI.Connections
             request.AddHeader("apiKey", api);
             RestResponse res = BloodBankConnectionValidator.Authenticate(restClient, request);
             return JsonSerializer.Deserialize<bool>(Boolean.Parse(res.Content));
+        }
+
+        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            throw new NotImplementedException();
         }
     }
 }
