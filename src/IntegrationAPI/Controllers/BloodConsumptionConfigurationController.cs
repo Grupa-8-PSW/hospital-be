@@ -24,10 +24,6 @@ namespace IntegrationAPI.Controllers
         private readonly IHospitalHTTPConnectionService _hospitalHTTPConnectionService;
         private IBloodConsumptionConfigurationService bloodConsumptionConfigurationService;
 
-        public BloodConsumptionConfigurationController(IBloodConsumptionConfigurationService bloodConsumptionConfigurationService)
-        {
-            this.bloodConsumptionConfigurationService = bloodConsumptionConfigurationService;
-        }
 
         public BloodConsumptionConfigurationController(IBloodConsumptionConfigurationService service, IHospitalHTTPConnectionService hospitalHTTPConnectionService)
         {
