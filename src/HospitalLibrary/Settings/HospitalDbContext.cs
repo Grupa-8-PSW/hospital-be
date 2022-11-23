@@ -24,19 +24,41 @@ namespace HospitalLibrary.Settings
         public DbSet<TreatmentHistory> TreatmentHistories { get; set; }
         public DbSet<Allergen> Allergens { get; set; }
         public DbSet<Address> Addresses{ get; set; }
-
+        public DbSet<Therapy> Therapies { get; set; }
+        public DbSet<BloodUnit> BloodUnits { get; set; }
+        public DbSet<MedicalDrugs> MedicalDrugs { get; set; }
+        public DbSet<BloodUnitRequest> BloodUnitRequests { get; set; }
+        public DbSet<Bed> Beds { get; set; }
+        public DbSet<Blood> Bloods { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<MedicalDrugs>()
+                .HasIndex(m => m.Code)
+                .IsUnique();
+            modelBuilder.Entity<Blood>()
+                .HasIndex(b => b.Type)
+                .IsUnique();
+
             modelBuilder.SeedMap();
             modelBuilder.SeedAddress();
             modelBuilder.SeedDoctor();
             modelBuilder.SeedPatient();
             modelBuilder.SeedFeedback();
             modelBuilder.SeedAllergen();
+            modelBuilder.SeedBed();
+            modelBuilder.SeedDoctor();
+            modelBuilder.SeedMedicalDrugs();
+            modelBuilder.SeedTreatmentHistory();
+            modelBuilder.SeedBlood();
             base.OnModelCreating(modelBuilder);
+
+
+            
+            
+        
         }
 
     }

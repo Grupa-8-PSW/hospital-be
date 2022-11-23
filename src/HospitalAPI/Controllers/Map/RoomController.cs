@@ -65,6 +65,16 @@ namespace HospitalAPI.Controllers.Map
             return Ok(rooms);
         }
 
+        [HttpGet("free")]
+        public IActionResult GetFreeRooms()
+        {
+            List<RoomDTO> rooms = new();
+            foreach (var room in _roomService.GetFreeRooms())
+            {
+                rooms.Add(new RoomDTO(room));
+            }
+            return Ok(rooms);
+        }
     }
 
 }

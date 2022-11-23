@@ -1,7 +1,10 @@
 ﻿using HospitalAPI;
 using HospitalAPI.Controllers.Map;
+using HospitalAPI.DTO;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Model.DTO;
+using HospitalLibrary.GraphicalEditor.Service;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using HospitalTests.HospitalAPITests.Setup;
 using Microsoft.AspNetCore.Mvc;
@@ -57,6 +60,19 @@ namespace HospitalTests.HospitalAPITests.Integration
             var result = ((OkObjectResult)controller.Search(""))?.Value as List<RoomDTO>;
 
             Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void Finds_rooms_with_free_beds()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.GetFreeRooms())?.Value as List<RoomDTO>;
+
+            Assert.NotNull(result);
+            Assert.IsType<List<RoomDTO>>(result);
+            Assert.NotEmpty(result);
             Assert.IsType<List<RoomDTO>>(result);
             Assert.True(result.Count.Equals(19));
             Assert.True(result[0].Name.Equals("Pedijatrija"));
@@ -103,5 +119,6 @@ namespace HospitalTests.HospitalAPITests.Integration
             Assert.True(result.Count.Equals(1));
             Assert.True(result[0].Name.Equals("Fizioterapeut"));
         }
+
     }
 }

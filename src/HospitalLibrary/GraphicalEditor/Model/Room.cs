@@ -22,5 +22,6 @@ namespace HospitalLibrary.GraphicalEditor.Model
 
         public ICollection<Bed> Beds { get; set; }
         public RoomType Type { get; set; }
+
     }
 }

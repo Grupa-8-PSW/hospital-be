@@ -1,4 +1,6 @@
 ﻿using HospitalAPI;
+using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.GraphicalEditor.Model;
 using HospitalAPI.Security;
 using HospitalLibrary.Settings;
@@ -6,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection.Emit;
 
 namespace HospitalTests.HospitalAPITests.Setup
 {
@@ -42,7 +45,7 @@ namespace HospitalTests.HospitalAPITests.Setup
 
         private static string CreateConnectionStringForTest()
         {
-            return "Host=localhost;Database=HospitalTestDb;Username=postgres;Password=password;";
+            return "Host=localhost;Database=HospitalTestDb;Username=postgres;Password=loki123;";
         }
 
         private static void InitializeDatabase(HospitalDbContext context)
@@ -50,8 +53,12 @@ namespace HospitalTests.HospitalAPITests.Setup
             //context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
+
+            //context.Doctors.Add( new Doctor() { Id = 1, FirstName = "firstName", LastName = "lastName", RoomId = 1, StartWork = new DateTime(), EndWork = new DateTime() });
+            //context.MedicalDrugs.Add( new MedicalDrugs() { Id = 1, Name = "Drugs1", Type = MedicalDrugType.PILL });
+
             //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Rooms\";");
-            //context.Rooms.Add(new Room { Id = 1, FloorId = 1, Name = "11" });
+           // context.Rooms.Add(new Room { Id = 1, FloorId = 1, Name = "11" });
             //context.Rooms.Add(new Room { Id = 2, FloorId = 1, Name = "12" });
             //context.Rooms.Add(new Room { Id = 3, FloorId = 2, Name = "21" });
             //context.Rooms.Add(new Room { Id = 4, FloorId = 3, Name = "31" });

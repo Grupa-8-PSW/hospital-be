@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.GraphicalEditor.Model;
+using HospitalLibrary.GraphicalEditor.Service;
 
 namespace HospitalLibrary.GraphicalEditor.Repository.Interfaces
 {
@@ -11,5 +12,6 @@ namespace HospitalLibrary.GraphicalEditor.Repository.Interfaces
         Room GetById(int id);
 
         IEnumerable<Room> GetRoomsByFloorId(int id);
+        IEnumerable<Room> GetFreeRooms();
     }
 }

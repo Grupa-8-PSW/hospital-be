@@ -11,5 +11,6 @@ namespace HospitalLibrary.GraphicalEditor.Service.Interfaces
         Room GetById(int id);
 
         IEnumerable<Room> GetRoomsByFloorId(int id);
+        public IEnumerable<Room> GetFreeRooms();
     }
 }

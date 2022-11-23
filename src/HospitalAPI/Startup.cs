@@ -22,6 +22,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
+using HospitalAPI.Mapper;
+using HospitalAPI.Connections;
 
 namespace HospitalAPI
 {
@@ -97,10 +100,42 @@ namespace HospitalAPI
             services.AddScoped<IExaminationRepository, ExaminationRepository>();
 
             services.AddScoped<IMapper<Examination, ExaminationDTO>, ExaminationMapper>();
+            services.AddScoped<IMapper<TreatmentHistory, TreatmentHistoryDTO>, TreatmentHistoryMapper>();
+            services.AddScoped<IMapper<Patient, PatientDTO>, PatientMapper>();  //mozda se ponovi pri merge
 
-            services.AddScoped<IValidation, ExaminationValidation>();
+            services.AddScoped<IExaminationValidation, ExaminationValidation>();
+
+            services.AddScoped<IBloodRepository, BloodRepository>();
+            services.AddScoped<IBloodService, BloodService>();
+
+            services.AddScoped<IMapper<Blood, BloodDTO>, BloodMapper>();
+
+            services.AddScoped<ITreatmentHistoryService, TreatmentHistoryService>();
+            services.AddScoped<ITreatmentHistoryRepository, TreatmentHistoryRepository>();
+
+            services.AddScoped<IBedRepository, BedRepository>();
+
+            services.AddScoped<ITherapyRepository, TherapyRepository>();
+            services.AddScoped<ITherapyService, TherapyService>();
+
+            services.AddScoped<IBloodUnitRepository, BloodUnitRepository>();
+
+            services.AddScoped<IMedicalDrugsRepository, MedicalDrugsRepository>();
+            services.AddScoped<IMedicalDrugsService, MedicalDrugsService>();
 
             services.AddScoped<AuthService>();
+            services.AddScoped<ITherapyValidation, TherapyValidation>();
+
+            services.AddScoped<IMapper<BloodUnitRequest, BloodUnitRequestDTO>, BloodUnitRequestMapper>();
+
+            services.AddScoped<IBloodUnitRequestRepository, BloodUnitRequestRepository>();
+            services.AddScoped<IBloodUnitRequestService, BloodUnitRequestService>();
+
+            services.AddScoped<IBloodUnitRequestHTTPConnection, BloodUnitRequestHTTPConnection>();
+
+
+            services.AddScoped<IMapper<Therapy, TherapyDTO>, TherapyMapper>();
+        
 
             services.AddCors(options =>
             {

@@ -1,12 +1,17 @@
-﻿using HospitalLibrary.GraphicalEditor.Model;
+﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Repository;
+using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
+using System.Collections.Immutable;
 
 namespace HospitalLibrary.GraphicalEditor.Service
 {
     public class RoomService : IRoomService
     {
         private readonly IRoomRepository _roomRepository;
+        private readonly IBedRepository _bedRepository;
+
 
         public RoomService(IRoomRepository roomRepository)
         {
@@ -41,5 +46,11 @@ namespace HospitalLibrary.GraphicalEditor.Service
             }
 
         }
+
+        public IEnumerable<Room> GetFreeRooms()
+        {
+            return _roomRepository.GetFreeRooms();
+        }
+
     }
 }

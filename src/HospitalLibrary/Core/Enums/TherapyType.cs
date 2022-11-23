@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Core.Model
+namespace HospitalLibrary.Core.Enums
 {
-    public interface ITherapySubject
+    public enum TherapyType
     {
-        public String Print();
+        MEDICAL_DRUG_THERAPY,
+        BLOOD_THERAPY
     }
 }
