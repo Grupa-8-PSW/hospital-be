@@ -65,7 +65,7 @@ namespace HospitalLibrary.Core.Util
 
         public static void RenderAndSaveDocument(Document document, string filename)
         {
-            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             PdfDocumentRenderer renderer = new PdfDocumentRenderer(true);
             renderer.Document = document;
 
@@ -73,7 +73,7 @@ namespace HospitalLibrary.Core.Util
 
             renderer.PdfDocument.Save(filename);
 
-            Process.Start(new ProcessStartInfo { FileName = filename, UseShellExecute = true });
+            // Process.Start(new ProcessStartInfo { FileName = filename, UseShellExecute = true });
         }
 
         /// <summary>
@@ -86,14 +86,14 @@ namespace HospitalLibrary.Core.Util
             // Because all styles are derived from Normal, the next line changes the 
             // font of the whole document. Or, more exactly, it changes the font of
             // all styles and paragraphs that do not redefine the font.
-            style.Font.Name = "Times New Roman";
+            style.Font.Name = "Verdana";
 
             // Heading1 to Heading9 are predefined styles with an outline level. An outline level
             // other than OutlineLevel.BodyText automatically creates the outline (or bookmarks) 
             // in PDF.
 
             style = document.Styles["Heading1"];
-            style.Font.Name = "Tahoma";
+            style.Font.Name = "Verdana";
             style.Font.Size = 14;
             style.Font.Bold = true;
             style.Font.Color = Colors.LimeGreen;
