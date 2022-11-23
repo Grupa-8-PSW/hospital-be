@@ -1,5 +1,6 @@
 ﻿using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Persistence;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,12 +31,18 @@ namespace IntegrationLibrary.Core.Repository
 
         public IEnumerable<BloodBankNews> GetAll()
         {
-            return _context.BloodBankNews.ToList();
+            return _context.BloodBankNews.Include(b => b.BloodBank).Where(b => b.Archived == false).ToList();
         }
 
         public BloodBankNews GetById(int id)
         {
-            throw new NotImplementedException();
+            return _context.BloodBankNews.Find(id);
+        }
+
+        public void Update(BloodBankNews bloodBankNews)
+        {
+            _context.Update(bloodBankNews);
+            _context.SaveChanges();
         }
     }
 }

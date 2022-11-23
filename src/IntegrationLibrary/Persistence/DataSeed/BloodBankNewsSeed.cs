@@ -13,7 +13,7 @@ namespace IntegrationLibrary.Persistence.DataSeed
         public static void SeedBloodBankNews(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<BloodBankNews>().HasData(
-                new BloodBankNews() { id=1, text="text", subject="subject1", archived=false, byteArray=Array.Empty<byte>(), published=false}
+                new BloodBankNews() { Id=1, Text="text", Subject="subject1", Archived=false, ImgSrc = string.Empty, Published=false, BloodBank=null, BloodBankId=1}
             );
         }
     }

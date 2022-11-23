@@ -1,4 +1,4 @@
-﻿using IntegrationLibrary.Core.Model;
+﻿using IntegrationLibrary.Core.Model.DTO;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System;
@@ -11,7 +11,7 @@ namespace IntegrationTests.IntegrationAPITests.Mocks
 {
     public static class RabbitMqPublisherMock
     {
-        public static void Send()
+        public static void Send(BloodBankNewsDTO message)
         {
             var factory = new ConnectionFactory() { HostName = "localhost" };
             using (var connection = factory.CreateConnection())
@@ -22,7 +22,6 @@ namespace IntegrationTests.IntegrationAPITests.Mocks
                                       exclusive: false,
                                       autoDelete: false,
                                       arguments: null);
-                BloodBankNews message = new BloodBankNews("text1", "subject1", 2, Array.Empty<byte>(), false, false);
                 var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
                 
                 channel.BasicPublish(exchange: "",

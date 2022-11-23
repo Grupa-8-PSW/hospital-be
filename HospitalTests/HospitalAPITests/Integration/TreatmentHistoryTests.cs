@@ -33,9 +33,38 @@ namespace HospitalTests.HospitalAPITests.Integration
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            TreatmentHistoryDTO treatmentHistoryDTO = new TreatmentHistoryDTO(2, 2,"reason");
+            TreatmentHistoryDTO treatmentHistoryDTO = new TreatmentHistoryDTO(2, 2, "reason");
 
             var result = ((CreatedAtActionResult)controller.Create(treatmentHistoryDTO))?.Value as TreatmentHistory;
+
+            Assert.NotNull(result);
+            Assert.IsType<TreatmentHistory>(result);
+        }
+
+        [Fact]
+        public void Gets_one_treatment_history()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.GetById(1))?.Value as TreatmentHistoryDTO;
+
+            Assert.NotNull(result);
+            Assert.IsType<TreatmentHistoryDTO>(result);
+        }
+
+        [Fact]
+        public void Update_history_of_treatment()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var treatmentHistoryDTO = ((OkObjectResult)controller.GetById(5))?.Value as TreatmentHistoryDTO;
+
+            treatmentHistoryDTO.EndDate = "11/20/2022";
+            treatmentHistoryDTO.DischargeReason = "discharge reason";
+
+            var result = ((OkObjectResult)controller.FinishTreatmentHistory(5, treatmentHistoryDTO))?.Value as TreatmentHistory;
 
             Assert.NotNull(result);
             Assert.IsType<TreatmentHistory>(result);

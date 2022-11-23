@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.GraphicalEditor.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,13 +19,16 @@ namespace HospitalLibrary.Core.Model
         public Patient Patient { get; set; }
         public int BedId { get; set; }
         public Bed Bed { get; set; }
-        public String? Reason { get; set; }
+        public int RoomId { get; set; }
+        public Room Room { get; set; }
+        public string Reason { get; set; }
+
 
         public TreatmentHistory()
         {
         }
 
-        public TreatmentHistory(int id, DateTime startDate, DateTime endDate, bool active, string dischargeReason, IEnumerable<Therapy> therapies, int patientId, Patient patient, int bedId, Bed bed, string reason)
+        public TreatmentHistory(int id, DateTime startDate, DateTime? endDate, bool active, string dischargeReason, IEnumerable<Therapy> therapies, int patientId, Patient patient, int bedId, Bed bed, Room room, string reason)
         {
             Id = id;
             StartDate = startDate;
@@ -36,7 +40,9 @@ namespace HospitalLibrary.Core.Model
             Patient = patient;
             BedId = bedId;
             Bed = bed;
+            Room = room;
             Reason = reason;
         }
+
     }
 }
