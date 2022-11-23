@@ -7,53 +7,49 @@ using IntegrationLibrary.Core.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.DTO;
-
+using IntegrationAPI.ConnectionService.Interface;
 
 namespace IntegrationTeamTests.Integration
 {
 
-    public class BloodConsumptionConfigurationTests: BaseIntegrationTests
+    public class BloodConsumptionConfigurationTests : BaseIntegrationTests
     {
-        private readonly HttpClient _httpClient = new() { BaseAddress = new Uri("https://localhost:7133") };
-        
+
         public BloodConsumptionConfigurationTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
 
         private static BloodConsumptionConfigurationController SetupController(IServiceScope scope)
         {
-            return new BloodConsumptionConfigurationController(scope.ServiceProvider.GetRequiredService<IBloodConsumptionConfigurationService>());
+            return new BloodConsumptionConfigurationController(scope.ServiceProvider.GetRequiredService<IBloodConsumptionConfigurationService>(),
+                                                                scope.ServiceProvider.GetRequiredService<IHospitalHTTPConnectionService>());
         }
-
-
         [Fact]
-        public async void CreatingBloodConsumptionConfiguration()
+        public void CreatingBloodConsumptionConfiguration()
         {
             // Arrange
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            BloodConsumptionReportDTO dto = new BloodConsumptionReportDTO
+            BloodConsumptionReportDTO dto = new BloodConsumptionReportDTO()
             {
                 ConsumptionPeriodHours = 12,
-                StartDate = "11/Nov/2022",
+                StartDate = "11/Nov/2023",
                 StartTime = "11:11:00",
                 FrequencyPeriodInHours = 12
 
             };
 
+            Assert.True(true);
+
             // Act
             var retVal = controller.CreateConfiguration(dto) as OkObjectResult;
 
-            
-            // Assert
+
+            //Assert
             BloodConsumptionConfiguration createdBloodConsumptionConfiguration = (BloodConsumptionConfiguration)retVal.Value;
-            
             Assert.IsType<OkObjectResult>(retVal);
             Assert.True(ValidateObjectWritenInBase(dto, createdBloodConsumptionConfiguration));
-            
+
         }
-
-
-
         private bool ValidateObjectWritenInBase(BloodConsumptionReportDTO dto, BloodConsumptionConfiguration retVal)
         {
             BloodConsumptionConfiguration bloodConsumptionConfiguration = new BloodConsumptionConfiguration(dto);

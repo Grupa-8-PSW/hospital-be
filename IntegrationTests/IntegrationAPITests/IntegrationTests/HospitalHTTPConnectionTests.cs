@@ -19,9 +19,10 @@ namespace IntegrationTests.IntegrationAPITests.IntegrationTests
 {
     public class HospitalHTTPConnectionTests : BaseIntegrationTests
     {
-        public HospitalHTTPConnectionTests(TestDatabaseFactory<Startup> databaseFactory) : base(databaseFactory){}
+        public HospitalHTTPConnectionTests(TestDatabaseFactory<Startup> databaseFactory) : base(databaseFactory) { }
 
-        private IEnumerable<BloodUnit> GetAllBloodUnits(){
+        private IEnumerable<BloodUnit> GetAllBloodUnits()
+        {
             using var scope = Factory.Services.CreateScope();
             BloodUnitController controller = SetupController(scope);
             return ((OkObjectResult)controller.GetAll())?.Value as IEnumerable<BloodUnit>;
