@@ -33,7 +33,7 @@ namespace HospitalTests.HospitalLibraryTests
             var equipments = ((OkObjectResult)controller.GetAll()).Value as List<EquipmentDTO>;
 
             Assert.NotNull(equipments);
-            Assert.Equal(3, equipments.Count);
+            equipments.Count().ShouldBe(3);
         }
 
         [Fact]
@@ -42,10 +42,10 @@ namespace HospitalTests.HospitalLibraryTests
             IEquipmentService service = new EquipmentService(CreateStubRepository());
             EquipmentController controller = new EquipmentController(service);
 
-            var equipments = ((OkObjectResult)controller.GetEquipmentByRoomId(1)).Value as List<EquipmentDTO>;
+            List<EquipmentDTO> equipments = ((OkObjectResult)controller.GetEquipmentByRoomId(1))?.Value as List<EquipmentDTO>;
 
-            Assert.NotNull(equipments);
-            Assert.Equal(1, equipments.Count);
+           
+            equipments.Count().ShouldBe(2);
         }
 
 

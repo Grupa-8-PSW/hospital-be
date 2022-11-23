@@ -18,8 +18,9 @@ namespace HospitalLibrary.GraphicalEditor.Service
 
         public EquipmentTransferDTO dto;
 
-        
-
+        public RoomService(IRoomRepository roomRepository)
+        {
+        }
 
         public RoomService(IRoomRepository roomRepository, IExaminationRepository examinationRepository) 
         {

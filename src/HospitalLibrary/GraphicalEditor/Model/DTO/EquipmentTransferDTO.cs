@@ -21,5 +21,18 @@ namespace HospitalLibrary.GraphicalEditor.Model.DTO
         public int Duration { get; set; }
 
         public string EquipmentName { get; set; }
+
+        public EquipmentTransferDTO(int amount, int fromRoomId, int toRoomId, DateTime startDate, DateTime endDate, int duration, string equipmentName)
+        {
+            Amount = amount;
+            FromRoomId = fromRoomId;
+            ToRoomId = toRoomId;
+            StartDate = startDate;
+            EndDate = endDate;
+            Duration = duration;
+            EquipmentName = equipmentName;
+        }
+
+        public EquipmentTransferDTO() { }
     }
 }

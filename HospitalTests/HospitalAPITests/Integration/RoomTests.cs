@@ -1,6 +1,7 @@
 ﻿using HospitalAPI;
 using HospitalAPI.Controllers.Map;
 using HospitalLibrary.GraphicalEditor.Model;
+using HospitalLibrary.GraphicalEditor.Model.DTO;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using HospitalTests.HospitalAPITests.Setup;
 using Microsoft.AspNetCore.Mvc;
@@ -32,5 +33,18 @@ namespace HospitalTests.HospitalAPITests.Integration
 
             Assert.NotNull(result);
         }
+
+        [Fact]
+        public void Dates_for_trainsfering_equipments()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            EquipmentTransferDTO dto = new EquipmentTransferDTO(1, 1, 2, new DateTime(2022, 11, 22, 00, 00, 00, DateTimeKind.Utc), new DateTime(2022, 11, 23, 00, 00, 00, DateTimeKind.Utc), 120, "Zavoji");
+            var freeSpace = ((OkObjectResult)controller.GetAvailableTerminsForTransfer(dto))?.Value as List<FreeSpaceDTO>;  
+
+            Assert.NotNull(freeSpace);
+        }
+
     }
 }
