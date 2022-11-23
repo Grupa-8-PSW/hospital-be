@@ -68,6 +68,7 @@ namespace HospitalTests
 
             ageOfFirstPatient.ShouldBeGreaterThanOrEqualTo(22);
         }
+        [Fact]
         public void Create_patient_and_add_allergens()
         {
             var service = new PatientService(CreateStubRepository());
