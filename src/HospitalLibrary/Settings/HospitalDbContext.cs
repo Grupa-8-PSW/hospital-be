@@ -54,7 +54,6 @@ namespace HospitalLibrary.Settings
             modelBuilder.SeedFeedback();
 
             modelBuilder.SeedBed();
-            modelBuilder.SeedDoctor();
             modelBuilder.SeedMedicalDrugs();
             modelBuilder.SeedTreatmentHistory();
             modelBuilder.SeedBlood();
