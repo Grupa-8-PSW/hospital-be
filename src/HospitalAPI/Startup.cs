@@ -15,8 +15,10 @@ using HospitalAPI.Web.Mapper;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Validation;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
+
 using HospitalAPI.Mapper;
 using HospitalAPI.Connections;
+
 using Microsoft.AspNetCore.Identity;
 using HospitalAPI.Security;
 using HospitalAPI.Security.Models;
@@ -24,6 +26,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
+using HospitalAPI.Mapper;
+using HospitalAPI.Connections;
+
 
 namespace HospitalAPI
 {
@@ -100,6 +107,7 @@ namespace HospitalAPI
 
             services.AddScoped<IMapper<Examination, ExaminationDTO>, ExaminationMapper>();
             services.AddScoped<IMapper<TreatmentHistory, TreatmentHistoryDTO>, TreatmentHistoryMapper>();
+            services.AddScoped<IMapper<Patient, PatientDTO>, PatientMapper>();  //mozda se ponovi pri merge
 
             services.AddScoped<IExaminationValidation, ExaminationValidation>();
 
@@ -118,8 +126,10 @@ namespace HospitalAPI
 
             services.AddScoped<IBloodUnitRepository, BloodUnitRepository>();
 
-            services.AddScoped<IMedicalDrugRepository, MedicalDrugsRepository>();
+            services.AddScoped<IMedicalDrugsRepository, MedicalDrugsRepository>();
+            services.AddScoped<IMedicalDrugsService, MedicalDrugsService>();
 
+            services.AddScoped<AuthService>();
             services.AddScoped<ITherapyValidation, TherapyValidation>();
 
             services.AddScoped<IMapper<BloodUnitRequest, BloodUnitRequestDTO>, BloodUnitRequestMapper>();
@@ -129,12 +139,15 @@ namespace HospitalAPI
 
             services.AddScoped<IBloodUnitRequestHTTPConnection, BloodUnitRequestHTTPConnection>();
 
+
             services.AddScoped<IBloodUnitRepository, BloodUnitRepository>();
             services.AddScoped<IBloodUnitService, BloodUnitService>();
 
             services.AddScoped<IExaminationValidation, ExaminationValidation>();
 
-            services.AddScoped<AuthService>();
+
+            services.AddScoped<IMapper<Therapy, TherapyDTO>, TherapyMapper>();
+        
 
             services.AddCors(options =>
             {

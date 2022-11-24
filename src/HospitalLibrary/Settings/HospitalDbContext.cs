@@ -22,6 +22,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Examination> Examinations { get; set; }
         public DbSet<TreatmentHistory> TreatmentHistories { get; set; }
+
         public DbSet<Therapy> Therapies { get; set; }
         public DbSet<BloodUnit> BloodUnits { get; set; }
         public DbSet<MedicalDrugs> MedicalDrugs { get; set; }
@@ -29,8 +30,10 @@ namespace HospitalLibrary.Settings
         public DbSet<Bed> Beds { get; set; }
         public DbSet<Blood> Bloods { get; set; }
 
+
         public DbSet<Allergen> Allergens { get; set; }
         public DbSet<Address> Addresses{ get; set; }
+
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
@@ -49,11 +52,13 @@ namespace HospitalLibrary.Settings
             modelBuilder.SeedDoctor();
             modelBuilder.SeedPatient();
             modelBuilder.SeedFeedback();
+
             modelBuilder.SeedBed();
             modelBuilder.SeedDoctor();
             modelBuilder.SeedMedicalDrugs();
             modelBuilder.SeedTreatmentHistory();
             modelBuilder.SeedBlood();
+
 
             modelBuilder.SeedAllergen();
 

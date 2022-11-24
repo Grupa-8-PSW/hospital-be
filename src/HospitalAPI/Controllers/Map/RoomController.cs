@@ -65,7 +65,6 @@ namespace HospitalAPI.Controllers.Map
             return Ok(rooms);
         }
 
-<<<<<<< HEAD
         [HttpGet("free")]
         public IActionResult GetFreeRooms()
         {
@@ -76,8 +75,7 @@ namespace HospitalAPI.Controllers.Map
             }
             return Ok(rooms);
         }
-=======
->>>>>>> 4addd3d9fd52b77c8be88d680c2e3dc301c3a87a
+
     }
 
 }

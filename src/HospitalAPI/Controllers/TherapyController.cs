@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HospitalAPI.DTO;
+using HospitalAPI.Mapper;
 
 namespace HospitalAPI.Controllers
 {
@@ -16,10 +18,12 @@ namespace HospitalAPI.Controllers
     public class TherapyController : ControllerBase
     {
         private readonly ITherapyService _therapyService;
+        private readonly IMapper<Therapy, TherapyDTO> _therapyMapper;
 
-        public TherapyController(ITherapyService therapyService)
+        public TherapyController(ITherapyService therapyService, IMapper<Therapy, TherapyDTO> therapyMapper)
         {
             _therapyService = therapyService;
+            _therapyMapper = therapyMapper;
         }
 
         // GET: api/rooms
@@ -46,11 +50,17 @@ namespace HospitalAPI.Controllers
 
         // POST api/rooms
         [HttpPost]
-        public ActionResult Create(Therapy therapy)
+        public ActionResult Create(TherapyDTO therapyDTo)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+
+            Therapy therapy = _therapyMapper.toModel(therapyDTo);
+            if(therapy == null)
+            {
+                return BadRequest("Poruka .....");
             }
 
 

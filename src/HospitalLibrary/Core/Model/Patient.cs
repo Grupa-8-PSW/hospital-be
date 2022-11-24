@@ -31,6 +31,14 @@ namespace HospitalLibrary.Core.Model
             AddressId = addressId;
             SelectedDoctorId = selectedDoctorId;
         }
+
+        public Patient(int id, string firstName, string lastName)
+        {
+            Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+        }
+
         public Patient()
         {
 
