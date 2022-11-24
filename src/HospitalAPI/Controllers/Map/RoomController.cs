@@ -75,6 +75,7 @@ namespace HospitalAPI.Controllers.Map
             }
             return Ok(rooms);
         }
+
     }
 
 }

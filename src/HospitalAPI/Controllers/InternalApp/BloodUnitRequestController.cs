@@ -1,4 +1,5 @@
-﻿using HospitalAPI.Connections;
+﻿using System.Web.Http.Cors;
+using HospitalAPI.Connections;
 using HospitalAPI.DTO;
 using HospitalAPI.Web.Mapper;
 using HospitalLibrary.Core.Model;
@@ -14,14 +15,14 @@ namespace HospitalAPI.Controllers.InternalApp
     {
         private readonly IBloodUnitRequestService _bloodUnitRequestService;
         private readonly IMapper<BloodUnitRequest, BloodUnitRequestDTO> _bloodUnitRequestMapper;
-        private readonly IBloodUnitRequestHTTPConnection _bloodUnitRequestHTTPConnection;
 
-        public BloodUnitRequestController(IBloodUnitRequestService bloodUnitRequestService, IMapper<BloodUnitRequest, BloodUnitRequestDTO> bloodUnitRequestMapper, IBloodUnitRequestHTTPConnection bloodUnitRequestHTTPConnection)
+        public BloodUnitRequestController(IBloodUnitRequestService bloodUnitRequestService, IMapper<BloodUnitRequest, BloodUnitRequestDTO> bloodUnitRequestMapper)
         {
             _bloodUnitRequestService = bloodUnitRequestService;
             _bloodUnitRequestMapper = bloodUnitRequestMapper;
-            _bloodUnitRequestHTTPConnection = bloodUnitRequestHTTPConnection;
         }
+
+
 
         // GET: api/rooms
         [HttpGet]
@@ -40,7 +41,7 @@ namespace HospitalAPI.Controllers.InternalApp
                 return NotFound();
             }
 
-            return Ok(bloodUnitRequest);
+            return Ok(_bloodUnitRequestMapper.toDTO(bloodUnitRequest));
         }
 
 
@@ -61,8 +62,31 @@ namespace HospitalAPI.Controllers.InternalApp
             {
                 return BadRequest("Poruka .....");
             }
-            _bloodUnitRequestHTTPConnection.CreateBloodUnitRequestIntegration(bloodUnitRequestDTO);
             return CreatedAtAction("GetById", new { id = bloodUnitRequest.Id }, bloodUnitRequest);
+        }
+        [Route("updateUnclearRequest")]
+        [HttpPut]
+        public ActionResult UpdateUnclearRequest(BloodUnitRequestDTO bloodUnitRequestDTO)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            BloodUnitRequest bloodUnitRequest = _bloodUnitRequestMapper.toModel(bloodUnitRequestDTO);
+            _bloodUnitRequestService.UpdateUnclearRequest(bloodUnitRequest);
+            return Ok();
+
+
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public ActionResult ChangeRequestStatus(BloodUnitRequestDTO bloodUnitRequestDto)
+        {
+            BloodUnitRequest bloodUnitRequest = _bloodUnitRequestMapper.toModel(bloodUnitRequestDto);
+            _bloodUnitRequestService.Update(bloodUnitRequest);
+            return Ok();
         }
 
         

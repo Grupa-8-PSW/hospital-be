@@ -1,6 +1,10 @@
-﻿using IntegrationLibrary.Core.Model;
+﻿using HospitalAPI.Web.Mapper;
+using HospitalLibrary.Core.Model;
+using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibrary.Core.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.ObjectModel;
 
 namespace IntegrationAPI.Controllers
 {
@@ -8,11 +12,11 @@ namespace IntegrationAPI.Controllers
     [ApiController]
     public class BloodBankNewsController : ControllerBase
     {
-        private readonly IBloodBankNewsService _bloodBankNewsService;
-
+        private readonly IBloodBankNewsService _bloodBankNewsService;   
         public BloodBankNewsController(IBloodBankNewsService bloodBankNewsService)
         {
             _bloodBankNewsService = bloodBankNewsService;
+
         }
 
         [HttpGet]

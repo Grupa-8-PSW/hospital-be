@@ -14,7 +14,9 @@ namespace IntegrationAPI.ExceptionHandler.Exceptions
             {typeof(BloodBankArgumentException), HttpStatusCode.BadRequest},
             {typeof(BloodBankApiKeyAuthException), HttpStatusCode.Unauthorized},
             {typeof(BloodBankURIException), HttpStatusCode.InternalServerError},
-            {typeof(BloodBankConnectionException), HttpStatusCode.BadGateway}
+            {typeof(BloodBankConnectionException), HttpStatusCode.BadGateway},
+            {typeof(BloodConsumptionConfigurationArgumentException), HttpStatusCode.InternalServerError}
+
         };
         
         public static HttpStatusCode GetExceptionStatusCode(Exception ex)

@@ -15,6 +15,10 @@ using HospitalAPI.Web.Mapper;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Validation;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
+
+using HospitalAPI.Mapper;
+using HospitalAPI.Connections;
+
 using Microsoft.AspNetCore.Identity;
 using HospitalAPI.Security;
 using HospitalAPI.Security.Models;
@@ -22,9 +26,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 using HospitalAPI.Mapper;
 using HospitalAPI.Connections;
+
 
 namespace HospitalAPI
 {
@@ -132,6 +138,12 @@ namespace HospitalAPI
             services.AddScoped<IBloodUnitRequestService, BloodUnitRequestService>();
 
             services.AddScoped<IBloodUnitRequestHTTPConnection, BloodUnitRequestHTTPConnection>();
+
+
+            services.AddScoped<IBloodUnitRepository, BloodUnitRepository>();
+            services.AddScoped<IBloodUnitService, BloodUnitService>();
+
+            services.AddScoped<IExaminationValidation, ExaminationValidation>();
 
 
             services.AddScoped<IMapper<Therapy, TherapyDTO>, TherapyMapper>();

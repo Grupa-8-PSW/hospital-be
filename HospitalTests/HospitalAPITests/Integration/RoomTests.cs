@@ -4,7 +4,11 @@ using HospitalAPI.DTO;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Model.DTO;
+
 using HospitalLibrary.GraphicalEditor.Service;
+
+using HospitalLibrary.GraphicalEditor.Service;
+
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using HospitalTests.HospitalAPITests.Setup;
 using Microsoft.AspNetCore.Mvc;
@@ -38,17 +42,21 @@ namespace HospitalTests.HospitalAPITests.Integration
         }
 
         [Fact]
+
         public void Searches_rooms_with_same_name()
+
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            var result = ((OkObjectResult)controller.Search("Magacin"))?.Value as List<RoomDTO>;
+
+            var result = ((OkObjectResult)controller.GetFreeRooms())?.Value as List<RoomDTO>;
 
             Assert.NotNull(result);
             Assert.IsType<List<RoomDTO>>(result);
-            Assert.True(result.Count.Equals(2));
-            Assert.True(result[0].Name.Equals("Magacin"));
+            Assert.NotEmpty(result);
+            
+
         }
 
         [Fact]
@@ -120,5 +128,6 @@ namespace HospitalTests.HospitalAPITests.Integration
             Assert.True(result[0].Name.Equals("Fizioterapeut"));
         }
 
+        
     }
 }
