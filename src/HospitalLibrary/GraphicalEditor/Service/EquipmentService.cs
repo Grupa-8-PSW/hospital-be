@@ -33,7 +33,6 @@ namespace HospitalLibrary.GraphicalEditor.Service
         {
             _equRepository.CreateEquipTransfer(equipTrans);
             //MoveEquipmentThread(equipTrans);
-           
         }
         
         public void MoveEquipmentThread(EquipmentTransferDTO equipTrans)

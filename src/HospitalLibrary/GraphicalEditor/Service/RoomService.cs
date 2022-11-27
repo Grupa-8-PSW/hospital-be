@@ -66,17 +66,18 @@ namespace HospitalLibrary.GraphicalEditor.Service
 
             foreach (Examination exam in fromRoomExaminations)
             {
-                
                 while (startDate < exam.StartTime)
                 {
                     FreeSpaceDTO freeSpace = new FreeSpaceDTO();
                     freeSpace.StartTime = startDate;
                     freeSpace.EndTime = startDate.AddHours(dto.Duration);
-                    freeSpacesFromRoom.Add(freeSpace);
+                    if (freeSpace.EndTime <= exam.StartTime)
+                    {
+                        freeSpacesFromRoom.Add(freeSpace);
+                    }
                     startDate = startDate.AddHours(0.5);
                 }
                 startDate = startDate.AddMinutes(exam.Duration);
-
             }
 
             while (startDate < endDate)
@@ -100,7 +101,10 @@ namespace HospitalLibrary.GraphicalEditor.Service
                     FreeSpaceDTO freeSpace = new FreeSpaceDTO();
                     freeSpace.StartTime = startDate;
                     freeSpace.EndTime = startDate.AddHours(dto.Duration);
-                    freeSpacesToRoom.Add(freeSpace);
+                    if (freeSpace.EndTime <= exam.StartTime)
+                    {
+                        freeSpacesToRoom.Add(freeSpace);
+                    }
                     startDate = startDate.AddHours(0.5);
                 }
 
