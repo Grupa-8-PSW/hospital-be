@@ -13,10 +13,10 @@ namespace HospitalLibrary.Core.Service
     public class ExaminationService : IExaminationService
     {
         private readonly IExaminationRepository _examinationRepository;
-        private readonly IValidation _validation;
+        private readonly IExaminationValidation _validation;
         private readonly IDoctorRepository _doctorRepository;
 
-        public ExaminationService(IExaminationRepository examinationRepository, IValidation validation, IDoctorRepository doctorRepository)
+        public ExaminationService(IExaminationRepository examinationRepository, IExaminationValidation validation, IDoctorRepository doctorRepository)
         {
             _examinationRepository = examinationRepository;
             _validation = validation;

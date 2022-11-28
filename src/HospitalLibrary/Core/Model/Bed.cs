@@ -11,18 +11,16 @@ namespace HospitalLibrary.Core.Model
     {
         public int Id { get; set; }
         public int RoomId { get; set; }
-        public Room Room { get; set; }
         public bool Available { get; set; }
 
         public Bed()
         {
         }
 
-        public Bed(int id, int roomId, Room room, bool available)
+        public Bed(int id, int roomId, bool available)
         {
             Id = id;
             RoomId = roomId;
-            Room = room;
             Available = available;
         }
     }

@@ -10,9 +10,11 @@ namespace HospitalLibrary.Core.Repository
     public interface ITreatmentHistoryRepository
     {
         public IEnumerable<TreatmentHistory> GetAll();
-        public Doctor GetById(int id);
+        public TreatmentHistory GetById(int id);
         public void Create(TreatmentHistory doctor);
         public void Update(TreatmentHistory doctor);
         public void Delete(TreatmentHistory doctor);
+        public IEnumerable<Patient> GetPatientsWithoutActiveTreatmentHistory();
+
     }
 }

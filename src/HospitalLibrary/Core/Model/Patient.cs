@@ -12,9 +12,14 @@ namespace HospitalLibrary.Core.Model
         public string Pin { get; set; }
         public Gender Gender { get; set; }
         public BloodType BloodType { get; set; }
+        public Address Address { get; set; }
+        public int AddressId { get; set; }
         public List<Feedback> Feedbacks { get; private set; }
+        public List<Allergen> Allergens { get; set; }
+        public Doctor selectedDoctor { get; set; }
+        public int SelectedDoctorId { get; set; }
 
-        public Patient(int id, string firstName, string lastName, string email, string pin, Gender gender, BloodType bloodType)
+        public Patient(int id, string firstName, string lastName, string email, string pin, Gender gender, BloodType bloodType, int addressId, int selectedDoctorId)
         {
             Id = id;
             FirstName = firstName;
@@ -23,7 +28,22 @@ namespace HospitalLibrary.Core.Model
             Pin = pin;
             Gender = gender;
             BloodType = bloodType;
+            AddressId = addressId;
+            SelectedDoctorId = selectedDoctorId;
         }
+
+        public Patient(int id, string firstName, string lastName)
+        {
+            Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+        }
+
+        public Patient()
+        {
+
+        }
+
     }
 
 }

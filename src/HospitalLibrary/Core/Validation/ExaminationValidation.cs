@@ -9,7 +9,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 
 namespace HospitalLibrary.Core.Validation
 {
-    public class ExaminationValidation : IValidation
+    public class ExaminationValidation : IExaminationValidation
     {
         private readonly IExaminationRepository _examinationRepository;
         private readonly IDoctorRepository _doctorRepository;

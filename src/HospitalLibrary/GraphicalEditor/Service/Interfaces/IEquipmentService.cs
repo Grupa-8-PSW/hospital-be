@@ -12,6 +12,8 @@ namespace HospitalLibrary.GraphicalEditor.Service.Interfaces
     {
         IEnumerable<Equipment> GetAll();
 
+        IEnumerable<Equipment> Search(string name, int? amount);
+
         IEnumerable<Equipment> GetEquipmentByRoomId(int id);
 
         void CreateEquipTransfer(EquipmentTransfer equipTrans);

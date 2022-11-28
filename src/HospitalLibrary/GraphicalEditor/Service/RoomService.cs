@@ -1,10 +1,7 @@
-﻿using System.Collections.Specialized;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
-using HospitalLibrary.Core.Service;
 using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Model.DTO;
-using HospitalLibrary.GraphicalEditor.Repository;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 
@@ -13,6 +10,7 @@ namespace HospitalLibrary.GraphicalEditor.Service
     public class RoomService : IRoomService
     {
         private readonly IRoomRepository _roomRepository;
+        private readonly IBedRepository _bedRepository;
 
         private readonly IExaminationRepository _examinationRepository;
 
@@ -31,6 +29,11 @@ namespace HospitalLibrary.GraphicalEditor.Service
         public IEnumerable<Room> GetAll()
         {
             return _roomRepository.GetAll();
+        }
+
+        public IEnumerable<Room> Search(string name)
+        {
+            return _roomRepository.Search(name);
         }
 
         public Room GetById(int id)
@@ -139,5 +142,11 @@ namespace HospitalLibrary.GraphicalEditor.Service
 
             return filteredFreeSpaces;
         }
+
+        public IEnumerable<Room> GetFreeRooms()
+        {
+            return _roomRepository.GetFreeRooms();
+        }
+
     }
 }

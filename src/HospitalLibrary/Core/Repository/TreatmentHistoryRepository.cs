@@ -1,6 +1,8 @@
 ﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
+using RestSharp.Serializers.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Repository
 {
-    public class TreatmentHistoryRepository
+    public class TreatmentHistoryRepository : ITreatmentHistoryRepository
     {
         private readonly HospitalDbContext _context;
 
@@ -20,13 +22,13 @@ namespace HospitalLibrary.Core.Repository
 
         public IEnumerable<TreatmentHistory> GetAll()
         {
-            return _context.TreatmentHistories.ToList();
+            return _context.TreatmentHistories.Include(th => th.Patient).ToList();
         }
 
         public TreatmentHistory GetById(int id)
         {
-            return _context.TreatmentHistories.Find(id);
-        }
+            return _context.TreatmentHistories.Include(th => th.Patient).Include(th => th.Bed).Where(th => th.Id == id).FirstOrDefault<TreatmentHistory>();
+        }                                               //i bed
 
         public void Create(TreatmentHistory treatmentHistory)
         {
@@ -54,6 +56,18 @@ namespace HospitalLibrary.Core.Repository
         {
             _context.TreatmentHistories.Remove(treatmentHistory);
             _context.SaveChanges();
+        }
+
+        public IEnumerable<TreatmentHistory> GetAllActive()
+        {
+            return _context.TreatmentHistories.Include(th => th.Active == true).ToList();
+        }
+
+        public IEnumerable<Patient> GetPatientsWithoutActiveTreatmentHistory()
+        {
+            return _context.Patients.Except(from th in _context.TreatmentHistories
+                     where th.Active == true
+                     select th.Patient).ToList();
         }
 
     }

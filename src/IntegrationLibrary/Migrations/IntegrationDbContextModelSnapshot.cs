@@ -15,6 +15,7 @@ namespace IntegrationLibrary.Migrations
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
+
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.10")
@@ -68,44 +69,88 @@ namespace IntegrationLibrary.Migrations
 
             modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodBankNews", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("archived")
+                    b.Property<bool>("Archived")
                         .HasColumnType("boolean");
 
-                    b.Property<byte[]>("byteArray")
-                        .IsRequired()
-                        .HasColumnType("bytea");
+                    b.Property<int>("BloodBankId")
+                        .HasColumnType("integer");
 
-                    b.Property<bool>("published")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("subject")
+                    b.Property<string>("ImgSrc")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("text")
+                    b.Property<bool>("Published")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Subject")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("id");
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BloodBankId");
 
                     b.ToTable("BloodBankNews");
 
                     b.HasData(
                         new
                         {
-                            id = 1,
-                            archived = false,
-                            byteArray = new byte[0],
-                            published = false,
-                            subject = "subject1",
-                            text = "text"
+                            Id = 1,
+                            Archived = false,
+                            BloodBankId = 1,
+                            ImgSrc = "",
+                            Published = false,
+                            Subject = "subject1",
+                            Text = "text"
                         });
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodBankNews", b =>
+                {
+                    b.HasOne("IntegrationLibrary.Core.Model.BloodBank", "BloodBank")
+                        .WithMany()
+                        .HasForeignKey("BloodBankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BloodBank");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodUnitRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BloodUnitRequests");
                 });
 #pragma warning restore 612, 618
         }

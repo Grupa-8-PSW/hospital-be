@@ -1,14 +1,18 @@
 ﻿using HospitalAPI.Web.Mapper;
 using HospitalLibrary.Core.Service;
+﻿using HospitalLibrary.Core.Service;
 using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Model.DTO;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers.Map
 {
+
     [Route("api/map/floor/rooms/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Manager")]
     public class RoomController : ControllerBase
     {
         private readonly IRoomService _roomService;
@@ -50,15 +54,23 @@ namespace HospitalAPI.Controllers.Map
         }
 
         [HttpGet("search")]
-        public IActionResult GetByQuery(string name)
+        public IActionResult Search(string? name)
         {
             List<RoomDTO> rooms = new();
-            foreach (var room in _roomService.GetAll())
+            foreach (var room in _roomService.Search(name))
             {
-                if (room.Name == name)
-                {
-                    rooms.Add(new RoomDTO(room));
-                }
+                rooms.Add(new RoomDTO(room));
+            }
+            return Ok(rooms);
+        }
+
+        [HttpGet("free")]
+        public IActionResult GetFreeRooms()
+        {
+            List<RoomDTO> rooms = new();
+            foreach (var room in _roomService.GetFreeRooms())
+            {
+                rooms.Add(new RoomDTO(room));
             }
             return Ok(rooms);
         }

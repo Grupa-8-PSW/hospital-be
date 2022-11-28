@@ -1,5 +1,6 @@
 using IntegrationAPI.Connections;
 using Microsoft.Extensions.DependencyInjection;
+using Xunit;
 
 namespace IntegrationTests
 {
