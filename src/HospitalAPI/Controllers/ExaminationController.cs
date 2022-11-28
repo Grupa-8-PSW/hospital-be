@@ -132,6 +132,16 @@ namespace HospitalAPI.Controllers
             return NoContent();
         }
 
+        [HttpGet("room/{roomId}")]
+        public ActionResult GetByRoomId(int roomId)
+        {
+            var examination = _examinationService.GetByRoomId(roomId);
+            if (examination == null)
+            {
+                return NotFound();
+            }
 
+            return Ok(examination);
+        }
     }
 }

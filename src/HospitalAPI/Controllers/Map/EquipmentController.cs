@@ -12,6 +12,11 @@ namespace HospitalAPI.Controllers.Map
         private readonly IRoomService _roomService;
         private readonly IEquipmentService _equipmentService;
 
+        public EquipmentController(IEquipmentService equipmentService)
+        {
+            _equipmentService = equipmentService;
+        }
+
         public EquipmentController(IRoomService roomService, IEquipmentService equipmentService)
         {
             _roomService = roomService;

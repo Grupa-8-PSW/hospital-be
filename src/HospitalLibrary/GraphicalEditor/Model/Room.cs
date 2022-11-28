@@ -23,5 +23,19 @@ namespace HospitalLibrary.GraphicalEditor.Model
         public ICollection<Bed> Beds { get; set; }
         public RoomType Type { get; set; }
 
+        public Room(int id, int x, int y, int width, int height, string color, string name, int floorId, RoomType type)
+        {
+            Id = id;
+            X = x;
+            Y = y;
+            Width = width;
+            Height = height;
+            Color = color;
+            Name = name;
+            FloorId = floorId;
+            Type = type;
+        }
+
+        public Room() { }
     }
 }

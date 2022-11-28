@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.GraphicalEditor.Model;
+﻿using HospitalLibrary.Core.Service;
+using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Model.DTO;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -14,6 +15,8 @@ namespace HospitalAPI.Controllers.Map
     {
         private readonly IRoomService _roomService;
 
+        private readonly IExaminationService _examinationService;
+
         public RoomController(IRoomService roomService)
         {
             _roomService = roomService;
@@ -22,12 +25,7 @@ namespace HospitalAPI.Controllers.Map
         [HttpGet]
         public ActionResult GetAll()
         {
-            List<RoomDTO> rooms = new();
-            foreach (var room in _roomService.GetAll())
-            {
-                rooms.Add(new RoomDTO(room));
-            }
-            return Ok(rooms);
+            return Ok(_roomService.GetAll());
         }
 
         [HttpGet("{id}")]
@@ -76,6 +74,12 @@ namespace HospitalAPI.Controllers.Map
             return Ok(rooms);
         }
 
+        [HttpPost("get/transferedEquipment")]
+        public IActionResult GetAvailableTerminsForTransfer(EquipmentTransferDTO dto)
+        {
+            List<FreeSpaceDTO> freeSpace = _roomService.GetTransferedEquipment(dto);
+            return Ok(freeSpace); 
+        }
     }
 
 }

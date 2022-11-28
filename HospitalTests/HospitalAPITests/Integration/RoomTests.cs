@@ -1,23 +1,11 @@
 ﻿using HospitalAPI;
 using HospitalAPI.Controllers.Map;
-using HospitalAPI.DTO;
-using HospitalLibrary.Core.Model;
 using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Model.DTO;
-
-using HospitalLibrary.GraphicalEditor.Service;
-
-using HospitalLibrary.GraphicalEditor.Service;
-
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using HospitalTests.HospitalAPITests.Setup;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalTests.HospitalAPITests.Integration
 {
