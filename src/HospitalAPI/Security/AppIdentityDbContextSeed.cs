@@ -13,6 +13,7 @@ namespace HospitalAPI.Security
             await roleManager.CreateAsync(new IdentityRole<int>("Patient"));
             await roleManager.CreateAsync(new IdentityRole<int>("Doctor"));
             await roleManager.CreateAsync(new IdentityRole<int>("Manager"));
+            await roleManager.CreateAsync(new IdentityRole<int>("BloodBank"));
 
             var patientUser = new User()
             {
@@ -37,6 +38,14 @@ namespace HospitalAPI.Security
             };
             await userManager.CreateAsync(managerUser, "12345");
             await userManager.AddToRoleAsync(managerUser, "Manager");
+
+            var bloodBankUser = new User()
+            {
+                UserName = "bloodBank",
+                Email = "bloodbank@email.com"
+            };
+            await userManager.CreateAsync(bloodBankUser, "12345");
+            await userManager.AddToRoleAsync(bloodBankUser, "BloodBank");
         }
     }
 }
