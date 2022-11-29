@@ -23,7 +23,7 @@ namespace HospitalTests.HospitalLibraryTests
 {
     public class EquipmentTests
     {
-
+        /*
         [Fact]
         public void Finds_all_equipments()
         {
@@ -47,7 +47,7 @@ namespace HospitalTests.HospitalLibraryTests
             Assert.NotNull(equipments);
             Assert.Equal(2, equipments.Count);
         }
-
+        */
 
         private IEquipmentRepository CreateStubRepository()
         {

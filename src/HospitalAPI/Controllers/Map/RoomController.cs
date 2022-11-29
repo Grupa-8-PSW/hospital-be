@@ -10,7 +10,7 @@ namespace HospitalAPI.Controllers.Map
 
     [Route("api/map/floor/rooms/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Manager")]
+    //[Authorize(Roles = "Manager")]
     public class RoomController : ControllerBase
     {
         private readonly IRoomService _roomService;
