@@ -478,9 +478,8 @@ namespace HospitalLibrary.Migrations
                             FirstName = "Pera",
                             LastName = "Peric",
                             RoomId = 1,
-                            StartWork = new DateTime(2022, 11, 22, 10, 10, 10, 0, DateTimeKind.Utc)
+                            StartWork = new DateTime(2022, 11, 22, 10, 10, 10, 0, DateTimeKind.Utc),
                             Specialization = 0,
-                            StartWork = new DateTime(2022, 11, 22, 10, 10, 10, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
@@ -489,7 +488,7 @@ namespace HospitalLibrary.Migrations
                             FirstName = "Sergej",
                             LastName = "Milinkovic-Savic",
                             RoomId = 1,
-                            StartWork = new DateTime(2022, 11, 22, 10, 10, 10, 0, DateTimeKind.Utc)
+                            StartWork = new DateTime(2022, 11, 22, 10, 10, 10, 0, DateTimeKind.Utc),
                             Specialization = 0,
                         });
                 });
