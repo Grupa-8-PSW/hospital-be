@@ -10,6 +10,8 @@ namespace IntegrationAPI.ConnectionService.Interface
         public List<BloodUnitRequestDTO> GetAllBloodUnitRequests();
         public List<BloodUnitDTO> GetAllBloodUnits();
 
+        public List<BloodDTO> GetAllBlood();
+
         public void ChangeRequestStatus(BloodUnitRequestDTO bloodUnitRequestDto);
 
         public Doctor GetDoctorById(int id);

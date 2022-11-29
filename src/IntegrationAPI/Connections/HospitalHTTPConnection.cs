@@ -48,7 +48,19 @@ namespace HospitalAPI.Connections
             client.Execute(request);
         }
 
-        
+        public List<BloodDTO> GetAllBlood()
+        {
+            var client = new RestClient("http://localhost:5174/api/internal/Blood");
+            var request = new RestRequest();
+
+
+            RestResponse response = client.Get(request);
+
+            List<BloodDTO> result = JsonConvert.DeserializeObject<List<BloodDTO>>(response.Content);
+            return result;
+        }
+
+
     }
 }
 

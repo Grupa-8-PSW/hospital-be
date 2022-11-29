@@ -55,6 +55,7 @@ namespace IntegrationAPI
             services.AddScoped<IBloodBankConnectionService, BloodBankConnectionService>();
             services.AddScoped<ICredentialGenerator, CredentialGenerator>();
             services.AddScoped<IBloodBankHTTPConnection, BloodBankHTTPConnection>();
+            services.AddScoped<IBloodService, BloodService>();
             services.AddScoped<IBloodBankNewsRepository, BloodBankNewsRepository>();
             services.AddScoped<IBloodBankNewsService, BloodBankNewsService>();
             services.AddScoped<IHospitalHTTPConnectionService, HospitalHTTPConnectionService>();

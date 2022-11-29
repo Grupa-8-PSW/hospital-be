@@ -28,6 +28,11 @@ namespace IntegrationAPI.ConnectionService
             return _connection.GetAllBloodUnits();
         }
 
+        public List<BloodDTO> GetAllBlood()
+        {
+            return _connection.GetAllBlood();
+        }
+
         public void ChangeRequestStatus(BloodUnitRequestDTO bloodUnitRequestDto)
         {
             _connection.ChangeRequestStatus(bloodUnitRequestDto);

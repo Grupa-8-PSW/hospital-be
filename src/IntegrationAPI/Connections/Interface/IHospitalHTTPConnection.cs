@@ -14,6 +14,8 @@ namespace HospitalAPI.Connections
         public List<BloodUnitRequestDTO> GetAllBloodUnitRequests();
         public List<BloodUnitDTO> GetAllBloodUnits();
 
+        public List<BloodDTO> GetAllBlood();
+
         public void ChangeRequestStatus(BloodUnitRequestDTO bloodUnitRequestDto);
     }
 }
