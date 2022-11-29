@@ -17,6 +17,7 @@ using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Service.Interfaces;
 using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibrary.Core.Model;
+using Microsoft.Extensions.Options;
 
 namespace IntegrationAPI
 {
@@ -38,6 +39,7 @@ namespace IntegrationAPI
           
             services.AddSwaggerGen(c =>
             {
+                c.CustomSchemaIds(type => type.ToString());
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IntegrationAPI", Version = "v1" });
             });
 
