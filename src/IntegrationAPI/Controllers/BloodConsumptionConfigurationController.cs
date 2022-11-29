@@ -41,9 +41,9 @@ namespace IntegrationAPI.Controllers
 
         [Route("/api/[controller]/generatePdf")]
         [HttpGet]
-        public IActionResult GenerateSeveralPdf()
+        public IActionResult GenerateSeveralPdf()   
         {
-            var validList =  _service.FindValidBloodUnits(_hospitalHTTPConnectionService.GetAllBloodUnits(), out var configuration);
+            var validList = _service.FindValidBloodUnits(_hospitalHTTPConnectionService.GetAllBloodUnits(), out var configuration);
             return File(_service.GeneratePdf(configuration.Last(), validList), "application/pdf", "bloodconsumptionreport.pdf");
 
         }
