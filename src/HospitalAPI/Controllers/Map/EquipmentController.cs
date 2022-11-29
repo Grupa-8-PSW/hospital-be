@@ -68,6 +68,8 @@ namespace HospitalAPI.Controllers.Map
             //_equipmentService.CreateEquipTransfer(equipTrans);
             //return CreatedAtAction("GetById", new { id = equipTrans.Id }, equipTrans);
             return null;
+        }
+
         [HttpGet("search")]
         public IActionResult Search(string? name, int? amount)
         {

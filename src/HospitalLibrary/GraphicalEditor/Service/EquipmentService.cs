@@ -94,6 +94,8 @@ namespace HospitalLibrary.GraphicalEditor.Service
                 _equRepository.Update(eqTo);
             }
             _equRepository.Update(eqFrom);
+        }
+
         public IEnumerable<Equipment> Search(string name, int? amount)
         {
             return _equRepository.Search(name, amount);
