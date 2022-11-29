@@ -12,13 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-<<<<<<<< HEAD:src/HospitalLibrary/Migrations/20221123224950_InitMigration.Designer.cs
-    [Migration("20221123224950_InitMigration")]
+    [Migration("20221129133911_InitMigration")]
     partial class InitMigration
-========
-    [Migration("20221124011620_new_migration")]
-    partial class new_migration
->>>>>>>> develop:src/HospitalLibrary/Migrations/20221124011620_new_migration.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -793,7 +788,6 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("TreatmentHistoryId");
 
                     b.ToTable("Therapies");
-<<<<<<<< HEAD:src/HospitalLibrary/Migrations/20221123224950_InitMigration.Designer.cs
 
                     b.HasData(
                         new
@@ -805,7 +799,7 @@ namespace HospitalLibrary.Migrations
                             TherapySubject = "Bromazepam 500mg",
                             TherapyType = 0,
                             TreatmentHistoryId = 1,
-                            WhenPrescribed = new DateTime(2022, 11, 23, 22, 49, 49, 904, DateTimeKind.Utc).AddTicks(9604)
+                            WhenPrescribed = new DateTime(2022, 11, 29, 13, 39, 10, 774, DateTimeKind.Utc).AddTicks(2590)
                         },
                         new
                         {
@@ -816,10 +810,8 @@ namespace HospitalLibrary.Migrations
                             TherapySubject = "A+ 500ml",
                             TherapyType = 1,
                             TreatmentHistoryId = 1,
-                            WhenPrescribed = new DateTime(2022, 11, 23, 22, 49, 49, 904, DateTimeKind.Utc).AddTicks(9606)
+                            WhenPrescribed = new DateTime(2022, 11, 29, 13, 39, 10, 774, DateTimeKind.Utc).AddTicks(2593)
                         });
-========
->>>>>>>> develop:src/HospitalLibrary/Migrations/20221124011620_new_migration.Designer.cs
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.TreatmentHistory", b =>
@@ -873,19 +865,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 1,
                             DischargeReason = "abc",
-<<<<<<<< HEAD:src/HospitalLibrary/Migrations/20221123224950_InitMigration.Designer.cs
-                            EndDate = new DateTime(2022, 11, 23, 22, 49, 49, 904, DateTimeKind.Utc).AddTicks(9562),
+                            EndDate = new DateTime(2022, 11, 29, 13, 39, 10, 774, DateTimeKind.Utc).AddTicks(2534),
                             PatientId = 1,
                             Reason = "reason1",
                             RoomId = 1,
-                            StartDate = new DateTime(2022, 11, 23, 22, 49, 49, 904, DateTimeKind.Utc).AddTicks(9561)
-========
-                            EndDate = new DateTime(2022, 11, 24, 1, 16, 20, 513, DateTimeKind.Utc).AddTicks(7247),
-                            PatientId = 1,
-                            Reason = "reason1",
-                            RoomId = 1,
-                            StartDate = new DateTime(2022, 11, 24, 1, 16, 20, 513, DateTimeKind.Utc).AddTicks(7246)
->>>>>>>> develop:src/HospitalLibrary/Migrations/20221124011620_new_migration.Designer.cs
+                            StartDate = new DateTime(2022, 11, 29, 13, 39, 10, 774, DateTimeKind.Utc).AddTicks(2533)
                         },
                         new
                         {
@@ -893,19 +877,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 2,
                             DischargeReason = "abc",
-<<<<<<<< HEAD:src/HospitalLibrary/Migrations/20221123224950_InitMigration.Designer.cs
-                            EndDate = new DateTime(2022, 11, 23, 22, 49, 49, 904, DateTimeKind.Utc).AddTicks(9568),
+                            EndDate = new DateTime(2022, 11, 29, 13, 39, 10, 774, DateTimeKind.Utc).AddTicks(2540),
                             PatientId = 2,
                             Reason = "reason2",
                             RoomId = 1,
-                            StartDate = new DateTime(2022, 11, 23, 22, 49, 49, 904, DateTimeKind.Utc).AddTicks(9568)
-========
-                            EndDate = new DateTime(2022, 11, 24, 1, 16, 20, 513, DateTimeKind.Utc).AddTicks(7252),
-                            PatientId = 2,
-                            Reason = "reason2",
-                            RoomId = 1,
-                            StartDate = new DateTime(2022, 11, 24, 1, 16, 20, 513, DateTimeKind.Utc).AddTicks(7251)
->>>>>>>> develop:src/HospitalLibrary/Migrations/20221124011620_new_migration.Designer.cs
+                            StartDate = new DateTime(2022, 11, 29, 13, 39, 10, 774, DateTimeKind.Utc).AddTicks(2539)
                         },
                         new
                         {
@@ -913,19 +889,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 4,
                             DischargeReason = "abc",
-<<<<<<<< HEAD:src/HospitalLibrary/Migrations/20221123224950_InitMigration.Designer.cs
-                            EndDate = new DateTime(2022, 11, 23, 22, 49, 49, 904, DateTimeKind.Utc).AddTicks(9570),
+                            EndDate = new DateTime(2022, 11, 29, 13, 39, 10, 774, DateTimeKind.Utc).AddTicks(2542),
                             PatientId = 3,
                             Reason = "reason3",
                             RoomId = 2,
-                            StartDate = new DateTime(2022, 11, 23, 22, 49, 49, 904, DateTimeKind.Utc).AddTicks(9569)
-========
-                            EndDate = new DateTime(2022, 11, 24, 1, 16, 20, 513, DateTimeKind.Utc).AddTicks(7253),
-                            PatientId = 3,
-                            Reason = "reason3",
-                            RoomId = 2,
-                            StartDate = new DateTime(2022, 11, 24, 1, 16, 20, 513, DateTimeKind.Utc).AddTicks(7253)
->>>>>>>> develop:src/HospitalLibrary/Migrations/20221124011620_new_migration.Designer.cs
+                            StartDate = new DateTime(2022, 11, 29, 13, 39, 10, 774, DateTimeKind.Utc).AddTicks(2541)
                         },
                         new
                         {
@@ -936,11 +904,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 1,
                             Reason = "reason1",
                             RoomId = 1,
-<<<<<<<< HEAD:src/HospitalLibrary/Migrations/20221123224950_InitMigration.Designer.cs
-                            StartDate = new DateTime(2022, 11, 23, 22, 49, 49, 904, DateTimeKind.Utc).AddTicks(9571)
-========
-                            StartDate = new DateTime(2022, 11, 24, 1, 16, 20, 513, DateTimeKind.Utc).AddTicks(7254)
->>>>>>>> develop:src/HospitalLibrary/Migrations/20221124011620_new_migration.Designer.cs
+                            StartDate = new DateTime(2022, 11, 29, 13, 39, 10, 774, DateTimeKind.Utc).AddTicks(2544)
                         },
                         new
                         {
@@ -951,11 +915,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 2,
                             Reason = "reason2",
                             RoomId = 1,
-<<<<<<<< HEAD:src/HospitalLibrary/Migrations/20221123224950_InitMigration.Designer.cs
-                            StartDate = new DateTime(2022, 11, 23, 22, 49, 49, 904, DateTimeKind.Utc).AddTicks(9572)
-========
-                            StartDate = new DateTime(2022, 11, 24, 1, 16, 20, 513, DateTimeKind.Utc).AddTicks(7256)
->>>>>>>> develop:src/HospitalLibrary/Migrations/20221124011620_new_migration.Designer.cs
+                            StartDate = new DateTime(2022, 11, 29, 13, 39, 10, 774, DateTimeKind.Utc).AddTicks(2545)
                         },
                         new
                         {
@@ -966,11 +926,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 3,
                             Reason = "reason3",
                             RoomId = 2,
-<<<<<<<< HEAD:src/HospitalLibrary/Migrations/20221123224950_InitMigration.Designer.cs
-                            StartDate = new DateTime(2022, 11, 23, 22, 49, 49, 904, DateTimeKind.Utc).AddTicks(9573)
-========
-                            StartDate = new DateTime(2022, 11, 24, 1, 16, 20, 513, DateTimeKind.Utc).AddTicks(7257)
->>>>>>>> develop:src/HospitalLibrary/Migrations/20221124011620_new_migration.Designer.cs
+                            StartDate = new DateTime(2022, 11, 29, 13, 39, 10, 774, DateTimeKind.Utc).AddTicks(2547)
                         });
                 });
 
@@ -2121,8 +2077,6 @@ namespace HospitalLibrary.Migrations
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-<<<<<<<< HEAD:src/HospitalLibrary/Migrations/20221123224950_InitMigration.Designer.cs
-========
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.BloodUnitRequest", b =>
@@ -2134,7 +2088,6 @@ namespace HospitalLibrary.Migrations
                         .IsRequired();
 
                     b.Navigation("Doctor");
->>>>>>>> develop:src/HospitalLibrary/Migrations/20221124011620_new_migration.Designer.cs
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>

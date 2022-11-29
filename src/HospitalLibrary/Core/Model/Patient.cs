@@ -19,7 +19,8 @@ namespace HospitalLibrary.Core.Model
         public Doctor selectedDoctor { get; set; }
         public int SelectedDoctorId { get; set; }
 
-        public Patient(int id, string firstName, string lastName, string email, string pin, Gender gender, BloodType bloodType, int addressId, int selectedDoctorId)
+        public Patient(int id, string firstName, string lastName, string email, string pin, Gender gender,
+            BloodType bloodType, int addressId, int selectedDoctorId)
         {
             Id = id;
             FirstName = firstName;
@@ -30,14 +31,6 @@ namespace HospitalLibrary.Core.Model
             BloodType = bloodType;
             AddressId = addressId;
             SelectedDoctorId = selectedDoctorId;
-        }
-
-        public Patient(int id, string firstName, string lastName, string v1, string v2, Gender mALE, BloodType zERO_POSITIVE) : this(id, firstName, lastName)
-        {
-            this.v1 = v1;
-            this.v2 = v2;
-            this.mALE = mALE;
-            this.zERO_POSITIVE = zERO_POSITIVE;
         }
 
         public Patient(int id, string firstName, string lastName)

@@ -24,7 +24,7 @@ namespace HospitalAPI.Controllers
         private readonly IMapper<TreatmentHistory, TreatmentHistoryDTO> _treatmentHistoryMapper;
         private readonly IMapper _patientMapper;
 
-        public TreatmentHistoryController(ITreatmentHistoryService treatmentHistoryService, 
+        public TreatmentHistoryController(ITreatmentHistoryService treatmentHistoryService,
             IMapper<TreatmentHistory, TreatmentHistoryDTO> mapper,
             IMapper patientMapper)
         {
@@ -64,7 +64,7 @@ namespace HospitalAPI.Controllers
             }
 
             TreatmentHistory treatmentHistory = _treatmentHistoryMapper.toModel(treatmentHistoryDTO);
-          //  int roomId = treatmentHistoryDTO.RoomId;
+            //  int roomId = treatmentHistoryDTO.RoomId;
 
             bool succes = _treatmentHistoryService.Create(treatmentHistory);
             if (!succes)
@@ -78,30 +78,30 @@ namespace HospitalAPI.Controllers
         [HttpPut("{id}")]
         public ActionResult Update(int id, TreatmentHistoryDTO treatmentHistoryDTO)   //DTO
         {
-             TreatmentHistory treatmentHistory = _treatmentHistoryMapper.toModel(treatmentHistoryDTO);
+            TreatmentHistory treatmentHistory = _treatmentHistoryMapper.toModel(treatmentHistoryDTO);
             // examination.RoomId = doctor.RoomId;
-             if (!ModelState.IsValid)
-             {
-                 return BadRequest(ModelState);
-             }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-             if (id != treatmentHistory.Id)
-             {
-                 return BadRequest();
-             }
-             bool succes;
-             try
-             {
-                 succes = _treatmentHistoryService.Update(treatmentHistory);
-             }
-             catch (Exception e1)
-             {
-                 return BadRequest();
-             }
-             if (!succes)
-             {
-                 return BadRequest("Poruka .....");
-             }
+            if (id != treatmentHistory.Id)
+            {
+                return BadRequest();
+            }
+            bool succes;
+            try
+            {
+                succes = _treatmentHistoryService.Update(treatmentHistory);
+            }
+            catch (Exception e1)
+            {
+                return BadRequest();
+            }
+            if (!succes)
+            {
+                return BadRequest("Poruka .....");
+            }
             return Ok(treatmentHistory);
         }
 
@@ -165,14 +165,14 @@ namespace HospitalAPI.Controllers
                     return BadRequest(new { Error = "Treatment is still active." });
                 }
 
-                string fileName = treatmentHistory.Patient.Id 
+                string fileName = treatmentHistory.Patient.Id
                     + "_"
                     + treatmentHistory.Patient.FirstName
                     + treatmentHistory.Patient.LastName
                     + "_report.pdf";
                 string dirName = @"C:\\Temp\";
 
-                ITreatmentReportGenerator treatmentReportGenerator = 
+                ITreatmentReportGenerator treatmentReportGenerator =
                     new TreatmentReportGenerator(treatmentHistory);
                 string? pdfPath = treatmentReportGenerator.GenerateSummarizingReport(treatmentHistory,
                     dirName, fileName);
@@ -196,7 +196,7 @@ namespace HospitalAPI.Controllers
                 return new JsonResult(new SimpleResponse(HttpStatusCode.InternalServerError,
                         new { Message = "Unknown error occured while generating treatment report." }));
             }
-           
+
         }
 
         [HttpGet("withoutActiveTreatment")]
@@ -207,10 +207,10 @@ namespace HospitalAPI.Controllers
             return Ok(patientsDTO);
         }
 
-      /*  [HttpGet]
-        public ActionResult GetAll()
-        {
-            return Ok(_mapper.Map<List<PatientDTO>>(_patientService.GetAll()));
-
+        /*  [HttpGet]
+          public ActionResult GetAll()
+          {
+              return Ok(_mapper.Map<List<PatientDTO>>(_patientService.GetAll()));
+        */
     }
 }
