@@ -26,7 +26,7 @@ namespace HospitalAPI.Mapper
 
         public Patient toModel(PatientDTO dto)
         {
-            Patient patient = new Patient(dto.Id, dto.FirstName, dto.LastName);
+            Patient patient = new Patient();
 
             return patient;
         }

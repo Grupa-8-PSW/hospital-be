@@ -7,7 +7,7 @@ using HospitalLibrary.Core.Model;
 
 namespace HospitalLibrary.Core.Repository
 {
-    public interface IMedicalDrugRepository
+    public interface IMedicalDrugsRepository
     {
         IEnumerable<MedicalDrugs> GetAll();
         MedicalDrugs GetById(int id);

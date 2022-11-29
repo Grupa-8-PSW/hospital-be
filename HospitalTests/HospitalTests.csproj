@@ -21,8 +21,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\HospitalAPI\HospitalAPI.csproj" />
-    <ProjectReference Include="..\src\HospitalLibrary\HospitalLibrary.csproj" />
+    <Folder Include="HospitalLibraryTests\" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup Condition="$(VisualStudioVersion) == '17.0'">
@@ -45,4 +44,3 @@
   <Import Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="$(VisualStudioVersion) != '15.0' And '$(SQLDBExtensionsRefPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.Sql.UnitTesting.targets" Condition="$(VisualStudioVersion) != '15.0' And '$(SQLDBExtensionsRefPath)' == ''" />
 </Project>
-

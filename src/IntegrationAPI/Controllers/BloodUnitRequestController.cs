@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Core.Model;
+﻿using IntegrationAPI.ConnectionService.Interface;
+using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibrary.Core.Service.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -10,52 +11,37 @@ namespace IntegrationAPI.Controllers
     [ApiController]
     public class BloodUnitRequestController : ControllerBase
     {
-        private readonly IBloodUnitRequestService _bloodUnitRequestService;
+        private readonly IHospitalHTTPConnectionService hospitalHTTPConnectionService;
 
-        public BloodUnitRequestController(IBloodUnitRequestService bloodUnitRequestService)
+        public BloodUnitRequestController(IHospitalHTTPConnectionService hospitalHTTPConnectionService)
         {
-            _bloodUnitRequestService = bloodUnitRequestService;
+            this.hospitalHTTPConnectionService = hospitalHTTPConnectionService;
         }
 
         // GET: api/rooms
         [HttpGet]
         public ActionResult GetAll()
         {
-            return Ok(_bloodUnitRequestService.GetAll());
+            return Ok(hospitalHTTPConnectionService.GetAllBloodUnitRequests());
         }
 
-        // GET api/rooms/2
+        [HttpPut]
+        public ActionResult ChangeRequestStatus([FromBody] BloodUnitRequestDTO bloodUnitRequestDto)
+        {
+            hospitalHTTPConnectionService.ChangeRequestStatus(bloodUnitRequestDto);
+            return Ok();
+        }
+
         [HttpGet("{id}")]
-        public ActionResult GetById(int id)
+        public ActionResult GetDoctorById(int id)
         {
-            var bloodUnitRequest = _bloodUnitRequestService.GetById(id);
-            if (bloodUnitRequest == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(bloodUnitRequest);
+            return Ok(hospitalHTTPConnectionService.GetDoctorById(id));
+        }
+        [HttpGet("/getAllDoctors")]
+        public ActionResult GetAllDoctors()
+        {
+            return Ok(hospitalHTTPConnectionService.GetAllDoctors());
         }
 
-
-
-        [HttpPost]
-        public ActionResult Create(BloodUnitRequestDTO bloodUnitRequestDTO)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            BloodUnitRequest bloodUnitRequest = bloodUnitRequestDTO.toModel();
-
-
-            bool succes = _bloodUnitRequestService.Create(bloodUnitRequest);
-            if (!succes)
-            {
-                return BadRequest("Error in creating new blood unit request");
-            }
-            return CreatedAtAction("GetById", new { id = bloodUnitRequest.Id }, bloodUnitRequest);
-        }
     }
 }

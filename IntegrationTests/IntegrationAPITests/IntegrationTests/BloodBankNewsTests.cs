@@ -19,6 +19,9 @@ using IntegrationLibrary.Core.Model;
 using Shouldly;
 using IntegrationLibrary.Core.Model.DTO;
 using System.Collections;
+using HospitalAPI;
+using Startup = IntegrationAPI.Startup;
+using HospitalAPI.Web.Mapper;
 
 namespace IntegrationTeamTests.Integration
 {
@@ -44,7 +47,7 @@ namespace IntegrationTeamTests.Integration
         }
 
 
-        private async Task<bool> ArrangeRabbitMq(BloodBankNewsDTO message) 
+        private async Task<bool> ArrangeRabbitMq(BloodBankNewsMessageDTO message)
         {
             using var scope = Factory.Services.CreateScope();
             BloodBankRabbitMqConnection rabbitConnection = SetupRabbitMqConnection(scope);
@@ -56,6 +59,7 @@ namespace IntegrationTeamTests.Integration
             RabbitMqPublisherMock.Send(message);
             await Task.Delay(1000);
             await rabbitConnection.StopAsync(CancellationToken.None);
+
 
             int newsCountAfter = GetAllBloodBankNews().Count();
             return (newsCountAfter - newsCountBefore) > 0;
@@ -73,7 +77,7 @@ namespace IntegrationTeamTests.Integration
 
         [Theory]
         [ClassData(typeof(BloodBankNewsTestData))]
-        public async Task Receives_BloodBank_News(BloodBankNewsDTO message, bool expected)
+        public async Task Receives_BloodBank_News(BloodBankNewsMessageDTO message, bool expected)
         {
             //ARRANGE AND ACT
             bool changed = await ArrangeRabbitMq(message);
@@ -120,13 +124,14 @@ namespace IntegrationTeamTests.Integration
     {
         public IEnumerator<object[]> GetEnumerator()
         {
-            BloodBankNewsDTO messageWithValidApiKey = new() { text = "text", bloodBankApiKey = "1", imgSrc = "", subject = "subject" };
-            BloodBankNewsDTO messageWithInvalidApiKey = new() { text = "text", bloodBankApiKey = "invalid", imgSrc = "", subject = "subject" };
+            BloodBankNewsMessageDTO messageWithValidApiKey = new() { text = "text", bloodBankApiKey = "1", imgSrc = "", subject = "subject" };
+            BloodBankNewsMessageDTO messageWithInvalidApiKey = new() { text = "text", bloodBankApiKey = "invalid", imgSrc = "", subject = "subject" };
             yield return new object[] { messageWithValidApiKey, true };
             yield return new object[] { messageWithInvalidApiKey, false };
         }
-
+            
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
 }
+

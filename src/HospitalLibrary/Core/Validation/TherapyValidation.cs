@@ -13,9 +13,9 @@ namespace HospitalLibrary.Core.Validation
     public class TherapyValidation : ITherapyValidation
     {
         private readonly IBloodRepository _bloodRepository;
-        private readonly IMedicalDrugRepository _medicalDrugRepository;
+        private readonly IMedicalDrugsRepository _medicalDrugRepository;
 
-        public TherapyValidation(IBloodRepository bloodRepository, IMedicalDrugRepository medicalDrugRepository)
+        public TherapyValidation(IBloodRepository bloodRepository, IMedicalDrugsRepository medicalDrugRepository)
         {
             _bloodRepository = bloodRepository;
             _medicalDrugRepository = medicalDrugRepository;

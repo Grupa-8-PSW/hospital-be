@@ -101,6 +101,7 @@ namespace HospitalAPI
 
             services.AddScoped<IMapper<Examination, ExaminationDTO>, ExaminationMapper>();
             services.AddScoped<IMapper<TreatmentHistory, TreatmentHistoryDTO>, TreatmentHistoryMapper>();
+            services.AddScoped<IMapper<Patient, PatientDTO>, PatientMapper>();  //mozda se ponovi pri merge
 
             services.AddScoped<IExaminationValidation, ExaminationValidation>();
 
@@ -119,8 +120,10 @@ namespace HospitalAPI
 
             services.AddScoped<IBloodUnitRepository, BloodUnitRepository>();
 
-            services.AddScoped<IMedicalDrugRepository, MedicalDrugsRepository>();
+            services.AddScoped<IMedicalDrugsRepository, MedicalDrugsRepository>();
+            services.AddScoped<IMedicalDrugsService, MedicalDrugsService>();
 
+            services.AddScoped<AuthService>();
             services.AddScoped<ITherapyValidation, TherapyValidation>();
 
             services.AddScoped<IMapper<BloodUnitRequest, BloodUnitRequestDTO>, BloodUnitRequestMapper>();
@@ -129,9 +132,17 @@ namespace HospitalAPI
             services.AddScoped<IBloodUnitRequestService, BloodUnitRequestService>();
 
             services.AddScoped<IBloodUnitRequestHTTPConnection, BloodUnitRequestHTTPConnection>();
+
             services.AddScoped<IExaminationValidation, ExaminationValidation>();
 
-            services.AddScoped<AuthService>();
+            services.AddScoped<IBloodUnitRepository, BloodUnitRepository>();
+            services.AddScoped<IBloodUnitService, BloodUnitService>();
+
+            services.AddScoped<IExaminationValidation, ExaminationValidation>();
+
+
+            services.AddScoped<IMapper<Therapy, TherapyDTO>, TherapyMapper>();
+        
 
             services.AddCors(options =>
             {

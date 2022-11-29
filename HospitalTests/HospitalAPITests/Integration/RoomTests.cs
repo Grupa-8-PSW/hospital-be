@@ -20,6 +20,7 @@ namespace HospitalTests.HospitalAPITests.Integration
     public class RoomTests : BaseIntegrationTest
     {
         public RoomTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
+        
         private static RoomController SetupController(IServiceScope scope)
         {
             return new RoomController(scope.ServiceProvider.GetRequiredService<IRoomService>());
@@ -68,6 +69,19 @@ namespace HospitalTests.HospitalAPITests.Integration
             var result = ((OkObjectResult)controller.Search(""))?.Value as List<RoomDTO>;
 
             Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void Finds_rooms_with_free_beds()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.GetFreeRooms())?.Value as List<RoomDTO>;
+
+            Assert.NotNull(result);
+            Assert.IsType<List<RoomDTO>>(result);
+            Assert.NotEmpty(result);
             Assert.IsType<List<RoomDTO>>(result);
             Assert.True(result.Count.Equals(19));
             Assert.True(result[0].Name.Equals("Pedijatrija"));

@@ -2,6 +2,7 @@
 using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
+using RestSharp.Serializers.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,6 +65,18 @@ namespace HospitalLibrary.Core.Repository
                 .Include(th => th.Bed)
                 .Include(th => th.Therapies)
                 .First((th) => th.Id == id);
+        }
+
+        public IEnumerable<TreatmentHistory> GetAllActive()
+        {
+            return _context.TreatmentHistories.Include(th => th.Active == true).ToList();
+        }
+
+        public IEnumerable<Patient> GetPatientsWithoutActiveTreatmentHistory()
+        {
+            return _context.Patients.Except(from th in _context.TreatmentHistories
+                     where th.Active == true
+                     select th.Patient).ToList();
         }
     }
 }

@@ -13,10 +13,13 @@ namespace HospitalAPI.Mapper
         {
             var bloodUnitRequestDTO = new BloodUnitRequestDTO();
             bloodUnitRequestDTO.Id = model.Id;
+            bloodUnitRequestDTO.DoctorId = model.DoctorId;
             bloodUnitRequestDTO.Type = model.Type.ToString();
-            bloodUnitRequestDTO.Amount = model.AmountL;
+            bloodUnitRequestDTO.AmountL = model.AmountL;
             bloodUnitRequestDTO.Reason = model.Reason;
             bloodUnitRequestDTO.CreationDate = model.CreationDate.ToString("dd/MM/yyyy HH:mm");
+            bloodUnitRequestDTO.ManagerComment = model.ManagerComment;
+            bloodUnitRequestDTO.Status = model.Status;
             return bloodUnitRequestDTO;
         }
 
@@ -34,15 +37,21 @@ namespace HospitalAPI.Mapper
             {
                 bloodUnitRequest.Id = dto.Id.Value;
             }
+            if (dto.DoctorId.HasValue)
+            {
+                bloodUnitRequest.DoctorId = dto.DoctorId.Value;
+            }
             BloodType bloodType;
             if (!Enum.TryParse<BloodType>(dto.Type, out bloodType))
             {
                 return null;
             }
             bloodUnitRequest.Type = bloodType;
-            bloodUnitRequest.AmountL = dto.Amount;
+            bloodUnitRequest.AmountL = dto.AmountL;
             bloodUnitRequest.Reason = dto.Reason;
-            bloodUnitRequest.CreationDate = DateTime.ParseExact(dto.CreationDate, "dd/MM/yyyy", null).ToUniversalTime();  
+            bloodUnitRequest.CreationDate = DateTime.ParseExact(dto.CreationDate, "dd/MM/yyyy", null).ToUniversalTime();
+            bloodUnitRequest.ManagerComment = dto.ManagerComment;
+            bloodUnitRequest.Status = dto.Status;
             return bloodUnitRequest;
         }
 

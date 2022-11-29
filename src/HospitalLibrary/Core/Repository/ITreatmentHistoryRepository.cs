@@ -15,5 +15,6 @@ namespace HospitalLibrary.Core.Repository
         public void Update(TreatmentHistory doctor);
         public void Delete(TreatmentHistory doctor);
         public TreatmentHistory GetByIdEager(int id);
+        public IEnumerable<Patient> GetPatientsWithoutActiveTreatmentHistory();
     }
 }

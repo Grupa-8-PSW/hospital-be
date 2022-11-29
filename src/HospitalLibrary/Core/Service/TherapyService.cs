@@ -15,16 +15,18 @@ namespace HospitalLibrary.Core.Service
     {
         private readonly ITherapyRepository _therapyRepository;
         private readonly IBloodRepository _bloodRepository;
-        private readonly IMedicalDrugRepository _medicalDrugRepository;
+        private readonly IMedicalDrugsRepository _medicalDrugRepository;
         private readonly ITherapyValidation _therapyValidation;
+        private readonly IBloodUnitRepository _bloodUnitRepository;
 
-        public TherapyService(ITherapyRepository therapyRepository, IBloodRepository bloodRepository, 
-            IMedicalDrugRepository medicalDrugRepository, ITherapyValidation therapyValidation)
+        public TherapyService(ITherapyRepository therapyRepository, IBloodRepository bloodRepository,
+            IMedicalDrugsRepository medicalDrugRepository, ITherapyValidation therapyValidation, IBloodUnitRepository bloodUnitRepository)
         {
             _therapyRepository = therapyRepository;
             _bloodRepository = bloodRepository;
             _medicalDrugRepository = medicalDrugRepository;
             _therapyValidation = therapyValidation;
+            _bloodUnitRepository = bloodUnitRepository;
         }
 
         public IEnumerable<Therapy> GetAll()
@@ -39,13 +41,13 @@ namespace HospitalLibrary.Core.Service
 
         public bool Create(Therapy therapy)
         {
-            therapy.WhenPrescribed = DateTime.Now;
+            therapy.WhenPrescribed = DateTime.Now.ToUniversalTime();
             therapy.DoctorId = 1;
 
             string therapySubject = therapy.TherapySubject;
             int amount = therapy.Amount;
 
-            if(therapy.TherapyType == TherapyType.BLOOD_THERAPY)
+            if (therapy.TherapyType == TherapyType.BLOOD_THERAPY)
             {
                 if (!_therapyValidation.ValidateBlood(therapySubject, amount))
                 {
@@ -59,6 +61,10 @@ namespace HospitalLibrary.Core.Service
                 Blood blood = _bloodRepository.GetByBloodType(bloodType);
                 blood.Quantity -= amount;
                 _bloodRepository.Update(blood);
+
+                //dodati bloodUnit u 
+                BloodUnit bloodUnit = new BloodUnit(0, therapy.WhenPrescribed, bloodType, amount);
+                _bloodUnitRepository.Create(bloodUnit);
             }
             else
             {
@@ -72,7 +78,7 @@ namespace HospitalLibrary.Core.Service
             }
 
 
-            
+
             _therapyRepository.Create(therapy);
             return true;
         }
@@ -82,6 +88,8 @@ namespace HospitalLibrary.Core.Service
             _therapyRepository.Update(therapy);
             return true;
         }
+
+        
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using HospitalAPI;
+﻿using AutoMapper;
+using HospitalAPI;
 using HospitalAPI.Controllers;
 using HospitalAPI.Controllers.Map;
 using HospitalAPI.DTO;
@@ -6,6 +7,7 @@ using HospitalAPI.Web.Mapper;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.GraphicalEditor.Model;
+using HospitalLibrary.GraphicalEditor.Model.DTO;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using HospitalTests.HospitalAPITests.Setup;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +26,8 @@ namespace HospitalTests.HospitalAPITests.Integration
 
         private static TreatmentHistoryController SetupController(IServiceScope scope)
         {
-            return new TreatmentHistoryController(scope.ServiceProvider.GetRequiredService<ITreatmentHistoryService>(), scope.ServiceProvider.GetRequiredService<IMapper<TreatmentHistory, TreatmentHistoryDTO>>());
+            return new TreatmentHistoryController(scope.ServiceProvider.GetRequiredService<ITreatmentHistoryService>(), scope.ServiceProvider.GetRequiredService<IMapper<TreatmentHistory, TreatmentHistoryDTO>>(),
+                scope.ServiceProvider.GetRequiredService<IMapper>());
         }
 
         [Fact]
@@ -68,6 +71,19 @@ namespace HospitalTests.HospitalAPITests.Integration
 
             Assert.NotNull(result);
             Assert.IsType<TreatmentHistory>(result);
+        }
+
+        [Fact]
+        public void Get_Patients_Without_Active_Treatment()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.GetPatientsWithoutActiveTreatmentHistory())?.Value as List<PatientDTO>;
+
+            Assert.NotNull(result);
+            Assert.IsType<List<PatientDTO>>(result);
+            Assert.NotEmpty(result);
         }
 
     }

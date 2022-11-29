@@ -5,11 +5,6 @@ namespace HospitalLibrary.Core.Model
 {
     public class Patient : BaseEntityModel
     {
-        private string v1;
-        private string v2;
-        private Gender mALE;
-        private BloodType zERO_POSITIVE;
-
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FullName { get => FirstName + " " + LastName; }
@@ -23,7 +18,7 @@ namespace HospitalLibrary.Core.Model
         public List<Allergen> Allergens { get; set; }
         public Doctor selectedDoctor { get; set; }
         public int SelectedDoctorId { get; set; }
-        
+
         public Patient(int id, string firstName, string lastName, string email, string pin, Gender gender, BloodType bloodType, int addressId, int selectedDoctorId)
         {
             Id = id;
@@ -54,7 +49,10 @@ namespace HospitalLibrary.Core.Model
 
         public Patient()
         {
+
         }
+
+
     }
 
 }

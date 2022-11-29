@@ -15,7 +15,7 @@ namespace HospitalLibrary.Core.Model
         public int Amount { get; set; }
         public string Reason { get; set; }
         public TherapyType TherapyType { get; set; }
-        public string TherapySubject { get; set; }      //medical drug name or blood type MedicalDrugs
+        public string TherapySubject { get; set; }      //medical drug code or blood type MedicalDrugs
         public int DoctorId { get; set; }
         public Doctor Doctor { get; set; }
         public int TreatmentHistoryId { get; set; }

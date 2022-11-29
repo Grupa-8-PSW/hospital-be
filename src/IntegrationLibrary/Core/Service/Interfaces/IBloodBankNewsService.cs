@@ -11,7 +11,7 @@ namespace IntegrationLibrary.Core.Service.Interfaces
     public interface IBloodBankNewsService
     {
         IEnumerable<BloodBankNews> GetAll();
-        void Create(BloodBankNewsDTO bloodBankNewsDTO);
+        void Create(BloodBankNewsMessageDTO bloodBankNewsDTO);
         BloodBankNews GetById(int id);
         public void Delete(BloodBankNews bloodBankNews);
         void ArchiveNews(BloodBankNews bloodBankNews);

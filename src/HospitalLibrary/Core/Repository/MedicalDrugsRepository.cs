@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HospitalLibrary.Core.Repository
 {
-    public class MedicalDrugsRepository : IMedicalDrugRepository
+    public class MedicalDrugsRepository : IMedicalDrugsRepository
     {
         private readonly HospitalDbContext _context;
 

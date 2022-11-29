@@ -96,5 +96,25 @@ namespace HospitalLibrary.Core.Service
             return _treatmentHistoryRepository.GetByIdEager(id);
         }
 
+       /* public IEnumerable<Patient> GetPatientsWithoutActiveTreatmentHistory()
+        {
+            var patients = new List<Patient>();
+            var allPatients = _patientService.GetAll();
+            var treatedPatients = _treatmentHistoryRepository.GetAllActive();
+            return patients;
+        }*/
+
+        public IEnumerable<Patient> GetPatientsWithoutActiveTreatmentHistory()
+        {
+            /* var patients = new List<Patient>();
+             foreach(TreatmentHistory th in _treatmentHistoryRepository.GetAllActive())
+             {
+                 patients.Add(th.Patient);
+             }*/
+            var patients = _treatmentHistoryRepository.GetPatientsWithoutActiveTreatmentHistory();
+            return patients;
+        }
+
+
     }
 }
