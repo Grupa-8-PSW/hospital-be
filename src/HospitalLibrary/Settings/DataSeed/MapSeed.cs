@@ -17,13 +17,15 @@ namespace HospitalLibrary.Settings.DataSeed
             );
 
             modelBuilder.Entity<Doctor>().HasData(
-                new Doctor() { Id = 1, FirstName = "Pera", LastName = "Peric", RoomId = 1, StartWork = new DateTime(2022, 11, 22, 10, 10, 10), EndWork = new DateTime(2022, 11, 22, 18, 10, 10) },
-                new Doctor() { Id = 2, FirstName = "Sergej", LastName = "Milinkovic-Savic", RoomId = 1, StartWork = new DateTime(2022, 11, 22, 10, 10, 10), EndWork = new DateTime(2022, 11, 22, 19, 10, 10) }
+                new Doctor() { Id = 1, FirstName = "Pera", LastName = "Peric", RoomId = 1, StartWork = new DateTime(2022, 11, 22, 10, 10, 10, DateTimeKind.Utc), EndWork = new DateTime(2022, 11, 22, 18, 10, 10, DateTimeKind.Utc) },
+                new Doctor() { Id = 2, FirstName = "Sergej", LastName = "Milinkovic-Savic", RoomId = 1, StartWork = new DateTime(2022, 11, 22, 10, 10, 10, DateTimeKind.Utc), EndWork = new DateTime(2022, 11, 22, 19, 10, 10, DateTimeKind.Utc) }
              );
 
             modelBuilder.Entity<Examination>().HasData(
-                new Examination() { Id = 1, DoctorId = 1, PatientId = 1, RoomId = 1,  StartTime = new DateTime(2022, 11, 22, 10, 10, 10), Duration = 200 },
-                new Examination() { Id = 2, DoctorId = 2, PatientId = 2, RoomId = 2, StartTime = new DateTime(2022, 11, 22, 14, 10, 10), Duration = 100 }
+                new Examination() { Id = 1, DoctorId = 1, PatientId = 1, RoomId = 1, StartTime = new DateTime(2022, 11, 22, 2, 00, 00, DateTimeKind.Utc), Duration = 300 },
+                new Examination() { Id = 2, DoctorId = 2, PatientId = 2, RoomId = 2, StartTime = new DateTime(2022, 11, 22, 7, 30, 00, DateTimeKind.Utc), Duration = 120 },
+                new Examination() { Id = 3, DoctorId = 1, PatientId = 3, RoomId = 1, StartTime = new DateTime(2022, 11, 22, 11, 30, 00, DateTimeKind.Utc), Duration = 420 },
+                new Examination() { Id = 4, DoctorId = 2, PatientId = 4, RoomId = 2, StartTime = new DateTime(2022, 11, 22, 20, 30, 00, DateTimeKind.Utc), Duration = 150 }
              );
 
             /*

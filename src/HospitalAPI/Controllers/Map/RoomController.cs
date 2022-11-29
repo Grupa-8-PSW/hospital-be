@@ -1,3 +1,5 @@
+﻿using HospitalAPI.Web.Mapper;
+using HospitalLibrary.Core.Service;
 ﻿using HospitalLibrary.Core.Service;
 using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Model.DTO;
@@ -15,7 +17,6 @@ namespace HospitalAPI.Controllers.Map
     {
         private readonly IRoomService _roomService;
 
-        private readonly IExaminationService _examinationService;
 
         public RoomController(IRoomService roomService)
         {
@@ -80,6 +81,8 @@ namespace HospitalAPI.Controllers.Map
             List<FreeSpaceDTO> freeSpace = _roomService.GetTransferedEquipment(dto);
             return Ok(freeSpace); 
         }
+
+
     }
 
 }

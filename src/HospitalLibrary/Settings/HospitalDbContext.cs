@@ -22,19 +22,15 @@ namespace HospitalLibrary.Settings
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Examination> Examinations { get; set; }
         public DbSet<TreatmentHistory> TreatmentHistories { get; set; }
-
+        public DbSet<EquipmentTransfer> EquipmentTransfers { get; set; }
         public DbSet<Therapy> Therapies { get; set; }
         public DbSet<BloodUnit> BloodUnits { get; set; }
         public DbSet<MedicalDrugs> MedicalDrugs { get; set; }
         public DbSet<BloodUnitRequest> BloodUnitRequests { get; set; }
         public DbSet<Bed> Beds { get; set; }
         public DbSet<Blood> Bloods { get; set; }
-
-
         public DbSet<Allergen> Allergens { get; set; }
         public DbSet<Address> Addresses{ get; set; }
-
-
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true); }
 
@@ -61,11 +57,7 @@ namespace HospitalLibrary.Settings
 
             modelBuilder.SeedAllergen();
 
-            base.OnModelCreating(modelBuilder);
-
-
-            
-            
+            base.OnModelCreating(modelBuilder);   
         
         }
 

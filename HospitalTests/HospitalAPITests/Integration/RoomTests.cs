@@ -30,7 +30,7 @@ namespace HospitalTests.HospitalAPITests.Integration
         }
 
         [Fact]
-
+        public void Dates_for_trainsfering_equipments()
         public void Searches_rooms_with_same_name()
 
         {
@@ -107,7 +107,11 @@ namespace HospitalTests.HospitalAPITests.Integration
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
+            EquipmentTransferDTO dto = new EquipmentTransferDTO(1, 1, 2, new DateTime(2022, 11, 22, 00, 00, 00, DateTimeKind.Utc), new DateTime(2022, 11, 23, 00, 00, 00, DateTimeKind.Utc), 120, "Zavoji");
+            var freeSpace = ((OkObjectResult)controller.GetAvailableTerminsForTransfer(dto))?.Value as List<FreeSpaceDTO>;  
 
+            Assert.NotNull(freeSpace);
+        }
             var result = ((OkObjectResult)controller.Search("fizio"))?.Value as List<RoomDTO>;
 
             Assert.NotNull(result);
@@ -115,7 +119,5 @@ namespace HospitalTests.HospitalAPITests.Integration
             Assert.True(result.Count.Equals(1));
             Assert.True(result[0].Name.Equals("Fizioterapeut"));
         }
-
-        
     }
 }

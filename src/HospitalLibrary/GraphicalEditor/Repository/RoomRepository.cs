@@ -51,7 +51,7 @@ namespace HospitalLibrary.GraphicalEditor.Repository
 
         public IEnumerable<Room> GetTransferedEquipment(EquipmentTransferDTO dto)
         {
-            return null;
+            return _context.Rooms.ToList();
         }
 
     }
