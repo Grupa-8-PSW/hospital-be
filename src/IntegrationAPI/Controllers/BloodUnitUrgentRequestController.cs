@@ -1,5 +1,7 @@
-﻿using IntegrationAPI.ConnectionService.Interface;
+﻿using HospitalAPI.Connections;
+using IntegrationAPI.ConnectionService.Interface;
 using IntegrationAPI.ConnectionService;
+using IntegrationAPI.GrpcServices;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -13,29 +15,29 @@ namespace IntegrationAPI.Controllers
         private readonly IBloodService _bloodService;
         private readonly IHospitalHTTPConnectionService _hospitalHTTPConnectionService;
         private readonly IBloodBankService _bloodBankService;
+        private readonly IClientScheduledService _clientScheduletService;
         private IBloodBankConnectionService _connectionService;
 
         public BloodUnitUrgentRequestController(IBloodService bloodService, 
                                                 IHospitalHTTPConnectionService hospitalHTTPConnectionService,
                                                 IBloodBankService bloodBankService,
-                                                IBloodBankConnectionService connectionService)
+                                                IBloodBankConnectionService connectionService,
+                                                IClientScheduledService clientScheduletService)
         {
             this._bloodService = bloodService;
             this._hospitalHTTPConnectionService = hospitalHTTPConnectionService;
             this._bloodBankService = bloodBankService;
             this._connectionService = connectionService;
+            this._clientScheduletService = clientScheduletService;
+
         }
 
-        [HttpGet]
-        public ActionResult SendRequest(string apiKey)
+        [HttpPost]
+        public ActionResult SendRequest(BloodBank bloodBank)
         {
-            
-            _connectionService.SendUrgentRequest(_bloodService.GetMissingQuantities(_hospitalHTTPConnectionService.GetAllBlood()), apiKey);
-           
-
-
+            _clientScheduletService.communicate(bloodBank.APIKey);
+           // _hospitalHTTPConnectionService.RestockBlood(_bloodService.GetMissingQuantities(_hospitalHTTPConnectionService.GetAllBlood()));
             return Ok();
         }
-
     }
 }

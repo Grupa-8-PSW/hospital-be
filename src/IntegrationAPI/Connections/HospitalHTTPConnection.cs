@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.Json;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,8 +10,19 @@ using RestSharp;
 using IntegrationLibrary.Core.Model.DTO;
 using Newtonsoft.Json;
 using HospitalLibrary.Core.Model;
+using MimeKit;
+using NuGet.Protocol;
+using System.Text.Json;
+using HospitalAPI.Connections;
+using JsonSerializer = System.Text.Json.JsonSerializer;
+using HospitalAPI.DTO;
+using IntegrationLibraryAPI.Connections;
+using BloodDTO = IntegrationLibrary.Core.Model.DTO.BloodDTO;
+using BloodUnitDTO = IntegrationLibrary.Core.Model.DTO.BloodUnitDTO;
+using BloodUnitRequestDTO = IntegrationLibrary.Core.Model.DTO.BloodUnitRequestDTO;
+using Parameter = RestSharp.Parameter;
 
-namespace HospitalAPI.Connections
+namespace IntegrationAPI.Connections
 {
     public class HospitalHTTPConnection : IHospitalHTTPConnection
     {
@@ -60,6 +72,13 @@ namespace HospitalAPI.Connections
             return result;
         }
 
+        public void RestockBlood(List<BloodDTO> bloodList){
+            var client = new RestClient("http://localhost:5174");
+            var request = new RestRequest("/api/internal/Blood/", Method.Put);
+            var json = JsonConvert.SerializeObject(bloodList);
+            request.AddBody(bloodList);
+            RestResponse response = client.Execute(request);
+        }
 
     }
 }

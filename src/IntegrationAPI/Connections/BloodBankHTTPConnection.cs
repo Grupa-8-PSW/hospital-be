@@ -18,6 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 using HospitalAPI.Connections;
 using HospitalAPI.DTO;
 using IntegrationLibrary.Core.Model.DTO;
+using IntegrationLibraryAPI.Connections;
 
 namespace IntegrationAPI.Connections
 {

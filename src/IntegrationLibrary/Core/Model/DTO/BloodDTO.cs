@@ -10,14 +10,14 @@ namespace IntegrationLibrary.Core.Model.DTO
     public class BloodDTO
     {
         public int Id { get; set; }
-        public BloodType Type { get; set; }
+        public string Type { get; set; }
         public int Quantity { get; set; }
 
         public BloodDTO()
         {
         }
 
-        public BloodDTO(int id, BloodType bloodType, int quantity)
+        public BloodDTO(int id, string bloodType, int quantity)
         {
             Id = id;
             Type = bloodType;

@@ -3,6 +3,7 @@ using HospitalLibrary.Core.Model;
 using IntegrationAPI.ConnectionService.Interface;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.DTO;
+using IntegrationLibraryAPI.Connections;
 using Newtonsoft.Json;
 using RestSharp;
 
@@ -36,6 +37,11 @@ namespace IntegrationAPI.ConnectionService
         public void ChangeRequestStatus(BloodUnitRequestDTO bloodUnitRequestDto)
         {
             _connection.ChangeRequestStatus(bloodUnitRequestDto);
+        }
+
+        public void RestockBlood(List<BloodDTO> bloods)
+        {
+            _connection.RestockBlood(bloods);
         }
 
         public Doctor GetDoctorById(int id)

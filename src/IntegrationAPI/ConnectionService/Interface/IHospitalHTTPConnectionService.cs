@@ -14,6 +14,8 @@ namespace IntegrationAPI.ConnectionService.Interface
 
         public void ChangeRequestStatus(BloodUnitRequestDTO bloodUnitRequestDto);
 
+        public void RestockBlood(List<BloodDTO> bloods);
+
         public Doctor GetDoctorById(int id);
 
         public List<Doctor> GetAllDoctors();
