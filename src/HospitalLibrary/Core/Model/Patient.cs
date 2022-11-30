@@ -18,8 +18,9 @@ namespace HospitalLibrary.Core.Model
         public List<Allergen> Allergens { get; set; }
         public Doctor selectedDoctor { get; set; }
         public int SelectedDoctorId { get; set; }
+        public int UserId { get; set; }
 
-        public Patient(int id, string firstName, string lastName, string email, string pin, Gender gender, BloodType bloodType, int addressId, int selectedDoctorId)
+        public Patient(int id, string firstName, string lastName, string email, string pin, Gender gender, BloodType bloodType, int addressId, int selectedDoctorId, int userId)
         {
             Id = id;
             FirstName = firstName;
@@ -30,6 +31,7 @@ namespace HospitalLibrary.Core.Model
             BloodType = bloodType;
             AddressId = addressId;
             SelectedDoctorId = selectedDoctorId;
+            UserId = userId;
         }
 
         public Patient(int id, string firstName, string lastName)

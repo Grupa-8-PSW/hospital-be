@@ -54,10 +54,6 @@ namespace HospitalLibrary.Settings
             modelBuilder.SeedBlood();
             base.OnModelCreating(modelBuilder);
 
-
-            
-            
-        
         }
 
     }
