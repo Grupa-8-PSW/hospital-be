@@ -1,4 +1,5 @@
-﻿using IntegrationAPI.Connections;
+﻿using Grpc.Core;
+using IntegrationAPI.Connections;
 using IntegrationAPI.Connections.Interface;
 using IntegrationAPI.Middlewares;
 using IntegrationAPI.ConnectionService.Interface;
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using IntegrationAPI.ConnectionService;
 using HospitalAPI.Connections;
+using IntegrationAPI.GrpcServices;
 using IntegrationAPI.Mapper;
 using static IntegrationAPI.Mapper.IMapper;
 using IntegrationAPI.Security;
@@ -17,7 +19,9 @@ using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Service.Interfaces;
 using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibrary.Core.Model;
+using IntegrationLibraryAPI.Connections;
 using Microsoft.Extensions.Options;
+
 
 namespace IntegrationAPI
 {
@@ -55,12 +59,14 @@ namespace IntegrationAPI
             services.AddScoped<IBloodBankConnectionService, BloodBankConnectionService>();
             services.AddScoped<ICredentialGenerator, CredentialGenerator>();
             services.AddScoped<IBloodBankHTTPConnection, BloodBankHTTPConnection>();
+            services.AddScoped<IBloodService, BloodService>();
             services.AddScoped<IBloodBankNewsRepository, BloodBankNewsRepository>();
             services.AddScoped<IBloodBankNewsService, BloodBankNewsService>();
             services.AddScoped<IHospitalHTTPConnectionService, HospitalHTTPConnectionService>();
             services.AddScoped<IHospitalHTTPConnection, HospitalHTTPConnection>();
             services.AddScoped<IMapper<BloodBankNews, BloodBankNewsDTO>, BloodBankNewsMapper>();
             services.AddTransient<ExceptionMiddleware>();
+            services.AddScoped<IClientScheduledService, ClientScheduledService>();
 
             services.AddScoped<IHospitalAPIClient, HospitalAPIClient>();
 
@@ -97,13 +103,13 @@ namespace IntegrationAPI
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
 
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-        }
+            
+      }
+
 
     }
 

@@ -1,4 +1,5 @@
-﻿using HospitalAPI.DTO;
+﻿using System.Collections.Immutable;
+using HospitalAPI.DTO;
 using HospitalAPI.Mapper;
 using HospitalAPI.Web.Mapper;
 using HospitalLibrary.Core.Model;
@@ -70,7 +71,7 @@ namespace HospitalAPI.Controllers.InternalApp
         }
 
         // api/internal/Blood/1
-        [HttpPut("{id}")]
+      /*  [HttpPut("{id}")]
         public ActionResult Update(int id, Blood blood)
         {
             if (!ModelState.IsValid)
@@ -92,6 +93,38 @@ namespace HospitalAPI.Controllers.InternalApp
             }
 
             return Ok(blood);
+        }*/
+
+        //[Route("restockBlood")]
+        [HttpPut]
+        public ActionResult UpdateBlood([FromBody]List<BloodDTO> bloodList)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            foreach (BloodDTO blood in bloodList)
+            {
+                Blood newBlood = _bloodMapper.toModel(blood);
+                try
+                {
+                    _bloodService.RestockBlood(newBlood.Id, newBlood);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace);
+                    return BadRequest(ex.Message);
+                }
+            }
+
+            /*if (blood.Id != id)
+            {
+                return BadRequest();
+            }*/
+
+
+            return Ok(bloodList);
         }
 
     }

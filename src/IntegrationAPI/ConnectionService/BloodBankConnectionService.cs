@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IntegrationAPI.Connections.Interface;
+using IntegrationAPI.ConnectionService;
 using IntegrationAPI.ConnectionService.Interface;
 using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibrary.Core.Service.Interfaces;
 using RestSharp;
 
@@ -37,6 +39,15 @@ namespace IntegrationLibrary.Core.Service
         {
             BloodBank bloodBank = bloodBankService.GetById(id);
             return bloodBankHTTPConnection.CheckBloodAmount(bloodBank.APIKey, bloodType, quant);
+        }
+
+
+        public bool SendUrgentRequest(List<BloodDTO> requestBlood, string apiKey)
+        {
+            BloodUnitUrgentRequest request = new BloodUnitUrgentRequest();
+            request.bloodUnits = requestBlood;
+            request.APIKey = apiKey;
+            return bloodBankHTTPConnection.SendUrgentRequest(request);
         }
     }
 }
