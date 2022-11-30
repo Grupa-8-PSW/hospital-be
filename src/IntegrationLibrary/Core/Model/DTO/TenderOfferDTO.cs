@@ -8,6 +8,7 @@ namespace IntegrationLibrary.Core.Model.DTO
 {
     public class TenderOfferDTO
     {
+        public int TenderID { get; set; } 
         public List<BloodOfferDTO> BloodAmounts { get; set; }
     }
 }

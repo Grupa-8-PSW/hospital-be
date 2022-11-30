@@ -38,12 +38,16 @@ namespace IntegrationAPI
           
             services.AddSwaggerGen(c =>
             {
+                c.CustomSchemaIds(type => type.ToString());
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IntegrationAPI", Version = "v1" });
             });
 
             services.AddScoped<IBloodConsumptionConfigurationRepository, BloodConsumptionConfigurationRepository>();
             services.AddScoped<IBloodConsumptionConfigurationService, BloodConsumptionConfigurationService>();
             services.AddHostedService<BloodBankRabbitMqConnection>();
+
+            services.AddScoped<ITenderOfferService, TenderOfferService>();
+            services.AddScoped<ITenderOfferRepository, TenderOfferRepository>();
 
             services.AddScoped<IBloodBankConnectionService, BloodBankConnectionService>();
             services.AddScoped<IEmailService, EmailService>();
