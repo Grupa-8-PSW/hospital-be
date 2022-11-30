@@ -78,6 +78,7 @@ namespace HospitalAPI.Security
             if(registerRequest.RegisterUser != null)
             {
                 var p = _mapper.Map<Patient>(registerRequest.RegisterUser);
+                p.SelectedDoctorId = 1;
                 var patientAllergens = _allergensRepository
                     .GetAllergensByDtoId(p.Allergens.Select(a => a.Id).ToList());
                 _patientService.CreateAndAddAllergens(p, patientAllergens);
