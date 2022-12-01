@@ -70,9 +70,12 @@ namespace IntegrationAPI
 
             services.AddScoped<IHospitalAPIClient, HospitalAPIClient>();
 
+
+
             services.AddAuthentication("Default")
                 .AddScheme<AuthenticationSchemeOptions, AuthHandler>("Default", null);
             services.AddAuthorization();
+
 
         }
 
@@ -96,9 +99,8 @@ namespace IntegrationAPI
             }
 
             app.UseMiddleware<ExceptionMiddleware>();
-
+            
             app.UseRouting();
-
 
             app.UseAuthentication();
             app.UseAuthorization();

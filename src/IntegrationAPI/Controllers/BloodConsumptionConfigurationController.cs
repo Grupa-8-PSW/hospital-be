@@ -13,9 +13,13 @@ using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Asn1.Cms;
 using IntegrationAPI.ConnectionService.Interface;
+using System.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IntegrationAPI.Controllers
 {
+
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BloodConsumptionConfigurationController : ControllerBase

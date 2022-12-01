@@ -5,9 +5,13 @@ using IntegrationAPI.GrpcServices;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace IntegrationAPI.Controllers
 {
+
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BloodUnitUrgentRequestController : Controller

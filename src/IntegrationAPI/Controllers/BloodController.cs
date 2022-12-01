@@ -1,8 +1,11 @@
 ﻿using IntegrationAPI.ConnectionService.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace IntegrationAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BloodController : Controller

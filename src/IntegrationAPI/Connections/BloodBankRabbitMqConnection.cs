@@ -59,10 +59,9 @@ namespace IntegrationAPI.Connections
                                        autoAck: true,
                                        consumer: consumer);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                
+                Console.WriteLine(ex.ToString());
             }
             return Task.CompletedTask;
         }
