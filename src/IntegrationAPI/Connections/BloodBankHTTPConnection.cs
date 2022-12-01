@@ -16,6 +16,9 @@ using static iTextSharp.text.pdf.AcroFields;
 using IntegrationAPI.ConnectionService.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using HospitalAPI.Connections;
+using HospitalAPI.DTO;
+using IntegrationLibrary.Core.Model.DTO;
+using IntegrationLibraryAPI.Connections;
 
 namespace IntegrationAPI.Connections
 {
@@ -29,7 +32,6 @@ namespace IntegrationAPI.Connections
 
         public BloodBankHTTPConnection(IServiceScopeFactory factory)
         {
-
             _service = factory.CreateScope().ServiceProvider
                 .GetRequiredService<IBloodConsumptionConfigurationService>();
 
@@ -88,12 +90,12 @@ namespace IntegrationAPI.Connections
             while (!stoppingToken.IsCancellationRequested);
         }
 
+
         public async Task<TimeSpan> SendToBanks(DateTime now, BloodConsumptionConfiguration bcc, TimeSpan delay)
         {
             if (now.Hour == bcc.NextSendingTime.Hour && now.Minute == bcc.NextSendingTime.Minute)
             {
                 Guid uniqueSuffix = Guid.NewGuid();
-
                 //var scopedService = scope.ServiceProvider.GetRequiredService<IBloodBankHTTPConnection>();
                 byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(_bloodUnitService.GetAllBloodUnits(), out var configuration));
                 using (var stream = File.Create("./Reports/bloodConsumptionReport" + uniqueSuffix + ".PDF"))
@@ -174,6 +176,33 @@ namespace IntegrationAPI.Connections
                     Console.WriteLine(e);
                 }
             }
+        }
+
+        public bool SendUrgentRequest(BloodUnitUrgentRequest urgentRequest)
+        {
+            RestClient restClient =
+                BloodBankConnectionValidator.ValidateURL("http://localhost:8081/" + "/bloodBanks/urgentRequest");
+            //var client = new RestClient("http://localhost:5174");
+           // var request = new RestRequest("/api/BloodUnitRequest/" + bloodUnitRequestDto.Id, Method.Put);
+            RestRequest request = new RestRequest();
+            //  foreach (var unit in urgentRequest.bloodUnits)
+            //  {
+            //     request.AddParameter("quantity", unit.Quantity);
+            //     request.AddParameter("type", unit.Type);
+            // }
+            request.AddHeader("apiKey", urgentRequest.APIKey);
+            request.AddJsonBody(urgentRequest);
+            try
+                {
+                    RestResponse res = BloodBankConnectionValidator.Authenticate(restClient, request);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+
+
+            return true;
         }
 
 

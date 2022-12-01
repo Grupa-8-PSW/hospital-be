@@ -7,6 +7,7 @@ namespace HospitalLibrary.Core.Repository
     public interface IDoctorRepository
     {
         IEnumerable<Doctor> GetAll();
+        IEnumerable<Doctor> GetAllGeneralPracticioners();
         Doctor GetById(int id);
         void Create(Doctor doctor);
         void Update(Doctor doctor);

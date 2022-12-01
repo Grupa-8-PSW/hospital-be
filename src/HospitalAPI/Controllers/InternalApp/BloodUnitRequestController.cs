@@ -1,4 +1,4 @@
-﻿using System.Web.Http.Cors;
+using System.Web.Http.Cors;
 using HospitalAPI.Connections;
 using HospitalAPI.DTO;
 using HospitalAPI.Web.Mapper;
@@ -21,7 +21,6 @@ namespace HospitalAPI.Controllers.InternalApp
             _bloodUnitRequestService = bloodUnitRequestService;
             _bloodUnitRequestMapper = bloodUnitRequestMapper;
         }
-        
 
         // GET: api/rooms
         [HttpGet]

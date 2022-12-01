@@ -11,7 +11,7 @@ namespace IntegrationTests.IntegrationAPITests.Mocks
 {
     public static class RabbitMqPublisherMock
     {
-        public static void Send(BloodBankNewsDTO message)
+        public static void Send(BloodBankNewsMessageDTO message)
         {
             var factory = new ConnectionFactory() { HostName = "localhost" };
             using (var connection = factory.CreateConnection())

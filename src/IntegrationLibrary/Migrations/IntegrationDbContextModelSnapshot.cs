@@ -16,6 +16,7 @@ namespace IntegrationLibrary.Migrations
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
+
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.10")
@@ -63,7 +64,7 @@ namespace IntegrationLibrary.Migrations
                             Email = "test@test.com",
                             Name = "testName",
                             Password = "unknown",
-                            ServerAddress = "htttp://localhost:8081/"
+                            ServerAddress = "testServAdd"
                         });
                 });
 
@@ -115,7 +116,18 @@ namespace IntegrationLibrary.Migrations
                         });
                 });
 
-            modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodConsumptionConfiguration", b =>
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodBankNews", b =>
+                {
+                    b.HasOne("IntegrationLibrary.Core.Model.BloodBank", "BloodBank")
+                        .WithMany()
+                        .HasForeignKey("BloodBankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BloodBank");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodUnitRequest", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -123,22 +135,19 @@ namespace IntegrationLibrary.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<TimeSpan>("ConsumptionPeriodHours")
-                        .HasColumnType("interval");
+                    b.Property<int>("Amount")
+                        .HasColumnType("integer");
 
-                    b.Property<TimeSpan>("FrequencyPeriodInHours")
-                        .HasColumnType("interval");
-
-                    b.Property<DateTime>("NextSendingTime")
+                    b.Property<DateTime>("CreationDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("StartDateTime")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("BloodConsumptionConfiguration");
-                });
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
 
             modelBuilder.Entity("IntegrationLibrary.Core.Model.Tender", b =>
                 {
@@ -171,8 +180,8 @@ namespace IntegrationLibrary.Migrations
                         .HasForeignKey("BloodBankId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("BloodBank");
+                    b.HasKey("Id");
+                    b.ToTable("BloodUnitRequests");
                 });
 #pragma warning restore 612, 618
         }

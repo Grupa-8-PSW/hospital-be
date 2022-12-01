@@ -22,6 +22,7 @@ namespace IntegrationLibrary.Core.Repository
             _context = context;
         }
 
+
         public BloodConsumptionConfiguration Create(BloodConsumptionConfiguration bloodConsumptionConfiguration)
         {
             _context.BloodConsumptionConfiguration.Add(bloodConsumptionConfiguration);

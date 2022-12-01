@@ -11,6 +11,7 @@ namespace HospitalLibrary.Core.Service
     public interface IDoctorService
     {
         IEnumerable<Doctor> GetAll();
+        IEnumerable<Doctor> GetAllGeneralPracticioners();
         Doctor GetById(int id);
         void Create(Doctor doctor);
         void Update(Doctor doctor);

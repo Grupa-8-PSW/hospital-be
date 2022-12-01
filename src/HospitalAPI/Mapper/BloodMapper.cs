@@ -2,6 +2,7 @@
 using HospitalAPI.Web.Mapper;
 using HospitalLibrary.Core.Model;
 using System.Collections.ObjectModel;
+using HospitalLibrary.Core.Enums;
 
 namespace HospitalAPI.Mapper
 {
@@ -26,12 +27,29 @@ namespace HospitalAPI.Mapper
 
         public Blood toModel(BloodDTO dto)
         {
-            throw new NotImplementedException();
+            Blood blood = new Blood();
+            if (dto.Id != null)
+            {
+                blood.Id = dto.Id;
+            }
+
+            BloodType bloodType;
+            if (!Enum.TryParse<BloodType>(dto.Type, out bloodType))
+            {
+                return null;
+            }
+
+            blood.Type = bloodType;
+            blood.Quantity = dto.Quantity;
+
+            return blood;
         }
 
         public Collection<Blood> toModel(Collection<BloodDTO> dtos)
         {
-            throw new NotImplementedException();
+            return new Collection<Blood>(dtos
+                .Select<BloodDTO, Blood>((bloodDTO) => this.toModel(bloodDTO))
+                .ToList<Blood>());
         }
     }
 }

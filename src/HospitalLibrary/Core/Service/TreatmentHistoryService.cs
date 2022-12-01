@@ -39,7 +39,7 @@ namespace HospitalLibrary.Core.Service
             return _treatmentHistoryRepository.GetById(id);
         }
 
-        public bool Create(TreatmentHistory treatmentHistory, int roomId)
+        public bool Create(TreatmentHistory treatmentHistory)
         {
             treatmentHistory.StartDate = DateTime.UtcNow;
             treatmentHistory.EndDate = null;
@@ -47,8 +47,9 @@ namespace HospitalLibrary.Core.Service
             treatmentHistory.Patient = _patientService.GetById(treatmentHistory.PatientId);
             treatmentHistory.Therapies = new List<Therapy>();
             treatmentHistory.DischargeReason = "";
-            Room room = _roomService.GetById(roomId);
-            foreach (Bed bed in room.Beds)
+            treatmentHistory.Room = _roomService.GetById(treatmentHistory.RoomId);
+
+            foreach (Bed bed in treatmentHistory.Room.Beds)
             {
                 if (bed.Available)
                 {
@@ -67,14 +68,47 @@ namespace HospitalLibrary.Core.Service
 
         public bool Update(TreatmentHistory treatmentHistory)
         {
+            treatmentHistory.StartDate = DateTime.SpecifyKind(treatmentHistory.StartDate, DateTimeKind.Utc);
+            treatmentHistory.EndDate = (treatmentHistory.EndDate == null) ? null : DateTime.SpecifyKind((global::System.DateTime)treatmentHistory.EndDate, DateTimeKind.Utc);
+
             _treatmentHistoryRepository.Update(treatmentHistory);
             return true;
+        }
+
+        public bool FinishTreatmentHistory(TreatmentHistory treatmentHistory)
+        {
+            treatmentHistory.Room = _roomService.GetById(treatmentHistory.RoomId);
+            treatmentHistory.Bed = _bedRepository.GetById(treatmentHistory.BedId);
+            treatmentHistory.Patient = _patientService.GetById(treatmentHistory.PatientId);
+            treatmentHistory.Active = false;
+            //treatmentHistory.Bed.Available = becomes false on chosen date
+            return Update(treatmentHistory);
         }
 
         public void Delete(TreatmentHistory treatmentHistory)
         {
             _treatmentHistoryRepository.Delete(treatmentHistory);
         }
+
+       /* public IEnumerable<Patient> GetPatientsWithoutActiveTreatmentHistory()
+        {
+            var patients = new List<Patient>();
+            var allPatients = _patientService.GetAll();
+            var treatedPatients = _treatmentHistoryRepository.GetAllActive();
+            return patients;
+        }*/
+
+        public IEnumerable<Patient> GetPatientsWithoutActiveTreatmentHistory()
+        {
+            /* var patients = new List<Patient>();
+             foreach(TreatmentHistory th in _treatmentHistoryRepository.GetAllActive())
+             {
+                 patients.Add(th.Patient);
+             }*/
+            var patients = _treatmentHistoryRepository.GetPatientsWithoutActiveTreatmentHistory();
+            return patients;
+        }
+
 
     }
 }
