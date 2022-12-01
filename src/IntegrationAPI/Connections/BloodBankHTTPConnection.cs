@@ -101,10 +101,10 @@ namespace IntegrationAPI.Connections
 
                 await File.WriteAllBytesAsync("./Reports/bloodConsumptionReport" + uniqueSuffix + ".PDF", file);
                 SendUrlToBloodBanks(await Upload(uniqueSuffix));
-                bcc.NextSendingTime = bcc.NextSendingTime + bcc.FrequencyPeriodInHours;
+                bcc.NextSendingTime = bcc.NextSendingTime + TimeSpan.FromSeconds(10);
                 bcc.NextSendingTime = DateTime.SpecifyKind(bcc.NextSendingTime, DateTimeKind.Utc);
                 _service.Update(bcc);
-                return bcc.FrequencyPeriodInHours;
+                return TimeSpan.FromSeconds(10);
             }
 
             return delay;

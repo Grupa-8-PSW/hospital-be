@@ -12,7 +12,8 @@ namespace IntegrationLibrary.Persistence
         public DbSet<BloodBankNews> BloodBankNews { get; set; }
         public DbSet<TenderOffer> TenderOffer { get; set; }
         public IntegrationDbContext(DbContextOptions options) : base(options) { }
-
+        public DbSet<Tender> Tenders { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -24,7 +25,13 @@ namespace IntegrationLibrary.Persistence
             modelBuilder.Entity<TenderOffer>()
              .Property(b => b.Offers)
              .HasColumnType("jsonb");
+            modelBuilder.Entity<Tender>()
+                .Property(b => b.DateRange)
+                .HasColumnType("jsonb");
 
+            modelBuilder.Entity<Tender>()
+                .Property(b => b.Blood)
+                .HasColumnType("jsonb");
 
             modelBuilder.SeedBloodBankNews();
         }
