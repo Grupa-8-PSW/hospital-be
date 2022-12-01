@@ -1,4 +1,4 @@
-﻿using Grpc.Core;
+using Grpc.Core;
 using IntegrationAPI.Connections;
 using IntegrationAPI.Connections.Interface;
 using IntegrationAPI.Middlewares;
@@ -64,6 +64,8 @@ namespace IntegrationAPI
             services.AddScoped<IBloodBankNewsService, BloodBankNewsService>();
             services.AddScoped<IHospitalHTTPConnectionService, HospitalHTTPConnectionService>();
             services.AddScoped<IHospitalHTTPConnection, HospitalHTTPConnection>();
+            services.AddScoped<ITenderRepository, TenderRepository>();
+            services.AddScoped<ITenderService, TenderService>();
             services.AddScoped<IMapper<BloodBankNews, BloodBankNewsDTO>, BloodBankNewsMapper>();
             services.AddTransient<ExceptionMiddleware>();
             services.AddScoped<IClientScheduledService, ClientScheduledService>();

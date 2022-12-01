@@ -4,6 +4,7 @@ using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,11 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    partial class IntegrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221130180637_ime_migracije")]
+    partial class ime_migracije
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
-
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.10")
@@ -64,7 +65,7 @@ namespace IntegrationLibrary.Migrations
                             Email = "test@test.com",
                             Name = "testName",
                             Password = "unknown",
-                            ServerAddress = "testServAdd"
+                            ServerAddress = "htttp://localhost:8081/"
                         });
                 });
 
@@ -116,18 +117,7 @@ namespace IntegrationLibrary.Migrations
                         });
                 });
 
-            modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodBankNews", b =>
-                {
-                    b.HasOne("IntegrationLibrary.Core.Model.BloodBank", "BloodBank")
-                        .WithMany()
-                        .HasForeignKey("BloodBankId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BloodBank");
-                });
-
-            modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodUnitRequest", b =>
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodConsumptionConfiguration", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -135,19 +125,22 @@ namespace IntegrationLibrary.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Amount")
-                        .HasColumnType("integer");
+                    b.Property<TimeSpan>("ConsumptionPeriodHours")
+                        .HasColumnType("interval");
 
-                    b.Property<DateTime>("CreationDate")
+                    b.Property<TimeSpan>("FrequencyPeriodInHours")
+                        .HasColumnType("interval");
+
+                    b.Property<DateTime>("NextSendingTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Reason")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<DateTime>("StartDateTime")
+                        .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.HasKey("Id");
+
+                    b.ToTable("BloodConsumptionConfiguration");
+                });
 
             modelBuilder.Entity("IntegrationLibrary.Core.Model.Tender", b =>
                 {
@@ -180,8 +173,8 @@ namespace IntegrationLibrary.Migrations
                         .HasForeignKey("BloodBankId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                    b.HasKey("Id");
-                    b.ToTable("BloodUnitRequests");
+
+                    b.Navigation("BloodBank");
                 });
 #pragma warning restore 612, 618
         }

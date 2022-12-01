@@ -1,27 +1,39 @@
-﻿using HospitalLibrary.Core.Enums;
+using System;
+using HospitalLibrary.Core.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HospitalLibrary.Core.Enums;
 
 namespace IntegrationLibrary.Core.Model
 {
-    public class Blood
+    public class Blood : ValueObject<Blood>
     {
-        public int Id { get; set; }
-        public BloodType Type { get; set; }
-        public int Quantity { get; set; }
+        public BloodType BloodType { get; }
 
-        public Blood()
+        public int Quantity { get; }
+
+        public Blood(BloodType bloodType, int quantity)
         {
+            Quantity = quantity;
+            BloodType = bloodType;
         }
 
-        public Blood(int id, BloodType bloodType, int quantity)
+        protected override bool EqualsCore(Blood other)
         {
-            Id = id;
-            Type = bloodType;
-            Quantity = quantity;
+            return BloodType==other.BloodType && Quantity==other.Quantity;
+        }
+
+        protected override int GetHashCodeCore()
+        {
+            unchecked
+            {
+                int hashCode = BloodType.GetHashCode();
+                hashCode ^= Quantity.GetHashCode();
+                return hashCode;
+            }
         }
     }
 }
