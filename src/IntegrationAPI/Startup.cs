@@ -50,6 +50,8 @@ namespace IntegrationAPI
             services.AddScoped<IBloodBankNewsService, BloodBankNewsService>();
             services.AddScoped<IHospitalHTTPConnectionService, HospitalHTTPConnectionService>();
             services.AddScoped<IHospitalHTTPConnection, HospitalHTTPConnection>();
+            services.AddScoped<ITenderRepository, TenderRepository>();
+            services.AddScoped<ITenderService, TenderService>();
             services.AddTransient<ExceptionMiddleware>();
         }
 
