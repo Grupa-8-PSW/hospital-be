@@ -18,6 +18,6 @@ namespace IntegrationAPI.ConnectionService.Interface
 
         public bool CheckBloodAmount(int id, string bloodType, double quant);
 
-        public bool SendUrgentRequest(List<BloodDTO> requestBlood, string apiKey);
+        public bool SendUrgentRequest(string apiKey);
     }
 }

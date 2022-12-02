@@ -178,31 +178,25 @@ namespace IntegrationAPI.Connections
             }
         }
 
-        public bool SendUrgentRequest(BloodUnitUrgentRequest urgentRequest)
+        public async void  SendUrgentRequest(BloodUnitUrgentRequest urgentRequest)
         {
             RestClient restClient =
                 BloodBankConnectionValidator.ValidateURL("http://localhost:8081/" + "/bloodBanks/urgentRequest");
-            //var client = new RestClient("http://localhost:5174");
-           // var request = new RestRequest("/api/BloodUnitRequest/" + bloodUnitRequestDto.Id, Method.Put);
             RestRequest request = new RestRequest();
-            //  foreach (var unit in urgentRequest.bloodUnits)
-            //  {
-            //     request.AddParameter("quantity", unit.Quantity);
-            //     request.AddParameter("type", unit.Type);
-            // }
-            request.AddHeader("apiKey", urgentRequest.APIKey);
+            var cancellationTokenSource = new CancellationTokenSource();
             request.AddJsonBody(urgentRequest);
+            RestResponse res = new RestResponse();
             try
-                {
-                    RestResponse res = BloodBankConnectionValidator.Authenticate(restClient, request);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
+            {
+                res = await restClient.ExecuteAsync(request);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
 
+            Console.WriteLine(res.Content);
 
-            return true;
         }
 
 
