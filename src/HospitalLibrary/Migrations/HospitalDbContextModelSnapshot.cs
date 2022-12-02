@@ -786,6 +786,30 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("TreatmentHistoryId");
 
                     b.ToTable("Therapies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Amount = 1,
+                            DoctorId = 1,
+                            Reason = "Headache",
+                            TherapySubject = "Bromazepam 500mg",
+                            TherapyType = 0,
+                            TreatmentHistoryId = 1,
+                            WhenPrescribed = new DateTime(2022, 11, 29, 13, 39, 10, 774, DateTimeKind.Utc).AddTicks(2590)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Amount = 1,
+                            DoctorId = 2,
+                            Reason = "Blood loss",
+                            TherapySubject = "A+ 500ml",
+                            TherapyType = 1,
+                            TreatmentHistoryId = 1,
+                            WhenPrescribed = new DateTime(2022, 11, 29, 13, 39, 10, 774, DateTimeKind.Utc).AddTicks(2593)
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.TreatmentHistory", b =>

@@ -17,11 +17,17 @@ namespace IntegrationLibrary.Core.Service
     {
         private IBloodBankHTTPConnection bloodBankHTTPConnection;
         private IBloodBankService bloodBankService;
-
-        public BloodBankConnectionService(IBloodBankHTTPConnection bloodBankHTTPConnection, IBloodBankService bloodBankService)
+        private readonly IBloodService _bloodService;
+        private readonly IHospitalHTTPConnectionService _hospitalHTTPConnectionService;
+        public BloodBankConnectionService(IBloodBankHTTPConnection bloodBankHTTPConnection, 
+                                          IBloodBankService bloodBankService,
+                                          IBloodService bloodService,
+                                          IHospitalHTTPConnectionService hospitalHttpConnectionService)
         {
             this.bloodBankHTTPConnection = bloodBankHTTPConnection;
             this.bloodBankService = bloodBankService;
+            this._bloodService = bloodService;
+            this._hospitalHTTPConnectionService = hospitalHttpConnectionService;
         }
 
         public bool CheckForSpecificBloodType(int bloodBankId, string bloodType)
@@ -42,12 +48,13 @@ namespace IntegrationLibrary.Core.Service
         }
 
 
-        public bool SendUrgentRequest(List<BloodDTO> requestBlood, string apiKey)
+        public bool SendUrgentRequest(string apiKey)
         {
             BloodUnitUrgentRequest request = new BloodUnitUrgentRequest();
-            request.bloodUnits = requestBlood;
+            request.bloodUnits = _bloodService.GetMissingQuantities(_hospitalHTTPConnectionService.GetAllBlood());
             request.APIKey = apiKey;
-            return bloodBankHTTPConnection.SendUrgentRequest(request);
+            bloodBankHTTPConnection.SendUrgentRequest(request);
+            return true;
         }
     }
 }

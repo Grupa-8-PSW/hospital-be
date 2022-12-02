@@ -74,7 +74,7 @@ namespace IntegrationAPI.Connections
 
         public void RestockBlood(List<BloodDTO> bloodList){
             var client = new RestClient("http://localhost:5174");
-            var request = new RestRequest("/api/internal/Blood/", Method.Put);
+            var request = new RestRequest("/api/internal/Blood/restockBlood", Method.Put);
             var json = JsonConvert.SerializeObject(bloodList);
             request.AddBody(bloodList);
             RestResponse response = client.Execute(request);

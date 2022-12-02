@@ -53,7 +53,7 @@ namespace HospitalAPI.Controllers.InternalApp
                 return BadRequest(ModelState);
             }
             var bl = _bloodService.Create(blood);
-            return CreatedAtAction("GetById", new { id = bl.Id }, bl);
+            return CreatedAtAction("GetById", new { id = bl.Id }, _bloodMapper.toDTO(bl));
         }
 
         // api/internal/Blood/1
@@ -71,7 +71,7 @@ namespace HospitalAPI.Controllers.InternalApp
         }
 
         // api/internal/Blood/1
-      /*  [HttpPut("{id}")]
+        [HttpPut("{id}")]
         public ActionResult Update(int id, Blood blood)
         {
             if (!ModelState.IsValid)
@@ -92,10 +92,10 @@ namespace HospitalAPI.Controllers.InternalApp
                 return BadRequest(ex.Message);
             }
 
-            return Ok(blood);
-        }*/
+            return Ok(_bloodMapper.toDTO(blood));
+        }
 
-        //[Route("restockBlood")]
+        [Route("restockBlood")]
         [HttpPut]
         public ActionResult UpdateBlood([FromBody]List<BloodDTO> bloodList)
         {

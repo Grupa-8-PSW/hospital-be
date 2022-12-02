@@ -110,7 +110,7 @@ namespace IntegrationAPI
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
 
-            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+            //AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             
       }
 

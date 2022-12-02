@@ -1,6 +1,8 @@
 ﻿using HospitalAPI.DTO;
 using HospitalAPI.Web.Mapper;
+using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Model;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Collections.ObjectModel;
 using HospitalLibrary.Core.Enums;
 
@@ -48,8 +50,8 @@ namespace HospitalAPI.Mapper
         public Collection<Blood> toModel(Collection<BloodDTO> dtos)
         {
             return new Collection<Blood>(dtos
-                .Select<BloodDTO, Blood>((bloodDTO) => this.toModel(bloodDTO))
-                .ToList<Blood>());
+                .Select<BloodDTO, Blood>((bloodDto) => this.toModel(bloodDto))
+                .ToList());
         }
     }
 }

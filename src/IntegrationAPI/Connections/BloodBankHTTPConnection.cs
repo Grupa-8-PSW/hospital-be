@@ -19,6 +19,8 @@ using HospitalAPI.Connections;
 using HospitalAPI.DTO;
 using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibraryAPI.Connections;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace IntegrationAPI.Connections
 {
@@ -27,7 +29,7 @@ namespace IntegrationAPI.Connections
 
         private readonly IBloodConsumptionConfigurationService _service;
         private readonly IBloodBankService _bankService;
-        private readonly IHospitalHTTPConnection _bloodUnitService;
+        private readonly IHospitalHTTPConnection _hospitalHttpConnection;
         private String api = "reports/sendReports";
 
         public BloodBankHTTPConnection(IServiceScopeFactory factory)
@@ -37,7 +39,7 @@ namespace IntegrationAPI.Connections
 
             _bankService = factory.CreateScope().ServiceProvider.GetRequiredService<IBloodBankService>();
 
-            _bloodUnitService = factory.CreateScope().ServiceProvider.GetRequiredService<IHospitalHTTPConnection>();
+            _hospitalHttpConnection = factory.CreateScope().ServiceProvider.GetRequiredService<IHospitalHTTPConnection>();
         }
 
         public bool CheckForSpecificBloodType(BloodBank bloodBank, string bloodType)
@@ -97,7 +99,7 @@ namespace IntegrationAPI.Connections
             {
                 Guid uniqueSuffix = Guid.NewGuid();
                 //var scopedService = scope.ServiceProvider.GetRequiredService<IBloodBankHTTPConnection>();
-                byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(_bloodUnitService.GetAllBloodUnits(), out var configuration));
+                byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(_hospitalHttpConnection.GetAllBloodUnits(), out var configuration));
                 using (var stream = File.Create("./Reports/bloodConsumptionReport" + uniqueSuffix + ".PDF"))
                 {
                 }
@@ -145,7 +147,7 @@ namespace IntegrationAPI.Connections
                 bcc.NextSendingTime = DateTime.SpecifyKind(bcc.NextSendingTime, DateTimeKind.Utc);
                 _service.Update(bcc);
                 Guid uniqueSuffix = Guid.NewGuid();
-                byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(_bloodUnitService.GetAllBloodUnits(), out var configuration));
+                byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(_hospitalHttpConnection.GetAllBloodUnits(), out var configuration));
                 using (var stream = File.Create("./Reports/bloodConsumptionReport" + uniqueSuffix + ".PDF"))
                 {
                 }
@@ -178,31 +180,28 @@ namespace IntegrationAPI.Connections
             }
         }
 
-        public bool SendUrgentRequest(BloodUnitUrgentRequest urgentRequest)
+        public async void SendUrgentRequest(BloodUnitUrgentRequest urgentRequest)
         {
-            RestClient restClient =
-                BloodBankConnectionValidator.ValidateURL("http://localhost:8081/" + "/bloodBanks/urgentRequest");
-            //var client = new RestClient("http://localhost:5174");
-           // var request = new RestRequest("/api/BloodUnitRequest/" + bloodUnitRequestDto.Id, Method.Put);
-            RestRequest request = new RestRequest();
-            //  foreach (var unit in urgentRequest.bloodUnits)
-            //  {
-            //     request.AddParameter("quantity", unit.Quantity);
-            //     request.AddParameter("type", unit.Type);
-            // }
+            var client = new RestClient("http://localhost:8081");
+            var request = new RestRequest("/bloodBanks/urgentRequest", Method.Post);
+
             request.AddHeader("apiKey", urgentRequest.APIKey);
             request.AddJsonBody(urgentRequest);
+            RestResponse res = new RestResponse();
             try
-                {
-                    RestResponse res = BloodBankConnectionValidator.Authenticate(restClient, request);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
+            {
+                res = await client.ExecuteAsync(request);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
 
+            if (res.Content == "Ima dovoljno krvi")
+            {
+                _hospitalHttpConnection.RestockBlood(urgentRequest.bloodUnits);
+            }
 
-            return true;
         }
 
 

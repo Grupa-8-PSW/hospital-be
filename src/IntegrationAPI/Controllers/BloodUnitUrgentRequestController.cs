@@ -37,10 +37,20 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult SendRequest(BloodBank bloodBank)
+        public ActionResult SendRequestGRPC(BloodBank bloodBank)
         {
             _clientScheduletService.communicate(bloodBank.APIKey);
            // _hospitalHTTPConnectionService.RestockBlood(_bloodService.GetMissingQuantities(_hospitalHTTPConnectionService.GetAllBlood()));
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("sendRequestHttp")]
+        public ActionResult SendRequestHTTP(BloodBank bloodBank)
+        {
+            _connectionService.SendUrgentRequest(bloodBank.APIKey);
+            //_hospitalHTTPConnectionService
+            // _hospitalHTTPConnectionService.RestockBlood(_bloodService.GetMissingQuantities(_hospitalHTTPConnectionService.GetAllBlood()));
             return Ok();
         }
     }
