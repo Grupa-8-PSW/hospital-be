@@ -11,13 +11,11 @@ namespace IntegrationLibrary.Core.Model
     public class BloodUnitUrgentRequest
     {
 
-        public int Id { get; set; }
         public List<BloodDTO> bloodUnits { get; set; }
         public string APIKey { get; set; }
 
-        public BloodUnitUrgentRequest(int id, List<BloodDTO> bloodUnits, string apiKey)
+        public BloodUnitUrgentRequest(List<BloodDTO> bloodUnits, string apiKey)
         {
-            this.Id = id;
             this.bloodUnits = bloodUnits;
             this.APIKey = apiKey;
         }

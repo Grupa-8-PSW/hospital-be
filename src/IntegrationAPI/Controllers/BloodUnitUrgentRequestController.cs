@@ -41,6 +41,7 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost]
+        [Route("sendRequestHttp")]
         public ActionResult SendRequestHTTP(BloodBank bloodBank)
         {
             _connectionService.SendUrgentRequest(bloodBank.APIKey);

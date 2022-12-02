@@ -53,7 +53,8 @@ namespace IntegrationLibrary.Core.Service
             BloodUnitUrgentRequest request = new BloodUnitUrgentRequest();
             request.bloodUnits = _bloodService.GetMissingQuantities(_hospitalHTTPConnectionService.GetAllBlood());
             request.APIKey = apiKey;
-            return bloodBankHTTPConnection.SendUrgentRequest(request);
+            bloodBankHTTPConnection.SendUrgentRequest(request);
+            return true;
         }
     }
 }
