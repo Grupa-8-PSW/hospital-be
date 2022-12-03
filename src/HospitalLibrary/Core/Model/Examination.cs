@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HospitalLibrary.GraphicalEditor.Model;
+using Microsoft.VisualBasic.CompilerServices;
 
 namespace HospitalLibrary.Core.Model
 {
@@ -41,5 +42,6 @@ namespace HospitalLibrary.Core.Model
             StartTime = startTime;
             Duration = duration;
         }
+
     }
 }

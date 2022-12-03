@@ -142,7 +142,7 @@ namespace HospitalAPI
 
 
             services.AddScoped<IMapper<Therapy, TherapyDTO>, TherapyMapper>();
-        
+
 
             services.AddCors(options =>
             {
@@ -206,6 +206,8 @@ namespace HospitalAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HospitalAPI v1"));
             }
+
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
             app.UseRouting();
 
