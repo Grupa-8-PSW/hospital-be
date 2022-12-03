@@ -20,7 +20,7 @@ namespace HospitalAPI.Security
         private readonly IMapper _mapper;
 
         public AuthService(
-            SignInManager<User> signInManager, 
+            SignInManager<User> signInManager,
             RoleManager<IdentityRole<int>> roleManager,
             UserManager<User> userManager,
             IConfiguration configuration,
@@ -75,14 +75,14 @@ namespace HospitalAPI.Security
             if (!result.Succeeded)
                 return null;
             await _userManager.AddToRoleAsync(registerUser, "Patient");
-            if(registerRequest.RegisterUser != null)
+            if (registerRequest.RegisterUser != null)
             {
                 var p = _mapper.Map<Patient>(registerRequest.RegisterUser);
                 var patientAllergens = _allergensRepository
                     .GetAllergensByDtoId(p.Allergens.Select(a => a.Id).ToList());
                 _patientService.CreateAndAddAllergens(p, patientAllergens);
             }
-            
+
             return "Ok";
         }
 
@@ -92,7 +92,8 @@ namespace HospitalAPI.Security
             return new UserDTO()
             {
                 Username = user.UserName,
-                Role = userRoles[0]
+                Role = userRoles[0],
+                Id = user.Id
             };
         }
 
@@ -105,8 +106,9 @@ namespace HospitalAPI.Security
                 Subject = new ClaimsIdentity(new[]
                 {
                     new Claim("Username", user.Username),
-                    new Claim(ClaimTypes.Role, user.Role)
-                }),
+                    new Claim(ClaimTypes.Role, user.Role),
+                    new Claim("Id", user.Id.ToString())
+        }),
                 Issuer = issuer,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secret), SecurityAlgorithms.HmacSha512Signature)
             };
