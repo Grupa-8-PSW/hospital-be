@@ -1,17 +1,10 @@
-﻿using HospitalAPI.Requests;
+﻿using HospitalAPI.Extensions;
+using HospitalAPI.Requests;
 using HospitalAPI.Web.Dto;
 using HospitalAPI.Web.Mapper;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Threading.Tasks;
-using HospitalAPI.Extensions;
 
 namespace HospitalAPI.Controllers
 {
@@ -135,6 +128,17 @@ namespace HospitalAPI.Controllers
 
             _examinationService.Delete(examination);
             return NoContent();
+        }
+
+        public ActionResult GetByRoomId(int roomId)
+        {
+            var examination = _examinationService.GetByRoomId(roomId);
+            if (examination == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(examination);
         }
 
         private Examination CreateExaminationFromPostRequest(PostExaminationRequest postExaminationRequest)

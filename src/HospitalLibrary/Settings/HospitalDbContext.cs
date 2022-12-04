@@ -22,6 +22,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Examination> Examinations { get; set; }
         public DbSet<TreatmentHistory> TreatmentHistories { get; set; }
+        public DbSet<EquipmentTransfer> EquipmentTransfers { get; set; }
         public DbSet<Therapy> Therapies { get; set; }
         public DbSet<BloodUnit> BloodUnits { get; set; }
         public DbSet<MedicalDrugs> MedicalDrugs { get; set; }
@@ -44,7 +45,7 @@ namespace HospitalLibrary.Settings
 
             modelBuilder.SeedMap();
             modelBuilder.SeedAddress();
-            modelBuilder.SeedDoctor();
+            //modelBuilder.SeedDoctor();
             modelBuilder.SeedPatient();
             modelBuilder.SeedFeedback();
 

@@ -1,7 +1,8 @@
 ﻿using HospitalLibrary.GraphicalEditor.Model.Map;
 using HospitalLibrary.GraphicalEditor.Model;
 using Microsoft.EntityFrameworkCore;
-
+using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Model;
 
 namespace HospitalLibrary.Settings.DataSeed
 {
@@ -14,6 +15,19 @@ namespace HospitalLibrary.Settings.DataSeed
                 new Building() { Id = 2, X = 600, Y = 100, Width = 150, Height = 450, Color = "gray", Name = "Too", Floors = new List<Floor>() },
                 new Building() { Id = 3, X = 400, Y = 600, Width = 400, Height = 130, Color = "gray", Name = "Tre", Floors = new List<Floor>() }
             );
+
+            modelBuilder.Entity<Doctor>().HasData(
+                new Doctor() { Id = 1, FirstName = "Pera", LastName = "Peric", RoomId = 1, StartWork = new DateTime(2022, 11, 22, 10, 10, 10, DateTimeKind.Utc), EndWork = new DateTime(2022, 11, 22, 18, 10, 10, DateTimeKind.Utc) },
+                new Doctor() { Id = 2, FirstName = "Sergej", LastName = "Milinkovic-Savic", RoomId = 1, StartWork = new DateTime(2022, 11, 22, 10, 10, 10, DateTimeKind.Utc), EndWork = new DateTime(2022, 11, 22, 19, 10, 10, DateTimeKind.Utc) }
+             );
+
+            modelBuilder.Entity<Examination>().HasData(
+                new Examination() { Id = 1, DoctorId = 1, PatientId = 1, RoomId = 1, StartTime = new DateTime(2022, 11, 22, 2, 00, 00, DateTimeKind.Utc), Duration = 300 },
+                new Examination() { Id = 2, DoctorId = 2, PatientId = 2, RoomId = 2, StartTime = new DateTime(2022, 11, 22, 7, 30, 00, DateTimeKind.Utc), Duration = 120 },
+                new Examination() { Id = 3, DoctorId = 1, PatientId = 3, RoomId = 1, StartTime = new DateTime(2022, 11, 22, 11, 30, 00, DateTimeKind.Utc), Duration = 420 },
+                new Examination() { Id = 4, DoctorId = 2, PatientId = 4, RoomId = 2, StartTime = new DateTime(2022, 11, 22, 20, 30, 00, DateTimeKind.Utc), Duration = 150 }
+             );
+
             /*
             modelBuilder.Entity<MapBuilding>().HasData(
                 new MapBuilding() { Id = 1, X = 100, Y = 100, Width = 450, Height = 150, Color = "gray", BuildingId = 1 },
@@ -32,29 +46,29 @@ namespace HospitalLibrary.Settings.DataSeed
                 new Floor() { Id = 6, X = 100, Y = 270, Width = 300, Height = 100, Color = "white", Number = "Floor 1", BuildingId = 3, Rooms = new List<Room>() }
             );
             modelBuilder.Entity<Room>().HasData(
-                new Room() { Id = 1, X = 0, Y = 0, Width = 260, Height = 160, Color = "blue", Name = "Pedijatrija" , FloorId = 1 },
-                new Room() { Id = 2, X = 0, Y = 338, Width = 220, Height = 140, Color = "blue", Name = "Kafeterija", FloorId = 1 },
-                new Room() { Id = 3, X = 237, Y = 0, Width = 300, Height = 180, Color = "blue", Name = "Otorinolaringologija", FloorId = 1 },
-                new Room() { Id = 4, X = 270, Y = 378, Width = 200, Height = 100, Color = "blue", Name = "Fizioterapeut", FloorId = 2 },
-                new Room() { Id = 5, X = 0, Y = 0, Width = 360, Height = 180, Color = "blue", Name = "Stomatologija", FloorId = 2 },
-                new Room() { Id = 6, X = 0, Y = 0, Width = 260, Height = 180, Color = "blue", Name = "Magacin", FloorId = 3 },
-                new Room() { Id = 7, X = 0, Y = 338, Width = 220, Height = 140, Color = "blue", Name = "Opsta nega", FloorId = 3},
-                new Room() { Id = 8, X = 330, Y = 158, Width = 220, Height = 140, Color = "blue", Name = "Cekaonica", FloorId = 3 },
-                new Room() { Id = 9, X = 0, Y = 0, Width = 320, Height = 170, Color = "blue", Name = "Kardiologija", FloorId = 4 },
-                new Room() { Id = 10, X = 0, Y = 365, Width = 220, Height = 140, Color = "blue", Name = "Vaskularne bolesti", FloorId = 4 },
-                new Room() { Id = 11, X = 245, Y = 0, Width = 220, Height = 140, Color = "blue", Name = "Hirurgija", FloorId = 4 },
-                new Room() { Id = 12, X = 0, Y = 0, Width = 220, Height = 140, Color = "blue", Name = "Papirologija", FloorId = 5 },
-                new Room() { Id = 13, X = 200, Y = 0, Width = 220, Height = 140, Color = "blue", Name = "Prijavna soba", FloorId = 5 },
-                new Room() { Id = 14, X = 0, Y = 350, Width = 220, Height = 140, Color = "blue", Name = "Uplasta/isplata", FloorId = 5 },
-                new Room() { Id = 15, X = 200, Y = 350, Width = 220, Height = 140, Color = "blue", Name = "Izgubljeno/nadjeno", FloorId = 5 },
-                new Room() { Id = 16, X = 0, Y = 0, Width = 320, Height = 190, Color = "blue", Name = "Onkologija", FloorId = 6 },
-                new Room() { Id = 17, X = 200, Y = 300, Width = 250, Height = 240, Color = "blue", Name = "Onkologija", FloorId = 6 },
-                new Room() { Id = 18, X = 50, Y = 100, Width = 420, Height = 280, Color = "blue", Name = "Gastronomija", FloorId = 7 },
-                new Room() { Id = 19, X = 100, Y = 138, Width = 320, Height = 170, Color = "blue", Name = "Magacin", FloorId = 8 }
+                new Room() { Id = 1, X = 0, Y = 0, Width = 260, Height = 160, Color = "blue", Name = "Neurohirurgija", FloorId = 1, Type = RoomType.OPERATIONS },
+                new Room() { Id = 2, X = 0, Y = 338, Width = 220, Height = 140, Color = "blue", Name = "Kafeterija", FloorId = 1, Type = RoomType.CAFETERIA },
+                new Room() { Id = 3, X = 237, Y = 0, Width = 300, Height = 180, Color = "blue", Name = "Otorinolaringologija", FloorId = 1 , Type = RoomType.OTHER},
+                new Room() { Id = 4, X = 270, Y = 378, Width = 200, Height = 100, Color = "blue", Name = "Fizioterapeut", FloorId = 2 , Type = RoomType.OTHER },
+                new Room() { Id = 5, X = 0, Y = 0, Width = 360, Height = 180, Color = "blue", Name = "Stomatologija", FloorId = 2 , Type = RoomType.OTHER },
+                new Room() { Id = 6, X = 0, Y = 0, Width = 260, Height = 180, Color = "blue", Name = "Magacin", FloorId = 3 , Type = RoomType.MAGAZINE },
+                new Room() { Id = 7, X = 0, Y = 338, Width = 220, Height = 140, Color = "blue", Name = "Opsta nega", FloorId = 3, Type = RoomType.OTHER },
+                new Room() { Id = 8, X = 330, Y = 158, Width = 220, Height = 140, Color = "blue", Name = "Cekaonica", FloorId = 3, Type = RoomType.OTHER },
+                new Room() { Id = 9, X = 0, Y = 0, Width = 320, Height = 170, Color = "blue", Name = "Kardiologija", FloorId = 4, Type = RoomType.OPERATIONS },
+                new Room() { Id = 10, X = 0, Y = 365, Width = 220, Height = 140, Color = "blue", Name = "Vaskularne bolesti", FloorId = 4, Type = RoomType.OTHER },
+                new Room() { Id = 11, X = 245, Y = 0, Width = 220, Height = 140, Color = "blue", Name = "Hirurgija", FloorId = 4 , Type = RoomType.OPERATIONS },
+                new Room() { Id = 12, X = 0, Y = 0, Width = 220, Height = 140, Color = "blue", Name = "Papirologija", FloorId = 5 , Type = RoomType.OTHER },
+                new Room() { Id = 13, X = 200, Y = 0, Width = 220, Height = 140, Color = "blue", Name = "Prijavna soba", FloorId = 5 , Type = RoomType.OTHER },
+                new Room() { Id = 14, X = 0, Y = 350, Width = 220, Height = 140, Color = "blue", Name = "Uplasta/isplata", FloorId = 5 , Type = RoomType.OTHER},
+                new Room() { Id = 15, X = 200, Y = 350, Width = 220, Height = 140, Color = "blue", Name = "Izgubljeno/nadjeno", FloorId = 5, Type= RoomType.OTHER},
+                new Room() { Id = 16, X = 0, Y = 0, Width = 320, Height = 190, Color = "blue", Name = "Onkologija", FloorId = 6, Type = RoomType.OTHER },
+                new Room() { Id = 17, X = 200, Y = 300, Width = 250, Height = 240, Color = "blue", Name = "Endokrinologija", FloorId = 6 , Type = RoomType.OPERATIONS},
+                new Room() { Id = 18, X = 50, Y = 100, Width = 420, Height = 280, Color = "blue", Name = "Gastronomija", FloorId = 7, Type = RoomType.OTHER },
+                new Room() { Id = 19, X = 100, Y = 138, Width = 320, Height = 170, Color = "blue", Name = "Magacin", FloorId = 8, Type = RoomType.MAGAZINE }
             );
 
                 modelBuilder.Entity<Form>().HasData(
-                new Form() { Id = 1, Name = "101,Pedijatrija" , Description= "Pregledi za decu", StartHourWorkDay = "10:00h" , EndHourWorkDay = "17:00h" , StartHourSaturday = "12:00h" , EndHourSaturday = "17:00h" , StartHourSunday = "CLOSED" , EndHourSunday = "CLOSED", RoomId = 1 },
+                new Form() { Id = 1, Name = "101,Neurohirurgija" , Description= "Neuroloske operacije i zahvati", StartHourWorkDay = "8:00h" , EndHourWorkDay = "17:00h" , StartHourSaturday = "12:00h" , EndHourSaturday = "17:00h" , StartHourSunday = "CLOSED" , EndHourSunday = "CLOSED", RoomId = 1 },
                 new Form() { Id = 2, Name = "102,Kafeterija", Description = "Opustanje za radnike i posetioce", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 2 },
                 new Form() { Id = 3, Name = "103,Otorinolaringologija", Description = "UHO,GRLO,NOS", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 3 },
                 new Form() { Id = 4, Name = "201,Fizioterapeut", Description = "Pregled misica i povreda", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 4 },
@@ -70,7 +84,7 @@ namespace HospitalLibrary.Settings.DataSeed
                 new Form() { Id = 14, Name = "203a,Uplasta/isplata", Description = "...", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 14 },
                 new Form() { Id = 15, Name = "204a,Izgubljeno/nadjeno", Description = "...", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 15 },
                 new Form() { Id = 16, Name = "101b,Onkologija", Description = "...", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 16 },
-                new Form() { Id = 17, Name = "102b,Pedijatrija", Description = "...", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 17 },
+                new Form() { Id = 17, Name = "102b,Endokrinologija", Description = "Operacija endokrinog sistema", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 17 },
                 new Form() { Id = 18, Name = "201b,Gastronomija", Description = "...", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 18 },
                 new Form() { Id = 19, Name = "301b,Magacin", Description = "...", StartHourWorkDay = "10:00h", EndHourWorkDay = "17:00h", StartHourSaturday = "12:00h", EndHourSaturday = "17:00h", StartHourSunday = "CLOSED", EndHourSunday = "CLOSED", RoomId = 19 }            );
 

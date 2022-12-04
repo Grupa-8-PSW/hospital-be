@@ -1,26 +1,18 @@
 ﻿using HospitalAPI;
 using HospitalAPI.Controllers.Map;
-using HospitalAPI.DTO;
-using HospitalLibrary.Core.Model;
 using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Model.DTO;
-using HospitalLibrary.GraphicalEditor.Service;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using HospitalTests.HospitalAPITests.Setup;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalTests.HospitalAPITests.Integration
 {
     public class RoomTests : BaseIntegrationTest
     {
         public RoomTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
-        
+
         private static RoomController SetupController(IServiceScope scope)
         {
             return new RoomController(scope.ServiceProvider.GetRequiredService<IRoomService>());
@@ -47,7 +39,7 @@ namespace HospitalTests.HospitalAPITests.Integration
         //  Assert.NotEmpty(result);
         //}
 
-        
+        [Fact]
         public void Searches_rooms_with_same_name()
         {
             using var scope = Factory.Services.CreateScope();
@@ -128,5 +120,17 @@ namespace HospitalTests.HospitalAPITests.Integration
             Assert.True(result.Count.Equals(1));
             Assert.True(result[0].Name.Equals("Fizioterapeut"));
         }
+
+        [Fact]
+        public void Dates_for_trainsfering_equipments()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            EquipmentTransferDTO dto = new EquipmentTransferDTO(1, 1, 2, new DateTime(2022, 11, 22, 00, 00, 00, DateTimeKind.Utc), new DateTime(2022, 11, 23, 00, 00, 00, DateTimeKind.Utc), 120, "Zavoji");
+            var freeSpace = ((OkObjectResult)controller.GetAvailableTerminsForTransfer(dto))?.Value as List<FreeSpaceDTO>;
+
+            Assert.NotNull(freeSpace);
+        }
+
     }
 }
