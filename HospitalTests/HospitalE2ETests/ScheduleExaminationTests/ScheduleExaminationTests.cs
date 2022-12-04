@@ -14,19 +14,11 @@ public class ScheduleExaminationTests : IDisposable
     private readonly HomePage _homePage;
     private readonly LoginPage _loginPage;
     private readonly CalendarPage _calendarPage;
-    private int _examinationsCount = 0;
+    private readonly int _examinationsCount = 0;
 
     public ScheduleExaminationTests()
     {
-        // options for launching Google Chrome
-        var options = new ChromeOptions();
-        options.AddArguments("start-maximized");            // open Browser in maximized mode
-        options.AddArguments("disable-infobars");           // disabling infobars
-        options.AddArguments("--disable-extensions");       // disabling extensions
-        options.AddArguments("--disable-gpu");              // applicable to windows os only
-        options.AddArguments("--disable-dev-shm-usage");    // overcome limited resource problems
-        options.AddArguments("--no-sandbox");               // Bypass OS security model
-        options.AddArguments("--disable-notifications");    // disable notifications
+        var options = CreateChromeOptions();
 
         _driver = new ChromeDriver(options);
 
@@ -35,36 +27,45 @@ public class ScheduleExaminationTests : IDisposable
         _homePage.LoginButtonDisplayed().ShouldBe(true);
         _homePage.GoToLogin();
 
-        // GoToLogin Page
-
         _loginPage = new LoginPage(_driver);
-        _driver.Url.ShouldBe(LoginPage.URI);
-        _loginPage.UsernameTextBoxDisplayed().ShouldBe(true);
-        _loginPage.PasswordTextBoxDisplayed().ShouldBe(true);
-        _loginPage.SubmitButtonDisplayed().ShouldBe(true);
+        ValidateLoginPage();
         Login();
-
-        _loginPage.WaitForLogin();
 
         _driver.Url.ShouldBe(HomePage.URI + "/");
         _homePage.ExaminationsLinkDisplayed().ShouldBe(true);
         _homePage.GoToCalendar();
 
         _calendarPage = new CalendarPage(_driver);
-        _driver.Url.ShouldBe(CalendarPage.URI);
-        _calendarPage.ChooseButtonDisplayed().ShouldBe(true);
-        _calendarPage.CalendarDisplayed().ShouldBe(true);
+        ValidateCalendarPage();
         _calendarPage.SelectDate();
         _calendarPage.ChooseDate();
 
         _examinationsPage = new ExaminationsPage(_driver);
-        _driver.Url.ShouldBe(ExaminationsPage.URI);
-        _examinationsPage.EnsurePageIsDisplayed();
-        _examinationsPage.ButtonDisplayed().ShouldBe(true);
+        ValidateExaminationsPage();
         _examinationsCount = _examinationsPage.GetRowsCount();
         _examinationsPage.ClickButton();
 
         _scheduleExaminationPage = new ScheduleExaminationPage(_driver);
+        ValidateScheduleExaminationPage();
+    }
+
+    private static ChromeOptions CreateChromeOptions()
+    {
+        // options for launching Google Chrome
+        var options = new ChromeOptions();
+        options.AddArguments("start-maximized"); // open Browser in maximized mode
+        options.AddArguments("disable-infobars"); // disabling infobars
+        options.AddArguments("--disable-extensions"); // disabling extensions
+        options.AddArguments("--disable-gpu"); // applicable to windows os only
+        options.AddArguments("--disable-dev-shm-usage"); // overcome limited resource problems
+        options.AddArguments("--no-sandbox"); // Bypass OS security model
+        options.AddArguments("--disable-notifications"); // disable notifications
+
+        return options;
+    }
+
+    private void ValidateScheduleExaminationPage()
+    {
         _driver.Url.ShouldBe(ScheduleExaminationPage.URI);
         _scheduleExaminationPage.PatientSelectBoxDisplayed().ShouldBe(true);
         _scheduleExaminationPage.DatePickerDisplayed().ShouldBe(true);
@@ -74,11 +75,35 @@ public class ScheduleExaminationTests : IDisposable
         _scheduleExaminationPage.BackButtonDisplayed().ShouldBe(true);
     }
 
+    private void ValidateExaminationsPage()
+    {
+        _driver.Url.ShouldBe(ExaminationsPage.URI);
+        _examinationsPage.EnsurePageIsDisplayed();
+        _examinationsPage.ButtonDisplayed().ShouldBe(true);
+    }
+
+    private void ValidateCalendarPage()
+    {
+        _driver.Url.ShouldBe(CalendarPage.URI);
+        _calendarPage.ChooseButtonDisplayed().ShouldBe(true);
+        _calendarPage.CalendarDisplayed().ShouldBe(true);
+    }
+
+    private void ValidateLoginPage()
+    {
+        _driver.Url.ShouldBe(LoginPage.URI);
+        _loginPage.UsernameTextBoxDisplayed().ShouldBe(true);
+        _loginPage.PasswordTextBoxDisplayed().ShouldBe(true);
+        _loginPage.SubmitButtonDisplayed().ShouldBe(true);
+    }
+
     private void Login()
     {
         _loginPage.InsertUsername("doctor");
         _loginPage.InsertPassword("12345");
         _loginPage.Login();
+
+        _loginPage.WaitForLogin();
     }
 
     [Fact]
@@ -162,6 +187,8 @@ public class ScheduleExaminationTests : IDisposable
         _scheduleExaminationPage.InsertTime("13:00");
         _scheduleExaminationPage.InsertDuration("60");
         _scheduleExaminationPage.SubmitForm();
+
+        _scheduleExaminationPage.WaitForElementAppearance("submitError");
 
         _scheduleExaminationPage.SubmitErrorDisplayed().ShouldBe(true);
         _scheduleExaminationPage.GetSubmitError().ShouldBe(
