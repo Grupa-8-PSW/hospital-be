@@ -9,7 +9,7 @@ namespace IntegrationLibrary.Core.Service.Interfaces
 {
     public interface ITenderOfferService
     {
-        public TenderOffer Create(TenderOffer tenderOffer);
-        IEnumerable<TenderOffer> GetAll();
+        public tenderOfferDTO Create(tenderOfferDTO tenderOffer);
+        IEnumerable<tenderOfferDTO> GetAll();
     }
 }

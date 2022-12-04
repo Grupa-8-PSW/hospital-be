@@ -10,7 +10,7 @@ namespace IntegrationLibrary.Persistence
         public DbSet<BloodBank> BloodBanks { get; set; }
         public DbSet<BloodConsumptionConfiguration> BloodConsumptionConfiguration { get; set; }
         public DbSet<BloodBankNews> BloodBankNews { get; set; }
-        public DbSet<TenderOffer> TenderOffer { get; set; }
+        public DbSet<tenderOfferDTO> TenderOffer { get; set; }
         public IntegrationDbContext(DbContextOptions options) : base(options) { }
         public DbSet<Tender> Tenders { get; set; }
         
@@ -22,7 +22,7 @@ namespace IntegrationLibrary.Persistence
                 new BloodBank() { Id = 1, Email = "test@test.com", Name = "testName", ServerAddress = "htttp://localhost:8081/" }
             );
 
-            modelBuilder.Entity<TenderOffer>()
+            modelBuilder.Entity<tenderOfferDTO>()
              .Property(b => b.Offers)
              .HasColumnType("jsonb");
             modelBuilder.Entity<Tender>()

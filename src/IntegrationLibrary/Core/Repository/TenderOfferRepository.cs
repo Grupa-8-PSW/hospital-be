@@ -21,14 +21,14 @@ namespace IntegrationLibrary.Core.Repository
             _context = context;
         }
 
-        public TenderOffer Create(TenderOffer tenderOffer)
+        public tenderOfferDTO Create(tenderOfferDTO tenderOffer)
         {
             _context.TenderOffer.Add(tenderOffer);
             _context.SaveChanges();
             return tenderOffer;
         }
 
-        public IEnumerable<TenderOffer> GetAll()
+        public IEnumerable<tenderOfferDTO> GetAll()
         {
             return _context.TenderOffer.ToList();
         }
@@ -36,7 +36,7 @@ namespace IntegrationLibrary.Core.Repository
 
         //public List<Allergen> GetAllergensByDtoId(List<int> ids) => _dbContext.Allergens.Where(a => ids.Contains(a.Id)).ToList();
 
-        public IEnumerable<TenderOffer> GetAllByTennderID()
+        public IEnumerable<tenderOfferDTO> GetAllByTennderID()
         {
             throw new NotImplementedException();
         }

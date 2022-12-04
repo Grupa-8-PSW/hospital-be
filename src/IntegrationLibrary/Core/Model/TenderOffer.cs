@@ -8,7 +8,7 @@ using IntegrationLibrary.Core.Model.ValueObject;
 
 namespace IntegrationLibrary.Core.Model
 {
-    public class TenderOffer
+    public class tenderOfferDTO
     {
         public int Id { get; set; }
         [Required]
@@ -16,7 +16,7 @@ namespace IntegrationLibrary.Core.Model
         public List<BloodOffer> Offers { get; set; }
 
 
-        public TenderOffer()
+        public tenderOfferDTO()
         {
         }
     }

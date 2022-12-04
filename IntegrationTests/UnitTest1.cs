@@ -1,14 +1,28 @@
+using HospitalAPI;
 using IntegrationAPI.Connections;
+using IntegrationAPI.ConnectionService.Interface;
+using IntegrationAPI.Controllers;
+using IntegrationLibrary.Core.Model.DTO;
+using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Service.Interfaces;
+using IntegrationTeamTests.Setup;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
+using IntegrationLibrary.Core.Model.ValueObject;
 
 namespace IntegrationTests
 {
-    public class UnitTest1
+    public class BloodOfferTest
     {
+
         [Fact]
-        public void Test1()
+        public void CreateBloodOffer()
         {
+            // Arrange
+            BloodOffer bloodOffer = new BloodOffer("A-", 12, 421);
+
+            Assert.NotNull(bloodOffer);
             
         }
     }

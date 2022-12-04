@@ -19,12 +19,12 @@ namespace IntegrationLibrary.Core.Service
         }
 
 
-        public TenderOffer Create(TenderOffer tenderOffer)
+        public tenderOfferDTO Create(tenderOfferDTO tenderOffer)
         {
             return _repository.Create(tenderOffer);
         }
 
-        public IEnumerable<TenderOffer> GetAll()
+        public IEnumerable<tenderOfferDTO> GetAll()
         {
             return _repository.GetAll();
         }

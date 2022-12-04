@@ -17,6 +17,7 @@ namespace IntegrationAPI.Controllers
 
         // GET: api/rooms
         [HttpGet]
+        [Route("publishNews")]
         public ActionResult GetAll()
         {
             return Ok(hospitalHTTPConnectionService.GetAllBloodUnits());

@@ -38,13 +38,9 @@ namespace IntegrationTeamTests.Integration
 
             };
 
-
-
             // Act
             var retVal = controller.CreateConfiguration(dto) as OkObjectResult;
             
-
-
             //Assert
             BloodConsumptionConfiguration createdBloodConsumptionConfiguration = (BloodConsumptionConfiguration)retVal.Value;
             Assert.IsType<OkObjectResult>(retVal);
