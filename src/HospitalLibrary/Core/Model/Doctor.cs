@@ -19,7 +19,7 @@ namespace HospitalLibrary.Core.Model
         public Room Room { get; set; }
         public DateTime StartWork { get; set; }
         public DateTime EndWork { get; set; }
-
+        public virtual List<Consilium> Consiliums { get; set; }
         public DoctorSpecialization Specialization { get; set; }
         public Doctor()
         {
