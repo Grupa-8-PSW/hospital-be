@@ -24,6 +24,9 @@ using HospitalAPI.Security.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Text.Json.Serialization;
+using AngleSharp.Io;
+using HospitalAPI.Responses;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace HospitalAPI
@@ -62,6 +65,7 @@ namespace HospitalAPI
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+                    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
                 });
 
             services.AddSwaggerGen(c =>
@@ -140,9 +144,13 @@ namespace HospitalAPI
 
             services.AddScoped<IExaminationValidation, ExaminationValidation>();
 
-
             services.AddScoped<IMapper<Therapy, TherapyDTO>, TherapyMapper>();
 
+            services.AddScoped<IConsiliumRepository, ConsiliumRepository>();
+            services.AddScoped<IConsiliumService, ConsiliumService>();
+
+            services.AddScoped<IResponseMapper<Consilium, ConsiliumResponse>, ConsiliumResponseMapper>();
+            services.AddScoped<IResponseMapper<Doctor, ConsiliumDoctorResponse>, ConsiliumDoctorResponseMapper>();
 
             services.AddCors(options =>
             {
