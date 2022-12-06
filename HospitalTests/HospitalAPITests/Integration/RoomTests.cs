@@ -2,27 +2,6 @@
 using HospitalAPI.Controllers.Map;
 using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Model.DTO;
-using HospitalLibrary.GraphicalEditor.Service;
-using HospitalLibrary.GraphicalEditor.Service;
-
-using HospitalLibrary.GraphicalEditor.Service;
-
-using HospitalLibrary.GraphicalEditor.Service;
-
-using HospitalLibrary.GraphicalEditor.Service;
-
-using HospitalLibrary.GraphicalEditor.Service;
-
-using HospitalLibrary.GraphicalEditor.Service;
-
-using HospitalLibrary.GraphicalEditor.Service;
-
-using HospitalLibrary.GraphicalEditor.Service;
-
-using HospitalLibrary.GraphicalEditor.Service;
-
-using HospitalLibrary.GraphicalEditor.Service;
-
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using HospitalTests.HospitalAPITests.Setup;
 using Microsoft.AspNetCore.Mvc;
@@ -31,18 +10,9 @@ using Microsoft.Extensions.DependencyInjection;
 namespace HospitalTests.HospitalAPITests.Integration
 {
     public class RoomTests : BaseIntegrationTest
-        //[Fact]
-        //public void Finds_rooms_with_free_beds() {
-        //  var result = ((OkObjectResult)controller.GetFreeRooms())?.Value as List<RoomDTO>;
+    {
+        public RoomTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
 
-        //  Assert.NotNull(result);
-        //  Assert.IsType<List<RoomDTO>>(result);
-        //  Assert.NotEmpty(result);
-        //}
-
-        
-        [Fact]
-        
         private static RoomController SetupController(IServiceScope scope)
         {
             return new RoomController(scope.ServiceProvider.GetRequiredService<IRoomService>());
@@ -123,17 +93,8 @@ namespace HospitalTests.HospitalAPITests.Integration
 
             var result = ((OkObjectResult)controller.Search("Kafe"))?.Value as List<RoomDTO>;
 
-        [Fact]
-        public void Dates_for_trainsfering_equipments()
-        {
-            using var scope = Factory.Services.CreateScope();
-            var controller = SetupController(scope);
-            EquipmentTransferDTO dto = new EquipmentTransferDTO(1, 1, 2, new DateTime(2022, 11, 22, 00, 00, 00, DateTimeKind.Utc), new DateTime(2022, 11, 23, 00, 00, 00, DateTimeKind.Utc), 120, "Zavoji");
-            var freeSpace = ((OkObjectResult)controller.GetAvailableTerminsForTransfer(dto))?.Value as List<FreeSpaceDTO>;
 
-            Assert.NotNull(freeSpace);
-        }
-            
+
             Assert.IsType<List<RoomDTO>>(result);
             Assert.True(result.Count.Equals(1));
             Assert.True(result[0].Name.Equals("Kafeterija"));
@@ -153,6 +114,24 @@ namespace HospitalTests.HospitalAPITests.Integration
             Assert.True(result[0].Name.Equals("Fizioterapeut"));
         }
 
-        
+        //[Fact]
+        //public void Finds_rooms_with_free_beds() {
+        //  var result = ((OkObjectResult)controller.GetFreeRooms())?.Value as List<RoomDTO>;
+
+        //  Assert.NotNull(result);
+        //  Assert.IsType<List<RoomDTO>>(result);
+        //  Assert.NotEmpty(result);
+        //}
+
+        [Fact]
+        public void Dates_for_trainsfering_equipments()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            EquipmentTransferDTO dto = new EquipmentTransferDTO(1, 1, 2, new DateTime(2022, 11, 22, 00, 00, 00, DateTimeKind.Utc), new DateTime(2022, 11, 23, 00, 00, 00, DateTimeKind.Utc), 120, "Zavoji");
+            var freeSpace = ((OkObjectResult)controller.GetAvailableTerminsForTransfer(dto))?.Value as List<FreeSpaceDTO>;
+
+            Assert.NotNull(freeSpace);
+        }
     }
 }
