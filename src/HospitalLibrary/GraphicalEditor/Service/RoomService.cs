@@ -1,10 +1,7 @@
-using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.GraphicalEditor.Model;
-using HospitalLibrary.GraphicalEditor.Repository;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
-using System.Collections.Immutable;
 
 namespace HospitalLibrary.GraphicalEditor.Service
 {
