@@ -17,7 +17,7 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
         private readonly IWebDriver driver;
         private Pages.ManagerPage managerPage;
         private Pages.CreateBloodBankPage createBloodBankPage;
-
+        private int bloodBanksCount = 0;
 
         public CreateBloodBankTest()
         {
@@ -39,6 +39,7 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
             newManagerPage.Navigate();
             newManagerPage.EnsurePageIsDisplayed();
             Assert.True(newManagerPage.LinkDisplayed());
+            bloodBanksCount = newManagerPage.BloodBanksCount();
             newManagerPage.ClickLink();
 
 
@@ -126,6 +127,12 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
 
             Pages.ManagerPage newManagerPage = new Pages.ManagerPage(driver);
             newManagerPage.EnsurePageIsDisplayed();
+            Assert.True(newManagerPage.LinkDisplayed());
+
+            Assert.Equal(bloodBanksCount + 1, newManagerPage.BloodBanksCount());
+            Assert.Equal("email@mail.com", newManagerPage.GetLastRowEmail());
+            Assert.Equal("Banka", newManagerPage.GetLastRowName());
+            Assert.Equal("adresa.com", newManagerPage.GetLastRowServerAddress());
 
 
 
