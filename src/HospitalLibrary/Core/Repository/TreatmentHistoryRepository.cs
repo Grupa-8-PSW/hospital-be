@@ -58,6 +58,15 @@ namespace HospitalLibrary.Core.Repository
             _context.SaveChanges();
         }
 
+        public TreatmentHistory GetByIdEager(int id)
+        {
+            return _context.TreatmentHistories
+                .Include(th => th.Patient)
+                .Include(th => th.Bed)
+                .Include(th => th.Therapies)
+                .First((th) => th.Id == id);
+        }
+
         public IEnumerable<TreatmentHistory> GetAllActive()
         {
             return _context.TreatmentHistories.Include(th => th.Active == true).ToList();
@@ -69,6 +78,5 @@ namespace HospitalLibrary.Core.Repository
                      where th.Active == true
                      select th.Patient).ToList();
         }
-
     }
 }

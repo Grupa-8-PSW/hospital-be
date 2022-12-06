@@ -15,16 +15,19 @@ using HospitalAPI.Web.Mapper;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Validation;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
+using HospitalAPI.Mapper;
+using HospitalLibrary.Core.Util;
+using HospitalAPI.Connections;
 using Microsoft.AspNetCore.Identity;
 using HospitalAPI.Security;
 using HospitalAPI.Security.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Text.Json.Serialization;
+using AngleSharp.Io;
+using HospitalAPI.Responses;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
-using HospitalAPI.Mapper;
-using HospitalAPI.Connections;
 
 namespace HospitalAPI
 {
@@ -62,6 +65,7 @@ namespace HospitalAPI
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+                    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
                 });
 
             services.AddSwaggerGen(c =>
@@ -133,9 +137,20 @@ namespace HospitalAPI
 
             services.AddScoped<IBloodUnitRequestHTTPConnection, BloodUnitRequestHTTPConnection>();
 
+            services.AddScoped<IExaminationValidation, ExaminationValidation>();
+
+            services.AddScoped<IBloodUnitRepository, BloodUnitRepository>();
+            services.AddScoped<IBloodUnitService, BloodUnitService>();
+
+            services.AddScoped<IExaminationValidation, ExaminationValidation>();
 
             services.AddScoped<IMapper<Therapy, TherapyDTO>, TherapyMapper>();
-        
+
+            services.AddScoped<IConsiliumRepository, ConsiliumRepository>();
+            services.AddScoped<IConsiliumService, ConsiliumService>();
+
+            services.AddScoped<IResponseMapper<Consilium, ConsiliumResponse>, ConsiliumResponseMapper>();
+            services.AddScoped<IResponseMapper<Doctor, ConsiliumDoctorResponse>, ConsiliumDoctorResponseMapper>();
 
             services.AddCors(options =>
             {
@@ -143,14 +158,17 @@ namespace HospitalAPI
                       policy =>
                       {
                           policy.WithOrigins("http://localhost:4200")
-                          .AllowAnyHeader().AllowAnyMethod();
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .WithExposedHeaders("content-disposition");
                       });
                 options.AddPolicy(name: "PublicAllow",
                 policy =>
                 {
                     policy.AllowAnyOrigin()
                          .AllowAnyMethod()
-                         .AllowAnyHeader();
+                         .AllowAnyHeader()
+                         .WithExposedHeaders("content-disposition");
                 });
             });
 
@@ -186,18 +204,18 @@ namespace HospitalAPI
             });
             services.AddAuthentication();
             services.AddAuthorization();
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-          
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HospitalAPI v1"));
             }
+
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
             app.UseRouting();
 

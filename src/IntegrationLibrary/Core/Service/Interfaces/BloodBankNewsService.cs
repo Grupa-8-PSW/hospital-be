@@ -32,7 +32,7 @@ namespace IntegrationLibrary.Core.Service.Interfaces
             bloodBankNewsRepository.Update(bloodBankNews);
         }
 
-        public void Create(BloodBankNewsDTO bloodBankNewsDTO)
+        public void Create(BloodBankNewsMessageDTO bloodBankNewsDTO)
         {
             BloodBank bloodBank = bloodBankRepository.GetByApiKey(bloodBankNewsDTO.bloodBankApiKey);
             if (bloodBank != null)

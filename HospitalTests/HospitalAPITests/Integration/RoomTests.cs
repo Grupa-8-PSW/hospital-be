@@ -20,6 +20,7 @@ namespace HospitalTests.HospitalAPITests.Integration
     public class RoomTests : BaseIntegrationTest
     {
         public RoomTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
+        
         private static RoomController SetupController(IServiceScope scope)
         {
             return new RoomController(scope.ServiceProvider.GetRequiredService<IRoomService>());
@@ -37,12 +38,20 @@ namespace HospitalTests.HospitalAPITests.Integration
             Assert.NotNull(result);
         }
 
-        [Fact]
+        //[Fact]
+        //public void Finds_rooms_with_free_beds() {
+        //  var result = ((OkObjectResult)controller.GetFreeRooms())?.Value as List<RoomDTO>;
+
+        //  Assert.NotNull(result);
+        //  Assert.IsType<List<RoomDTO>>(result);
+        //  Assert.NotEmpty(result);
+        //}
+
+        
         public void Searches_rooms_with_same_name()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-
             var result = ((OkObjectResult)controller.Search("Magacin"))?.Value as List<RoomDTO>;
 
             Assert.NotNull(result);
@@ -119,6 +128,5 @@ namespace HospitalTests.HospitalAPITests.Integration
             Assert.True(result.Count.Equals(1));
             Assert.True(result[0].Name.Equals("Fizioterapeut"));
         }
-
     }
 }

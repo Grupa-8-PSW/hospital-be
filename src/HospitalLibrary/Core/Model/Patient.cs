@@ -21,6 +21,8 @@ namespace HospitalLibrary.Core.Model
         public int UserId { get; set; }
 
         public Patient(int id, string firstName, string lastName, string email, string pin, Gender gender, BloodType bloodType, int addressId, int selectedDoctorId, int userId)
+        public Patient(int id, string firstName, string lastName, string email, string pin, Gender gender,
+            BloodType bloodType, int addressId, int selectedDoctorId)
         {
             Id = id;
             FirstName = firstName;
@@ -36,15 +38,17 @@ namespace HospitalLibrary.Core.Model
 
         public Patient(int id, string firstName, string lastName)
         {
-            Id = id;
-            FirstName = firstName;
-            LastName = lastName;
+            this.Id = id;
+            this.FirstName = firstName;
+            this.LastName = lastName;
         }
 
         public Patient()
         {
 
         }
+
+
     }
 
 }
