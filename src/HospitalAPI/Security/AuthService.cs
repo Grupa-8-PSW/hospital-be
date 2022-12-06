@@ -78,6 +78,8 @@ namespace HospitalAPI.Security
             if (registerRequest.RegisterUser != null)
             {
                 var p = _mapper.Map<Patient>(registerRequest.RegisterUser);
+                p.SelectedDoctorId = 1;
+                p.UserId = registerUser.Id;
                 var patientAllergens = _allergensRepository
                     .GetAllergensByDtoId(p.Allergens.Select(a => a.Id).ToList());
                 _patientService.CreateAndAddAllergens(p, patientAllergens);
@@ -91,6 +93,7 @@ namespace HospitalAPI.Security
             var userRoles = await _userManager.GetRolesAsync(user);
             return new UserDTO()
             {
+                Id = user.Id,
                 Username = user.UserName,
                 Role = userRoles[0],
                 Id = user.Id
@@ -106,8 +109,10 @@ namespace HospitalAPI.Security
                 Subject = new ClaimsIdentity(new[]
                 {
                     new Claim("Username", user.Username),
+                    new Claim("UserId", user.Id.ToString()),
                     new Claim(ClaimTypes.Role, user.Role),
-                    new Claim("Id", user.Id.ToString())
+                    
+                }),
         }),
                 Issuer = issuer,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secret), SecurityAlgorithms.HmacSha512Signature)

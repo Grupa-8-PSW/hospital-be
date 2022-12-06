@@ -23,5 +23,10 @@ namespace HospitalLibrary.Core.Repository
             return _dbContext.Patients.Where(p => p.SelectedDoctorId == id).ToList();
         } 
 
+        public Patient GetByUserId(int userId)
+        {
+            return (Patient)_dbContext.Patients.FirstOrDefault(p => p.UserId == userId);
+        }
+
     }
 }
