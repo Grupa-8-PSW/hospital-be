@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.GraphicalEditor.Model;
+using HospitalLibrary.GraphicalEditor.Model.DTO;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
@@ -45,6 +46,12 @@ namespace HospitalLibrary.GraphicalEditor.Repository
         public IEnumerable<Room> GetFreeRooms()
         {
             return _context.Rooms.Where(r => r.Beds.Where(b => b.Available).ToList().Count > 0);
+        }
+
+
+        public IEnumerable<Room> GetTransferedEquipment(EquipmentTransferDTO dto)
+        {
+            return _context.Rooms.ToList();
         }
 
     }

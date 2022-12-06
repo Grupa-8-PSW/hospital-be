@@ -1,4 +1,6 @@
-﻿using HospitalLibrary.GraphicalEditor.Model;
+﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.GraphicalEditor.Model;
+using HospitalLibrary.GraphicalEditor.Model.DTO;
 
 namespace HospitalLibrary.GraphicalEditor.Service.Interfaces
 {
@@ -12,5 +14,7 @@ namespace HospitalLibrary.GraphicalEditor.Service.Interfaces
 
         IEnumerable<Room> GetRoomsByFloorId(int id);
         public IEnumerable<Room> GetFreeRooms();
+
+        List<FreeSpaceDTO> GetTransferedEquipment(EquipmentTransferDTO dto);
     }
 }

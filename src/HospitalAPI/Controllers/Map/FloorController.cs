@@ -8,7 +8,7 @@ namespace HospitalAPI.Controllers.Map
 {
     [Route("api/map/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Manager")]
+    //[Authorize(Roles = "Manager")]
     public class FloorController : ControllerBase
     {
         private readonly IFloorService _floorService;
