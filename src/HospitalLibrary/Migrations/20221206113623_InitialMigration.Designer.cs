@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221130223019_UpdatePatientModel")]
-    partial class UpdatePatientModel
+    [Migration("20221206113623_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,21 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("PatientsId");
 
                     b.ToTable("AllergenPatient");
+                });
+
+            modelBuilder.Entity("ConsiliumDoctor", b =>
+                {
+                    b.Property<int>("ConsiliumsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("DoctorsId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ConsiliumsId", "DoctorsId");
+
+                    b.HasIndex("DoctorsId");
+
+                    b.ToTable("ConsiliumDoctor");
                 });
 
             modelBuilder.Entity("FloorRoom", b =>
@@ -414,16 +429,48 @@ namespace HospitalLibrary.Migrations
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ManagerComment")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Reason")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
 
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DoctorId");
+
                     b.ToTable("BloodUnitRequests");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Consilium", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Consiliums");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
@@ -783,6 +830,30 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("TreatmentHistoryId");
 
                     b.ToTable("Therapies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Amount = 1,
+                            DoctorId = 1,
+                            Reason = "Headache",
+                            TherapySubject = "Bromazepam 500mg",
+                            TherapyType = 0,
+                            TreatmentHistoryId = 1,
+                            WhenPrescribed = new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(3006)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Amount = 1,
+                            DoctorId = 2,
+                            Reason = "Blood loss",
+                            TherapySubject = "A+ 500ml",
+                            TherapyType = 1,
+                            TreatmentHistoryId = 1,
+                            WhenPrescribed = new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(3007)
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.TreatmentHistory", b =>
@@ -836,11 +907,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 1,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2022, 11, 30, 22, 30, 18, 778, DateTimeKind.Utc).AddTicks(2143),
+                            EndDate = new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2975),
                             PatientId = 1,
                             Reason = "reason1",
                             RoomId = 1,
-                            StartDate = new DateTime(2022, 11, 30, 22, 30, 18, 778, DateTimeKind.Utc).AddTicks(2141)
+                            StartDate = new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2974)
                         },
                         new
                         {
@@ -848,11 +919,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 2,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2022, 11, 30, 22, 30, 18, 778, DateTimeKind.Utc).AddTicks(2151),
+                            EndDate = new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2978),
                             PatientId = 2,
                             Reason = "reason2",
                             RoomId = 1,
-                            StartDate = new DateTime(2022, 11, 30, 22, 30, 18, 778, DateTimeKind.Utc).AddTicks(2150)
+                            StartDate = new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2978)
                         },
                         new
                         {
@@ -860,11 +931,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 4,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2022, 11, 30, 22, 30, 18, 778, DateTimeKind.Utc).AddTicks(2152),
+                            EndDate = new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2979),
                             PatientId = 3,
                             Reason = "reason3",
                             RoomId = 2,
-                            StartDate = new DateTime(2022, 11, 30, 22, 30, 18, 778, DateTimeKind.Utc).AddTicks(2152)
+                            StartDate = new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2979)
                         },
                         new
                         {
@@ -875,7 +946,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 1,
                             Reason = "reason1",
                             RoomId = 1,
-                            StartDate = new DateTime(2022, 11, 30, 22, 30, 18, 778, DateTimeKind.Utc).AddTicks(2153)
+                            StartDate = new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2980)
                         },
                         new
                         {
@@ -886,7 +957,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 2,
                             Reason = "reason2",
                             RoomId = 1,
-                            StartDate = new DateTime(2022, 11, 30, 22, 30, 18, 778, DateTimeKind.Utc).AddTicks(2155)
+                            StartDate = new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2980)
                         },
                         new
                         {
@@ -897,7 +968,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 3,
                             Reason = "reason3",
                             RoomId = 2,
-                            StartDate = new DateTime(2022, 11, 30, 22, 30, 18, 778, DateTimeKind.Utc).AddTicks(2156)
+                            StartDate = new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2981)
                         });
                 });
 
@@ -2026,6 +2097,21 @@ namespace HospitalLibrary.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ConsiliumDoctor", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Consilium", null)
+                        .WithMany()
+                        .HasForeignKey("ConsiliumsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HospitalLibrary.Core.Model.Doctor", null)
+                        .WithMany()
+                        .HasForeignKey("DoctorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("FloorRoom", b =>
                 {
                     b.HasOne("HospitalLibrary.GraphicalEditor.Model.Floor", null)
@@ -2047,6 +2133,42 @@ namespace HospitalLibrary.Migrations
                         .WithMany("Beds")
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.BloodUnitRequest", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Consilium", b =>
+                {
+                    b.OwnsOne("HospitalLibrary.Core.Model.ValueObjects.DateRange", "Interval", b1 =>
+                        {
+                            b1.Property<int>("ConsiliumId")
+                                .HasColumnType("integer");
+
+                            b1.Property<DateTime>("From")
+                                .HasColumnType("timestamp with time zone");
+
+                            b1.Property<DateTime>("To")
+                                .HasColumnType("timestamp with time zone");
+
+                            b1.HasKey("ConsiliumId");
+
+                            b1.ToTable("Consiliums");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ConsiliumId");
+                        });
+
+                    b.Navigation("Interval")
                         .IsRequired();
                 });
 
