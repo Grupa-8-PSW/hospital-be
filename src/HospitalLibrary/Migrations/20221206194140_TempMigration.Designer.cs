@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221129133911_InitMigration")]
-    partial class InitMigration
+    [Migration("20221206194140_TempMigration")]
+    partial class TempMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,21 +37,6 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("PatientsId");
 
                     b.ToTable("AllergenPatient");
-                });
-
-            modelBuilder.Entity("FloorRoom", b =>
-                {
-                    b.Property<int>("FloorsId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("RoomsId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("FloorsId", "RoomsId");
-
-                    b.HasIndex("RoomsId");
-
-                    b.ToTable("FloorRoom");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Address", b =>
@@ -476,22 +461,22 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 1,
-                            EndWork = new DateTime(1998, 4, 30, 15, 0, 0, 0, DateTimeKind.Utc),
-                            FirstName = "Zeljko",
-                            LastName = "Babic",
+                            EndWork = new DateTime(2022, 11, 22, 18, 10, 10, 0, DateTimeKind.Utc),
+                            FirstName = "Pera",
+                            LastName = "Peric",
                             RoomId = 1,
                             Specialization = 0,
-                            StartWork = new DateTime(1998, 4, 30, 7, 0, 0, 0, DateTimeKind.Utc)
+                            StartWork = new DateTime(2022, 11, 22, 10, 10, 10, 0, DateTimeKind.Utc)
                         },
                         new
                         {
                             Id = 2,
-                            EndWork = new DateTime(1998, 4, 30, 16, 0, 0, 0, DateTimeKind.Utc),
-                            FirstName = "Bora",
-                            LastName = "Stevanovic",
-                            RoomId = 2,
+                            EndWork = new DateTime(2022, 11, 22, 19, 10, 10, 0, DateTimeKind.Utc),
+                            FirstName = "Sergej",
+                            LastName = "Milinkovic-Savic",
+                            RoomId = 1,
                             Specialization = 0,
-                            StartWork = new DateTime(1998, 4, 30, 8, 0, 0, 0, DateTimeKind.Utc)
+                            StartWork = new DateTime(2022, 11, 22, 10, 10, 10, 0, DateTimeKind.Utc)
                         });
                 });
 
@@ -527,6 +512,44 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("Examinations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DoctorId = 1,
+                            Duration = 300,
+                            PatientId = 1,
+                            RoomId = 1,
+                            StartTime = new DateTime(2022, 11, 22, 2, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DoctorId = 2,
+                            Duration = 120,
+                            PatientId = 2,
+                            RoomId = 2,
+                            StartTime = new DateTime(2022, 11, 22, 7, 30, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DoctorId = 1,
+                            Duration = 420,
+                            PatientId = 3,
+                            RoomId = 1,
+                            StartTime = new DateTime(2022, 11, 22, 11, 30, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DoctorId = 2,
+                            Duration = 150,
+                            PatientId = 4,
+                            RoomId = 2,
+                            StartTime = new DateTime(2022, 11, 22, 20, 30, 0, 0, DateTimeKind.Utc)
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Feedback", b =>
@@ -799,7 +822,7 @@ namespace HospitalLibrary.Migrations
                             TherapySubject = "Bromazepam 500mg",
                             TherapyType = 0,
                             TreatmentHistoryId = 1,
-                            WhenPrescribed = new DateTime(2022, 11, 29, 13, 39, 10, 774, DateTimeKind.Utc).AddTicks(2590)
+                            WhenPrescribed = new DateTime(2022, 12, 6, 19, 41, 40, 83, DateTimeKind.Utc).AddTicks(698)
                         },
                         new
                         {
@@ -810,7 +833,7 @@ namespace HospitalLibrary.Migrations
                             TherapySubject = "A+ 500ml",
                             TherapyType = 1,
                             TreatmentHistoryId = 1,
-                            WhenPrescribed = new DateTime(2022, 11, 29, 13, 39, 10, 774, DateTimeKind.Utc).AddTicks(2593)
+                            WhenPrescribed = new DateTime(2022, 12, 6, 19, 41, 40, 83, DateTimeKind.Utc).AddTicks(700)
                         });
                 });
 
@@ -865,11 +888,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 1,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2022, 11, 29, 13, 39, 10, 774, DateTimeKind.Utc).AddTicks(2534),
+                            EndDate = new DateTime(2022, 12, 6, 19, 41, 40, 83, DateTimeKind.Utc).AddTicks(642),
                             PatientId = 1,
                             Reason = "reason1",
                             RoomId = 1,
-                            StartDate = new DateTime(2022, 11, 29, 13, 39, 10, 774, DateTimeKind.Utc).AddTicks(2533)
+                            StartDate = new DateTime(2022, 12, 6, 19, 41, 40, 83, DateTimeKind.Utc).AddTicks(640)
                         },
                         new
                         {
@@ -877,11 +900,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 2,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2022, 11, 29, 13, 39, 10, 774, DateTimeKind.Utc).AddTicks(2540),
+                            EndDate = new DateTime(2022, 12, 6, 19, 41, 40, 83, DateTimeKind.Utc).AddTicks(646),
                             PatientId = 2,
                             Reason = "reason2",
                             RoomId = 1,
-                            StartDate = new DateTime(2022, 11, 29, 13, 39, 10, 774, DateTimeKind.Utc).AddTicks(2539)
+                            StartDate = new DateTime(2022, 12, 6, 19, 41, 40, 83, DateTimeKind.Utc).AddTicks(646)
                         },
                         new
                         {
@@ -889,11 +912,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 4,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2022, 11, 29, 13, 39, 10, 774, DateTimeKind.Utc).AddTicks(2542),
+                            EndDate = new DateTime(2022, 12, 6, 19, 41, 40, 83, DateTimeKind.Utc).AddTicks(648),
                             PatientId = 3,
                             Reason = "reason3",
                             RoomId = 2,
-                            StartDate = new DateTime(2022, 11, 29, 13, 39, 10, 774, DateTimeKind.Utc).AddTicks(2541)
+                            StartDate = new DateTime(2022, 12, 6, 19, 41, 40, 83, DateTimeKind.Utc).AddTicks(648)
                         },
                         new
                         {
@@ -904,7 +927,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 1,
                             Reason = "reason1",
                             RoomId = 1,
-                            StartDate = new DateTime(2022, 11, 29, 13, 39, 10, 774, DateTimeKind.Utc).AddTicks(2544)
+                            StartDate = new DateTime(2022, 12, 6, 19, 41, 40, 83, DateTimeKind.Utc).AddTicks(649)
                         },
                         new
                         {
@@ -915,7 +938,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 2,
                             Reason = "reason2",
                             RoomId = 1,
-                            StartDate = new DateTime(2022, 11, 29, 13, 39, 10, 774, DateTimeKind.Utc).AddTicks(2545)
+                            StartDate = new DateTime(2022, 12, 6, 19, 41, 40, 83, DateTimeKind.Utc).AddTicks(651)
                         },
                         new
                         {
@@ -926,7 +949,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 3,
                             Reason = "reason3",
                             RoomId = 2,
-                            StartDate = new DateTime(2022, 11, 29, 13, 39, 10, 774, DateTimeKind.Utc).AddTicks(2547)
+                            StartDate = new DateTime(2022, 12, 6, 19, 41, 40, 83, DateTimeKind.Utc).AddTicks(652)
                         });
                 });
 
@@ -1015,191 +1038,44 @@ namespace HospitalLibrary.Migrations
 
                     b.HasKey("EquipmentId");
 
-                    b.ToTable("Equipments");
+                    b.HasIndex("RoomId");
 
-                    b.HasData(
-                        new
-                        {
-                            EquipmentId = 1,
-                            Amount = 2,
-                            Name = "Krevet",
-                            RoomId = 1
-                        },
-                        new
-                        {
-                            EquipmentId = 2,
-                            Amount = 2,
-                            Name = "Stetoskop",
-                            RoomId = 1
-                        },
-                        new
-                        {
-                            EquipmentId = 3,
-                            Amount = 4,
-                            Name = "Stolica",
-                            RoomId = 1
-                        },
-                        new
-                        {
-                            EquipmentId = 4,
-                            Amount = 20,
-                            Name = "Stolica",
-                            RoomId = 2
-                        },
-                        new
-                        {
-                            EquipmentId = 5,
-                            Amount = 2,
-                            Name = "Aparat za kafu",
-                            RoomId = 2
-                        },
-                        new
-                        {
-                            EquipmentId = 6,
-                            Amount = 4,
-                            Name = "Fotelja",
-                            RoomId = 2
-                        },
-                        new
-                        {
-                            EquipmentId = 7,
-                            Amount = 2,
-                            Name = "Spric za ispiranje usiju",
-                            RoomId = 3
-                        },
-                        new
-                        {
-                            EquipmentId = 8,
-                            Amount = 3,
-                            Name = "Otoskop",
-                            RoomId = 3
-                        },
-                        new
-                        {
-                            EquipmentId = 9,
-                            Amount = 2,
-                            Name = "Stetoskop",
-                            RoomId = 4
-                        },
-                        new
-                        {
-                            EquipmentId = 10,
-                            Amount = 3,
-                            Name = "Bolnicki krevet",
-                            RoomId = 4
-                        },
-                        new
-                        {
-                            EquipmentId = 11,
-                            Amount = 2,
-                            Name = "Aparat za merenje pritiska",
-                            RoomId = 4
-                        },
-                        new
-                        {
-                            EquipmentId = 12,
-                            Amount = 4,
-                            Name = "Stolica",
-                            RoomId = 5
-                        },
-                        new
-                        {
-                            EquipmentId = 13,
-                            Amount = 50,
-                            Name = "Zavoji",
-                            RoomId = 6
-                        },
-                        new
-                        {
-                            EquipmentId = 14,
-                            Amount = 24,
-                            Name = "Spricevi",
-                            RoomId = 6
-                        },
-                        new
-                        {
-                            EquipmentId = 15,
-                            Amount = 12,
-                            Name = "Gips",
-                            RoomId = 6
-                        },
-                        new
-                        {
-                            EquipmentId = 16,
-                            Amount = 200,
-                            Name = "Flasteri",
-                            RoomId = 6
-                        },
-                        new
-                        {
-                            EquipmentId = 17,
-                            Amount = 20,
-                            Name = "Bolnicki krevet",
-                            RoomId = 7
-                        },
-                        new
-                        {
-                            EquipmentId = 18,
-                            Amount = 20,
-                            Name = "Infuzija",
-                            RoomId = 7
-                        },
-                        new
-                        {
-                            EquipmentId = 19,
-                            Amount = 20,
-                            Name = "Stolica",
-                            RoomId = 8
-                        },
-                        new
-                        {
-                            EquipmentId = 20,
-                            Amount = 2,
-                            Name = "Stetoskop",
-                            RoomId = 9
-                        },
-                        new
-                        {
-                            EquipmentId = 21,
-                            Amount = 4,
-                            Name = "Stolica",
-                            RoomId = 10
-                        },
-                        new
-                        {
-                            EquipmentId = 22,
-                            Amount = 2,
-                            Name = "Krevet",
-                            RoomId = 11
-                        },
-                        new
-                        {
-                            EquipmentId = 23,
-                            Amount = 2,
-                            Name = "Stetoskop",
-                            RoomId = 12
-                        },
-                        new
-                        {
-                            EquipmentId = 24,
-                            Amount = 4,
-                            Name = "Infuzija",
-                            RoomId = 13
-                        },
-                        new
-                        {
-                            EquipmentId = 25,
-                            Amount = 1,
-                            Name = "Fotelja",
-                            RoomId = 13
-                        },
-                        new
-                        {
-                            EquipmentId = 26,
-                            Amount = 20,
-                            Name = "Stolica",
-                            RoomId = 13
-                        });
+                    b.ToTable("Equipments");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.EquipmentTransfer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("EquipmentName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("FromRoomId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("ToRoomId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EquipmentTransfers");
                 });
 
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Floor", b =>
@@ -1381,15 +1257,15 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Pregledi za decu",
+                            Description = "Neuroloske operacije i zahvati",
                             EndHourSaturday = "17:00h",
                             EndHourSunday = "CLOSED",
                             EndHourWorkDay = "17:00h",
-                            Name = "101,Pedijatrija",
+                            Name = "101,Neurohirurgija",
                             RoomId = 1,
                             StartHourSaturday = "12:00h",
                             StartHourSunday = "CLOSED",
-                            StartHourWorkDay = "10:00h"
+                            StartHourWorkDay = "8:00h"
                         },
                         new
                         {
@@ -1589,11 +1465,11 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 17,
-                            Description = "...",
+                            Description = "Operacija endokrinog sistema",
                             EndHourSaturday = "17:00h",
                             EndHourSunday = "CLOSED",
                             EndHourWorkDay = "17:00h",
-                            Name = "102b,Pedijatrija",
+                            Name = "102b,Endokrinologija",
                             RoomId = 17,
                             StartHourSaturday = "12:00h",
                             StartHourSunday = "CLOSED",
@@ -1742,35 +1618,6 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("MapForms");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Map.MapRoom", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Height")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Width")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("X")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Y")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("MapRooms");
-                });
-
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Room", b =>
                 {
                     b.Property<int>("Id")
@@ -1779,33 +1626,23 @@ namespace HospitalLibrary.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Color")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<int>("FloorId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Height")
                         .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Width")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("X")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Y")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("FloorId");
 
                     b.ToTable("Rooms");
 
@@ -1813,230 +1650,154 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 1,
-                            Color = "blue",
                             FloorId = 1,
-                            Height = 160,
-                            Name = "Pedijatrija",
-                            Type = 0,
-                            Width = 260,
-                            X = 0,
-                            Y = 0
+                            Name = "Neurohirurgija",
+                            Number = "101",
+                            Type = 3
                         },
                         new
                         {
                             Id = 2,
-                            Color = "blue",
                             FloorId = 1,
-                            Height = 140,
                             Name = "Kafeterija",
-                            Type = 0,
-                            Width = 220,
-                            X = 0,
-                            Y = 338
+                            Number = "102",
+                            Type = 2
                         },
                         new
                         {
                             Id = 3,
-                            Color = "blue",
                             FloorId = 1,
-                            Height = 180,
                             Name = "Otorinolaringologija",
-                            Type = 0,
-                            Width = 300,
-                            X = 237,
-                            Y = 0
+                            Number = "103",
+                            Type = 0
                         },
                         new
                         {
                             Id = 4,
-                            Color = "blue",
                             FloorId = 2,
-                            Height = 100,
                             Name = "Fizioterapeut",
-                            Type = 0,
-                            Width = 200,
-                            X = 270,
-                            Y = 378
+                            Number = "201",
+                            Type = 0
                         },
                         new
                         {
                             Id = 5,
-                            Color = "blue",
                             FloorId = 2,
-                            Height = 180,
                             Name = "Stomatologija",
-                            Type = 0,
-                            Width = 360,
-                            X = 0,
-                            Y = 0
+                            Number = "202",
+                            Type = 0
                         },
                         new
                         {
                             Id = 6,
-                            Color = "blue",
                             FloorId = 3,
-                            Height = 180,
                             Name = "Magacin",
-                            Type = 0,
-                            Width = 260,
-                            X = 0,
-                            Y = 0
+                            Number = "301",
+                            Type = 4
                         },
                         new
                         {
                             Id = 7,
-                            Color = "blue",
                             FloorId = 3,
-                            Height = 140,
                             Name = "Opsta nega",
-                            Type = 0,
-                            Width = 220,
-                            X = 0,
-                            Y = 338
+                            Number = "302",
+                            Type = 0
                         },
                         new
                         {
                             Id = 8,
-                            Color = "blue",
                             FloorId = 3,
-                            Height = 140,
                             Name = "Cekaonica",
-                            Type = 0,
-                            Width = 220,
-                            X = 330,
-                            Y = 158
+                            Number = "303",
+                            Type = 0
                         },
                         new
                         {
                             Id = 9,
-                            Color = "blue",
                             FloorId = 4,
-                            Height = 170,
                             Name = "Kardiologija",
-                            Type = 0,
-                            Width = 320,
-                            X = 0,
-                            Y = 0
+                            Number = "101a",
+                            Type = 3
                         },
                         new
                         {
                             Id = 10,
-                            Color = "blue",
                             FloorId = 4,
-                            Height = 140,
                             Name = "Vaskularne bolesti",
-                            Type = 0,
-                            Width = 220,
-                            X = 0,
-                            Y = 365
+                            Number = "102a",
+                            Type = 0
                         },
                         new
                         {
                             Id = 11,
-                            Color = "blue",
                             FloorId = 4,
-                            Height = 140,
                             Name = "Hirurgija",
-                            Type = 0,
-                            Width = 220,
-                            X = 245,
-                            Y = 0
+                            Number = "103a",
+                            Type = 3
                         },
                         new
                         {
                             Id = 12,
-                            Color = "blue",
                             FloorId = 5,
-                            Height = 140,
                             Name = "Papirologija",
-                            Type = 0,
-                            Width = 220,
-                            X = 0,
-                            Y = 0
+                            Number = "201a",
+                            Type = 0
                         },
                         new
                         {
                             Id = 13,
-                            Color = "blue",
                             FloorId = 5,
-                            Height = 140,
                             Name = "Prijavna soba",
-                            Type = 0,
-                            Width = 220,
-                            X = 200,
-                            Y = 0
+                            Number = "202a",
+                            Type = 0
                         },
                         new
                         {
                             Id = 14,
-                            Color = "blue",
                             FloorId = 5,
-                            Height = 140,
                             Name = "Uplasta/isplata",
-                            Type = 0,
-                            Width = 220,
-                            X = 0,
-                            Y = 350
+                            Number = "203a",
+                            Type = 0
                         },
                         new
                         {
                             Id = 15,
-                            Color = "blue",
                             FloorId = 5,
-                            Height = 140,
                             Name = "Izgubljeno/nadjeno",
-                            Type = 0,
-                            Width = 220,
-                            X = 200,
-                            Y = 350
+                            Number = "204a",
+                            Type = 0
                         },
                         new
                         {
                             Id = 16,
-                            Color = "blue",
                             FloorId = 6,
-                            Height = 190,
                             Name = "Onkologija",
-                            Type = 0,
-                            Width = 320,
-                            X = 0,
-                            Y = 0
+                            Number = "101b",
+                            Type = 0
                         },
                         new
                         {
                             Id = 17,
-                            Color = "blue",
                             FloorId = 6,
-                            Height = 240,
-                            Name = "Onkologija",
-                            Type = 0,
-                            Width = 250,
-                            X = 200,
-                            Y = 300
+                            Name = "Endokrinologija",
+                            Number = "102b",
+                            Type = 3
                         },
                         new
                         {
                             Id = 18,
-                            Color = "blue",
                             FloorId = 7,
-                            Height = 280,
                             Name = "Gastronomija",
-                            Type = 0,
-                            Width = 420,
-                            X = 50,
-                            Y = 100
+                            Number = "201b",
+                            Type = 0
                         },
                         new
                         {
                             Id = 19,
-                            Color = "blue",
                             FloorId = 8,
-                            Height = 170,
                             Name = "Magacin",
-                            Type = 0,
-                            Width = 320,
-                            X = 100,
-                            Y = 138
+                            Number = "301b",
+                            Type = 4
                         });
                 });
 
@@ -2051,21 +1812,6 @@ namespace HospitalLibrary.Migrations
                     b.HasOne("HospitalLibrary.Core.Model.Patient", null)
                         .WithMany()
                         .HasForeignKey("PatientsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FloorRoom", b =>
-                {
-                    b.HasOne("HospitalLibrary.GraphicalEditor.Model.Floor", null)
-                        .WithMany()
-                        .HasForeignKey("FloorsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HospitalLibrary.GraphicalEditor.Model.Room", null)
-                        .WithMany()
-                        .HasForeignKey("RoomsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -2204,6 +1950,15 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Room");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Equipment", b =>
+                {
+                    b.HasOne("HospitalLibrary.GraphicalEditor.Model.Room", null)
+                        .WithMany("Equipment")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Floor", b =>
                 {
                     b.HasOne("HospitalLibrary.GraphicalEditor.Model.Building", "Building")
@@ -2237,6 +1992,222 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Floor");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Room", b =>
+                {
+                    b.HasOne("HospitalLibrary.GraphicalEditor.Model.Floor", "Floor")
+                        .WithMany("Rooms")
+                        .HasForeignKey("FloorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("HospitalLibrary.GraphicalEditor.Model.Map.MapRoom", "Map", b1 =>
+                        {
+                            b1.Property<int>("RoomId")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Color")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<int>("Height")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("Width")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("X")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("Y")
+                                .HasColumnType("integer");
+
+                            b1.HasKey("RoomId");
+
+                            b1.ToTable("MapRooms");
+
+                            b1.WithOwner()
+                                .HasForeignKey("RoomId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    RoomId = 1,
+                                    Color = "blue",
+                                    Height = 160,
+                                    Width = 260,
+                                    X = 0,
+                                    Y = 0
+                                },
+                                new
+                                {
+                                    RoomId = 2,
+                                    Color = "blue",
+                                    Height = 140,
+                                    Width = 220,
+                                    X = 0,
+                                    Y = 338
+                                },
+                                new
+                                {
+                                    RoomId = 3,
+                                    Color = "blue",
+                                    Height = 180,
+                                    Width = 300,
+                                    X = 237,
+                                    Y = 0
+                                },
+                                new
+                                {
+                                    RoomId = 4,
+                                    Color = "blue",
+                                    Height = 100,
+                                    Width = 200,
+                                    X = 270,
+                                    Y = 378
+                                },
+                                new
+                                {
+                                    RoomId = 5,
+                                    Color = "blue",
+                                    Height = 180,
+                                    Width = 360,
+                                    X = 0,
+                                    Y = 0
+                                },
+                                new
+                                {
+                                    RoomId = 6,
+                                    Color = "blue",
+                                    Height = 180,
+                                    Width = 260,
+                                    X = 0,
+                                    Y = 0
+                                },
+                                new
+                                {
+                                    RoomId = 7,
+                                    Color = "blue",
+                                    Height = 140,
+                                    Width = 220,
+                                    X = 0,
+                                    Y = 338
+                                },
+                                new
+                                {
+                                    RoomId = 8,
+                                    Color = "blue",
+                                    Height = 140,
+                                    Width = 220,
+                                    X = 330,
+                                    Y = 158
+                                },
+                                new
+                                {
+                                    RoomId = 9,
+                                    Color = "blue",
+                                    Height = 170,
+                                    Width = 320,
+                                    X = 0,
+                                    Y = 0
+                                },
+                                new
+                                {
+                                    RoomId = 10,
+                                    Color = "blue",
+                                    Height = 140,
+                                    Width = 220,
+                                    X = 0,
+                                    Y = 365
+                                },
+                                new
+                                {
+                                    RoomId = 11,
+                                    Color = "blue",
+                                    Height = 140,
+                                    Width = 220,
+                                    X = 245,
+                                    Y = 0
+                                },
+                                new
+                                {
+                                    RoomId = 12,
+                                    Color = "blue",
+                                    Height = 140,
+                                    Width = 220,
+                                    X = 0,
+                                    Y = 0
+                                },
+                                new
+                                {
+                                    RoomId = 13,
+                                    Color = "blue",
+                                    Height = 140,
+                                    Width = 220,
+                                    X = 200,
+                                    Y = 0
+                                },
+                                new
+                                {
+                                    RoomId = 14,
+                                    Color = "blue",
+                                    Height = 140,
+                                    Width = 220,
+                                    X = 0,
+                                    Y = 350
+                                },
+                                new
+                                {
+                                    RoomId = 15,
+                                    Color = "blue",
+                                    Height = 140,
+                                    Width = 220,
+                                    X = 200,
+                                    Y = 350
+                                },
+                                new
+                                {
+                                    RoomId = 16,
+                                    Color = "blue",
+                                    Height = 190,
+                                    Width = 320,
+                                    X = 0,
+                                    Y = 0
+                                },
+                                new
+                                {
+                                    RoomId = 17,
+                                    Color = "blue",
+                                    Height = 240,
+                                    Width = 250,
+                                    X = 200,
+                                    Y = 300
+                                },
+                                new
+                                {
+                                    RoomId = 18,
+                                    Color = "blue",
+                                    Height = 280,
+                                    Width = 420,
+                                    X = 50,
+                                    Y = 100
+                                },
+                                new
+                                {
+                                    RoomId = 19,
+                                    Color = "blue",
+                                    Height = 170,
+                                    Width = 320,
+                                    X = 100,
+                                    Y = 138
+                                });
+                        });
+
+                    b.Navigation("Floor");
+
+                    b.Navigation("Map")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.Patient", b =>
                 {
                     b.Navigation("Feedbacks");
@@ -2259,11 +2230,15 @@ namespace HospitalLibrary.Migrations
                 {
                     b.Navigation("Map")
                         .IsRequired();
+
+                    b.Navigation("Rooms");
                 });
 
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Room", b =>
                 {
                     b.Navigation("Beds");
+
+                    b.Navigation("Equipment");
                 });
 #pragma warning restore 612, 618
         }
