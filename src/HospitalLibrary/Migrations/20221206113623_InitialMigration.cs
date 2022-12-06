@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class UpdatePatientModel : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,22 +54,6 @@ namespace HospitalLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BloodUnitRequests",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Type = table.Column<int>(type: "integer", nullable: false),
-                    AmountL = table.Column<int>(type: "integer", nullable: false),
-                    Reason = table.Column<string>(type: "text", nullable: false),
-                    CreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BloodUnitRequests", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "BloodUnits",
                 columns: table => new
                 {
@@ -100,6 +84,22 @@ namespace HospitalLibrary.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Buildings", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Consiliums",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Subject = table.Column<string>(type: "text", nullable: false),
+                    Interval_From = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Interval_To = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Duration = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Consiliums", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -347,6 +347,55 @@ namespace HospitalLibrary.Migrations
                         name: "FK_MapFloors_Floors_FloorId",
                         column: x => x.FloorId,
                         principalTable: "Floors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BloodUnitRequests",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Type = table.Column<int>(type: "integer", nullable: false),
+                    AmountL = table.Column<int>(type: "integer", nullable: false),
+                    Reason = table.Column<string>(type: "text", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DoctorId = table.Column<int>(type: "integer", nullable: false),
+                    ManagerComment = table.Column<string>(type: "text", nullable: false),
+                    Status = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BloodUnitRequests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BloodUnitRequests_Doctors_DoctorId",
+                        column: x => x.DoctorId,
+                        principalTable: "Doctors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ConsiliumDoctor",
+                columns: table => new
+                {
+                    ConsiliumsId = table.Column<int>(type: "integer", nullable: false),
+                    DoctorsId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ConsiliumDoctor", x => new { x.ConsiliumsId, x.DoctorsId });
+                    table.ForeignKey(
+                        name: "FK_ConsiliumDoctor_Consiliums_ConsiliumsId",
+                        column: x => x.ConsiliumsId,
+                        principalTable: "Consiliums",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ConsiliumDoctor_Doctors_DoctorsId",
+                        column: x => x.DoctorsId,
+                        principalTable: "Doctors",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -757,12 +806,21 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "Id", "Active", "BedId", "DischargeReason", "EndDate", "PatientId", "Reason", "RoomId", "StartDate" },
                 values: new object[,]
                 {
-                    { 1, false, 1, "abc", new DateTime(2022, 11, 30, 22, 30, 18, 778, DateTimeKind.Utc).AddTicks(2143), 1, "reason1", 1, new DateTime(2022, 11, 30, 22, 30, 18, 778, DateTimeKind.Utc).AddTicks(2141) },
-                    { 2, false, 2, "abc", new DateTime(2022, 11, 30, 22, 30, 18, 778, DateTimeKind.Utc).AddTicks(2151), 2, "reason2", 1, new DateTime(2022, 11, 30, 22, 30, 18, 778, DateTimeKind.Utc).AddTicks(2150) },
-                    { 3, false, 4, "abc", new DateTime(2022, 11, 30, 22, 30, 18, 778, DateTimeKind.Utc).AddTicks(2152), 3, "reason3", 2, new DateTime(2022, 11, 30, 22, 30, 18, 778, DateTimeKind.Utc).AddTicks(2152) },
-                    { 4, true, 1, "abc", null, 1, "reason1", 1, new DateTime(2022, 11, 30, 22, 30, 18, 778, DateTimeKind.Utc).AddTicks(2153) },
-                    { 5, true, 2, "abc", null, 2, "reason2", 1, new DateTime(2022, 11, 30, 22, 30, 18, 778, DateTimeKind.Utc).AddTicks(2155) },
-                    { 6, true, 4, "abc", null, 3, "reason3", 2, new DateTime(2022, 11, 30, 22, 30, 18, 778, DateTimeKind.Utc).AddTicks(2156) }
+                    { 1, false, 1, "abc", new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2975), 1, "reason1", 1, new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2974) },
+                    { 2, false, 2, "abc", new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2978), 2, "reason2", 1, new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2978) },
+                    { 3, false, 4, "abc", new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2979), 3, "reason3", 2, new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2979) },
+                    { 4, true, 1, "abc", null, 1, "reason1", 1, new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2980) },
+                    { 5, true, 2, "abc", null, 2, "reason2", 1, new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2980) },
+                    { 6, true, 4, "abc", null, 3, "reason3", 2, new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2981) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Therapies",
+                columns: new[] { "Id", "Amount", "DoctorId", "Reason", "TherapySubject", "TherapyType", "TreatmentHistoryId", "WhenPrescribed" },
+                values: new object[,]
+                {
+                    { 1, 1, 1, "Headache", "Bromazepam 500mg", 0, 1, new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(3006) },
+                    { 2, 1, 2, "Blood loss", "A+ 500ml", 1, 1, new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(3007) }
                 });
 
             migrationBuilder.CreateIndex(
@@ -780,6 +838,16 @@ namespace HospitalLibrary.Migrations
                 table: "Bloods",
                 column: "Type",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BloodUnitRequests_DoctorId",
+                table: "BloodUnitRequests",
+                column: "DoctorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ConsiliumDoctor_DoctorsId",
+                table: "ConsiliumDoctor",
+                column: "DoctorsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Doctors_RoomId",
@@ -885,6 +953,9 @@ namespace HospitalLibrary.Migrations
                 name: "BloodUnits");
 
             migrationBuilder.DropTable(
+                name: "ConsiliumDoctor");
+
+            migrationBuilder.DropTable(
                 name: "Equipments");
 
             migrationBuilder.DropTable(
@@ -919,6 +990,9 @@ namespace HospitalLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "Allergens");
+
+            migrationBuilder.DropTable(
+                name: "Consiliums");
 
             migrationBuilder.DropTable(
                 name: "Floors");
