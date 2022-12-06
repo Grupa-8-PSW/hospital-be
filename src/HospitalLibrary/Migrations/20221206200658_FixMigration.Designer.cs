@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221124011620_new_migration")]
-    partial class new_migration
+    [Migration("20221206200658_FixMigration")]
+    partial class FixMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -393,7 +393,7 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("DatePrescribed")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -412,7 +412,7 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("CreationDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("DoctorId")
                         .HasColumnType("integer");
@@ -447,7 +447,7 @@ namespace HospitalLibrary.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("EndWork")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -464,7 +464,7 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("StartWork")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -476,22 +476,22 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 1,
-                            EndWork = new DateTime(1998, 4, 30, 15, 0, 0, 0, DateTimeKind.Utc),
-                            FirstName = "Zeljko",
-                            LastName = "Babic",
+                            EndWork = new DateTime(2022, 11, 22, 18, 10, 10, 0, DateTimeKind.Utc),
+                            FirstName = "Pera",
+                            LastName = "Peric",
                             RoomId = 1,
                             Specialization = 0,
-                            StartWork = new DateTime(1998, 4, 30, 7, 0, 0, 0, DateTimeKind.Utc)
+                            StartWork = new DateTime(2022, 11, 22, 10, 10, 10, 0, DateTimeKind.Utc)
                         },
                         new
                         {
                             Id = 2,
-                            EndWork = new DateTime(1998, 4, 30, 16, 0, 0, 0, DateTimeKind.Utc),
-                            FirstName = "Bora",
-                            LastName = "Stevanovic",
-                            RoomId = 2,
+                            EndWork = new DateTime(2022, 11, 22, 19, 10, 10, 0, DateTimeKind.Utc),
+                            FirstName = "Sergej",
+                            LastName = "Milinkovic-Savic",
+                            RoomId = 1,
                             Specialization = 0,
-                            StartWork = new DateTime(1998, 4, 30, 8, 0, 0, 0, DateTimeKind.Utc)
+                            StartWork = new DateTime(2022, 11, 22, 10, 10, 10, 0, DateTimeKind.Utc)
                         });
                 });
 
@@ -516,7 +516,7 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("StartTime")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -527,6 +527,44 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("RoomId");
 
                     b.ToTable("Examinations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DoctorId = 1,
+                            Duration = 300,
+                            PatientId = 1,
+                            RoomId = 1,
+                            StartTime = new DateTime(2022, 11, 22, 2, 0, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DoctorId = 2,
+                            Duration = 120,
+                            PatientId = 2,
+                            RoomId = 2,
+                            StartTime = new DateTime(2022, 11, 22, 7, 30, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DoctorId = 1,
+                            Duration = 420,
+                            PatientId = 3,
+                            RoomId = 1,
+                            StartTime = new DateTime(2022, 11, 22, 11, 30, 0, 0, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DoctorId = 2,
+                            Duration = 150,
+                            PatientId = 4,
+                            RoomId = 2,
+                            StartTime = new DateTime(2022, 11, 22, 20, 30, 0, 0, DateTimeKind.Utc)
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Feedback", b =>
@@ -779,7 +817,7 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("WhenPrescribed")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -809,7 +847,7 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("EndDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int>("PatientId")
                         .HasColumnType("integer");
@@ -822,7 +860,7 @@ namespace HospitalLibrary.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("StartDate")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -841,11 +879,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 1,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2022, 11, 24, 1, 16, 20, 513, DateTimeKind.Utc).AddTicks(7247),
+                            EndDate = new DateTime(2022, 12, 6, 20, 6, 57, 831, DateTimeKind.Utc).AddTicks(8509),
                             PatientId = 1,
                             Reason = "reason1",
                             RoomId = 1,
-                            StartDate = new DateTime(2022, 11, 24, 1, 16, 20, 513, DateTimeKind.Utc).AddTicks(7246)
+                            StartDate = new DateTime(2022, 12, 6, 20, 6, 57, 831, DateTimeKind.Utc).AddTicks(8508)
                         },
                         new
                         {
@@ -853,11 +891,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 2,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2022, 11, 24, 1, 16, 20, 513, DateTimeKind.Utc).AddTicks(7252),
+                            EndDate = new DateTime(2022, 12, 6, 20, 6, 57, 831, DateTimeKind.Utc).AddTicks(8513),
                             PatientId = 2,
                             Reason = "reason2",
                             RoomId = 1,
-                            StartDate = new DateTime(2022, 11, 24, 1, 16, 20, 513, DateTimeKind.Utc).AddTicks(7251)
+                            StartDate = new DateTime(2022, 12, 6, 20, 6, 57, 831, DateTimeKind.Utc).AddTicks(8513)
                         },
                         new
                         {
@@ -865,11 +903,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 4,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2022, 11, 24, 1, 16, 20, 513, DateTimeKind.Utc).AddTicks(7253),
+                            EndDate = new DateTime(2022, 12, 6, 20, 6, 57, 831, DateTimeKind.Utc).AddTicks(8515),
                             PatientId = 3,
                             Reason = "reason3",
                             RoomId = 2,
-                            StartDate = new DateTime(2022, 11, 24, 1, 16, 20, 513, DateTimeKind.Utc).AddTicks(7253)
+                            StartDate = new DateTime(2022, 12, 6, 20, 6, 57, 831, DateTimeKind.Utc).AddTicks(8514)
                         },
                         new
                         {
@@ -880,7 +918,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 1,
                             Reason = "reason1",
                             RoomId = 1,
-                            StartDate = new DateTime(2022, 11, 24, 1, 16, 20, 513, DateTimeKind.Utc).AddTicks(7254)
+                            StartDate = new DateTime(2022, 12, 6, 20, 6, 57, 831, DateTimeKind.Utc).AddTicks(8515)
                         },
                         new
                         {
@@ -891,7 +929,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 2,
                             Reason = "reason2",
                             RoomId = 1,
-                            StartDate = new DateTime(2022, 11, 24, 1, 16, 20, 513, DateTimeKind.Utc).AddTicks(7256)
+                            StartDate = new DateTime(2022, 12, 6, 20, 6, 57, 831, DateTimeKind.Utc).AddTicks(8516)
                         },
                         new
                         {
@@ -902,7 +940,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 3,
                             Reason = "reason3",
                             RoomId = 2,
-                            StartDate = new DateTime(2022, 11, 24, 1, 16, 20, 513, DateTimeKind.Utc).AddTicks(7257)
+                            StartDate = new DateTime(2022, 12, 6, 20, 6, 57, 831, DateTimeKind.Utc).AddTicks(8517)
                         });
                 });
 
@@ -1178,6 +1216,41 @@ namespace HospitalLibrary.Migrations
                         });
                 });
 
+            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.EquipmentTransfer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("EquipmentName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("FromRoomId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("ToRoomId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EquipmentTransfers");
+                });
+
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Floor", b =>
                 {
                     b.Property<int>("Id")
@@ -1357,15 +1430,15 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Pregledi za decu",
+                            Description = "Neuroloske operacije i zahvati",
                             EndHourSaturday = "17:00h",
                             EndHourSunday = "CLOSED",
                             EndHourWorkDay = "17:00h",
-                            Name = "101,Pedijatrija",
+                            Name = "101,Neurohirurgija",
                             RoomId = 1,
                             StartHourSaturday = "12:00h",
                             StartHourSunday = "CLOSED",
-                            StartHourWorkDay = "10:00h"
+                            StartHourWorkDay = "8:00h"
                         },
                         new
                         {
@@ -1565,11 +1638,11 @@ namespace HospitalLibrary.Migrations
                         new
                         {
                             Id = 17,
-                            Description = "...",
+                            Description = "Operacija endokrinog sistema",
                             EndHourSaturday = "17:00h",
                             EndHourSunday = "CLOSED",
                             EndHourWorkDay = "17:00h",
-                            Name = "102b,Pedijatrija",
+                            Name = "102b,Endokrinologija",
                             RoomId = 17,
                             StartHourSaturday = "12:00h",
                             StartHourSunday = "CLOSED",
@@ -1792,8 +1865,8 @@ namespace HospitalLibrary.Migrations
                             Color = "blue",
                             FloorId = 1,
                             Height = 160,
-                            Name = "Pedijatrija",
-                            Type = 0,
+                            Name = "Neurohirurgija",
+                            Type = 3,
                             Width = 260,
                             X = 0,
                             Y = 0
@@ -1805,7 +1878,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 1,
                             Height = 140,
                             Name = "Kafeterija",
-                            Type = 0,
+                            Type = 2,
                             Width = 220,
                             X = 0,
                             Y = 338
@@ -1853,7 +1926,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 3,
                             Height = 180,
                             Name = "Magacin",
-                            Type = 0,
+                            Type = 4,
                             Width = 260,
                             X = 0,
                             Y = 0
@@ -1889,7 +1962,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 4,
                             Height = 170,
                             Name = "Kardiologija",
-                            Type = 0,
+                            Type = 3,
                             Width = 320,
                             X = 0,
                             Y = 0
@@ -1913,7 +1986,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 4,
                             Height = 140,
                             Name = "Hirurgija",
-                            Type = 0,
+                            Type = 3,
                             Width = 220,
                             X = 245,
                             Y = 0
@@ -1984,8 +2057,8 @@ namespace HospitalLibrary.Migrations
                             Color = "blue",
                             FloorId = 6,
                             Height = 240,
-                            Name = "Onkologija",
-                            Type = 0,
+                            Name = "Endokrinologija",
+                            Type = 3,
                             Width = 250,
                             X = 200,
                             Y = 300
@@ -2009,7 +2082,7 @@ namespace HospitalLibrary.Migrations
                             FloorId = 8,
                             Height = 170,
                             Name = "Magacin",
-                            Type = 0,
+                            Type = 4,
                             Width = 320,
                             X = 100,
                             Y = 138
