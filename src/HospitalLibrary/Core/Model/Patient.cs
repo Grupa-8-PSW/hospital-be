@@ -20,9 +20,8 @@ namespace HospitalLibrary.Core.Model
         public int SelectedDoctorId { get; set; }
         public int UserId { get; set; }
 
-        public Patient(int id, string firstName, string lastName, string email, string pin, Gender gender, BloodType bloodType, int addressId, int selectedDoctorId, int userId)
         public Patient(int id, string firstName, string lastName, string email, string pin, Gender gender,
-            BloodType bloodType, int addressId, int selectedDoctorId)
+            BloodType bloodType, int addressId, int selectedDoctorId, int userId)
         {
             Id = id;
             FirstName = firstName;

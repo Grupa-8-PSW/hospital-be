@@ -96,7 +96,6 @@ namespace HospitalAPI.Security
                 Id = user.Id,
                 Username = user.UserName,
                 Role = userRoles[0],
-                Id = user.Id
             };
         }
 
@@ -111,9 +110,9 @@ namespace HospitalAPI.Security
                     new Claim("Username", user.Username),
                     new Claim("UserId", user.Id.ToString()),
                     new Claim(ClaimTypes.Role, user.Role),
-                    
+
                 }),
-        }),
+
                 Issuer = issuer,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secret), SecurityAlgorithms.HmacSha512Signature)
             };
