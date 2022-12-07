@@ -25,7 +25,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="HospitalE2ETests\Pages\" />
     <Folder Include="HospitalLibraryTests\" />
   </ItemGroup>
   <ItemGroup Condition="$(VisualStudioVersion) == '17.0'">
