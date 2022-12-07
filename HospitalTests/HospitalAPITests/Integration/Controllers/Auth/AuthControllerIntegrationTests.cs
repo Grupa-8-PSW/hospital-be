@@ -66,8 +66,10 @@ namespace HospitalTests.HospitalAPITests.Integration.Controllers.Auth
 
         [Theory]
         [InlineData("block", "markomarkovic@gmail.com",typeof(OkResult))]
+        [InlineData("block", "randommail@gmail.com", typeof(BadRequestResult))]
         [InlineData("unblock", "dusanbaljinac@gmail.com", typeof(BadRequestResult))]
-        public async Task BlockAccount(string type, string email, Type resultType)
+        [InlineData("unblock", "markomarkovic@gmail.com", typeof(OkResult))]
+        public async Task BlockAccountAccess(string type, string email, Type resultType)
         {
             // Arange
             using var scope = Factory.Services.CreateScope();
