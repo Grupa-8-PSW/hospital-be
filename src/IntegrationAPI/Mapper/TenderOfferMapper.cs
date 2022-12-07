@@ -63,11 +63,13 @@ namespace IntegrationAPI.Mapper
             return convBloodOffersDTO;
         }
 
-        private static List<BloodOfferDTO> convFromTenderTOBloodAmounts(List<Blood> blood)
+        
+
+        private static List<BloodOfferDTO> convFromTenderTOBloodAmounts(List<IntegrationLibrary.Core.Model.Blood> blood)
         {
             List<BloodOfferDTO> bos = new List<BloodOfferDTO>();
 
-            foreach(Blood b in blood)
+            foreach (IntegrationLibrary.Core.Model.Blood b in blood)
             {
                 bos.Add(new BloodOfferDTO()
                 {

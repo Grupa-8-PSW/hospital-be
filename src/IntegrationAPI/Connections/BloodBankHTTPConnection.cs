@@ -16,6 +16,11 @@ using static iTextSharp.text.pdf.AcroFields;
 using IntegrationAPI.ConnectionService.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using HospitalAPI.Connections;
+using HospitalAPI.DTO;
+using IntegrationLibrary.Core.Model.DTO;
+using IntegrationLibraryAPI.Connections;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace IntegrationAPI.Connections
 {
@@ -24,7 +29,7 @@ namespace IntegrationAPI.Connections
 
         private readonly IBloodConsumptionConfigurationService _service;
         private readonly IBloodBankService _bankService;
-        private readonly IHospitalHTTPConnection _bloodUnitService;
+        private readonly IHospitalHTTPConnection _hospitalHttpConnection;
         private String api = "reports/sendReports";
 
         public BloodBankHTTPConnection(IServiceScopeFactory factory)
@@ -34,7 +39,7 @@ namespace IntegrationAPI.Connections
 
             _bankService = factory.CreateScope().ServiceProvider.GetRequiredService<IBloodBankService>();
 
-            _bloodUnitService = factory.CreateScope().ServiceProvider.GetRequiredService<IHospitalHTTPConnection>();
+            _hospitalHttpConnection = factory.CreateScope().ServiceProvider.GetRequiredService<IHospitalHTTPConnection>();
         }
 
         public bool CheckForSpecificBloodType(BloodBank bloodBank, string bloodType)
@@ -94,7 +99,7 @@ namespace IntegrationAPI.Connections
             {
                 Guid uniqueSuffix = Guid.NewGuid();
                 //var scopedService = scope.ServiceProvider.GetRequiredService<IBloodBankHTTPConnection>();
-                byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(_bloodUnitService.GetAllBloodUnits(), out var configuration));
+                byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(_hospitalHttpConnection.GetAllBloodUnits(), out var configuration));
                 using (var stream = File.Create("./Reports/bloodConsumptionReport" + uniqueSuffix + ".PDF"))
                 {
                 }
@@ -142,7 +147,7 @@ namespace IntegrationAPI.Connections
                 bcc.NextSendingTime = DateTime.SpecifyKind(bcc.NextSendingTime, DateTimeKind.Utc);
                 _service.Update(bcc);
                 Guid uniqueSuffix = Guid.NewGuid();
-                byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(_bloodUnitService.GetAllBloodUnits(), out var configuration));
+                byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(_hospitalHttpConnection.GetAllBloodUnits(), out var configuration));
                 using (var stream = File.Create("./Reports/bloodConsumptionReport" + uniqueSuffix + ".PDF"))
                 {
                 }
@@ -173,6 +178,30 @@ namespace IntegrationAPI.Connections
                     Console.WriteLine(e);
                 }
             }
+        }
+
+        public async void SendUrgentRequest(BloodUnitUrgentRequest urgentRequest)
+        {
+            var client = new RestClient("http://localhost:8081");
+            var request = new RestRequest("/bloodBanks/urgentRequest", Method.Post);
+
+            request.AddHeader("apiKey", urgentRequest.APIKey);
+            request.AddJsonBody(urgentRequest);
+            RestResponse res = new RestResponse();
+            try
+            {
+                res = await client.ExecuteAsync(request);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            if (res.Content == "Ima dovoljno krvi")
+            {
+                _hospitalHttpConnection.RestockBlood(urgentRequest.bloodUnits);
+            }
+
         }
 
 

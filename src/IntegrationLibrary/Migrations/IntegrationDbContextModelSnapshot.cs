@@ -166,6 +166,7 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("Tenders");
                 });
 
+
             modelBuilder.Entity("IntegrationLibrary.Core.Model.TenderOffer", b =>
                 {
                     b.Property<int>("Id")
@@ -185,6 +186,7 @@ namespace IntegrationLibrary.Migrations
 
                     b.ToTable("TenderOffer");
                 });
+
 
             modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodBankNews", b =>
                 {
