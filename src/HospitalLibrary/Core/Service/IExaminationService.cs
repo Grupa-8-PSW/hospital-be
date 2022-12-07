@@ -8,7 +8,6 @@ namespace HospitalLibrary.Core.Service
     {
         IEnumerable<Examination> GetAll();
         Examination GetById(int id);
-        public AvailableAppointments GetRecommendedExaminationTime(DateRange dateRange, int doctorId, AppointmentPriority priority);
         bool Create(Examination examination);
         bool Update(Examination examination);
         void Delete(Examination examination);

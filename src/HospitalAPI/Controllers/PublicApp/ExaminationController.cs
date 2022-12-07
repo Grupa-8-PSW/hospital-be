@@ -12,15 +12,12 @@ namespace HospitalAPI.Controllers.PublicApp
     public class ExaminationController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IExaminationService _examinationService;
         private readonly IAppointmentService _appointmentService;
 
         public ExaminationController(
             IMapper mapper,
-            IExaminationService examinationService,
             IAppointmentService appointmentService)
         {
-            _examinationService = examinationService;
             _mapper = mapper;
             _appointmentService = appointmentService;
         }

@@ -18,11 +18,9 @@ namespace HospitalTests.HospitalAPITests.Setup
                 using var scope = BuildServiceProvider(services).CreateScope();
                 var scopedServices = scope.ServiceProvider;
                 var db = scopedServices.GetRequiredService<HospitalDbContext>();
-
                 InitializeDatabase(db);
+
                 var identityDb = scopedServices.GetRequiredService<AppIdentityDbContext>();
-
-                InitializeDatabase(db);
                 InitializeIdentityDatabase(identityDb);
             });
         }
@@ -47,6 +45,7 @@ namespace HospitalTests.HospitalAPITests.Setup
 
         private static void InitializeDatabase(HospitalDbContext context)
         {
+            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
             //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Rooms\";");

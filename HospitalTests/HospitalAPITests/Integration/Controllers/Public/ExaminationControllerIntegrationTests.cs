@@ -1,6 +1,9 @@
-﻿using HospitalAPI;
+﻿using AutoMapper;
+using HospitalAPI;
 using HospitalAPI.Controllers.PublicApp;
+using HospitalAPI.DTO;
 using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Service;
 using HospitalTests.HospitalAPITests.Setup;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,20 +33,23 @@ namespace HospitalTests.HospitalAPITests.Integration.Controllers.Public
             var result = controller.GetRecommendedExaminationTime(from, to, doctorId, priority);
 
             // Assert
-            result.ShouldBeOfType(typeof(OkObjectResult));
+            result.Result.ShouldBeOfType(typeof(OkObjectResult));
+            ((OkObjectResult)result.Result).Value.ShouldBeOfType(typeof(List<AvailableAppointmentsDTO>));
         }
 
-        private ExaminationController SetupController(IServiceScope scope)
+        private static ExaminationController SetupController(IServiceScope scope)
         {
-            return null;
-            // return new ExaminationController();
+            var mapper = scope.ServiceProvider.GetRequiredService<IMapper>();
+            var appointmentService = scope.ServiceProvider.GetRequiredService<IAppointmentService>();
+            return new ExaminationController(mapper, appointmentService);
         }
 
-        private static readonly object[][] GetRecommendedExaminationTimeTestData =
-        {
-            new object[] { new DateTime(2022, 12, 1), new DateTime(2022, 12, 10), 1, AppointmentPriority.DOCTOR },
-            new object[] { new DateTime(2022, 1, 1), new DateTime(2022, 1, 5), 1, AppointmentPriority.DATE }
-        };
+        private static IEnumerable<object[]> GetRecommendedExaminationTimeTestData() =>
+            new List<object[]>()
+            {
+                new object[] { new DateTime(2022, 12, 1), new DateTime(2022, 12, 10), 1, AppointmentPriority.DOCTOR },
+                new object[] { new DateTime(2022, 1, 1), new DateTime(2022, 1, 5), 1, AppointmentPriority.DATE }
+            };
 
     }
 }
