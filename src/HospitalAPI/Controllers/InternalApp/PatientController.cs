@@ -39,6 +39,7 @@ namespace HospitalAPI.Controllers.InternalApp
         public ActionResult GetPatientStatisticForDoctor(int id)
         {
             return Ok(_mapper.Map<StatisticDTO>(_patientService.GetPatientStatisticForSelectedDoctor(id)));
+
         }
 
     }

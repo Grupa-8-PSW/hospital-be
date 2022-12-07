@@ -98,6 +98,7 @@ namespace HospitalAPI.Security
             if (type.Equals("block")) access = true;
             else if (type.Equals("unblock")) access = false;
             else return false;
+            if(user.LockoutEnabled==access) return false;
             var block=await _userManager.SetLockoutEnabledAsync(user, access);
             return true;
         }

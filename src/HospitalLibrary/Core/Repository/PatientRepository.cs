@@ -10,7 +10,7 @@ namespace HospitalLibrary.Core.Repository
 
         public PatientRepository(HospitalDbContext dbContext) : base(dbContext)
         {
-
+        
         }
 
         public Patient Create(Patient p, List<Allergen> allers)

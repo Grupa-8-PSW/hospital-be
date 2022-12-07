@@ -64,5 +64,22 @@ namespace HospitalTests.HospitalAPITests.Integration.Controllers.Auth
             result.ShouldBeOfType(resultType);
         }
 
+        [Theory]
+        [InlineData("block", "markomarkovic@gmail.com",typeof(OkResult))]
+        [InlineData("unblock", "dusanbaljinac@gmail.com", typeof(BadRequestResult))]
+        public async Task BlockAccount(string type, string email, Type resultType)
+        {
+            // Arange
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+
+            // Act
+            var result = await controller.BlockPatientAccess(type, email);
+
+            // Assert
+            result.ShouldBeOfType(resultType);
+        }
+
     }
 }

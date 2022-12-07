@@ -128,6 +128,7 @@ namespace HospitalAPI
             services.AddScoped<IMedicalDrugsService, MedicalDrugsService>();
 
             services.AddScoped<AuthService>();
+
             services.AddScoped<ITherapyValidation, TherapyValidation>();
 
             services.AddScoped<IMapper<BloodUnitRequest, BloodUnitRequestDTO>, BloodUnitRequestMapper>();
