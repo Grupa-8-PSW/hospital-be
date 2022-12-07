@@ -1,5 +1,5 @@
 ﻿using HospitalLibrary.Core.Enums;
-using HospitalLibrary.Core.Util;
+using HospitalLibrary.Core.Model.ValueObjects;
 using HospitalLibrary.GraphicalEditor.Model;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -16,6 +16,7 @@ namespace HospitalLibrary.Core.Model
         public Room Room { get; set; }
         [Column(TypeName = "jsonb")]
         public DateRange WorkHour { get; set; }
+        public List<Consilium> Consiliums { get; set; }
 
         public Doctor()
         {

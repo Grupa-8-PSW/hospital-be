@@ -1,4 +1,4 @@
-﻿using HospitalLibrary.Core.Util;
+﻿using HospitalLibrary.Core.Model.ValueObjects;
 using Shouldly;
 
 namespace HospitalTests.HospitalLibraryTests.Unit.Core.Util

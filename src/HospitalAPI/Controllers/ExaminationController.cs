@@ -149,7 +149,7 @@ namespace HospitalAPI.Controllers
             _examinationService.Delete(examination);
             return NoContent();
         }
-
+        /*
         private Examination CreateExaminationFromPostRequest(PostExaminationRequest postExaminationRequest)
         {
             try
@@ -173,6 +173,6 @@ namespace HospitalAPI.Controllers
                 return null;
             }
 
-        }
+        }*/
     }
 }

@@ -19,7 +19,7 @@ namespace HospitalLibrary.Core.Service
         private readonly IDoctorRepository _doctorRepository;
         private readonly Util.DoctorScheduler _doctorScheduler;
 
-        public ExaminationService(IExaminationRepository examinationRepository, IValidation validation, IDoctorRepository doctorRepository, Util.DoctorScheduler doctorScheduler)
+        public ExaminationService(IExaminationRepository examinationRepository, IExaminationValidation validation, IDoctorRepository doctorRepository, Util.DoctorScheduler doctorScheduler)
         {
             _examinationRepository = examinationRepository;
             _validation = validation;

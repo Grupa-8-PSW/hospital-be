@@ -11,6 +11,7 @@ namespace HospitalLibrary.Core.Repository
         public void Create(Doctor doctor);
         public void Update(Doctor doctor);
         public void Delete(Doctor doctor);
+        public IEnumerable<Doctor> GetAllGeneralPracticioners();
     }
 
 }

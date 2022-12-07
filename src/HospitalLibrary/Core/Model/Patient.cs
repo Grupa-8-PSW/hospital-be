@@ -16,7 +16,6 @@ namespace HospitalLibrary.Core.Model
         public int AddressId { get; set; }
         public List<Feedback> Feedbacks { get; private set; }
         public List<Allergen> Allergens { get; set; }
-        public Doctor selectedDoctor { get; set; }
         public int SelectedDoctorId { get; set; }
         public int UserId { get; set; }
 

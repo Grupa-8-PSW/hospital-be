@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Util;
+﻿using HospitalLibrary.Core.Model.ValueObjects;
+using HospitalLibrary.Core.Util;
 using HospitalLibrary.Settings;
 
 namespace HospitalLibrary.Core.Repository

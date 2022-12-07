@@ -1,7 +1,7 @@
-﻿using HospitalLibrary.Core.Util;
-using HospitalLibrary.Core.Enums;
+﻿using HospitalLibrary.Core.Enums;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
+using HospitalLibrary.Core.Model.ValueObjects;
 
 namespace HospitalLibrary.Core.Model
 {

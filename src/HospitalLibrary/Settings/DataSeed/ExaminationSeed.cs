@@ -1,5 +1,5 @@
 ﻿using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Util;
+using HospitalLibrary.Core.Model.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace HospitalLibrary.Settings.DataSeed
