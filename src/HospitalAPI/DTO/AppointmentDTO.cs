@@ -1,0 +1,13 @@
+﻿namespace HospitalAPI.DTO
+{
+    public class AppointmentDTO
+    {
+        public int Id { get; set; }
+        public DateTime StartTime { get; set; }
+        public string DoctorFullName { get; set; }
+        public int RoomId { get; set; }
+        public int FloorId { get; set; }
+        public string RoomName { get; set; }
+    }
+
+}

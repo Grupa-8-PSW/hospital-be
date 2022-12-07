@@ -43,5 +43,15 @@ namespace HospitalLibrary.Core.Model
             Duration = duration;
         }
 
+        public Examination(int id, int doctorId,int patientId, int roomId, DateTime startTime, int duration)
+        {
+            Id = id;
+            DoctorId = doctorId;
+            PatientId = patientId;
+            RoomId = roomId;
+            StartTime = startTime;
+            Duration = duration;
+        }
+
     }
 }

@@ -15,6 +15,7 @@ namespace HospitalLibrary.Core.Model
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string FullName { get => FirstName + " " + LastName; }
         public int RoomId { get; set; }
         public Room Room { get; set; }
         public DateTime StartWork { get; set; }

@@ -47,14 +47,13 @@ namespace HospitalLibrary.Settings
             modelBuilder.SeedDoctor();
             modelBuilder.SeedPatient();
             modelBuilder.SeedFeedback();
-
+            modelBuilder.SeedExamination();
             modelBuilder.SeedBed();
             modelBuilder.SeedMedicalDrugs();
             modelBuilder.SeedTreatmentHistory();
             modelBuilder.SeedBlood();
             modelBuilder.SeedTherapy();
             modelBuilder.SeedAllergen();
-
             
             base.OnModelCreating(modelBuilder);  
 

@@ -81,6 +81,22 @@ namespace HospitalLibrary.Core.Service
             return _examinationRepository.GetByDoctorIdAndDate(doctorId, startTime);
         }
 
+        public IEnumerable<Examination> GetByPatientId(int patientId)
+        {
+            return _examinationRepository.GetByPatientId(patientId);
+        }
 
+        public bool CheckIfCancellable(int id)
+        {
+            var examination = _examinationRepository.GetById(id);
+            if((examination.StartTime - DateTime.Now) <= TimeSpan.FromHours(24) || examination == null)
+            {
+                return false;
+            } else
+            {
+                _examinationRepository.Delete(examination);
+                return true;
+            }
+        }
     }
 }
