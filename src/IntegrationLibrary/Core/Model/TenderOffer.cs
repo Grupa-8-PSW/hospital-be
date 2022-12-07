@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IntegrationLibrary.Core.Model.ValueObject;
+using Newtonsoft.Json;
 
 namespace IntegrationLibrary.Core.Model
 {
-    public class tenderOfferDTO
+    public class TenderOffer
     {
         public int Id { get; set; }
         [Required]
@@ -16,7 +17,15 @@ namespace IntegrationLibrary.Core.Model
         public List<BloodOffer> Offers { get; set; }
 
 
-        public tenderOfferDTO()
+       
+        public TenderOffer(int id, int tenderID, List<BloodOffer> offers)
+        {
+            Id = id;
+            TenderID = tenderID;
+            Offers = offers;
+        }
+
+        public TenderOffer()
         {
         }
     }

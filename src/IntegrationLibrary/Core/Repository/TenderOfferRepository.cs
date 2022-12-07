@@ -21,24 +21,26 @@ namespace IntegrationLibrary.Core.Repository
             _context = context;
         }
 
-        public tenderOfferDTO Create(tenderOfferDTO tenderOffer)
+        public TenderOffer Create(TenderOffer tenderOffer)
         {
             _context.TenderOffer.Add(tenderOffer);
             _context.SaveChanges();
             return tenderOffer;
         }
 
-        public IEnumerable<tenderOfferDTO> GetAll()
+        public IEnumerable<TenderOffer> GetAll()
         {
             return _context.TenderOffer.ToList();
+        }
+
+        public IEnumerable<TenderOffer> GetAllByTennderID(int tenderId)
+        {
+            return _context.TenderOffer.Where(offer => offer.TenderID.Equals(tenderId));
         }
 
 
         //public List<Allergen> GetAllergensByDtoId(List<int> ids) => _dbContext.Allergens.Where(a => ids.Contains(a.Id)).ToList();
 
-        public IEnumerable<tenderOfferDTO> GetAllByTennderID()
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

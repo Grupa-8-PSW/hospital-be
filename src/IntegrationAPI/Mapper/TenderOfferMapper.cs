@@ -8,9 +8,9 @@ namespace IntegrationAPI.Mapper
     public static class TenderOfferMapper
     {
 
-        public static tenderOfferDTO ToModel(TenderOfferDTO dto)
+        public static TenderOffer ToModel(TenderOfferDTO dto)
         {
-            tenderOfferDTO to = new tenderOfferDTO();
+            TenderOffer to = new TenderOffer();
             to.TenderID = dto.TenderID;
             to.Offers = convBloodOffers(dto.BloodAmounts);
 
@@ -23,7 +23,7 @@ namespace IntegrationAPI.Mapper
 
             foreach (BloodOfferDTO dto in dtos)
             {
-                convBloodOffers.Add(new BloodOffer(dto.BloodType, dto.BloodAmount, dto.PriceAmount));
+                convBloodOffers.Add(new BloodOffer(dto.BloodType, dto.BloodAmount, new Money(dto.PriceAmount, Currency.USD)));
             }
 
             return convBloodOffers;

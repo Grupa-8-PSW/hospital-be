@@ -9,9 +9,8 @@ namespace IntegrationLibrary.Core.Repository
 {
     public interface ITenderOfferRepository
     {
-        public tenderOfferDTO Create(tenderOfferDTO tenderOffer);
-        IEnumerable<tenderOfferDTO> GetAll();
-
-        public IEnumerable<tenderOfferDTO> GetAllByTennderID();
+        public TenderOffer Create(TenderOffer tenderOffer);
+        IEnumerable<TenderOffer> GetAll();
+        public IEnumerable<TenderOffer> GetAllByTennderID(int tenderID);
     }
 }

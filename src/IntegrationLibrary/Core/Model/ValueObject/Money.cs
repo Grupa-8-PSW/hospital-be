@@ -10,11 +10,10 @@ using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Core.Model.ValueObject
 {
-    public class Money 
+    public class Money : ValueObject<Money>
     {
         public decimal  Amount { get; }
         public Currency Currency { get; }
-
 
         public Money(decimal amount, Currency currency )
         {
@@ -43,6 +42,16 @@ namespace IntegrationLibrary.Core.Model.ValueObject
         {
             if (Amount < 0 || Amount == null || Currency == null)
                 throw new Exception("Wrong data");
+        }
+
+        protected override bool EqualsCore(Money other)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override int GetHashCodeCore()
+        {
+            throw new NotImplementedException();
         }
     }
 }

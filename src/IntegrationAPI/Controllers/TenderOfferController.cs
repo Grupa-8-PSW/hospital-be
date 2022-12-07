@@ -24,11 +24,19 @@ namespace IntegrationAPI.Controllers
 
 
         [HttpPost]
-        public IActionResult CreateConfiguration([FromBody] TenderOfferDTO dto)
+        public IActionResult CreateTenderOffer([FromBody] TenderOfferDTO dto)
         {
-            
-            _tenderOfferService.Create(TenderOfferMapper.ToModel(dto));
-            return Ok();
+            return Ok(_tenderOfferService.Create(TenderOfferMapper.ToModel(dto)));
         }
+
+
+        [Route("/getOffersForTender")]
+        [HttpGet]
+        public IActionResult GetOffersForTender( int tenderID)
+        {
+
+            return Ok(_tenderOfferService.getOffersForTender(tenderID));
+        }
+
     }
 }

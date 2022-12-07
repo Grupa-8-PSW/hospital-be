@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Core.Model.ValueObject
 {
-    public class BloodOffer
+    public class BloodOffer  : ValueObject<BloodOffer>
     {
         public string BloodType { get; }
         public int BloodAmount { get; }
         public Money Price { get; }
 
 
-        public BloodOffer(string tip, int bloodAmount, decimal priceAmount)
+        public BloodOffer(string bloodType, int bloodAmount, Money price)
         {
-            BloodType = tip;
+            BloodType = bloodType;
             BloodAmount = bloodAmount;
-            Price = new Money(priceAmount, Currency.USD);
+            Price = price;
             Validate();
 
         }
@@ -30,6 +30,16 @@ namespace IntegrationLibrary.Core.Model.ValueObject
         public void Validate()
         {
             if (BloodAmount < 0 || BloodAmount ==null || BloodType == null ) throw new Exception("Wrong data");
+        }
+
+        protected override bool EqualsCore(BloodOffer other)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override int GetHashCodeCore()
+        {
+            throw new NotImplementedException();
         }
     }
 }
