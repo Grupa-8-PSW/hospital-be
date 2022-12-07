@@ -43,10 +43,10 @@ namespace HospitalAPI.Controllers.Auth
             });
         }
         [EnableCors("InternAllow")]
-        [HttpPut("blockPatientAccess/{email}")]
-        public async Task<ActionResult> BlockPatientAccess(string email)
+        [HttpPut("manageAccess/{type}/{email}")]
+        public async Task<ActionResult> BlockPatientAccess(string type,string email)
         {
-            var token = await _authService.BlockUserAccess(email);
+            var token = await _authService.BlockUserAccess(type,email);
             if (token == false)
                 return BadRequest();
             return Ok();

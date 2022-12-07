@@ -55,6 +55,7 @@ namespace HospitalAPI.Security
             var user = await _userManager.FindByNameAsync(loginRequest.Username);
             if (user == null)
                 return null;
+            if (user.LockoutEnabled) return null;
             var rolename = await _userManager.GetRolesAsync(user);
             if (rolename.First() == "Manager" || rolename.First() == "Doctor")
                 return null;
@@ -88,12 +89,16 @@ namespace HospitalAPI.Security
 
             return "Ok";
         }
-        public async Task<bool> BlockUserAccess(string email)
+        public async Task<bool> BlockUserAccess(string type,string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
                 return false;
-            var block=await _userManager.SetLockoutEnabledAsync(user, true);
+            var access = true;
+            if (type.Equals("block")) access = true;
+            else if (type.Equals("unblock")) access = false;
+            else return false;
+            var block=await _userManager.SetLockoutEnabledAsync(user, access);
             return true;
         }
         private async Task<UserDTO> GetUserDTO(User user)
