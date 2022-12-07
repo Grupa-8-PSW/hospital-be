@@ -51,6 +51,9 @@ namespace IntegrationAPI
             services.AddScoped<IBloodConsumptionConfigurationService, BloodConsumptionConfigurationService>();
             services.AddHostedService<BloodBankRabbitMqConnection>();
 
+            services.AddScoped<ITenderOfferService, TenderOfferService>();
+            services.AddScoped<ITenderOfferRepository, TenderOfferRepository>();
+
             services.AddScoped<IBloodBankConnectionService, BloodBankConnectionService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IBloodBankService, BloodBankService>();
@@ -64,9 +67,13 @@ namespace IntegrationAPI
             services.AddScoped<IBloodBankNewsService, BloodBankNewsService>();
             services.AddScoped<IHospitalHTTPConnectionService, HospitalHTTPConnectionService>();
             services.AddScoped<IHospitalHTTPConnection, HospitalHTTPConnection>();
+            services.AddScoped<IMapper<BloodBankNews, BloodBankNewsDTO>, BloodBankNewsMapper>();
+            services.AddScoped<ITenderRepository, TenderRepository>();
+            services.AddScoped<ITenderService, TenderService>();
             services.AddScoped<ITenderRepository, TenderRepository>();
             services.AddScoped<ITenderService, TenderService>();
             services.AddScoped<IMapper<BloodBankNews, BloodBankNewsDTO>, BloodBankNewsMapper>();
+
             services.AddTransient<ExceptionMiddleware>();
             services.AddScoped<IClientScheduledService, ClientScheduledService>();
 

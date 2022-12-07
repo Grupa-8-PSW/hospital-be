@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Service.Interfaces;
+using IntegrationLibrary.Core.Service;
+using IntegrationAPI.Mapper;
 
 namespace IntegrationAPI.Controllers
 {
@@ -28,5 +30,13 @@ namespace IntegrationAPI.Controllers
             _service.Create(tender);
         }
 
+        // POST: TenderController/getAllForOffers
+        [HttpGet]
+        [Route("getAllForOffers")]
+        public ActionResult GetAllForOffers()
+        {
+            return Ok(TenderOfferMapper.convertTenderTOBloodOffersDTO(_service.GetAll()));
+        }
+       
     }
 }
