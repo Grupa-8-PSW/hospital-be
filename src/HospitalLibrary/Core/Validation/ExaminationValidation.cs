@@ -22,7 +22,7 @@ namespace HospitalLibrary.Core.Validation
 
         public List<string> SuggestFreeTime(int doctorId, DateTime startTime, int duration)
         {
-            List<Examination> examinations = _examinationRepository.GetByDoctorIdAndDate(doctorId, startTime).ToList();
+            /*List<Examination> examinations = _examinationRepository.GetByDoctorIdAndDate(doctorId, startTime).ToList();
             examinations.Sort((ex1, ex2) => DateTime.Compare(ex1.StartTime, ex2.StartTime));
 
             Doctor doctor = _doctorRepository.GetById(doctorId);
@@ -43,7 +43,8 @@ namespace HospitalLibrary.Core.Validation
             {
                 suggestedTime.Add(begin.ToString("HH:mm") + " - " + doctor.EndWork.ToString("HH:mm"));
             }
-            return suggestedTime;
+            return suggestedTime;*/
+            return null;
         }
         public bool DateCheck(DateTime start, DateTime? end)
         {
@@ -52,7 +53,7 @@ namespace HospitalLibrary.Core.Validation
         }
         public bool Validate(int doctorId, DateTime startTime, int duration)
         {
-            Doctor doctor = _doctorRepository.GetById(doctorId);
+            /*Doctor doctor = _doctorRepository.GetById(doctorId);
             if (!DateContainsDate(doctor.StartWork, doctor.EndWork, startTime, startTime.AddMinutes(duration)))
             {
                 return false;
@@ -66,14 +67,14 @@ namespace HospitalLibrary.Core.Validation
                 {
                     return false;
                 }
-            }
+            }*/
 
             return true;
         }
 
         public bool ValidateNotIncludingExaminationId(int doctorId, DateTime startTime, int duration, int examinationIdToIgnore)
         {
-            Doctor doctor = _doctorRepository.GetById(doctorId);
+            /*Doctor doctor = _doctorRepository.GetById(doctorId);
             if (!DateContainsDate(doctor.StartWork, doctor.EndWork, startTime, startTime.AddMinutes(duration)))
             {
                 return false;
@@ -87,7 +88,7 @@ namespace HospitalLibrary.Core.Validation
                 {
                     return false;
                 }
-            }
+            }*/
 
             return true;
         }

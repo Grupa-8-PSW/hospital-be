@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Model;
 
 namespace HospitalLibrary.Core.Repository
 {
     public interface IDoctorRepository
     {
-        IEnumerable<Doctor> GetAll();
-        IEnumerable<Doctor> GetAllGeneralPracticioners();
-        Doctor GetById(int id);
-        void Create(Doctor doctor);
-        void Update(Doctor doctor);
-        void Delete(Doctor doctor);
+        public List<Doctor> GetAll();
+        public Doctor GetById(int id);
+        public List<Doctor> GetBySpecialization(DoctorSpecialization specialization);
+        public void Create(Doctor doctor);
+        public void Update(Doctor doctor);
+        public void Delete(Doctor doctor);
     }
 
 }

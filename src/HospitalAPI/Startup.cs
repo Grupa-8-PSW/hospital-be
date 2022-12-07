@@ -28,6 +28,7 @@ using System.Text.Json.Serialization;
 using AngleSharp.Io;
 using HospitalAPI.Responses;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Runtime.Serialization;
 
 namespace HospitalAPI
 {
@@ -103,6 +104,9 @@ namespace HospitalAPI
             services.AddScoped<IExaminationService, ExaminationService>();
             services.AddScoped<IExaminationRepository, ExaminationRepository>();
 
+            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+            services.AddScoped<IAppointmentService, AppointmentService>();
+
             services.AddScoped<IMapper<Examination, ExaminationDTO>, ExaminationMapper>();
             services.AddScoped<IMapper<TreatmentHistory, TreatmentHistoryDTO>, TreatmentHistoryMapper>();
             services.AddScoped<IMapper<Patient, PatientDTO>, PatientMapper>();  //mozda se ponovi pri merge
@@ -151,6 +155,8 @@ namespace HospitalAPI
 
             services.AddScoped<IResponseMapper<Consilium, ConsiliumResponse>, ConsiliumResponseMapper>();
             services.AddScoped<IResponseMapper<Doctor, ConsiliumDoctorResponse>, ConsiliumDoctorResponseMapper>();
+
+            services.AddScoped<HospitalLibrary.Core.Util.DoctorScheduler>();
 
             services.AddCors(options =>
             {
