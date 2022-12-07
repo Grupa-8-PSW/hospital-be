@@ -5,6 +5,7 @@ using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using NuGet.Protocol.Plugins;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -87,7 +88,14 @@ namespace HospitalAPI.Security
 
             return "Ok";
         }
-
+        public async Task<bool> BlockUserAccess(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                return false;
+            var block=await _userManager.SetLockoutEnabledAsync(user, true);
+            return true;
+        }
         private async Task<UserDTO> GetUserDTO(User user)
         {
             var userRoles = await _userManager.GetRolesAsync(user);

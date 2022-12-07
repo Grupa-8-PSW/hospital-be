@@ -42,7 +42,15 @@ namespace HospitalAPI.Controllers.Auth
                 Jwt = token
             });
         }
-
+        [EnableCors("InternAllow")]
+        [HttpPut("blockPatientAccess/{email}")]
+        public async Task<ActionResult> BlockPatientAccess(string email)
+        {
+            var token = await _authService.BlockUserAccess(email);
+            if (token == false)
+                return BadRequest();
+            return Ok();
+        }
         [EnableCors("PublicAllow")]
         [HttpPost("register")]
         public async Task<ActionResult> Register(RegisterRequest registerRequest)

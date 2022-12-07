@@ -37,6 +37,39 @@ namespace HospitalAPI.Security
             };
             await userManager.CreateAsync(managerUser, "12345");
             await userManager.AddToRoleAsync(managerUser, "Manager");
+
+            //AspNetUsers za inicijalne pacijente
+            var patient1 = new User()
+            {
+                UserName = "peraperic",
+                Email = "peraperic@gmail.com"
+            };
+            await userManager.CreateAsync(patient1, "12345");
+            await userManager.AddToRoleAsync(patient1, "Patient");
+
+            var patient2 = new User()
+            {
+                UserName = "markomarkovic",
+                Email = "markomarkovic@gmail.com"
+            };
+            await userManager.CreateAsync(patient2, "12345");
+            await userManager.AddToRoleAsync(patient2, "Patient");
+
+            var patient3 = new User()
+            {
+                UserName = "dusanbaljinac",
+                Email = "dusanbaljinac@gmail.com"
+            };
+            await userManager.CreateAsync(patient3, "12345");
+            await userManager.AddToRoleAsync(patient3, "Patient");
+
+            var patient4= new User()
+            {
+                UserName = "slobodanradulovic",
+                Email = "slobodanradulovic@gmail.com"
+            };
+            await userManager.CreateAsync(patient4, "12345");
+            await userManager.AddToRoleAsync(patient4, "Patient");
         }
     }
 }

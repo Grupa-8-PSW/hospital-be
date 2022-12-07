@@ -1,12 +1,10 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
-
 namespace HospitalLibrary.Core.Service
 {
     public class PatientService : IPatientService
     {
         private readonly IPatientRepository _patientRepository;
-
         public PatientService(IPatientRepository patientRepository)
         {
             _patientRepository = patientRepository;
@@ -42,7 +40,7 @@ namespace HospitalLibrary.Core.Service
         {
             AgeStatistic statistic = new AgeStatistic();
 
-            foreach(Patient p in patients)
+            foreach (Patient p in patients)
             {
                 int age = CalculateAgeFromPin(p);
                 switch (age)
@@ -68,10 +66,11 @@ namespace HospitalLibrary.Core.Service
             string fullBirthYear;
             DateTime dateNow = DateTime.Now;
 
-            if(Int32.Parse(birthYear) > Int32.Parse(dateNow.Year.ToString().Substring(1, 3)))
+            if (Int32.Parse(birthYear) > Int32.Parse(dateNow.Year.ToString().Substring(1, 3)))
             {
                 fullBirthYear = "1" + birthYear;
-            } else
+            }
+            else
             {
                 fullBirthYear = "2" + birthYear;
             }
@@ -143,7 +142,6 @@ namespace HospitalLibrary.Core.Service
             patient.Allergens = allers;
             return _patientRepository.Create(patient);
         }
-
-
     }
 }
+
