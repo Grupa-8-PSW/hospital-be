@@ -1,7 +1,8 @@
-﻿using HospitalLibrary.Core.Enums;
-using HospitalLibrary.Core.Model;
+﻿using AutoMapper;
+using HospitalAPI.DTO;
+using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Service;
 using HospitalLibrary.Core.Util;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers.PublicApp
@@ -10,16 +11,33 @@ namespace HospitalAPI.Controllers.PublicApp
     [ApiController]
     public class ExaminationController : ControllerBase
     {
+        private readonly IMapper _mapper;
+        private readonly IExaminationService _examinationService;
+        private readonly IAppointmentService _appointmentService;
+
+        public ExaminationController(
+            IMapper mapper,
+            IExaminationService examinationService,
+            IAppointmentService appointmentService)
+        {
+            _examinationService = examinationService;
+            _mapper = mapper;
+            _appointmentService = appointmentService;
+        }
+
         [HttpGet("/recommend")]
-        public ActionResult<List<DateRange>> GetRecommendedExaminationTime(
-            [FromQuery] DateTime from,
-            [FromQuery] DateTime to,
+        public ActionResult<List<AvailableAppointmentsDTO>> GetRecommendedExaminationTime(
+            [FromQuery] DateTime start,
+            [FromQuery] DateTime end,
             [FromQuery] int doctorId, 
             [FromQuery] AppointmentPriority priority)
         {
-            if (from >= to)
+            if (start >= end)
                 return BadRequest();
-            throw new NotImplementedException();
+            var dateRange = new DateRange(start, end);
+            var availableAppointments = _appointmentService.GetRecommendedAvailableAppointments(dateRange, doctorId, priority);
+            return Ok(_mapper.Map<List<AvailableAppointmentsDTO>>(availableAppointments));
         }
+
     }
 }

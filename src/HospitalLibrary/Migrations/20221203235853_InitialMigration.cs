@@ -1,4 +1,5 @@
 ﻿using System;
+using HospitalLibrary.Core.Util;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -6,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -252,9 +253,7 @@ namespace HospitalLibrary.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
-                    RoomId = table.Column<int>(type: "integer", nullable: false),
-                    StartWork = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    EndWork = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    RoomId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -401,9 +400,8 @@ namespace HospitalLibrary.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     DoctorId = table.Column<int>(type: "integer", nullable: false),
                     PatientId = table.Column<int>(type: "integer", nullable: false),
-                    RoomId = table.Column<int>(type: "integer", nullable: false),
-                    StartTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Duration = table.Column<int>(type: "integer", nullable: false)
+                    DateRange = table.Column<DateRange>(type: "jsonb", nullable: false),
+                    Status = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -418,12 +416,6 @@ namespace HospitalLibrary.Migrations
                         name: "FK_Examinations_Patients_PatientId",
                         column: x => x.PatientId,
                         principalTable: "Patients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Examinations_Rooms_RoomId",
-                        column: x => x.RoomId,
-                        principalTable: "Rooms",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -634,11 +626,6 @@ namespace HospitalLibrary.Migrations
                 name: "IX_Examinations_PatientId",
                 table: "Examinations",
                 column: "PatientId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Examinations_RoomId",
-                table: "Examinations",
-                column: "RoomId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Feedbacks_PatientId",

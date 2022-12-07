@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using HospitalLibrary.Core.Model;
-using System.Threading.Tasks;
-
+﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Util;
 
 namespace HospitalLibrary.Core.Repository
 {
@@ -18,7 +13,8 @@ namespace HospitalLibrary.Core.Repository
 
 
         IEnumerable<Examination> GetByDate(DateTime startTime);
-        IEnumerable<Examination> GetByDoctorIdAndDate(int doctorId, DateTime startTime);
+        IEnumerable<Examination> GetByDoctorAndDate(int doctorId, DateTime date);
+        public List<DateRange> GetByDoctorAndDateRange(int doctorId, DateRange dateRange);
 
     }
 }

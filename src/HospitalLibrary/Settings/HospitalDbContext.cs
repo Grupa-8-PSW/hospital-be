@@ -26,7 +26,10 @@ namespace HospitalLibrary.Settings
         public DbSet<Address> Addresses{ get; set; }
 
 
-        public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
+        public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
+        {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,6 +38,8 @@ namespace HospitalLibrary.Settings
             modelBuilder.SeedPatient();
             modelBuilder.SeedFeedback();
             modelBuilder.SeedAllergen();
+            // modelBuilder.SeedDoctor();
+            // modelBuilder.SeedExamination();
             base.OnModelCreating(modelBuilder);
         }
 

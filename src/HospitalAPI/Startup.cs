@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Runtime.Serialization;
 
 namespace HospitalAPI
 {
@@ -96,11 +97,16 @@ namespace HospitalAPI
             services.AddScoped<IExaminationService, ExaminationService>();
             services.AddScoped<IExaminationRepository, ExaminationRepository>();
 
+            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+            services.AddScoped<IAppointmentService, AppointmentService>();
+
             services.AddScoped<IMapper<Examination, ExaminationDTO>, ExaminationMapper>();
 
             services.AddScoped<IValidation, ExaminationValidation>();
 
             services.AddScoped<AuthService>();
+
+            services.AddScoped<HospitalLibrary.Core.Util.DoctorScheduler>();
 
             services.AddCors(options =>
             {

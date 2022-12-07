@@ -73,8 +73,8 @@ namespace HospitalTests.HospitalLibraryTests.Unit.Core.Util
             var extendedDateRange = dateRange.ExtendByDays(5);
 
             // Assert
-            Should.Equals(extendedDateRange.From, dateRange.From.AddDays(-5));
-            Should.Equals(extendedDateRange.To, dateRange.To.AddDays(5));
+            Should.Equals(extendedDateRange.Start, dateRange.Start.AddDays(-5));
+            Should.Equals(extendedDateRange.End, dateRange.End.AddDays(5));
         }
 
         [Fact]

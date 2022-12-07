@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Core.Util;
 using HospitalLibrary.Core.Validation;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 
@@ -15,12 +17,14 @@ namespace HospitalLibrary.Core.Service
         private readonly IExaminationRepository _examinationRepository;
         private readonly IValidation _validation;
         private readonly IDoctorRepository _doctorRepository;
+        private readonly Util.DoctorScheduler _doctorScheduler;
 
-        public ExaminationService(IExaminationRepository examinationRepository, IValidation validation, IDoctorRepository doctorRepository)
+        public ExaminationService(IExaminationRepository examinationRepository, IValidation validation, IDoctorRepository doctorRepository, Util.DoctorScheduler doctorScheduler)
         {
             _examinationRepository = examinationRepository;
             _validation = validation;
             _doctorRepository = doctorRepository;
+            _doctorScheduler = doctorScheduler;
         }
 
         public IEnumerable<Examination> GetAll()
@@ -48,23 +52,24 @@ namespace HospitalLibrary.Core.Service
 
         public bool Create(Examination examination)
         {
-            if (!_validation.Validate(examination.DoctorId, examination.StartTime, examination.Duration))
+            _examinationRepository.Create(examination);
+            /*if (!_validation.Validate(examination.DoctorId, examination.StartTime, examination.Duration))
             {
                 return false;
             }
-            _examinationRepository.Create(examination);
+            _examinationRepository.Create(examination);*/
             return true;
         }
 
         public bool Update(Examination examination)
         {
-            if (!_validation.ValidateNotIncludingExaminationId(examination.DoctorId, examination.StartTime, examination.Duration, examination.Id))
+            /*if (!_validation.ValidateNotIncludingExaminationId(examination.DoctorId, examination.StartTime, examination.Duration, examination.Id))
             {
                 return false;
             }
             Doctor doctor = _doctorRepository.GetById(examination.DoctorId);
             examination.Doctor = doctor;
-            _examinationRepository.Update(examination);
+            _examinationRepository.Update(examination);*/
             return true;
         }
 
@@ -78,8 +83,10 @@ namespace HospitalLibrary.Core.Service
         }
         public IEnumerable<Examination> GetByDoctorIdAndDate(int doctorId, DateTime startTime)
         {
-            return _examinationRepository.GetByDoctorIdAndDate(doctorId, startTime);
+            return _examinationRepository.GetByDoctorAndDate(doctorId, startTime);
         }
+
+
 
 
     }

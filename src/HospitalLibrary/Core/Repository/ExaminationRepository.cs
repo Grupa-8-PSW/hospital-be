@@ -1,11 +1,7 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using HospitalLibrary.Core.Util;
 
 namespace HospitalLibrary.Core.Repository
 {
@@ -58,13 +54,19 @@ namespace HospitalLibrary.Core.Repository
 
         public IEnumerable<Examination> GetByDate(DateTime startTime)
         {
-            return _context.Examinations.Where(ex => ex.StartTime.Date == startTime.Date).ToList();
+            // return _context.Examinations.Where(ex => ex.StartTime.Date == startTime.Date).ToList();
+            return null;
         }
-        public IEnumerable<Examination> GetByDoctorIdAndDate(int doctorId, DateTime startTime)
+
+        public IEnumerable<Examination> GetByDoctorAndDate(int doctorId, DateTime date)
         {
-            return _context.Examinations.Where(ex => ex.DoctorId == doctorId && ex.StartTime.Date == startTime.Date).ToList();
+            return _context.Examinations.Where(ex => ex.DoctorId == doctorId && ex.DateRange.Start.Date == date.Date).ToList();
         }
 
-
+        public List<DateRange> GetByDoctorAndDateRange(int doctorId, DateRange dateRange)
+            => _context.Examinations
+            .Where(ex => ex.DoctorId == doctorId && ex.DateRange.Start.Date == dateRange.Start.Date)
+            .Select(dr => dr.DateRange)
+            .ToList();
     }
 }

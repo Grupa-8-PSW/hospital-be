@@ -35,7 +35,8 @@ namespace HospitalTests.HospitalAPITests.Integration.Controllers.Public
 
         private ExaminationController SetupController(IServiceScope scope)
         {
-            return new ExaminationController();
+            return null;
+            // return new ExaminationController();
         }
 
         private static readonly object[][] GetRecommendedExaminationTimeTestData =

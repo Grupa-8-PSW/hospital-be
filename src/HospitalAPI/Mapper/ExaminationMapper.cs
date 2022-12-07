@@ -15,8 +15,8 @@ namespace HospitalAPI.Web.Mapper
             examinationDTO.Id = examination.Id;
             examinationDTO.PatientId = examination.PatientId;
             examinationDTO.DoctorId = examination.DoctorId;
-            examinationDTO.StartTime = examination.StartTime.ToString("o", CultureInfo.InvariantCulture);
-            examinationDTO.Duration = examination.Duration;
+            /*examinationDTO.StartTime = examination.StartTime.ToString("o", CultureInfo.InvariantCulture);
+            examinationDTO.Duration = examination.Duration;*/
 
             return examinationDTO;
         }
@@ -36,8 +36,8 @@ namespace HospitalAPI.Web.Mapper
             }
             examination.DoctorId = dto.DoctorId;
             examination.PatientId = dto.PatientId;
-            examination.Duration = dto.Duration;
-            examination.StartTime = DateTime.ParseExact(dto.StartTime, "dd/MM/yyyy HH:mm", null); //DateTime.Parse(dto.StartTime, null, System.Globalization.DateTimeStyles.RoundtripKind);
+            /*examination.Duration = dto.Duration;
+            examination.StartTime = DateTime.ParseExact(dto.StartTime, "dd/MM/yyyy HH:mm", null); //DateTime.Parse(dto.StartTime, null, System.Globalization.DateTimeStyles.RoundtripKind);*/
 
             return examination;
         }

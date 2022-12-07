@@ -17,13 +17,18 @@ namespace HospitalAPI.DTO
             CreateMap<CreateFeedbackDTO, Feedback>();
 
             CreateMap<Allergen, AllergenDTO>();
-
             CreateMap<AllergenDTO, Allergen>();
 
             CreateMap<Patient, PatientDTO>();
 
             CreateMap<RegisterUserDTO, Patient>()
                 .ForMember(f => f.Allergens, o => o.MapFrom(f => f.Allergens));
+
+            CreateMap<Doctor, DoctorDTO>();
+            CreateMap<DoctorDTO, Doctor>();
+
+            CreateMap<AvailableAppointments, AvailableAppointmentsDTO>();
+            CreateMap<AvailableAppointmentsDTO, AvailableAppointments>();
 
         }
 
