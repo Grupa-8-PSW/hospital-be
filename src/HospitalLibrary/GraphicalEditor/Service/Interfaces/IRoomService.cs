@@ -16,5 +16,7 @@ namespace HospitalLibrary.GraphicalEditor.Service.Interfaces
         public IEnumerable<Room> GetFreeRooms();
 
         List<FreeSpaceDTO> GetTransferedEquipment(EquipmentTransferDTO dto);
+
+        List<SeparatedRoomsDTO> GetSeparatedRooms(RoomForSeparateDTO dto);
     }
 }

@@ -51,6 +51,12 @@ namespace HospitalLibrary.GraphicalEditor.Service
 
         }
 
+        public List<SeparatedRoomsDTO> GetSeparatedRooms(RoomForSeparateDTO dto)
+        {
+            List<SeparatedRoomsDTO> separatedRooms = new List<SeparatedRoomsDTO>();   
+            return null;
+        }
+
         public List<FreeSpaceDTO> GetTransferedEquipment(EquipmentTransferDTO dto)
         {
             IEnumerable<Examination> fromRoomExaminations = _examinationRepository.GetByRoomId(dto.FromRoomId);
