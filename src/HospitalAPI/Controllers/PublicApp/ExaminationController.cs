@@ -13,15 +13,12 @@ namespace HospitalAPI.Controllers.PublicApp
     public class ExaminationController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IExaminationService _examinationService;
         private readonly IAppointmentService _appointmentService;
 
         public ExaminationController(
             IMapper mapper,
-            IExaminationService examinationService,
             IAppointmentService appointmentService)
         {
-            _examinationService = examinationService;
             _mapper = mapper;
             _appointmentService = appointmentService;
         }
@@ -38,6 +35,14 @@ namespace HospitalAPI.Controllers.PublicApp
             var dateRange = new DateRange(start, end);
             var availableAppointments = _appointmentService.GetRecommendedAvailableAppointments(dateRange, doctorId, priority);
             return Ok(_mapper.Map<List<AvailableAppointmentsDTO>>(availableAppointments));
+        }
+        [HttpGet("/available/doctor-date")]
+        public ActionResult<AvailableAppointmentsDTO> GetAvailableAppointmentsByDateDoctor(
+            [FromQuery] DateTime date,
+            [FromQuery] int doctorId)
+        {
+            var availableAppointments = _appointmentService.GetAvailableAppointments(date, doctorId);
+            return Ok(_mapper.Map<AvailableAppointmentsDTO>(availableAppointments));
         }
 
     }
