@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.GraphicalEditor.Model.DTO;
+using HospitalLibrary.GraphicalEditor.Service;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -48,6 +49,13 @@ namespace HospitalAPI.Controllers.Map
                 rooms.Add(new RoomDTO(room));
             }
             return Ok(rooms);
+        }
+
+        [HttpGet("get/schedules/{id}")]
+        public IActionResult getSchedulesDTO(int id)
+        {
+            var shedulesDto = _roomService.GetSchedules(id);
+            return Ok(shedulesDto);
         }
 
         [HttpGet("search")]
