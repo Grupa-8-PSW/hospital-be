@@ -1,4 +1,4 @@
-using HospitalAPI;
+/*using HospitalAPI;
 using IntegrationAPI.Connections;
 using IntegrationAPI.ConnectionService.Interface;
 using IntegrationAPI.Controllers;
@@ -73,4 +73,4 @@ namespace IntegrationTests.IntegrationAPITests.UnitTests
 
         }
     }
-}
+}*/

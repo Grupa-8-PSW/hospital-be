@@ -49,6 +49,30 @@ namespace IntegrationLibrary.Core.Service
             email.Body = new TextPart(TextFormat.Html) { Text = template.ToString() };
         }
 
+        public void SendTenderEmail(string emailBB)
+        {
+            var email = new MimeMessage();
+            GenerateSuccesTenderEmail(email, emailBB);
+
+            using var smtp = new SmtpClient();
+            smtp.Connect(_config.GetSection("EmailHost").Value, 587, SecureSocketOptions.StartTls);
+            smtp.Authenticate(_config.GetSection("EmailUsername").Value, _config.GetSection("EmailPassword").Value);
+
+            smtp.Send(email);
+            smtp.Disconnect(true);
+
+        }
+
+        private void GenerateSuccesTenderEmail(MimeMessage email, string address)
+        {
+            template.AppendLine("<b><h1>***SUCCESSFUL TENDER OFFER***</h1></b>");
+            template.AppendLine("<a href='https://localhost:7131/api/BloodUnitUrgentRequest/sendTenderOffer'>Confirm the tender offer</a>");
+            email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUsername").Value));
+            email.To.Add(MailboxAddress.Parse(address));
+            email.Subject = "Congratulations, your tender request has been accepted";
+            email.Body = new TextPart(TextFormat.Html) { Text = template.ToString() };
+        }
+
     }
 }
 
