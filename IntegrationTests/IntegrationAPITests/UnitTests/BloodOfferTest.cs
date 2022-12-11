@@ -15,62 +15,62 @@ namespace IntegrationTests.IntegrationAPITests.UnitTests
 {
     public class BloodOfferTest
     {
-
-        [Fact]
-        public void CreateBloodOffer()
-        {
-            BloodOffer bloodOffer = new BloodOffer("A-", 12, 421);
-
-            Assert.NotNull(bloodOffer);
-
-        }
-
-        [Fact]
-        public void CreatBloodOfferWithWrongBloodAmount()
-        {
-  
-            try
-            {
-                BloodOffer bloodOffer = new BloodOffer("A-", -12, 421);
-
-            }
-            catch(Exception ex)
-            {
-                Assert.Contains("Wrong data", ex.Message);
-            }
-
-        }
-
-        [Fact]
-        public void CreatBloodOfferWithWrongPriceAmount()
-        {
-
-            try
-            {
-                BloodOffer bloodOffer = new BloodOffer("A-", 12, -421);
-
-            }
-            catch (Exception ex)
-            {
-                Assert.Contains("Wrong data", ex.Message);
-            }
-
-        }
-
-        [Fact]
-        public void CreatBloodOfferWithNullAtribute()
-        {
-
-            try
-            {
-                BloodOffer bloodOffer = new BloodOffer(null, 12, -421);
-
-            }
-            catch (Exception ex)
-            {
-                Assert.Contains("Wrong data", ex.Message);
-            }
-
-        }
+        //
+        // [Fact]
+        // public void CreateBloodOffer()
+        // {
+        //     BloodOffer bloodOffer = new BloodOffer("A-", 12, 421);
+        //
+        //     Assert.NotNull(bloodOffer);
+        //
+        // }
+        //
+        // [Fact]
+        // public void CreatBloodOfferWithWrongBloodAmount()
+        // {
+        //
+        //     try
+        //     {
+        //         BloodOffer bloodOffer = new BloodOffer("A-", -12, 421);
+        //
+        //     }
+        //     catch(Exception ex)
+        //     {
+        //         Assert.Contains("Wrong data", ex.Message);
+        //     }
+        //
+        // }
+        //
+        // [Fact]
+        // public void CreatBloodOfferWithWrongPriceAmount()
+        // {
+        //
+        //     try
+        //     {
+        //         BloodOffer bloodOffer = new BloodOffer("A-", 12, -421);
+        //
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         Assert.Contains("Wrong data", ex.Message);
+        //     }
+        //
+        // }
+        //
+        // [Fact]
+        // public void CreatBloodOfferWithNullAtribute()
+        // {
+        //
+        //     try
+        //     {
+        //         BloodOffer bloodOffer = new BloodOffer(null, 12, -421);
+        //
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         Assert.Contains("Wrong data", ex.Message);
+        //     }
+        //
+        // }
     }
 }*/
