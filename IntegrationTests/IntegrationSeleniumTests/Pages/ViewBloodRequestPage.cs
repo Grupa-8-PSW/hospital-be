@@ -57,6 +57,32 @@ namespace IntegrationTests.IntegrationSeleniumTests.Pages
             });
         }
 
+        public void WaitForTableUpdate()
+        {
+            var oldCount = RowsCount();
+            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
+            wait.Until(condition =>
+            {
+                try
+                {
+                    if (Rows.Count != oldCount - 1)
+                    {
+                        return false;
+                    }
+
+                    return true;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    return false;
+                }
+                catch (NoSuchElementException)
+                {
+                    return false;
+                }
+            });
+        }
+
         public void ClickLink()
         {
             Link.Click();
