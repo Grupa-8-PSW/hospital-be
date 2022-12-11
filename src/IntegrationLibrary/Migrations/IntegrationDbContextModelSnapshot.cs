@@ -166,7 +166,6 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("Tenders");
                 });
 
-
             modelBuilder.Entity("IntegrationLibrary.Core.Model.TenderOffer", b =>
                 {
                     b.Property<int>("Id")
@@ -182,11 +181,18 @@ namespace IntegrationLibrary.Migrations
                     b.Property<int>("TenderID")
                         .HasColumnType("integer");
 
+                    b.Property<int>("bloodBankId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("tenderOfferStatus")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("bloodBankId");
 
                     b.ToTable("TenderOffer");
                 });
-
 
             modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodBankNews", b =>
                 {
@@ -197,6 +203,17 @@ namespace IntegrationLibrary.Migrations
                         .IsRequired();
 
                     b.Navigation("BloodBank");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.TenderOffer", b =>
+                {
+                    b.HasOne("IntegrationLibrary.Core.Model.BloodBank", "bloodBank")
+                        .WithMany()
+                        .HasForeignKey("bloodBankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("bloodBank");
                 });
 #pragma warning restore 612, 618
         }

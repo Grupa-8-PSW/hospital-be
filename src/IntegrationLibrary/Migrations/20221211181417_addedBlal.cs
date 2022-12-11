@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
-    public partial class tenders : Migration
+    public partial class addedBlal : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -44,20 +44,6 @@ namespace IntegrationLibrary.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BloodConsumptionConfiguration", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TenderOffer",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    TenderID = table.Column<int>(type: "integer", nullable: false),
-                    Offers = table.Column<List<BloodOffer>>(type: "jsonb", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TenderOffer", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -99,6 +85,28 @@ namespace IntegrationLibrary.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "TenderOffer",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    TenderID = table.Column<int>(type: "integer", nullable: false),
+                    Offers = table.Column<List<BloodOffer>>(type: "jsonb", nullable: false),
+                    bloodBankId = table.Column<int>(type: "integer", nullable: false),
+                    tenderOfferStatus = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TenderOffer", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TenderOffer_BloodBanks_bloodBankId",
+                        column: x => x.bloodBankId,
+                        principalTable: "BloodBanks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "BloodBanks",
                 columns: new[] { "Id", "APIKey", "Email", "Name", "Password", "ServerAddress" },
@@ -113,6 +121,11 @@ namespace IntegrationLibrary.Migrations
                 name: "IX_BloodBankNews_BloodBankId",
                 table: "BloodBankNews",
                 column: "BloodBankId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TenderOffer_bloodBankId",
+                table: "TenderOffer",
+                column: "bloodBankId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

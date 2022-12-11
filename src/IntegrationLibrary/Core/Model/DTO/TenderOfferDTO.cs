@@ -10,5 +10,7 @@ namespace IntegrationLibrary.Core.Model.DTO
     {
         public int TenderID { get; set; } 
         public List<BloodOfferDTO> BloodAmounts { get; set; }
+        public string BloodBankUsername { get; set; }
+        public int TenderOfferStatus { get; set; }
     }
 }

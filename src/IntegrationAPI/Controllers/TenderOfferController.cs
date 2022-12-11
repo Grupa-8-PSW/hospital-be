@@ -35,7 +35,7 @@ namespace IntegrationAPI.Controllers
         public IActionResult GetOffersForTender( int tenderID)
         {
 
-            return Ok(_tenderOfferService.getOffersForTender(tenderID));
+            return Ok(TenderOfferMapper.ToDTOs(_tenderOfferService.getOffersForTender(tenderID)));
         }
 
     }

@@ -13,9 +13,27 @@ namespace IntegrationAPI.Mapper
             TenderOffer to = new TenderOffer();
             to.TenderID = dto.TenderID;
             to.Offers = convBloodOffers(dto.BloodAmounts);
-
+            to.TenderOfferStatus = (TenderOfferStatus)dto.TenderOfferStatus;
+            to.BloodBankName = dto.BloodBankUsername;
             return to;
         }
+
+
+        public static List<TenderOfferDTO> ToDTOs(IEnumerable<TenderOffer> tOffers)
+        {
+            List<TenderOfferDTO> ret = new List<TenderOfferDTO>();
+            foreach(TenderOffer to in tOffers)
+            {
+                ret.Add(new TenderOfferDTO()
+                {
+                    BloodAmounts = convBloodOffersToDTO(to.Offers),
+                    TenderID = to.TenderID,
+                    BloodBankUsername = to.BloodBankName
+                });
+            }
+            return ret;
+        }
+
 
         public static List<BloodOffer> convBloodOffers(List<BloodOfferDTO> dtos)
         {
@@ -39,7 +57,7 @@ namespace IntegrationAPI.Mapper
                 convBloodOffersDTO.Add(new BloodOfferDTO()
                 {
                     BloodAmount = bo.BloodAmount,
-                    BloodType = bo.BloodType,
+                    BloodType =  bo.BloodType,
                     PriceAmount = 0
                 });
             }
