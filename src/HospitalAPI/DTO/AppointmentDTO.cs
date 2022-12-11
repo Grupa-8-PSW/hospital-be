@@ -1,4 +1,6 @@
-﻿namespace HospitalAPI.DTO
+﻿using HospitalLibrary.Core.Enums;
+
+namespace HospitalAPI.DTO
 {
     public class AppointmentDTO
     {
@@ -8,6 +10,7 @@
         public int RoomId { get; set; }
         public int FloorId { get; set; }
         public string RoomName { get; set; }
+        public ExaminationStatus Status { get; set; }  
     }
 
 }

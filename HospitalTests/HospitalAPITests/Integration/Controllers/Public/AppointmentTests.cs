@@ -8,6 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 using HospitalAPI;
 using Shouldly;
+using Castle.Core.Resource;
+using Newtonsoft.Json;
+using HospitalLibrary.Core.Model;
 
 namespace HospitalTests.HospitalAPITests.Integration.Controllers.Public
 {
@@ -31,6 +34,34 @@ namespace HospitalTests.HospitalAPITests.Integration.Controllers.Public
             result.ShouldNotBeNull();
             result.ShouldBeOfType(typeof(OkObjectResult));
             ((OkObjectResult)result).Value.ShouldBeOfType(typeof(List<AppointmentDTO>));
+        }
+
+        [Fact]
+        public void Cancels_appointment()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = controller.CancelAppointment(6);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType(typeof(OkObjectResult));
+            ((OkObjectResult)result).Value.ShouldBeOfType(typeof(bool));
+            ((OkObjectResult)result).Value.ShouldBe(true);
+        }
+
+        [Fact]
+        public void Fails_to_cancel_appointment()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = controller.CancelAppointment(1);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType(typeof(OkObjectResult));
+            ((OkObjectResult)result).Value.ShouldBeOfType(typeof(bool));
+            ((OkObjectResult)result).Value.ShouldBe(false);
         }
     }
 }

@@ -23,6 +23,11 @@ namespace HospitalLibrary.Core.Service
             _doctorRepository = doctorRepository;
         }
 
+        public ExaminationService(IExaminationRepository examinationRepository)
+        {
+            _examinationRepository = examinationRepository;
+        }
+
         public IEnumerable<Examination> GetAll()
         {
             /*  Room room = new Room(1, "11", 1);
@@ -89,12 +94,13 @@ namespace HospitalLibrary.Core.Service
         public bool CheckIfCancellable(int id)
         {
             var examination = _examinationRepository.GetById(id);
-            if((examination.StartTime - DateTime.Now) <= TimeSpan.FromHours(24) || examination == null)
+            if(examination.StartTime < DateTime.Now || (examination.StartTime - DateTime.Now) <= TimeSpan.FromHours(24) || examination == null)
             {
                 return false;
             } else
             {
-                _examinationRepository.Delete(examination);
+                examination.Status = Enums.ExaminationStatus.CANCELLED;
+                _examinationRepository.Update(examination);
                 return true;
             }
         }
