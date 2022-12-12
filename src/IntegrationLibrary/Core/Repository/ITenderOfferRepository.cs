@@ -12,5 +12,6 @@ namespace IntegrationLibrary.Core.Repository
         public TenderOffer Create(TenderOffer tenderOffer);
         IEnumerable<TenderOffer> GetAll();
         public IEnumerable<TenderOffer> GetAllByTennderID(int tenderID);
+        public void UpdateTenderOffer(TenderOffer newTenderOffer);
     }
 }

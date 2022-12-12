@@ -1,6 +1,8 @@
-﻿using IntegrationLibrary.Core.Model;
+﻿using HospitalLibrary.Core.Model;
+using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Service.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +20,28 @@ namespace IntegrationLibrary.Core.Service
             _repository = repo;
         }
 
+        public TenderOffer AcceptTenderOffer(TenderOffer acceptedTenderOffer)
+        {
+            // promjeni status
+            changeStatusForOffers(acceptedTenderOffer);
+            
+            // posalji mejlove
+
+            return acceptedTenderOffer;
+        }
+
+        public void changeStatusForOffers(TenderOffer acceptedTenderOffer)
+        {
+            _repository.UpdateTenderOffer(acceptedTenderOffer);
+            foreach (TenderOffer to in _repository.GetAll())
+            {
+                if (to.TenderOfferStatus == TenderOfferStatus.WAITING)
+                {
+                    to.TenderOfferStatus = TenderOfferStatus.REJECT;
+                    _repository.UpdateTenderOffer(to);
+                }
+            }
+        }
 
         public TenderOffer Create(TenderOffer tenderOffer)
         {

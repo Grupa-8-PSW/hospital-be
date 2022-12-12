@@ -21,6 +21,15 @@ namespace IntegrationLibrary.Core.Repository
             _context = context;
         }
 
+        public void UpdateTenderOffer(TenderOffer newTenderOffer)
+        {
+
+            _context.ChangeTracker.Clear();
+            _context.TenderOffer.Update(newTenderOffer);
+            _context.SaveChanges();
+
+        }
+
         public TenderOffer Create(TenderOffer tenderOffer)
         {
             _context.TenderOffer.Add(tenderOffer);

@@ -28,7 +28,8 @@ namespace IntegrationAPI.Mapper
                 {
                     BloodAmounts = convBloodOffersToDTO(to.Offers),
                     TenderID = to.TenderID,
-                    BloodBankUsername = to.BloodBankName
+                    BloodBankUsername = to.BloodBankName,
+                    
                 });
             }
             return ret;
@@ -58,7 +59,7 @@ namespace IntegrationAPI.Mapper
                 {
                     BloodAmount = bo.BloodAmount,
                     BloodType =  bo.BloodType,
-                    PriceAmount = 0
+                    PriceAmount = bo.Price.Amount
                 });
             }
 

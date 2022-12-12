@@ -19,13 +19,13 @@ namespace IntegrationLibrary.Core.Model
         public string BloodBankName { get; set; }
         public TenderOfferStatus TenderOfferStatus { get; set; }
        
-        public TenderOffer(int id, int tenderID, List<BloodOffer> offers, string bloodBankName, TenderOffer tenderOfferStatus)
+        public TenderOffer(int id, int tenderID, List<BloodOffer> offers, string bloodBankName, TenderOfferStatus tenderOfferStatus)
         {
             Id = id;
             TenderID = tenderID;
             Offers = offers;
             BloodBankName = bloodBankName;
-            TenderOfferStatus = TenderOfferStatus;
+            TenderOfferStatus = tenderOfferStatus;
         }
 
         public TenderOffer()
