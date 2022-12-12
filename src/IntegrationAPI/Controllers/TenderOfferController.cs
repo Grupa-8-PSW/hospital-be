@@ -42,7 +42,7 @@ namespace IntegrationAPI.Controllers
         [HttpGet]
         public IActionResult GetOffersForTender( int tenderID)
         {
-            IEnumerable<TenderOffer> tp = _tenderOfferService.getOffersForTender(tenderID);
+            List<TenderOfferDTO> ts = TenderOfferMapper.ToDTOs(_tenderOfferService.getOffersForTender(tenderID));
             return Ok(TenderOfferMapper.ToDTOs(_tenderOfferService.getOffersForTender(tenderID)));
         }
 

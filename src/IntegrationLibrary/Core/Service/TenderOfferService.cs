@@ -35,7 +35,7 @@ namespace IntegrationLibrary.Core.Service
             _repository.UpdateTenderOffer(acceptedTenderOffer);
             foreach (TenderOffer to in _repository.GetAll())
             {
-                if (to.TenderOfferStatus == TenderOfferStatus.WAITING)
+                if (to.TenderOfferStatus == TenderOfferStatus.WAITING && to.TenderID.Equals(acceptedTenderOffer.TenderID))
                 {
                     to.TenderOfferStatus = TenderOfferStatus.REJECT;
                     _repository.UpdateTenderOffer(to);

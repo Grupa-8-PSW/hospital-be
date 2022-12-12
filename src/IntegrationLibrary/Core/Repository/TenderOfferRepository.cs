@@ -2,6 +2,7 @@
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Persistence;
 using Microsoft.EntityFrameworkCore;
+using MimeKit;
 using Org.BouncyCastle.Crypto;
 using System;
 using System.Collections.Generic;
@@ -23,10 +24,11 @@ namespace IntegrationLibrary.Core.Repository
 
         public void UpdateTenderOffer(TenderOffer newTenderOffer)
         {
+            TenderOffer bloodUnitOld = _context.TenderOffer.Find(newTenderOffer.Id);
+            _context.Entry(bloodUnitOld).CurrentValues.SetValues(newTenderOffer);
 
-            _context.ChangeTracker.Clear();
-            _context.TenderOffer.Update(newTenderOffer);
             _context.SaveChanges();
+            
 
         }
 
