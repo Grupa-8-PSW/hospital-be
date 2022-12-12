@@ -25,6 +25,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+	<Folder Include="HospitalAPITests\"/>
     <Folder Include="HospitalE2ETests\Pages\" />
     <Folder Include="HospitalLibraryTests\" />
   </ItemGroup>
