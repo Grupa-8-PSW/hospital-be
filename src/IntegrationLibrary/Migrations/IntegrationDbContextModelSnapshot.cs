@@ -142,6 +142,34 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("BloodConsumptionConfiguration");
                 });
 
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.MonthlySubscription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BankId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("DeliveryDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<List<Blood>>("RequestedBlood")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BankId");
+
+                    b.ToTable("MonthlySubscription");
+                });
+
             modelBuilder.Entity("IntegrationLibrary.Core.Model.Tender", b =>
                 {
                     b.Property<int>("Id")
@@ -166,7 +194,6 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("Tenders");
                 });
 
-
             modelBuilder.Entity("IntegrationLibrary.Core.Model.TenderOffer", b =>
                 {
                     b.Property<int>("Id")
@@ -175,6 +202,10 @@ namespace IntegrationLibrary.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("BloodBankName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<List<BloodOffer>>("Offers")
                         .IsRequired()
                         .HasColumnType("jsonb");
@@ -182,11 +213,13 @@ namespace IntegrationLibrary.Migrations
                     b.Property<int>("TenderID")
                         .HasColumnType("integer");
 
+                    b.Property<int>("TenderOfferStatus")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.ToTable("TenderOffer");
                 });
-
 
             modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodBankNews", b =>
                 {
@@ -197,6 +230,17 @@ namespace IntegrationLibrary.Migrations
                         .IsRequired();
 
                     b.Navigation("BloodBank");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.MonthlySubscription", b =>
+                {
+                    b.HasOne("IntegrationLibrary.Core.Model.BloodBank", "Bank")
+                        .WithMany()
+                        .HasForeignKey("BankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bank");
                 });
 #pragma warning restore 612, 618
         }

@@ -4,7 +4,7 @@
 
 namespace IntegrationLibrary.Migrations
 {
-    public partial class ghgk : Migration
+    public partial class ime_mig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

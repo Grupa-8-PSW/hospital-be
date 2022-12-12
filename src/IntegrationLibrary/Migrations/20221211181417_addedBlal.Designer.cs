@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Model.ValueObject;
 using IntegrationLibrary.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -14,8 +15,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221204184446_initMigration")]
-    partial class initMigration
+    [Migration("20221211181417_addedBlal")]
+    partial class addedBlal
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -167,6 +168,34 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("Tenders");
                 });
 
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.TenderOffer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<List<BloodOffer>>("Offers")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
+                    b.Property<int>("TenderID")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("bloodBankId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("tenderOfferStatus")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("bloodBankId");
+
+                    b.ToTable("TenderOffer");
+                });
+
             modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodBankNews", b =>
                 {
                     b.HasOne("IntegrationLibrary.Core.Model.BloodBank", "BloodBank")
@@ -176,6 +205,17 @@ namespace IntegrationLibrary.Migrations
                         .IsRequired();
 
                     b.Navigation("BloodBank");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.TenderOffer", b =>
+                {
+                    b.HasOne("IntegrationLibrary.Core.Model.BloodBank", "bloodBank")
+                        .WithMany()
+                        .HasForeignKey("bloodBankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("bloodBank");
                 });
 #pragma warning restore 612, 618
         }

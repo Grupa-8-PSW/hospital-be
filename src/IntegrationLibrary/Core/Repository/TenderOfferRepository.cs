@@ -21,6 +21,15 @@ namespace IntegrationLibrary.Core.Repository
             _context = context;
         }
 
+        public void UpdateTenderOffer(TenderOffer newTenderOffer)
+        {
+
+            _context.ChangeTracker.Clear();
+            _context.TenderOffer.Update(newTenderOffer);
+            _context.SaveChanges();
+
+        }
+
         public TenderOffer Create(TenderOffer tenderOffer)
         {
             _context.TenderOffer.Add(tenderOffer);
@@ -37,10 +46,6 @@ namespace IntegrationLibrary.Core.Repository
         {
             return _context.TenderOffer.Where(offer => offer.TenderID.Equals(tenderId));
         }
-
-
-        //public List<Allergen> GetAllergensByDtoId(List<int> ids) => _dbContext.Allergens.Where(a => ids.Contains(a.Id)).ToList();
-
 
     }
 }

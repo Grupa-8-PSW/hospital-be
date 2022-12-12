@@ -1,4 +1,4 @@
-/*using HospitalAPI;
+using HospitalAPI;
 using IntegrationAPI.Connections;
 using IntegrationAPI.ConnectionService.Interface;
 using IntegrationAPI.Controllers;
@@ -15,11 +15,10 @@ namespace IntegrationTests.IntegrationAPITests.UnitTests
 {
     public class BloodOfferTest
     {
-
         [Fact]
         public void CreateBloodOffer()
         {
-            BloodOffer bloodOffer = new BloodOffer("A-", 12, 421);
+            BloodOffer bloodOffer = new BloodOffer("A-", 12, new Money(421, Currency.USD));
 
             Assert.NotNull(bloodOffer);
 
@@ -31,7 +30,7 @@ namespace IntegrationTests.IntegrationAPITests.UnitTests
   
             try
             {
-                BloodOffer bloodOffer = new BloodOffer("A-", -12, 421);
+                BloodOffer bloodOffer = new BloodOffer("A-", -12, new Money(421, Currency.USD));
 
             }
             catch(Exception ex)
@@ -47,7 +46,7 @@ namespace IntegrationTests.IntegrationAPITests.UnitTests
 
             try
             {
-                BloodOffer bloodOffer = new BloodOffer("A-", 12, -421);
+                BloodOffer bloodOffer = new BloodOffer("A-", 12, new Money(-421, Currency.USD));
 
             }
             catch (Exception ex)
@@ -63,7 +62,7 @@ namespace IntegrationTests.IntegrationAPITests.UnitTests
 
             try
             {
-                BloodOffer bloodOffer = new BloodOffer(null, 12, -421);
+                BloodOffer bloodOffer = new BloodOffer(null, 12, new Money(-421, Currency.USD));
 
             }
             catch (Exception ex)
@@ -72,5 +71,6 @@ namespace IntegrationTests.IntegrationAPITests.UnitTests
             }
 
         }
+
     }
-}*/
+}
