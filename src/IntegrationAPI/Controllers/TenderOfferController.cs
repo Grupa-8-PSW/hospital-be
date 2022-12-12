@@ -30,12 +30,20 @@ namespace IntegrationAPI.Controllers
         }
 
 
+        [Route("/acceptOffer")]
+        [HttpPost]
+        public IActionResult AcceptTenderOffer([FromBody] TenderOfferDTO dto)
+        {
+            return Ok(_tenderOfferService.AcceptTenderOffer(TenderOfferMapper.ToModel(dto)));
+        }
+
+
         [Route("/getOffersForTender")]
         [HttpGet]
         public IActionResult GetOffersForTender( int tenderID)
         {
-
-            return Ok(_tenderOfferService.getOffersForTender(tenderID));
+            IEnumerable<TenderOffer> tp = _tenderOfferService.getOffersForTender(tenderID);
+            return Ok(TenderOfferMapper.ToDTOs(_tenderOfferService.getOffersForTender(tenderID)));
         }
 
     }
