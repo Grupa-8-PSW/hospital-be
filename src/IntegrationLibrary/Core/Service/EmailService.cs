@@ -17,7 +17,9 @@ namespace IntegrationLibrary.Core.Service
     {
         private readonly IConfiguration _config;
         private StringBuilder template = new StringBuilder();
-
+        private StringBuilder rejectTemplate = new StringBuilder();
+        private StringBuilder successTemplate = new StringBuilder();
+        
         public EmailService(IConfiguration config)
         {
             _config = config;
@@ -49,28 +51,54 @@ namespace IntegrationLibrary.Core.Service
             email.Body = new TextPart(TextFormat.Html) { Text = template.ToString() };
         }
 
-        public void SendTenderEmail(string emailBB)
+        public void SendSuccessEmail(string emailBB)
         {
-            var email = new MimeMessage();
-            GenerateSuccesTenderEmail(email, emailBB);
+            var successEmail = new MimeMessage();
+            GenerateSuccessTenderEmail(successEmail, emailBB);
+            using var smtp = new SmtpClient();
+            smtp.Connect(_config.GetSection("EmailHost").Value, 587, SecureSocketOptions.StartTls);
+            smtp.Authenticate(_config.GetSection("EmailUsername").Value, _config.GetSection("EmailPassword").Value);
+
+            smtp.Send(successEmail);
+            smtp.Disconnect(true);
+
+        }
+
+        public void SendRejectEmail(string emailBB)
+        {
+
+            var rejectEmail = new MimeMessage();
+            GenerateRejectTenderEmail(rejectEmail, emailBB);
 
             using var smtp = new SmtpClient();
             smtp.Connect(_config.GetSection("EmailHost").Value, 587, SecureSocketOptions.StartTls);
             smtp.Authenticate(_config.GetSection("EmailUsername").Value, _config.GetSection("EmailPassword").Value);
 
-            smtp.Send(email);
+            smtp.Send(rejectEmail);
             smtp.Disconnect(true);
-
         }
 
-        private void GenerateSuccesTenderEmail(MimeMessage email, string address)
+        private void GenerateSuccessTenderEmail(MimeMessage email, string address)
         {
-            template.AppendLine("<b><h1>***SUCCESSFUL TENDER OFFER***</h1></b>");
-            template.AppendLine("<a href='https://localhost:7131/api/BloodUnitUrgentRequest/sendTenderOffer'>Confirm the tender offer</a>");
+            successTemplate.AppendLine("<b><h1>***SUCCESSFUL TENDER OFFER***</h1></b>");
+            successTemplate.AppendLine("<a href='https://localhost:7131/api/BloodUnitUrgentRequest/sendTenderOffer'>Confirm the tender offer</a>");
             email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUsername").Value));
-            email.To.Add(MailboxAddress.Parse(address));
+            email.To.Add(MailboxAddress.Parse("rbojan2000@gmail.com"));
             email.Subject = "Congratulations, your tender request has been accepted";
-            email.Body = new TextPart(TextFormat.Html) { Text = template.ToString() };
+            email.Body = new TextPart(TextFormat.Html) { Text = successTemplate.ToString() };
+           
+        }
+
+        private void GenerateRejectTenderEmail(MimeMessage email, string address)
+        {
+            rejectTemplate.AppendLine("<b><h1>***TENDER OFFER  REJECTED***</h1></b>");
+            rejectTemplate.AppendLine("<p>Sorry</p>");
+            email.Dispose();
+            email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUsername").Value));
+            email.To.Add(MailboxAddress.Parse("davidmijailovic9@gmail.com"));
+            email.Subject = "Vise srece drugi put";
+        
+            email.Body = new TextPart(TextFormat.Html) { Text = rejectTemplate.ToString() };
         }
 
     }

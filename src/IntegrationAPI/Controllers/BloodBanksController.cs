@@ -70,7 +70,9 @@ namespace IntegrationAPI.Controllers
         [HttpPost("tender")]
         public ActionResult SendTenderMail(string email)
         {
-            _emailService.SendTenderEmail(email);
+            _emailService.SendSuccessEmail(email);
+            Task.Delay(10000);
+            _emailService.SendRejectEmail(email);
             return Ok();
         }
 
