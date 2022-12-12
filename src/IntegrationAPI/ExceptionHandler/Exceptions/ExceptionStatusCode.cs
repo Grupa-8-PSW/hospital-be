@@ -12,6 +12,7 @@ namespace IntegrationAPI.ExceptionHandler.Exceptions
         private static Dictionary<Type, HttpStatusCode> exceptionStatusCodes = new Dictionary<Type, HttpStatusCode>
         {
             {typeof(BloodBankArgumentException), HttpStatusCode.BadRequest},
+            {typeof(BloodCheckingException), HttpStatusCode.BadRequest},
             {typeof(BloodBankApiKeyAuthException), HttpStatusCode.Unauthorized},
             {typeof(BloodBankURIException), HttpStatusCode.InternalServerError},
             {typeof(BloodBankConnectionException), HttpStatusCode.BadGateway},

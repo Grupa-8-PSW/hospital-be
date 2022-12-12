@@ -196,8 +196,8 @@ namespace IntegrationAPI.Connections
             {
                 Console.WriteLine(e);
             }
-
-            if (res.Content == "Ima dovoljno krvi")
+            bool hasEnoughBlood =  JsonSerializer.Deserialize<bool>(Boolean.Parse(res.Content));
+            if (hasEnoughBlood)
             {
                 _hospitalHttpConnection.RestockBlood(urgentRequest.bloodUnits);
             }

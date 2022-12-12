@@ -15,7 +15,6 @@ namespace IntegrationTests.IntegrationAPITests.UnitTests
 {
     public class BloodOfferTest
     {
-
         [Fact]
         public void CreateBloodOffer()
         {
@@ -72,5 +71,6 @@ namespace IntegrationTests.IntegrationAPITests.UnitTests
             }
 
         }
+
     }
 }
