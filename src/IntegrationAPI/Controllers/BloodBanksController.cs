@@ -12,7 +12,7 @@ using System.Data;
 
 namespace IntegrationAPI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BloodBanksController : ControllerBase
@@ -65,13 +65,6 @@ namespace IntegrationAPI.Controllers
 
             _bloodBankService.Delete(bloodBank);
             return NoContent();
-        }
-
-        [HttpPost("tender")]
-        public ActionResult SendTenderMail(string email)
-        {
-            _emailService.SendTenderEmail(email);
-            return Ok();
         }
 
     }
