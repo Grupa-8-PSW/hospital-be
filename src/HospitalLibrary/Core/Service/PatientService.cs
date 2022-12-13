@@ -5,14 +5,40 @@ namespace HospitalLibrary.Core.Service
     public class PatientService : IPatientService
     {
         private readonly IPatientRepository _patientRepository;
+        private readonly IExaminationRepository _examinationRepository;
         public PatientService(IPatientRepository patientRepository)
         {
             _patientRepository = patientRepository;
-        }
 
+        }
+        public PatientService(IPatientRepository patientRepository, IExaminationRepository examinationRepository)
+        {
+            _patientRepository = patientRepository;
+            _examinationRepository = examinationRepository;
+        }
         public List<Patient> GetAll() => _patientRepository.GetAll();
 
         public List<Patient> GetBySelectedDoctorId(int id) => _patientRepository.GetBySelectedDoctorId(id).ToList();
+        public List<Patient> GetMalicious()
+        {
+            var cancelledExams = _examinationRepository.GetCancelled();
+            var patients = _patientRepository.GetAll();
+            var maliciousPatients = new List<Patient>();
+            int cancelCount = 0;
+
+            foreach(Patient patient in patients)
+            {
+                foreach(var exam in cancelledExams)
+                {
+                    if (exam.PatientId == patient.Id) cancelCount++;
+                }
+                if (cancelCount >= 3)maliciousPatients.Add(patient);
+                cancelCount = 0;
+            }
+
+            return maliciousPatients;
+
+        }
 
         public Patient GetById(int id) => _patientRepository.GetById(id);
 

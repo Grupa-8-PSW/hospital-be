@@ -14,5 +14,6 @@ namespace HospitalLibrary.Core.Service
         public Statistic GetPatientStatisticForSelectedDoctor(int id);
         public Patient CreateAndAddAllergens(Patient patient, List<Allergen> allers);
         public Patient GetByUserId(int userId);
+        public List<Patient> GetMalicious();
     }
 }

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using HospitalLibrary.Core.Enums;
 
 namespace HospitalLibrary.Core.Repository
 {
@@ -49,7 +50,10 @@ namespace HospitalLibrary.Core.Repository
                 throw;
             }
         }
-
+        public IEnumerable<Examination> GetCancelled()
+        {
+            return _context.Examinations.Where(ex => ex.Status == (ExaminationStatus.CANCELLED));
+        }
         public void Delete(Examination examination)
         {
             _context.Examinations.Remove(examination);
