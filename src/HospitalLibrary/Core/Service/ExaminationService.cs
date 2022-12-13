@@ -41,7 +41,7 @@ namespace HospitalLibrary.Core.Service
             return _examinationRepository.GetAll();
         }
 
-        public Examination GetById(int id)
+        public Examination? GetById(int id)
         {
             return _examinationRepository.GetById(id);
         }
