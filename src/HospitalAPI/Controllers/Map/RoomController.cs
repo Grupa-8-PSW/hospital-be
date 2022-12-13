@@ -86,6 +86,12 @@ namespace HospitalAPI.Controllers.Map
             return Ok(separatedRooms);
         }
 
+        [HttpPost("get/mergedRoom")]
+        public IActionResult GetMergedRoom(RoomsForMergeDTO dto)
+        {
+            MergedRoomDTO mergedRoom = _roomService.GetMergedRoom(dto);
+            return Ok(mergedRoom);
+        }
     }
 
 }

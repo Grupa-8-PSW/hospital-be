@@ -134,16 +134,30 @@ namespace HospitalTests.HospitalAPITests.Integration
             Assert.NotNull(freeSpace);
         }
 
-        /* NE RADE OSTALI TESTOVI PA SAM MOJ DODAO A ZAKOMENTARISAO GA
+        /*
         [Fact]
-        public void Separating_rooms()
+        public void Separating_room()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            RoomForSeparateDTO dto = new RoomForSeparateDTO(2, new DateTime(2022, 12, 13, 00, 00, 00, DateTimeKind.Utc), new DateTime(2022, 12, 15, 00, 00, 00, DateTimeKind.Utc), 2, "Ortopedija", "OTHER", "Pedijatrija", "OTHER");
+            //int oldRoomId, string newRoom1Name, string newRoom1Type, string newRoom2Name, string newRoom2Type
+            RoomForSeparateDTO dto = new RoomForSeparateDTO(2,"Ortopedija", "OTHER", "Pedijatrija", "OTHER");
             var separatedRoom = ((OkObjectResult)controller.GetSeparatedRooms(dto))?.Value as List<SeparatedRoomsDTO>;
 
             Assert.NotNull(separatedRoom);
+        } 
+
+        
+        [Fact]
+        public void Merging_Rooms()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            //int oldRoom1Id, int oldRoom2Id, string newRoomName, string newRoomType
+            RoomsForMergeDTO dto = new RoomsForMergeDTO(1, 2, "Logopedija", "OTHER");
+            var mergedRoom = ((OkObjectResult)controller.GetMergedRoom(dto))?.Value as List<MergedRoomDTO>;
+
+            Assert.NotNull(mergedRoom);
         } */
     }
 }

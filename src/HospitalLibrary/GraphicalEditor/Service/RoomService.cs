@@ -54,8 +54,6 @@ namespace HospitalLibrary.GraphicalEditor.Service
 
         public SeparatedRoomsDTO GetSeparatedRooms(RoomForSeparateDTO dto)
         {
-            List<SeparatedRoomsDTO> separatedRooms = new List<SeparatedRoomsDTO>();
-          
             Room oldRoom = new Room();
             oldRoom = GetById(dto.OldRoomId);
 
@@ -69,6 +67,22 @@ namespace HospitalLibrary.GraphicalEditor.Service
             return newRooms;
         }
 
+        public MergedRoomDTO GetMergedRoom(RoomsForMergeDTO dto)
+        {
+            Room oldRoom1 = new Room();
+            Room oldRoom2 = new Room();
+
+            oldRoom1 = GetById(dto.OldRoom1Id);
+            oldRoom2 = GetById(dto.OldRoom2Id);
+
+            MergedRoomDTO newRoom = new MergedRoomDTO();
+
+            MapRoom mergedRoomMap = new MapRoom(oldRoom1.Map.X, oldRoom1.Map.Y, oldRoom1.Map.Width + oldRoom2.Map.Width, (oldRoom1.Map.Height + oldRoom2.Map.Height) / 2, "blue");
+            newRoom.Room = new Room(oldRoom1.Id, Core.Enums.RoomType.OTHER, "103", dto.NewRoomName, mergedRoomMap, 1, null);
+
+            return newRoom;
+        }
+
         public List<FreeSpaceDTO> GetTransferedEquipment(EquipmentTransferDTO dto)
         {
             IEnumerable<Examination> fromRoomExaminations = _examinationRepository.GetByRoomId(dto.FromRoomId);
@@ -78,8 +92,6 @@ namespace HospitalLibrary.GraphicalEditor.Service
             List<FreeSpaceDTO> freeSpacesFromRoom = new List<FreeSpaceDTO>();
             List<FreeSpaceDTO> freeSpacesToRoom = new List<FreeSpaceDTO>();
             List<FreeSpaceDTO> filteredFreeSpaces = new List<FreeSpaceDTO>();
-
-
 
             foreach (Examination exam in fromRoomExaminations)
             {
