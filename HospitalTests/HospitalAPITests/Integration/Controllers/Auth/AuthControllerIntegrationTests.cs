@@ -1,4 +1,5 @@
-﻿using HospitalAPI;
+﻿using AutoMapper;
+using HospitalAPI;
 using HospitalAPI.Controllers.Auth;
 using HospitalAPI.Security;
 using HospitalAPI.Security.Models;
@@ -15,7 +16,7 @@ namespace HospitalTests.HospitalAPITests.Integration.Controllers.Auth
 
         private static AuthController SetupController(IServiceScope scope) 
         {
-            return new AuthController(scope.ServiceProvider.GetRequiredService<AuthService>());
+            return new AuthController(scope.ServiceProvider.GetRequiredService<AuthService>(),scope.ServiceProvider.GetRequiredService<IMapper>());
         }
 
         [Theory]

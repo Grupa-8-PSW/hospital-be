@@ -19,7 +19,6 @@ namespace HospitalAPI.Security
         private readonly IAllergensRepository _allergensRepository;
         private readonly IPatientService _patientService;
         private readonly IMapper _mapper;
-
         public AuthService(
             SignInManager<User> signInManager,
             RoleManager<IdentityRole<int>> roleManager,
@@ -89,6 +88,17 @@ namespace HospitalAPI.Security
 
             return "Ok";
         }
+        public async Task<List<Patient>> GetBlockedPatients(bool type)
+        {
+            var patients = _patientService.GetMalicious();
+            var maliciousPatients = new List<Patient>();
+            foreach(var patient in patients)
+            {
+                var user=await _userManager.FindByEmailAsync(patient.Email);
+                if ((await _userManager.GetLockoutEnabledAsync(user)) == type) maliciousPatients.Add(patient);
+            }
+            return maliciousPatients;
+        }
         public async Task<bool> BlockUserAccess(string type,string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
@@ -105,6 +115,7 @@ namespace HospitalAPI.Security
         private async Task<UserDTO> GetUserDTO(User user)
         {
             var userRoles = await _userManager.GetRolesAsync(user);
+            
             return new UserDTO()
             {
                 Id = user.Id,
@@ -112,7 +123,7 @@ namespace HospitalAPI.Security
                 Role = userRoles[0],
             };
         }
-
+        
         private string BuildToken(UserDTO user)
         {
             var issuer = _configuration["Jwt:ValidIssuer"];
@@ -134,6 +145,8 @@ namespace HospitalAPI.Security
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
+
+        
 
     }
 }

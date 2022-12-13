@@ -1,3 +1,5 @@
+using AutoMapper;
+using HospitalAPI.DTO;
 using HospitalAPI.Security;
 using HospitalAPI.Security.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -11,10 +13,12 @@ namespace HospitalAPI.Controllers.Auth
     public class AuthController : ControllerBase
     {
         private readonly AuthService _authService;
+        private readonly IMapper _mapper;
 
-        public AuthController(AuthService authService)
+        public AuthController(AuthService authService, IMapper mapper)
         {
             _authService = authService;
+            _mapper = mapper;
         }
 
         [EnableCors("InternAllow")]
@@ -50,6 +54,15 @@ namespace HospitalAPI.Controllers.Auth
             if (token == false)
                 return BadRequest();
             return Ok();
+        }
+        [EnableCors("InternAllow")]
+        [HttpGet("MaliciousPatients/{type}")]
+        public async Task<ActionResult> MaliciousPatients(string type)
+        {
+            bool blocked;
+            if (type.Equals("blocked")) blocked = true;
+            else blocked = false;
+            return Ok(_mapper.Map<List<PatientDTO>>(_authService.GetBlockedPatients(blocked).Result));
         }
         [EnableCors("PublicAllow")]
         [HttpPost("register")]
