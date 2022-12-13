@@ -18,7 +18,7 @@ namespace HospitalLibrary.Core.Service
         public ExaminationDoneService(IExaminationDoneRepository examinationDoneRepository)
         {
             _examinationDoneRepository = examinationDoneRepository;
-            
+
         }
 
         public IEnumerable<ExaminationDone> GetAll()
@@ -61,6 +61,11 @@ namespace HospitalLibrary.Core.Service
         public IEnumerable<Symptom> GetAllSymptoms()
         {
             return _examinationDoneRepository.GetAllSymptoms();
+        }
+
+        public ExaminationDone? GetByExamination(int examinationId)
+        {
+            return _examinationDoneRepository.GetByExamination(examinationId);
         }
     }
 }

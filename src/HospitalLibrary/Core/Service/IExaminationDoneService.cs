@@ -15,6 +15,6 @@ namespace HospitalLibrary.Core.Service
         bool Update(ExaminationDone examinationDone);
         void Delete(ExaminationDone examinationDone);
         IEnumerable<Symptom> GetAllSymptoms();
-
+        ExaminationDone? GetByExamination(int examinationId);
     }
 }

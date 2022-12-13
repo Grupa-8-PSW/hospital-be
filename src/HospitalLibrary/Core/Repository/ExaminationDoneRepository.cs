@@ -60,5 +60,13 @@ namespace HospitalLibrary.Core.Repository
         {
             return _context.Symptoms.ToList();
         }
+
+        public ExaminationDone? GetByExamination(int examinationId)
+        {
+            return _context.ExaminationsDone
+                .Include(x => x.Symptoms)
+                .Include(x => x.Prescriptions)
+                .SingleOrDefault(x => x.ExaminationId == examinationId);
+        }
     }
 }
