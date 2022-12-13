@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 
@@ -25,6 +25,11 @@ namespace HospitalLibrary.Core.Service
         public IEnumerable<Doctor> GetAllGeneralPracticioners()
         {
             return _doctorRepository.GetAllGeneralPracticioners();
+        }
+
+        public List<Doctor> GetBySpecialization(DoctorSpecialization specialization)
+        {
+            return _doctorRepository.GetBySpecialization(specialization);
         }
         public Doctor GetById(int id)
         {

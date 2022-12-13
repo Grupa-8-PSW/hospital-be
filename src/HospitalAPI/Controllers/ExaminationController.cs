@@ -38,7 +38,8 @@ namespace HospitalAPI.Controllers
         [HttpGet]
         public ActionResult GetAll()
         {
-            return Ok(_examinationService.GetAll());
+            var res =  _examinationService.GetAll();
+            return Ok(res);
         }
 
         // GET api/rooms/2
@@ -71,24 +72,36 @@ namespace HospitalAPI.Controllers
 
         // POST api/rooms
         [HttpPost]
-        public ActionResult Create(PostExaminationRequest postExaminationRequest)
+        public ActionResult Create(Examination examinationDTO)
         {
-            if (!ModelState.IsValid)
+            _examinationService.Create(examinationDTO);
+            return Ok();
+            /*if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
             var examination = CreateExaminationFromPostRequest(postExaminationRequest);
 
-            var success = _examinationService.Create(examination);
-            if (!success)
+            Examination examination = _examinationMapper.toModel(examinationDTO);
+            // examination.RoomId = doctor.RoomId;
+
+            bool succes = _examinationService.Create(examination);
+            if (!succes)
             {
                 return BadRequest("Poruka .....");
             }
-            return CreatedAtAction("GetById", new
-            {
-                id = examination.Id
-            }, _examinationMapper.toDTO(examination));
+            return CreatedAtAction("GetById", new { id = examination.Id }, _examinationMapper.toDTO(examination));*/
+        }
+
+        [HttpPost("test")]
+        public IActionResult Test(Testt date)
+        {
+            return Ok();
+        }
+
+        public class Testt { 
+            public DateTime DateTime { get; set; }
         }
 
         // PUT api/rooms/2
@@ -98,7 +111,7 @@ namespace HospitalAPI.Controllers
             Doctor doctor = _doctorService.GetById(examinationDTO.DoctorId);
 
             Examination examination = _examinationMapper.toModel(examinationDTO);
-            examination.RoomId = doctor.RoomId;
+            // examination.RoomId = doctor.RoomId;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -137,7 +150,7 @@ namespace HospitalAPI.Controllers
             _examinationService.Delete(examination);
             return NoContent();
         }
-
+        /*
         private Examination CreateExaminationFromPostRequest(PostExaminationRequest postExaminationRequest)
         {
             try
@@ -162,6 +175,6 @@ namespace HospitalAPI.Controllers
                 return null;
             }
 
-        }
+        }*/
     }
 }

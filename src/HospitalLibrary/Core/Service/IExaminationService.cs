@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Util;
 
 namespace HospitalLibrary.Core.Service
 {

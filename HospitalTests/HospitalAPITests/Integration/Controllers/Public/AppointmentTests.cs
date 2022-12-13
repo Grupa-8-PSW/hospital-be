@@ -18,9 +18,9 @@ namespace HospitalTests.HospitalAPITests.Integration.Controllers.Public
     {
         public AppointmentTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
 
-        private static AppointmentController SetupController(IServiceScope scope)
+        private static ExaminationController SetupController(IServiceScope scope)
         {
-            return new AppointmentController(scope.ServiceProvider.GetRequiredService<IExaminationService>(), scope.ServiceProvider.GetRequiredService<IMapper>());
+            return new ExaminationController(scope.ServiceProvider.GetRequiredService<IMapper>(), scope.ServiceProvider.GetRequiredService<IAppointmentService>(), scope.ServiceProvider.GetRequiredService<IExaminationService>());
         }
 
         [Fact]

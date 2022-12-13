@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HospitalLibrary.Core.Enums;
+﻿using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +14,7 @@ namespace HospitalLibrary.Core.Repository
             _context = context;
         }
 
-        public IEnumerable<Doctor> GetAll()
+        public List<Doctor> GetAll()
         {
             return _context.Doctors.ToList();
         }
@@ -32,6 +27,9 @@ namespace HospitalLibrary.Core.Repository
         {
             return _context.Doctors.Find(id);
         }
+
+        public List<Doctor> GetBySpecialization(DoctorSpecialization specialization)
+            => _context.Doctors.Where(d => d.Specialization == specialization).ToList();
 
         public void Create(Doctor doctor)
         {

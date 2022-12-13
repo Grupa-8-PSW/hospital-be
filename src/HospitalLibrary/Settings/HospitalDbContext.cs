@@ -32,16 +32,21 @@ namespace HospitalLibrary.Settings
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Consilium> Consiliums { get; set; }
 
-        public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
+
+        public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
+        {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<MedicalDrugs>()
-                .HasIndex(m => m.Code)
-                .IsUnique();
-            modelBuilder.Entity<Blood>()
-                .HasIndex(b => b.Type)
-                .IsUnique();
+            
+              modelBuilder.Entity<MedicalDrugs>()
+                  .HasIndex(m => m.Code)
+                  .IsUnique();
+              modelBuilder.Entity<Blood>()
+                  .HasIndex(b => b.Type)
+                  .IsUnique();
 
             modelBuilder.SeedMap();
             modelBuilder.SeedAddress();

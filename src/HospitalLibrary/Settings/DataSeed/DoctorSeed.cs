@@ -1,4 +1,7 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.ValueObjects;
+using HospitalLibrary.Core.Util;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,10 +15,14 @@ namespace HospitalLibrary.Settings.DataSeed
     {
         public static void SeedDoctor(this ModelBuilder modelBuilder)
         {
+            var workHour = new DateRange(new DateTime(2022, 12, 1, 8, 0, 0), new DateTime(2022, 12, 1, 16, 0, 0));
             modelBuilder.Entity<Doctor>().HasData(
-                new Doctor() { Id = 1, FirstName = "Zeljko", LastName = "Babic", RoomId = 1, StartWork = new DateTime(1998, 04, 30, 7, 0, 0, DateTimeKind.Utc), EndWork = new DateTime(1998, 04, 30, 15, 0, 0, DateTimeKind.Utc) },
-                new Doctor() { Id = 2, FirstName = "Bora", LastName = "Stevanovic", RoomId = 2, StartWork = new DateTime(1998, 04, 30, 8, 0, 0, DateTimeKind.Utc), EndWork = new DateTime(1998, 04, 30, 16, 0, 0, DateTimeKind.Utc) });      
-
+                new List<Doctor>() {
+                    new Doctor(1, "Slobodan", "Radulovic", DoctorSpecialization.GENERAL_PRACTICIONER, 1, workHour),
+                    new Doctor(2, "Aleksa", "Zindovic", DoctorSpecialization.GENERAL_PRACTICIONER, 2, workHour),
+                    new Doctor(3, "Mica", "Micic", DoctorSpecialization.GENERAL_PRACTICIONER, 3, workHour)
+                }
+                );
         }
     }
 }

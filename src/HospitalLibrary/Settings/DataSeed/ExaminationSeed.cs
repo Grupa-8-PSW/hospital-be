@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,12 +14,14 @@ namespace HospitalLibrary.Settings.DataSeed
         public static void SeedExamination(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Examination>().HasData(
-                    new Examination(1, 1, 1, 1, new DateTime(2022, 12, 1, 7, 0, 0, DateTimeKind.Utc), 20, 0),
-                    new Examination(2, 1, 1, 2, new DateTime(2022, 12, 1, 8, 0, 0, DateTimeKind.Utc), 45, 0),
-                    new Examination(3, 1, 2, 3, new DateTime(2022, 12, 15, 18, 30, 0, DateTimeKind.Utc), 7, 0),
-                    new Examination(4, 2, 1, 3, new DateTime(2022, 12, 11, 23, 30, 0, DateTimeKind.Utc), 23, 0),
-                    new Examination(5, 2, 1, 2, new DateTime(2022, 12, 20, 19, 30, 0, DateTimeKind.Utc), 24, 0),
-                    new Examination(6, 1, 1, 1, new DateTime(2023, 10, 23, 14, 15, 0, DateTimeKind.Utc), 45, 0));
+                new List<Examination>() { 
+                    new Examination(1, 1, 1, new DateRange(new DateTime(2022, 12, 1, 7, 0, 0), new DateTime(2022, 12, 1, 7, 30, 0))),
+                    new Examination(2, 1, 2, new DateRange(new DateTime(2022, 12, 1, 8, 0, 0), new DateTime(2022, 12, 1, 8, 30, 0))),
+                    new Examination(3, 1, 3, new DateRange(new DateTime(2022, 12, 1, 8, 30, 0), new DateTime(2022, 12, 1, 9, 0, 0))),
+                    new Examination(4, 2, 1, new DateRange(new DateTime(2022, 12, 16, 6, 0, 0), new DateTime(2022, 12, 16, 6, 30, 0))),
+                    new Examination(5, 2, 1, new DateRange(new DateTime(2022, 12, 25, 9, 0, 0), new DateTime(2022, 12, 25, 9, 30, 0))),
+                    new Examination(6, 1, 1, new DateRange(new DateTime(2022, 12, 27, 10, 0, 0), new DateTime(2022, 12, 27, 10, 30, 0)))
+                });
 
         }
     }

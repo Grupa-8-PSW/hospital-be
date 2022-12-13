@@ -8,7 +8,8 @@ namespace HospitalLibrary.Core.Enums
 {
     public enum ExaminationStatus
     {
-        REGULAR,
-        CANCELLED
+        UPCOMING,
+        FINISHED,
+        CANCELED
     }
 }

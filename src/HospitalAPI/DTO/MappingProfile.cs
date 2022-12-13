@@ -17,7 +17,6 @@ namespace HospitalAPI.DTO
             CreateMap<CreateFeedbackDTO, Feedback>();
 
             CreateMap<Allergen, AllergenDTO>();
-
             CreateMap<AllergenDTO, Allergen>();
 
             CreateMap<Patient, PatientDTO>();
@@ -27,12 +26,18 @@ namespace HospitalAPI.DTO
             CreateMap<RegisterUserDTO, Patient>()
                 .ForMember(f => f.Allergens, o => o.MapFrom(f => f.Allergens));
 
+            CreateMap<Doctor, DoctorDTO>();
+            CreateMap<DoctorDTO, Doctor>();
+
+            CreateMap<AvailableAppointments, AvailableAppointmentsDTO>();
+            CreateMap<AvailableAppointmentsDTO, AvailableAppointments>();
+
             CreateMap<Statistic, StatisticDTO>();
 
             CreateMap<Examination, AppointmentDTO>()
                 .ForMember(o => o.DoctorFullName, b => b.MapFrom(z => z.Doctor.FullName))
-                .ForMember(o => o.FloorId, b => b.MapFrom(z => z.Room.FloorId))
-                .ForMember(o => o.RoomName, b => b.MapFrom(z => z.Room.Name));
+                .ForMember(o => o.FloorId, b => b.MapFrom(z => z.Doctor.Room.FloorId))
+                .ForMember(o => o.RoomName, b => b.MapFrom(z => z.Doctor.Room.Name));
         }
 
     }
