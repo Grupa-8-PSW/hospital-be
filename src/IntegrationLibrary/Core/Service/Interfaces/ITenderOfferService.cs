@@ -14,5 +14,6 @@ namespace IntegrationLibrary.Core.Service.Interfaces
         IEnumerable<TenderOffer> GetAll();
         TenderOffer GetById(int tenderID);
         IEnumerable<TenderOffer> getOffersForTender(int tenderID);
+        public void changeStatusForOffers(TenderOffer acceptedTenderOffer);
     }
 }

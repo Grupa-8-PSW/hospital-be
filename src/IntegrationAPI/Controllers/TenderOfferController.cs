@@ -28,6 +28,7 @@ namespace IntegrationAPI.Controllers
         public IActionResult CreateTenderOffer([FromBody] TenderOfferDTO dto)
         {
             return Ok(_tenderOfferService.Create(TenderOfferMapper.ToModel(dto)));
+
         }
 
 
@@ -49,7 +50,6 @@ namespace IntegrationAPI.Controllers
         [HttpGet("sendTenderOffer")]
         public ActionResult SendTenderOffer(int tenderId, string APIKey)
         {
-
             _connectionService.SendTenderOffer(APIKey, tenderId);
             return Ok();
         }
