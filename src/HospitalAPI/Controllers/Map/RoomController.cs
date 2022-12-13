@@ -82,7 +82,7 @@ namespace HospitalAPI.Controllers.Map
         [HttpPost("get/separatedRooms")]
         public IActionResult GetSeparatedRooms(RoomForSeparateDTO dto)
         {
-            List<SeparatedRoomsDTO> separatedRooms = _roomService.GetSeparatedRooms(dto);
+            SeparatedRoomsDTO separatedRooms = _roomService.GetSeparatedRooms(dto);
             return Ok(separatedRooms);
         }
 

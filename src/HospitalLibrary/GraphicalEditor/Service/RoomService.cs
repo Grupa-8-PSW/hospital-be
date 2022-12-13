@@ -2,6 +2,7 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Model.DTO;
+using HospitalLibrary.GraphicalEditor.Model.Map;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 
@@ -51,12 +52,21 @@ namespace HospitalLibrary.GraphicalEditor.Service
 
         }
 
-        public List<SeparatedRoomsDTO> GetSeparatedRooms(RoomForSeparateDTO dto)
+        public SeparatedRoomsDTO GetSeparatedRooms(RoomForSeparateDTO dto)
         {
             List<SeparatedRoomsDTO> separatedRooms = new List<SeparatedRoomsDTO>();
-            List<RoomForSeparateDTO> rooms = new List<RoomForSeparateDTO>();
-            rooms.Add(dto);
-            return null;
+          
+            Room oldRoom = new Room();
+            oldRoom = GetById(dto.OldRoomId);
+
+            SeparatedRoomsDTO newRooms = new SeparatedRoomsDTO();
+          
+            MapRoom firstRoom = new MapRoom(oldRoom.Map.X, oldRoom.Map.Y, (oldRoom.Map.X + oldRoom.Map.Width) / 2, oldRoom.Map.Height, "blue");
+            newRooms.FirstRoom = new Room(oldRoom.Id, Core.Enums.RoomType.OTHER, "102", dto.NewRoom1Name, firstRoom, 1, null);
+            MapRoom secondRoom = new MapRoom((oldRoom.Map.X + oldRoom.Map.Width) / 2, oldRoom.Map.Y, oldRoom.Map.X + oldRoom.Map.Width,oldRoom.Map.Height, "blue");
+            newRooms.SecondRoom = new Room(oldRoom.Id + 100, Core.Enums.RoomType.OPERATIONS, "103", dto.NewRoom2Name, secondRoom, 1, null);
+
+            return newRooms;
         }
 
         public List<FreeSpaceDTO> GetTransferedEquipment(EquipmentTransferDTO dto)
