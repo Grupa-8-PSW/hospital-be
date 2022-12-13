@@ -45,10 +45,10 @@ namespace IntegrationLibrary.Core.Service
             email.Body = new TextPart(TextFormat.Html) { Text = template.ToString() };
         }
 
-        public void SendSuccessEmail(string emailBB)
+        public void SendSuccessEmail(string emailBB, int tenderId, string APIKey)
         {
             var successEmail = new MimeMessage();
-            GenerateSuccessTenderEmail(successEmail, emailBB);
+            GenerateSuccessTenderEmail(successEmail, emailBB, tenderId, APIKey);
             SmtpClient smtp = SetupSmtpClient(successEmail);
         }
 
@@ -71,12 +71,12 @@ namespace IntegrationLibrary.Core.Service
             return smtp;
         }
 
-        private void GenerateSuccessTenderEmail(MimeMessage email, string address)
+        private void GenerateSuccessTenderEmail(MimeMessage email, string address, int tenderId, string APIKey)
         {
             successTemplate.AppendLine("<b><h1>***SUCCESSFUL TENDER OFFER***</h1></b>");
-            successTemplate.AppendLine("<a href='https://localhost:7131/api/BloodUnitUrgentRequest/sendTenderOffer'>Confirm the tender offer</a>");
+            successTemplate.AppendLine("<a href='https://localhost:7131/api/TenderOffer/sendTenderOffer?tenderId=" + tenderId +"&APIKey="+ APIKey + "'"+ ">Confirm the tender offer</a>");
             email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUsername").Value));
-            email.To.Add(MailboxAddress.Parse("davidmijailovic9@gmail.com"));
+            email.To.Add(MailboxAddress.Parse("rbojan2000@gmail.com"));
             email.Subject = "Congratulations, your tender request has been accepted";
             email.Body = new TextPart(TextFormat.Html) { Text = successTemplate.ToString() };
            

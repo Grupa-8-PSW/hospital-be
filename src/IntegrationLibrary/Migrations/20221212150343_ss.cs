@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
-    public partial class initDav : Migration
+    public partial class ss : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -126,7 +126,7 @@ namespace IntegrationLibrary.Migrations
             migrationBuilder.InsertData(
                 table: "BloodBanks",
                 columns: new[] { "Id", "APIKey", "Email", "Name", "Password", "ServerAddress" },
-                values: new object[] { 1, "unknown", "test@test.com", "testName", "unknown", "htttp://localhost:8081/" });
+                values: new object[] { 1, "123", "test@test.com", "bloodBank", "unknown", "htttp://localhost:8081/" });
 
             migrationBuilder.InsertData(
                 table: "BloodBankNews",

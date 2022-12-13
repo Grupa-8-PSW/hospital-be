@@ -3,6 +3,7 @@ using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,29 +16,40 @@ namespace IntegrationLibrary.Core.Service
     {
         private readonly ITenderOfferRepository _repository;
         private readonly IEmailService _emailService;
+        private readonly IBloodBankService _bankService;
+        private readonly ITenderService _tenderService;
 
-        public TenderOfferService(ITenderOfferRepository repo, IEmailService emailService)
+        public TenderOfferService(ITenderOfferRepository repo, IEmailService emailService, IBloodBankService bankService, ITenderService tenderService)
         {
             _repository = repo;
             _emailService = emailService;
+            _bankService = bankService;
+            _tenderService = tenderService;
         }
 
         public TenderOffer AcceptTenderOffer(TenderOffer acceptedTenderOffer)
         {
-            // promjeni status
-            changeStatusForOffers(acceptedTenderOffer);
+            BloodBank bb = _bankService.GetByName(acceptedTenderOffer.BloodBankName);
 
-            // posalji mejlove
-            _emailService.SendSuccessEmail(acceptedTenderOffer.BloodBankName);
+            changeStatusForOffers(acceptedTenderOffer);
+            ChangeTenderStatus(acceptedTenderOffer.TenderID);
+
+            _emailService.SendSuccessEmail(bb.Email, acceptedTenderOffer.TenderID, bb.APIKey);
 
             foreach(TenderOffer to in _repository.GetAll())
             {
-                if (to.TenderOfferStatus == TenderOfferStatus.REJECT)
+                if (to.TenderOfferStatus == TenderOfferStatus.REJECT && to.TenderID.Equals(acceptedTenderOffer.TenderID))
                 {
-                    _emailService.SendRejectEmail(to.BloodBankName);
+                    BloodBank bb2 = _bankService.GetByName(acceptedTenderOffer.BloodBankName);
+                    _emailService.SendRejectEmail(bb2.Email);
                 }
             }
             return acceptedTenderOffer;
+        }
+
+        private void ChangeTenderStatus(int tenderID)
+        {
+            _tenderService.UpdateStatus(tenderID);
         }
 
         public void changeStatusForOffers(TenderOffer acceptedTenderOffer)
@@ -45,7 +57,7 @@ namespace IntegrationLibrary.Core.Service
             _repository.UpdateTenderOffer(acceptedTenderOffer);
             foreach (TenderOffer to in _repository.GetAll())
             {
-                if (to.TenderOfferStatus == TenderOfferStatus.WAITING)
+                if (to.TenderOfferStatus == TenderOfferStatus.WAITING && to.TenderID.Equals(acceptedTenderOffer.TenderID))
                 {
                     to.TenderOfferStatus = TenderOfferStatus.REJECT;
                     _repository.UpdateTenderOffer(to);
@@ -61,6 +73,11 @@ namespace IntegrationLibrary.Core.Service
         public IEnumerable<TenderOffer> GetAll()
         {
             return _repository.GetAll();
+        }
+
+        public TenderOffer GetById(int tenderID)
+        {
+            return _repository.GetAcceptedOffer(tenderID);
         }
 
         public IEnumerable<TenderOffer> getOffersForTender(int tenderID)

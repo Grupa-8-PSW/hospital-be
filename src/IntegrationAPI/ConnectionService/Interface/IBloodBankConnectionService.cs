@@ -19,5 +19,7 @@ namespace IntegrationAPI.ConnectionService.Interface
         public bool CheckBloodAmount(int id, string bloodType, double quant);
 
         public bool SendUrgentRequest(string apiKey);
+        public bool SendTenderOffer(string apiKey, int tenderID);
+
     }
 }

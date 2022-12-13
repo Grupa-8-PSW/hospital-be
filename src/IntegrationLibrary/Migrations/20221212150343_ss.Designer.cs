@@ -15,8 +15,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221211181417_addedBlal")]
-    partial class addedBlal
+    [Migration("20221212150343_ss")]
+    partial class ss
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -63,9 +63,9 @@ namespace IntegrationLibrary.Migrations
                         new
                         {
                             Id = 1,
-                            APIKey = "unknown",
+                            APIKey = "123",
                             Email = "test@test.com",
-                            Name = "testName",
+                            Name = "bloodBank",
                             Password = "unknown",
                             ServerAddress = "htttp://localhost:8081/"
                         });
@@ -144,6 +144,34 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("BloodConsumptionConfiguration");
                 });
 
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.MonthlySubscription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BankId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("DeliveryDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<List<Blood>>("RequestedBlood")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BankId");
+
+                    b.ToTable("MonthlySubscription");
+                });
+
             modelBuilder.Entity("IntegrationLibrary.Core.Model.Tender", b =>
                 {
                     b.Property<int>("Id")
@@ -176,6 +204,10 @@ namespace IntegrationLibrary.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("BloodBankName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<List<BloodOffer>>("Offers")
                         .IsRequired()
                         .HasColumnType("jsonb");
@@ -183,15 +215,10 @@ namespace IntegrationLibrary.Migrations
                     b.Property<int>("TenderID")
                         .HasColumnType("integer");
 
-                    b.Property<int>("bloodBankId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("tenderOfferStatus")
+                    b.Property<int>("TenderOfferStatus")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("bloodBankId");
 
                     b.ToTable("TenderOffer");
                 });
@@ -207,15 +234,15 @@ namespace IntegrationLibrary.Migrations
                     b.Navigation("BloodBank");
                 });
 
-            modelBuilder.Entity("IntegrationLibrary.Core.Model.TenderOffer", b =>
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.MonthlySubscription", b =>
                 {
-                    b.HasOne("IntegrationLibrary.Core.Model.BloodBank", "bloodBank")
+                    b.HasOne("IntegrationLibrary.Core.Model.BloodBank", "Bank")
                         .WithMany()
-                        .HasForeignKey("bloodBankId")
+                        .HasForeignKey("BankId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("bloodBank");
+                    b.Navigation("Bank");
                 });
 #pragma warning restore 612, 618
         }

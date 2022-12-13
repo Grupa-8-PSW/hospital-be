@@ -61,9 +61,9 @@ namespace IntegrationLibrary.Migrations
                         new
                         {
                             Id = 1,
-                            APIKey = "unknown",
+                            APIKey = "123",
                             Email = "test@test.com",
-                            Name = "testName",
+                            Name = "bloodBank",
                             Password = "unknown",
                             ServerAddress = "htttp://localhost:8081/"
                         });

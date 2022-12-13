@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace IntegrationLibrary.Migrations
+namespace HospitalAPI.Migrations
 {
-    public partial class ime_mig : Migration
+    public partial class davMigr : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

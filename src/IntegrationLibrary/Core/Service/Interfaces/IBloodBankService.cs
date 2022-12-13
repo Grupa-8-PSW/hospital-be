@@ -13,5 +13,6 @@ namespace IntegrationLibrary.Core.Service.Interfaces
         void Create(BloodBank bloodBank);
         BloodBank GetById(int id);
         public void Delete(BloodBank bloodBank);
+        BloodBank GetByName(string bloodBankName);
     }
 }

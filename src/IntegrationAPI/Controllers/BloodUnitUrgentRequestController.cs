@@ -51,12 +51,6 @@ namespace IntegrationAPI.Controllers
             return Ok();
         }
         
-        //ovo se gadja klikom na link, treba nekako resiti authorize, za sad je gore zakomentarisan 
-        [HttpGet("sendTenderOffer")]
-        public ActionResult SendTenderOffer()
-        {
-            _connectionService.SendUrgentRequest("123");
-            return Ok();
-        }
+
     }
 }

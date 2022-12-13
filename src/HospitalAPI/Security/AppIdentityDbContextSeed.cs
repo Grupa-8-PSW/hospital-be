@@ -46,6 +46,7 @@ namespace HospitalAPI.Security
             };
             await userManager.CreateAsync(bloodBankUser, "12345");
             await userManager.AddToRoleAsync(bloodBankUser, "BloodBank");
+
         }
     }
 }
