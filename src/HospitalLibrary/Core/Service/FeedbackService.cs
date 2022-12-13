@@ -25,9 +25,7 @@ namespace HospitalLibrary.Core.Service
         public Feedback Create(Feedback feedback)
         {
             feedback.Status = FeedbackStatus.OnHold;
-            feedback.PatientId = 1;
             feedback.CreationDate = DateOnly.FromDateTime(DateTime.Now);
-            feedback.Patient = _petientRepository.GetById(1);
             return HandleAnonymous(_feedbackRepository.Create(feedback));
         }
 

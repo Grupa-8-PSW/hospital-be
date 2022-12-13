@@ -38,5 +38,18 @@ namespace IntegrationLibrary.Core.Service
         {
             _tenderRepository.Delete(tender);
         }
+
+        public IEnumerable<Tender> GetActiveTenders()
+        {
+            return _tenderRepository.GetActiveTenders();
+        }
+
+        public Tender UpdateStatus(int tenderID)
+        {
+            Tender tender = _tenderRepository.GetById(tenderID);
+            tender.Status = TenderStatus.Inactive;
+            _tenderRepository.Update(tender);
+            return tender;
+        }
     }
 }

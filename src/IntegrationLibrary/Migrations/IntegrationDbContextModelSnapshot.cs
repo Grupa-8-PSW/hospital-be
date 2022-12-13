@@ -61,9 +61,9 @@ namespace IntegrationLibrary.Migrations
                         new
                         {
                             Id = 1,
-                            APIKey = "unknown",
+                            APIKey = "123",
                             Email = "test@test.com",
-                            Name = "testName",
+                            Name = "bloodBank",
                             Password = "unknown",
                             ServerAddress = "htttp://localhost:8081/"
                         });
@@ -202,11 +202,18 @@ namespace IntegrationLibrary.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("BloodBankName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<List<BloodOffer>>("Offers")
                         .IsRequired()
                         .HasColumnType("jsonb");
 
                     b.Property<int>("TenderID")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TenderOfferStatus")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");

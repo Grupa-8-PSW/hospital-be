@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using IntegrationAPI.Connections.Interface;
 using IntegrationAPI.ConnectionService;
 using IntegrationAPI.ConnectionService.Interface;
+using IntegrationAPI.Mapper;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibrary.Core.Service.Interfaces;
@@ -17,17 +18,20 @@ namespace IntegrationLibrary.Core.Service
     {
         private IBloodBankHTTPConnection bloodBankHTTPConnection;
         private IBloodBankService bloodBankService;
+        private readonly ITenderOfferService _tenderOfferService;
         private readonly IBloodService _bloodService;
         private readonly IHospitalHTTPConnectionService _hospitalHTTPConnectionService;
         public BloodBankConnectionService(IBloodBankHTTPConnection bloodBankHTTPConnection, 
                                           IBloodBankService bloodBankService,
                                           IBloodService bloodService,
-                                          IHospitalHTTPConnectionService hospitalHttpConnectionService)
+                                          IHospitalHTTPConnectionService hospitalHttpConnectionService,
+                                          ITenderOfferService tenderOfferService)
         {
             this.bloodBankHTTPConnection = bloodBankHTTPConnection;
             this.bloodBankService = bloodBankService;
             this._bloodService = bloodService;
             this._hospitalHTTPConnectionService = hospitalHttpConnectionService;
+            this._tenderOfferService = tenderOfferService;
         }
 
         public bool CheckForSpecificBloodType(int bloodBankId, string bloodType)
@@ -52,6 +56,17 @@ namespace IntegrationLibrary.Core.Service
         {
             BloodUnitUrgentRequest request = new BloodUnitUrgentRequest();
             request.bloodUnits = _bloodService.GetMissingQuantities(_hospitalHTTPConnectionService.GetAllBlood());
+            request.APIKey = apiKey;
+            bloodBankHTTPConnection.SendUrgentRequest(request);
+            return true;
+        }
+
+        public bool SendTenderOffer(string apiKey, int tenderID)
+        {
+            BloodUnitUrgentRequest request = new BloodUnitUrgentRequest();
+            TenderOffer tenderOffer = _tenderOfferService.GetById(tenderID);
+
+            request.bloodUnits = TenderOfferMapper.ToBloodDTO(tenderOffer.Offers);
             request.APIKey = apiKey;
             bloodBankHTTPConnection.SendUrgentRequest(request);
             return true;

@@ -23,9 +23,14 @@ namespace IntegrationTests.IntegrationAPITests.IntegrationTests
         {
         }
 
+        private static ITenderOfferService SetUpTenderOfferService(IServiceScope scope)
+        {
+            return scope.ServiceProvider.GetRequiredService<ITenderOfferService>();
+        }
+
         private static TenderOfferController SetupController(IServiceScope scope)
         {
-            return new TenderOfferController(scope.ServiceProvider.GetRequiredService<ITenderOfferService>());
+            return new TenderOfferController(scope.ServiceProvider.GetRequiredService<ITenderOfferService>(), scope.ServiceProvider.GetRequiredService<IBloodBankConnectionService>());
         }
 
         [Fact]
@@ -44,8 +49,11 @@ namespace IntegrationTests.IntegrationAPITests.IntegrationTests
                         BloodAmount = 2,
                         BloodType = "A+",
                         PriceAmount = 12
+                        
                     }
-                }
+                },
+                BloodBankUsername = "bloodBank",
+                TenderOfferStatus = (int)TenderOfferStatus.WAITING
             };
 
             // Act
@@ -59,10 +67,70 @@ namespace IntegrationTests.IntegrationAPITests.IntegrationTests
 
         }
 
+        [Fact]
+        public void ValidateAcceptedTender()
+        {
+            // Arrange
+            using var scope = Factory.Services.CreateScope();
+            var service = SetUpTenderOfferService(scope);
+
+            PrepareBase();
+            IEnumerable<TenderOffer> offers = service.GetAll();
+            TenderOffer acceptedTender = offers.First();
+            acceptedTender.TenderOfferStatus = TenderOfferStatus.APPROVE;
+
+            // Act
+            service.changeStatusForOffers(acceptedTender);
+
+            //Assert
+            Assert.True(ValidateStatusForAllTenders(acceptedTender));
+
+        }
+
+        [Fact]
+        public void GetOffersForTender()
+        {
+            // Arrange
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            PrepareBase();
+
+            //Act
+            var retVal = controller.GetOffersForTender(1) as OkObjectResult;
+
+            //Assert
+            IEnumerable<TenderOfferDTO> offersForTender = (IEnumerable<TenderOfferDTO>)retVal.Value;
+            Assert.IsType<OkObjectResult>(retVal);
+            Assert.NotNull(retVal);
+            Assert.True(offersForTender.Count().Equals(2));
+
+        }
+
+
+        private bool ValidateStatusForAllTenders(TenderOffer acceptedTender)
+        {
+            using var scope = Factory.Services.CreateScope();
+            var service = SetUpTenderOfferService(scope);
+            IEnumerable<TenderOffer> offers = service.getOffersForTender(1);
+
+            foreach(TenderOffer offer in offers)
+            {
+                if (offer.Id.Equals(acceptedTender.Id) && (int)offer.TenderOfferStatus != (int)TenderOfferStatus.APPROVE)
+                    return false;
+                
+                else if (offer.Id != acceptedTender.Id && (int)offer.TenderOfferStatus != (int)TenderOfferStatus.REJECT)
+                    return false;
+            }
+
+            return true;
+
+        }
+
         private bool ValidateObjectWritenInBase(TenderOfferDTO dto, TenderOffer retVal)
         {
             if(dto.TenderID.Equals(retVal.TenderID) &&
-                compareLists(dto.BloodAmounts, retVal.Offers))
+                compareLists(dto.BloodAmounts, retVal.Offers) &&
+                dto.BloodBankUsername.Equals(retVal.BloodBankName))
                 return true;
 
             return false;
@@ -78,6 +146,68 @@ namespace IntegrationTests.IntegrationAPITests.IntegrationTests
                     return false;
             }
             return true;
+        }
+
+
+        private void PrepareBase()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            TenderOfferDTO dto = new TenderOfferDTO()
+            {
+                TenderID = 1,
+                BloodAmounts = new List<BloodOfferDTO>()
+                {
+                    new BloodOfferDTO()
+                    {
+                        BloodAmount = 2,
+                        BloodType = "A+",
+                        PriceAmount = 12
+
+                    }
+                },
+                BloodBankUsername = "bloodBank",
+                TenderOfferStatus = (int)TenderOfferStatus.WAITING
+            };
+
+
+            TenderOfferDTO dto2 = new TenderOfferDTO()
+            {
+                TenderID = 1,
+                BloodAmounts = new List<BloodOfferDTO>()
+                {
+                    new BloodOfferDTO()
+                    {
+                        BloodAmount = 2,
+                        BloodType = "A+",
+                        PriceAmount = 12
+
+                    }
+                },
+                BloodBankUsername = "bloodBank",
+                TenderOfferStatus = (int)TenderOfferStatus.WAITING
+            };
+
+            TenderOfferDTO dto3 = new TenderOfferDTO()
+            {
+                TenderID = 2,
+                BloodAmounts = new List<BloodOfferDTO>()
+                {
+                    new BloodOfferDTO()
+                    {
+                        BloodAmount = 2,
+                        BloodType = "A+",
+                        PriceAmount = 12
+
+                    }
+                },
+                BloodBankUsername = "bloodBank",
+                TenderOfferStatus = (int)TenderOfferStatus.WAITING
+            };
+
+            controller.CreateTenderOffer(dto);
+            controller.CreateTenderOffer(dto2);
+            controller.CreateTenderOffer(dto3); 
         }
     }
 }

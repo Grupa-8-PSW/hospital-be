@@ -6,5 +6,6 @@ namespace HospitalLibrary.Core.Repository
     {
         public Patient Create(Patient p, List<Allergen> allers);
         IEnumerable<Patient> GetBySelectedDoctorId(int id);
+        public Patient GetByUserId(int userId);
     }
 }

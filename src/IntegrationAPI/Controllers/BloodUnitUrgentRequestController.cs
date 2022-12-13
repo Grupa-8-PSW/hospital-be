@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace IntegrationAPI.Controllers
 {
 
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BloodUnitUrgentRequestController : Controller
@@ -40,7 +40,6 @@ namespace IntegrationAPI.Controllers
         public ActionResult SendRequestGRPC(BloodBank bloodBank)
         {
             _clientScheduletService.communicate(bloodBank.APIKey);
-           // _hospitalHTTPConnectionService.RestockBlood(_bloodService.GetMissingQuantities(_hospitalHTTPConnectionService.GetAllBlood()));
             return Ok();
         }
 
@@ -49,9 +48,9 @@ namespace IntegrationAPI.Controllers
         public ActionResult SendRequestHTTP(BloodBank bloodBank)
         {
             _connectionService.SendUrgentRequest(bloodBank.APIKey);
-            //_hospitalHTTPConnectionService
-            // _hospitalHTTPConnectionService.RestockBlood(_bloodService.GetMissingQuantities(_hospitalHTTPConnectionService.GetAllBlood()));
             return Ok();
         }
+        
+
     }
 }

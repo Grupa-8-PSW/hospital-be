@@ -3,3 +3,10 @@
     Active,
     Inactive
 }
+
+public enum TenderOfferStatus
+{
+    REJECT,
+    APPROVE,
+    WAITING
+}

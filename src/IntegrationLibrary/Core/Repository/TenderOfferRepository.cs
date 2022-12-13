@@ -2,6 +2,7 @@
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Persistence;
 using Microsoft.EntityFrameworkCore;
+using MimeKit;
 using Org.BouncyCastle.Crypto;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,16 @@ namespace IntegrationLibrary.Core.Repository
             _context = context;
         }
 
+        public void UpdateTenderOffer(TenderOffer newTenderOffer)
+        {
+            TenderOffer bloodUnitOld = _context.TenderOffer.Find(newTenderOffer.Id);
+            _context.Entry(bloodUnitOld).CurrentValues.SetValues(newTenderOffer);
+
+            _context.SaveChanges();
+            
+
+        }
+
         public TenderOffer Create(TenderOffer tenderOffer)
         {
             _context.TenderOffer.Add(tenderOffer);
@@ -38,9 +49,9 @@ namespace IntegrationLibrary.Core.Repository
             return _context.TenderOffer.Where(offer => offer.TenderID.Equals(tenderId));
         }
 
-
-        //public List<Allergen> GetAllergensByDtoId(List<int> ids) => _dbContext.Allergens.Where(a => ids.Contains(a.Id)).ToList();
-
-
+        public TenderOffer GetAcceptedOffer(int tenderID)
+        {
+            return  _context.TenderOffer.Where(p => p.TenderID.Equals(tenderID)).Where(p => p.TenderOfferStatus.Equals(TenderOfferStatus.APPROVE)).First();
+        }
     }
 }

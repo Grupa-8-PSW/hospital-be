@@ -15,11 +15,12 @@ namespace IntegrationAPI.Controllers
     public class TenderOfferController : ControllerBase
     {
         private readonly ITenderOfferService _tenderOfferService;
+        private readonly IBloodBankConnectionService _connectionService;
 
-
-        public TenderOfferController(ITenderOfferService service)
+        public TenderOfferController(ITenderOfferService service, IBloodBankConnectionService connectionService)
         {
             _tenderOfferService = service;
+            _connectionService = connectionService; 
         }
 
 
@@ -27,6 +28,15 @@ namespace IntegrationAPI.Controllers
         public IActionResult CreateTenderOffer([FromBody] TenderOfferDTO dto)
         {
             return Ok(_tenderOfferService.Create(TenderOfferMapper.ToModel(dto)));
+
+        }
+
+
+        [Route("/acceptOffer")]
+        [HttpPost]
+        public IActionResult AcceptTenderOffer([FromBody] TenderOfferDTO dto)
+        {
+            return Ok(_tenderOfferService.AcceptTenderOffer(TenderOfferMapper.ToModel(dto)));
         }
 
 
@@ -34,9 +44,14 @@ namespace IntegrationAPI.Controllers
         [HttpGet]
         public IActionResult GetOffersForTender( int tenderID)
         {
-
-            return Ok(_tenderOfferService.getOffersForTender(tenderID));
+            return Ok(TenderOfferMapper.ToDTOs(_tenderOfferService.getOffersForTender(tenderID)));
         }
 
+        [HttpGet("sendTenderOffer")]
+        public ActionResult SendTenderOffer(int tenderId, string APIKey)
+        {
+            _connectionService.SendTenderOffer(APIKey, tenderId);
+            return Ok();
+        }
     }
 }
