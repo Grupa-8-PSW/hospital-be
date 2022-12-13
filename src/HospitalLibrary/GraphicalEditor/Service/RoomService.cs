@@ -60,9 +60,9 @@ namespace HospitalLibrary.GraphicalEditor.Service
             SeparatedRoomsDTO newRooms = new SeparatedRoomsDTO();
           
             MapRoom firstRoom = new MapRoom(oldRoom.Map.X, oldRoom.Map.Y, (oldRoom.Map.X + oldRoom.Map.Width) / 2, oldRoom.Map.Height, "blue");
-            newRooms.FirstRoom = new Room(oldRoom.Id, Core.Enums.RoomType.OTHER, "102", dto.NewRoom1Name, firstRoom, 1, null);
+            newRooms.FirstRoom = new Room(oldRoom.Id, Core.Enums.RoomType.OTHER, oldRoom.Number, dto.NewRoom1Name, firstRoom, oldRoom.FloorId, null);
             MapRoom secondRoom = new MapRoom((oldRoom.Map.X + oldRoom.Map.Width) / 2, oldRoom.Map.Y, oldRoom.Map.X + oldRoom.Map.Width,oldRoom.Map.Height, "blue");
-            newRooms.SecondRoom = new Room(oldRoom.Id + 100, Core.Enums.RoomType.OPERATIONS, "103", dto.NewRoom2Name, secondRoom, 1, null);
+            newRooms.SecondRoom = new Room(oldRoom.Id + 100, Core.Enums.RoomType.OPERATIONS, oldRoom.Number + "a", dto.NewRoom2Name, secondRoom, oldRoom.FloorId, null);
 
             return newRooms;
         }
@@ -78,7 +78,7 @@ namespace HospitalLibrary.GraphicalEditor.Service
             MergedRoomDTO newRoom = new MergedRoomDTO();
 
             MapRoom mergedRoomMap = new MapRoom(oldRoom1.Map.X, oldRoom1.Map.Y, oldRoom1.Map.Width + oldRoom2.Map.Width, (oldRoom1.Map.Height + oldRoom2.Map.Height) / 2, "blue");
-            newRoom.Room = new Room(oldRoom1.Id, Core.Enums.RoomType.OTHER, "103", dto.NewRoomName, mergedRoomMap, 1, null);
+            newRoom.Room = new Room(oldRoom1.Id, Core.Enums.RoomType.OTHER, oldRoom1.Number, dto.NewRoomName, mergedRoomMap, oldRoom1.FloorId, null);
 
             return newRoom;
         }
