@@ -21,7 +21,7 @@ namespace IntegrationTests.IntegrationAPITests.UnitTests
             BloodOffer bloodOffer = new BloodOffer("A-", 12, new Money(421, Currency.USD));
 
             Assert.NotNull(bloodOffer);
-
+            
         }
 
         [Fact]

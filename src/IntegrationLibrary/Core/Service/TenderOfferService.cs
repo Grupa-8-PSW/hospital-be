@@ -47,7 +47,7 @@ namespace IntegrationLibrary.Core.Service
             return acceptedTenderOffer;
         }
 
-        private void ChangeTenderStatus(int tenderID)
+        public void ChangeTenderStatus(int tenderID)
         {
             _tenderService.UpdateStatus(tenderID);
         }
