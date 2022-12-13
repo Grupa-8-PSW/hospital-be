@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HospitalAPI.DTO;
+using HospitalAPI.Security;
 using HospitalAPI.Security.Models;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
@@ -54,7 +55,11 @@ namespace HospitalAPI.Controllers.PublicApp
         [Authorize(Roles = "Patient")]
         public ActionResult CreateFeedback(CreateFeedbackDTO feedbackDTO)
         {
-            var newFeedback = _feedbackService.Create(_mapper.Map<Feedback>(feedbackDTO));
+            var userId = User.UserId();
+            var patient = _patientService.GetByUserId(userId);
+            var feedback = _mapper.Map<Feedback>(feedbackDTO);
+            feedback.Patient = patient;
+            var newFeedback = _feedbackService.Create(feedback);
             return CreatedAtAction(nameof(Get), new { id = newFeedback.Id }, _mapper.Map<PublicFeedbackDTO>(newFeedback));
         }
     }

@@ -24,6 +24,8 @@ namespace HospitalLibrary.Core.Service
 
         public void Delete(int id) => _patientRepository.Delete(id);
 
+        public Patient GetByUserId(int userId) => _patientRepository.GetByUserId(userId);
+
         public Statistic GetStatistic()
         {
             List<Patient> patients = GetAll();
