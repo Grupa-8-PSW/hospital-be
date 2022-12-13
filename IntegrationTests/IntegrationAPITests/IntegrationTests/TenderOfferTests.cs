@@ -25,7 +25,7 @@ namespace IntegrationTests.IntegrationAPITests.IntegrationTests
 
         private static TenderOfferController SetupController(IServiceScope scope)
         {
-            return new TenderOfferController(scope.ServiceProvider.GetRequiredService<ITenderOfferService>());
+            return new TenderOfferController(scope.ServiceProvider.GetRequiredService<ITenderOfferService>(), scope.ServiceProvider.GetRequiredService<IBloodBankConnectionService>());
         }
 
         [Fact]

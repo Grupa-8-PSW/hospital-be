@@ -25,7 +25,8 @@ namespace HospitalLibrary.Core.Repository
 
         public void RestockBlood(Blood blood)
         {
-            Blood bloodOld = _context.Bloods.Find(blood.Id);
+            Blood bloodOld = GetByBloodType(blood.Type);
+            blood.Id = bloodOld.Id;
             _context.Entry(bloodOld).CurrentValues.SetValues(blood);
 
             try

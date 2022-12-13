@@ -11,7 +11,7 @@ namespace IntegrationLibrary.Core.Service.Interfaces
     public interface IEmailService
     {
         void SendEmail(string emailBB, string password, string API);
-        void SendSuccessEmail(string emailBB);
+        void SendSuccessEmail(string emailBB, int tenderId, string APIKey);
         void SendRejectEmail(string emailBB);
     }
 }

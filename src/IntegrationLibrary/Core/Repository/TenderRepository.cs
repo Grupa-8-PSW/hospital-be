@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Persistence;
+using MimeKit;
 
 namespace IntegrationLibrary.Core.Repository
 {
@@ -44,6 +45,11 @@ namespace IntegrationLibrary.Core.Repository
         {
             _context.Tenders.Update(tender);
             _context.SaveChanges();
+        }
+
+        public IEnumerable<Tender> GetActiveTenders()
+        {
+            return _context.Tenders.Where(p => p.Status.Equals(TenderStatus.Active));
         }
     }
 }

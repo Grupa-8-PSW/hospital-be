@@ -49,5 +49,9 @@ namespace IntegrationLibrary.Core.Repository
             return _context.TenderOffer.Where(offer => offer.TenderID.Equals(tenderId));
         }
 
+        public TenderOffer GetAcceptedOffer(int tenderID)
+        {
+            return  _context.TenderOffer.Where(p => p.TenderID.Equals(tenderID)).Where(p => p.TenderOfferStatus.Equals(TenderOfferStatus.APPROVE)).First();
+        }
     }
 }

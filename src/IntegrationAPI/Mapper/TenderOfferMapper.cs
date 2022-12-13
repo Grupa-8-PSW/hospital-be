@@ -124,5 +124,43 @@ namespace IntegrationAPI.Mapper
                 return "AB+"; 
             
         }
+
+        private static BloodType StringToBloodType(string bloodType)
+        {
+            if (bloodType.Equals("0+"))
+                return BloodType.ZERO_POSITIVE;
+            else if (bloodType.Equals("0-"))
+                return BloodType.ZERO_NEGATIVE;
+            else if (bloodType.Equals("A+"))
+                return BloodType.A_POSITIVE;
+            else if (bloodType.Equals("A-"))
+                return BloodType.A_NEGATIVE;
+            else if (bloodType.Equals("B-"))
+                return BloodType.B_NEGATIVE;
+            else if (bloodType.Equals("B+"))
+                return BloodType.B_POSITIVE;
+            else if (bloodType.Equals("AB+"))
+                return BloodType.AB_POSITIVE;
+            else
+                return BloodType.AB_NEGATIVE;
+
+        }
+
+
+        internal static List<BloodDTO> ToBloodDTO(List<BloodOffer> offers)
+        {
+            List<BloodDTO> bloodDTOs = new List<BloodDTO>();
+            
+            foreach(BloodOffer bo in offers)
+            {
+                BloodDTO bloodDTO = new BloodDTO();
+                bloodDTO.Quantity = bo.BloodAmount;
+                bloodDTO.Type = StringToBloodType(bo.BloodType).ToString();
+                bloodDTO.Id = (int)StringToBloodType(bo.BloodType);
+                bloodDTOs.Add(bloodDTO);
+            }
+
+            return bloodDTOs;
+        }
     }
 }
