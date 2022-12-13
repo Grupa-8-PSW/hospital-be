@@ -16,6 +16,7 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
 
         private readonly IWebDriver driver;
         private Pages.ViewBloodRequestPage viewBloodRequestsPage;
+        private Pages.LoginPage loginPage;
         private int RowsCount;
 
         public void Dispose()
@@ -37,7 +38,16 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
 
             driver = new ChromeDriver(options);
 
+            loginPage = new Pages.LoginPage(driver);
             viewBloodRequestsPage = new Pages.ViewBloodRequestPage(driver);
+
+            loginPage.Navigate();
+            loginPage.EnsurePageIsDisplayed();
+            loginPage.InsertUsername("manager");
+            loginPage.InsertPassword("12345");
+            loginPage.Login();
+            loginPage.WaitForLogin();
+
             viewBloodRequestsPage.Navigate();
             viewBloodRequestsPage.EnsurePageIsDisplayed();
             RowsCount = viewBloodRequestsPage.RowsCount();
@@ -45,32 +55,29 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
         }
 
         [Fact]
-        public async Task TestApprove()
+        public void TestApprove()
         {
             viewBloodRequestsPage.Approve();
-            await Task.Delay(3000);
-            Pages.ViewBloodRequestPage newViewBloodRequestPage = new ViewBloodRequestPage(driver);
-            Assert.Equal(RowsCount - 1, newViewBloodRequestPage.RowsCount());
+            viewBloodRequestsPage.WaitForTableUpdate();
+            Assert.Equal(RowsCount - 1, viewBloodRequestsPage.RowsCount());
         }
 
         [Fact]
-        public async Task TestReject()
+        public void TestReject()
         {
             viewBloodRequestsPage.Reject();
-            await Task.Delay(3000);
-            Pages.ViewBloodRequestPage newViewBloodRequestPage = new ViewBloodRequestPage(driver);
-            Assert.Equal(RowsCount - 1, newViewBloodRequestPage.RowsCount());
+            viewBloodRequestsPage.WaitForTableUpdate();
+            Assert.Equal(RowsCount - 1, viewBloodRequestsPage.RowsCount());
         }
 
         [Fact]
-        public async Task TestUnclear()
+        public void TestUnclear()
         {
             viewBloodRequestsPage.Unclear();
             viewBloodRequestsPage.InsertReason("gas");
             viewBloodRequestsPage.ReturnBack();
-            await Task.Delay(3000);
-            Pages.ViewBloodRequestPage newViewBloodRequestPage = new ViewBloodRequestPage(driver);
-            Assert.Equal(RowsCount - 1, newViewBloodRequestPage.RowsCount());
+            viewBloodRequestsPage.WaitForTableUpdate();
+            Assert.Equal(RowsCount - 1, viewBloodRequestsPage.RowsCount());
         }
 
         [Fact]

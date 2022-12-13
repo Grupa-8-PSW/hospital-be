@@ -14,5 +14,6 @@ namespace IntegrationLibrary.Core.Repository
         Tender GetById(int id);
         void Delete(Tender tender);
         void Update(Tender tender);
+        IEnumerable<Tender> GetActiveTenders();
     }
 }

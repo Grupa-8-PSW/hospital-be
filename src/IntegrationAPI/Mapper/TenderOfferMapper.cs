@@ -11,11 +11,33 @@ namespace IntegrationAPI.Mapper
         public static TenderOffer ToModel(TenderOfferDTO dto)
         {
             TenderOffer to = new TenderOffer();
+            
             to.TenderID = dto.TenderID;
             to.Offers = convBloodOffers(dto.BloodAmounts);
-
+            to.TenderOfferStatus = (TenderOfferStatus)dto.TenderOfferStatus;
+            to.BloodBankName = dto.BloodBankUsername;
+            to.Id = dto.Id;
             return to;
         }
+
+
+        public static List<TenderOfferDTO> ToDTOs(IEnumerable<TenderOffer> tOffers)
+        {
+            List<TenderOfferDTO> ret = new List<TenderOfferDTO>();
+            foreach(TenderOffer to in tOffers)
+            {
+                ret.Add(new TenderOfferDTO()
+                {
+                    BloodAmounts = convBloodOffersToDTO(to.Offers),
+                    TenderID = to.TenderID,
+                    BloodBankUsername = to.BloodBankName,
+                    Id = to.Id
+                    
+                });
+            }
+            return ret;
+        }
+
 
         public static List<BloodOffer> convBloodOffers(List<BloodOfferDTO> dtos)
         {
@@ -39,8 +61,8 @@ namespace IntegrationAPI.Mapper
                 convBloodOffersDTO.Add(new BloodOfferDTO()
                 {
                     BloodAmount = bo.BloodAmount,
-                    BloodType = bo.BloodType,
-                    PriceAmount = 0
+                    BloodType =  bo.BloodType,
+                    PriceAmount = bo.Price.Amount
                 });
             }
 
@@ -101,6 +123,44 @@ namespace IntegrationAPI.Mapper
             else 
                 return "AB+"; 
             
+        }
+
+        private static BloodType StringToBloodType(string bloodType)
+        {
+            if (bloodType.Equals("0+"))
+                return BloodType.ZERO_POSITIVE;
+            else if (bloodType.Equals("0-"))
+                return BloodType.ZERO_NEGATIVE;
+            else if (bloodType.Equals("A+"))
+                return BloodType.A_POSITIVE;
+            else if (bloodType.Equals("A-"))
+                return BloodType.A_NEGATIVE;
+            else if (bloodType.Equals("B-"))
+                return BloodType.B_NEGATIVE;
+            else if (bloodType.Equals("B+"))
+                return BloodType.B_POSITIVE;
+            else if (bloodType.Equals("AB+"))
+                return BloodType.AB_POSITIVE;
+            else
+                return BloodType.AB_NEGATIVE;
+
+        }
+
+
+        internal static List<BloodDTO> ToBloodDTO(List<BloodOffer> offers)
+        {
+            List<BloodDTO> bloodDTOs = new List<BloodDTO>();
+            
+            foreach(BloodOffer bo in offers)
+            {
+                BloodDTO bloodDTO = new BloodDTO();
+                bloodDTO.Quantity = bo.BloodAmount;
+                bloodDTO.Type = StringToBloodType(bo.BloodType).ToString();
+                bloodDTO.Id = (int)StringToBloodType(bo.BloodType);
+                bloodDTOs.Add(bloodDTO);
+            }
+
+            return bloodDTOs;
         }
     }
 }

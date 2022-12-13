@@ -29,8 +29,6 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
 
             driver = new ChromeDriver(options);
 
-
-
             checkForBloodTypePage = new Pages.CheckForBloodTypePage(driver);
             checkForBloodTypePage.Navigate();
             checkForBloodTypePage.EnsurePageIsDisplayed();

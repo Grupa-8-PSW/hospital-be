@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Model.ValueObject;
 using IntegrationLibrary.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -14,8 +15,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221204184446_initMigration")]
-    partial class initMigration
+    [Migration("20221212150343_ss")]
+    partial class ss
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -62,9 +63,9 @@ namespace IntegrationLibrary.Migrations
                         new
                         {
                             Id = 1,
-                            APIKey = "unknown",
+                            APIKey = "123",
                             Email = "test@test.com",
-                            Name = "testName",
+                            Name = "bloodBank",
                             Password = "unknown",
                             ServerAddress = "htttp://localhost:8081/"
                         });
@@ -143,6 +144,34 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("BloodConsumptionConfiguration");
                 });
 
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.MonthlySubscription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BankId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("DeliveryDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<List<Blood>>("RequestedBlood")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BankId");
+
+                    b.ToTable("MonthlySubscription");
+                });
+
             modelBuilder.Entity("IntegrationLibrary.Core.Model.Tender", b =>
                 {
                     b.Property<int>("Id")
@@ -167,6 +196,33 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("Tenders");
                 });
 
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.TenderOffer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BloodBankName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<List<BloodOffer>>("Offers")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
+                    b.Property<int>("TenderID")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TenderOfferStatus")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TenderOffer");
+                });
+
             modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodBankNews", b =>
                 {
                     b.HasOne("IntegrationLibrary.Core.Model.BloodBank", "BloodBank")
@@ -176,6 +232,17 @@ namespace IntegrationLibrary.Migrations
                         .IsRequired();
 
                     b.Navigation("BloodBank");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.MonthlySubscription", b =>
+                {
+                    b.HasOne("IntegrationLibrary.Core.Model.BloodBank", "Bank")
+                        .WithMany()
+                        .HasForeignKey("BankId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bank");
                 });
 #pragma warning restore 612, 618
         }

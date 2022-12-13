@@ -11,9 +11,12 @@ namespace IntegrationLibrary.Core.Service.Interfaces
     public interface ITenderService
     {
         IEnumerable<Tender> GetAll();
+        IEnumerable<Tender> GetActiveTenders();
+
         void Create(Tender tender);
         Tender GetById(int id);
 
         public void Delete(Tender tender);
+        Tender UpdateStatus(int tenderID);
     }
 }

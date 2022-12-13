@@ -35,7 +35,7 @@ namespace IntegrationAPI.Controllers
         [Route("getAllForOffers")]
         public ActionResult GetAllForOffers()
         {
-            return Ok(TenderOfferMapper.convertTenderTOBloodOffersDTO(_service.GetAll()));
+            return Ok(TenderOfferMapper.convertTenderTOBloodOffersDTO(_service.GetActiveTenders()));
         }
        
     }

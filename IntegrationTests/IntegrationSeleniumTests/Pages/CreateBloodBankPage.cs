@@ -14,9 +14,11 @@ namespace IntegrationTests.IntegrationSeleniumTests.Pages
         private readonly IWebDriver driver;
         public const string URI = "http://localhost:4200/bloodBanks/add";
 
-        private IWebElement BloodTypeElement => driver.FindElement(By.Name("bloodTypeSelect"));
-        private IWebElement BloodQuantityElement => driver.FindElement(By.Name("quantity"));
-        
+        private IWebElement EmailElement => driver.FindElement(By.Name("email"));
+        private IWebElement NameElement => driver.FindElement(By.Name("name"));
+        private IWebElement ServerAddressElement => driver.FindElement(By.Name("serverAddress"));
+        private IWebElement SubmitButtonElement => driver.FindElement(By.Id("submit"));
+
         public const string InvalidEmailMessage = "Email is Null/Empty/WhiteSpace.";
         public const string InvalidFormatEmailMessage = "Email is invalid.";
         public const string InvalidNameMessage = "Name is Null/Empty/WhiteSpace.";
@@ -30,7 +32,7 @@ namespace IntegrationTests.IntegrationSeleniumTests.Pages
 
         public void EnsurePageIsDisplayed()
         {
-            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
+            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 60));
             wait.Until(condition =>
             {
                 try

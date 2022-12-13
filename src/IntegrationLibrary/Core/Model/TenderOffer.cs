@@ -13,14 +13,19 @@ namespace IntegrationLibrary.Core.Model
     {
         public int Id { get; set; }
         [Required]
-        public int TenderID { get; set; }          
+        public int TenderID { get; set; }
+        [Required]
         public List<BloodOffer> Offers { get; set; }
+        public string BloodBankName { get; set; }
+        public TenderOfferStatus TenderOfferStatus { get; set; }
        
-        public TenderOffer(int id, int tenderID, List<BloodOffer> offers)
+        public TenderOffer(int id, int tenderID, List<BloodOffer> offers, string bloodBankName, TenderOfferStatus tenderOfferStatus)
         {
             Id = id;
             TenderID = tenderID;
             Offers = offers;
+            BloodBankName = bloodBankName;
+            TenderOfferStatus = tenderOfferStatus;
         }
 
         public TenderOffer()

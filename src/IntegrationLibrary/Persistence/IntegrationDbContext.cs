@@ -13,13 +13,15 @@ namespace IntegrationLibrary.Persistence
         public DbSet<TenderOffer> TenderOffer { get; set; }
         public IntegrationDbContext(DbContextOptions options) : base(options) { }
         public DbSet<Tender> Tenders { get; set; }
-        
+
+        public DbSet<MonthlySubscription> MonthlySubscription { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<BloodBank>().HasData(
-                new BloodBank() { Id = 1, Email = "test@test.com", Name = "testName", ServerAddress = "htttp://localhost:8081/" }
+                new BloodBank() { Id = 1, Email = "test@test.com", Name = "bloodBank", ServerAddress = "htttp://localhost:8081/", APIKey="123" }
             );
 
             modelBuilder.Entity<TenderOffer>()
@@ -33,6 +35,10 @@ namespace IntegrationLibrary.Persistence
 
             modelBuilder.Entity<Tender>()
                 .Property(b => b.Blood)
+                .HasColumnType("jsonb");
+
+            modelBuilder.Entity<MonthlySubscription>()
+                .Property(b => b.RequestedBlood)
                 .HasColumnType("jsonb");
 
             modelBuilder.SeedBloodBankNews();

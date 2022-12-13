@@ -17,6 +17,7 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
         private readonly IWebDriver driver;
         private Pages.ManagerPage managerPage;
         private Pages.CreateBloodBankPage createBloodBankPage;
+        private Pages.LoginPage loginPage;
         private int bloodBanksCount = 0;
 
         public CreateBloodBankTest()
@@ -33,7 +34,16 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
 
             driver = new ChromeDriver(options);
 
- 
+            loginPage = new Pages.LoginPage(driver);
+
+
+            loginPage.Navigate();
+            loginPage.EnsurePageIsDisplayed();
+            loginPage.InsertUsername("manager");
+            loginPage.InsertPassword("12345");
+            loginPage.Login();
+            loginPage.WaitForLogin();
+
 
             Pages.ManagerPage newManagerPage = new Pages.ManagerPage(driver); 
             newManagerPage.Navigate();
