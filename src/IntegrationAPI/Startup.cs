@@ -72,6 +72,8 @@ namespace IntegrationAPI
             services.AddScoped<ITenderService, TenderService>();
             services.AddScoped<ITenderRepository, TenderRepository>();
             services.AddScoped<ITenderService, TenderService>();
+            services.AddScoped<IMonthlySubscriptionRepository, MonthlySubscriptionRepository>();
+            services.AddScoped<IMonthlySubscriptionService, MonthlySubscriptionService>();
             services.AddScoped<IMapper<BloodBankNews, BloodBankNewsDTO>, BloodBankNewsMapper>();
 
             services.AddTransient<ExceptionMiddleware>();
