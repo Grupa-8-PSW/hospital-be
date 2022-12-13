@@ -23,7 +23,6 @@ namespace IntegrationLibrary.Core.Model.ValueObject
             BloodAmount = bloodAmount;
             Price = price;
             Validate();
-
         }
 
 

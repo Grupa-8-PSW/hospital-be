@@ -10,7 +10,6 @@ namespace IntegrationLibrary.Core.Model
 {
     public class BloodUnitUrgentRequest
     {
-
         public List<BloodDTO> bloodUnits { get; set; }
         public string APIKey { get; set; }
 
@@ -23,7 +22,5 @@ namespace IntegrationLibrary.Core.Model
         public BloodUnitUrgentRequest()
         {
         }
-
-
     }
 }

@@ -15,8 +15,6 @@ namespace IntegrationLibrary.Core.Model
         [Required]
         public int TenderID { get; set; }          
         public List<BloodOffer> Offers { get; set; }
-
-
        
         public TenderOffer(int id, int tenderID, List<BloodOffer> offers)
         {

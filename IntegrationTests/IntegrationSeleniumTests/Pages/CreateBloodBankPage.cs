@@ -14,11 +14,8 @@ namespace IntegrationTests.IntegrationSeleniumTests.Pages
         private readonly IWebDriver driver;
         public const string URI = "http://localhost:4200/bloodBanks/add";
 
-        private IWebElement EmailElement => driver.FindElement(By.Name("email"));
-        private IWebElement NameElement => driver.FindElement(By.Name("name"));
-        private IWebElement ServerAddressElement => driver.FindElement(By.Name("serverAddress"));
-
-        private IWebElement SubmitButtonElement => driver.FindElement(By.Id("submit"));
+        private IWebElement BloodTypeElement => driver.FindElement(By.Name("bloodTypeSelect"));
+        private IWebElement BloodQuantityElement => driver.FindElement(By.Name("quantity"));
         
         public const string InvalidEmailMessage = "Email is Null/Empty/WhiteSpace.";
         public const string InvalidFormatEmailMessage = "Email is invalid.";

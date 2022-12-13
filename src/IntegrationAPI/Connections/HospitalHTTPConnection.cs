@@ -21,12 +21,17 @@ using BloodDTO = IntegrationLibrary.Core.Model.DTO.BloodDTO;
 using BloodUnitDTO = IntegrationLibrary.Core.Model.DTO.BloodUnitDTO;
 using BloodUnitRequestDTO = IntegrationLibrary.Core.Model.DTO.BloodUnitRequestDTO;
 using Parameter = RestSharp.Parameter;
+using HospitalLibrary.Core.Enums;
+using IntegrationAPI.Connections.Interface;
 
 namespace IntegrationAPI.Connections
 {
     public class HospitalHTTPConnection : IHospitalHTTPConnection
     {
-        public HospitalHTTPConnection() { }
+        private readonly IHospitalRabbitMqPublisher _hospitalRabbitMqPublisher;
+        public HospitalHTTPConnection(IHospitalRabbitMqPublisher hospitalRabbitMqPublisher) { 
+            _hospitalRabbitMqPublisher = hospitalRabbitMqPublisher;
+        }
 
         public List<BloodUnitRequestDTO> GetAllBloodUnitRequests()
         {
@@ -57,7 +62,19 @@ namespace IntegrationAPI.Connections
             var client = new RestClient("http://localhost:5174");
             var request = new RestRequest("/api/internal/BloodUnitRequest/" + bloodUnitRequestDto.Id, Method.Put);
             request.AddJsonBody(bloodUnitRequestDto);
-            client.Execute(request);
+            try
+            {
+                client.Execute(request);
+                if(bloodUnitRequestDto.Status == BloodUnitRequestStatus.APPROVED)
+                {
+                    _hospitalRabbitMqPublisher.SendBloodUnitRequest(bloodUnitRequestDto);
+                }
+
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            
         }
 
         public List<BloodDTO> GetAllBlood()
