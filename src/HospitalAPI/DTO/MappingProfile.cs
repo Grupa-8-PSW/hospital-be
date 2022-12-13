@@ -28,6 +28,11 @@ namespace HospitalAPI.DTO
                 .ForMember(f => f.Allergens, o => o.MapFrom(f => f.Allergens));
 
             CreateMap<Statistic, StatisticDTO>();
+
+            CreateMap<Examination, AppointmentDTO>()
+                .ForMember(o => o.DoctorFullName, b => b.MapFrom(z => z.Doctor.FullName))
+                .ForMember(o => o.FloorId, b => b.MapFrom(z => z.Room.FloorId))
+                .ForMember(o => o.RoomName, b => b.MapFrom(z => z.Room.Name));
         }
 
     }
