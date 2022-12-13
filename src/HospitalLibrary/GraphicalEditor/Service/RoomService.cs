@@ -53,7 +53,9 @@ namespace HospitalLibrary.GraphicalEditor.Service
 
         public List<SeparatedRoomsDTO> GetSeparatedRooms(RoomForSeparateDTO dto)
         {
-            List<SeparatedRoomsDTO> separatedRooms = new List<SeparatedRoomsDTO>();   
+            List<SeparatedRoomsDTO> separatedRooms = new List<SeparatedRoomsDTO>();
+            List<RoomForSeparateDTO> rooms = new List<RoomForSeparateDTO>();
+            rooms.Add(dto);
             return null;
         }
 
