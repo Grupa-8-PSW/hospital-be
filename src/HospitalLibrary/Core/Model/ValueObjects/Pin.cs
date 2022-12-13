@@ -31,10 +31,10 @@ public class Pin : ValueObject
         {
             throw new ArgumentException("Invalid PIN.");
         }
-        //else if (CheckIfDayExistsInMonth(day, month))
-        //{
-        //throw new ArgumentException("Invalid PIN. Month " + month + ". doesn't have that many days.");
-        //}
+        else if (CheckIfDayExistsInMonth(day, month))
+        {
+            throw new ArgumentException("Invalid PIN. Month " + month + ". doesn't have that many days.");
+        }
 
     }
 
