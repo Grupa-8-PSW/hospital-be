@@ -1,4 +1,5 @@
-﻿using HospitalAPI.Web.Dto;
+﻿using HospitalAPI.Requests;
+using HospitalAPI.Web.Dto;
 using HospitalAPI.Web.Mapper;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
@@ -6,13 +7,17 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using HospitalAPI.Extensions;
 
 namespace HospitalAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class ExaminationController : ControllerBase
     {
         private readonly IExaminationService _examinationService;
@@ -65,24 +70,24 @@ namespace HospitalAPI.Controllers
 
         // POST api/rooms
         [HttpPost]
-        public ActionResult Create(ExaminationDTO examinationDTO)
+        public ActionResult Create(PostExaminationRequest postExaminationRequest)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            Doctor doctor = _doctorService.GetById(examinationDTO.DoctorId);
+            var examination = CreateExaminationFromPostRequest(postExaminationRequest);
 
-            Examination examination = _examinationMapper.toModel(examinationDTO);
-            examination.RoomId = doctor.RoomId;
-
-            bool succes = _examinationService.Create(examination);
-            if (!succes)
+            var success = _examinationService.Create(examination);
+            if (!success)
             {
                 return BadRequest("Poruka .....");
             }
-            return CreatedAtAction("GetById", new { id = examination.Id }, _examinationMapper.toDTO(examination));
+            return CreatedAtAction("GetById", new
+            {
+                id = examination.Id
+            }, _examinationMapper.toDTO(examination));
         }
 
         // PUT api/rooms/2
@@ -132,6 +137,29 @@ namespace HospitalAPI.Controllers
             return NoContent();
         }
 
+        private Examination CreateExaminationFromPostRequest(PostExaminationRequest postExaminationRequest)
+        {
+            try
+            {
+                var doctorId = HttpContext.GetUserId();
+                var doctor = _doctorService.GetById(doctorId);
+                var examination = new Examination
+                {
+                    DoctorId = doctorId,
+                    Duration = postExaminationRequest.Duration,
+                    PatientId = postExaminationRequest.PatientId,
+                    StartTime = DateTime.ParseExact(postExaminationRequest.StartTime, "dd/MM/yyyy HH:mm", null),
+                    RoomId = doctor.RoomId
+                };
+                examination.RoomId = doctor.RoomId;
+                return examination;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
 
+        }
     }
 }
