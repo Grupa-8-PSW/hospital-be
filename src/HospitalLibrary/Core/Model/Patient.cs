@@ -1,5 +1,8 @@
 ﻿using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Model.ValueObjects;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HospitalLibrary.Core.Model
 {
@@ -9,7 +12,8 @@ namespace HospitalLibrary.Core.Model
         public string LastName { get; set; }
         public string FullName { get => FirstName + " " + LastName; }
         public string Email { get; set; }
-        public string Pin { get; set; }
+        [Column(TypeName = "jsonb")]
+        public Pin Pin { get; set; }
         public Gender Gender { get; set; }
         public BloodType BloodType { get; set; }
         public Address Address { get; set; }
@@ -19,7 +23,7 @@ namespace HospitalLibrary.Core.Model
         public int SelectedDoctorId { get; set; }
         public int UserId { get; set; }
 
-        public Patient(int id, string firstName, string lastName, string email, string pin, Gender gender,
+        public Patient(int id, string firstName, string lastName, string email, Pin pin, Gender gender,
             BloodType bloodType, int addressId, int selectedDoctorId, int userId)
         {
             Id = id;
