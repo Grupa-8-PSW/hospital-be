@@ -16,6 +16,7 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
 
         private readonly IWebDriver driver;
         private Pages.ViewBloodRequestPage viewBloodRequestsPage;
+        private Pages.LoginPage loginPage;
         private int RowsCount;
 
         public void Dispose()
@@ -37,7 +38,16 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
 
             driver = new ChromeDriver(options);
 
+            loginPage = new Pages.LoginPage(driver);
             viewBloodRequestsPage = new Pages.ViewBloodRequestPage(driver);
+
+            loginPage.Navigate();
+            loginPage.EnsurePageIsDisplayed();
+            loginPage.InsertUsername("manager");
+            loginPage.InsertPassword("12345");
+            loginPage.Login();
+            loginPage.WaitForLogin();
+
             viewBloodRequestsPage.Navigate();
             viewBloodRequestsPage.EnsurePageIsDisplayed();
             RowsCount = viewBloodRequestsPage.RowsCount();
