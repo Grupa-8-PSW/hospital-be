@@ -54,12 +54,11 @@ namespace HospitalTests.HospitalAPITests.Integration.Controllers.Public
 
         }
 
-        private ExaminationController SetupController(IServiceScope scope)
+        private AppointmentController SetupController(IServiceScope scope)
         {
             var mapper = scope.ServiceProvider.GetRequiredService<IMapper>();
             var appointmentService = scope.ServiceProvider.GetRequiredService<IAppointmentService>();
-            var examinationService = scope.ServiceProvider.GetRequiredService<IExaminationService>();
-            return new ExaminationController(mapper, appointmentService, examinationService);
+            return new AppointmentController(mapper, appointmentService);
         }
 
         private static IEnumerable<object[]> GetRecommendedExaminationTimeTestData() =>

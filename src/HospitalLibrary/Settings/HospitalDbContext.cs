@@ -41,27 +41,29 @@ namespace HospitalLibrary.Settings
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
-              modelBuilder.Entity<MedicalDrugs>()
-                  .HasIndex(m => m.Code)
-                  .IsUnique();
-              modelBuilder.Entity<Blood>()
-                  .HasIndex(b => b.Type)
-                  .IsUnique();
+            modelBuilder.Entity<MedicalDrugs>()
+                .HasIndex(m => m.Code)
+                .IsUnique();
+            modelBuilder.Entity<Blood>()
+                .HasIndex(b => b.Type)
+                .IsUnique();
 
             modelBuilder.SeedMap();
+
             modelBuilder.SeedAddress();
             modelBuilder.SeedDoctor();
             modelBuilder.SeedPatient();
             modelBuilder.SeedFeedback();
             modelBuilder.SeedExamination();
+
             modelBuilder.SeedBed();
             modelBuilder.SeedMedicalDrugs();
             modelBuilder.SeedTreatmentHistory();
             modelBuilder.SeedBlood();
             modelBuilder.SeedTherapy();
             modelBuilder.SeedAllergen();
-            
-            base.OnModelCreating(modelBuilder);  
+
+            base.OnModelCreating(modelBuilder);
 
         }
 

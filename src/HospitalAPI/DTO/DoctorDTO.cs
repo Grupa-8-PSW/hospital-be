@@ -1,7 +1,7 @@
 ﻿namespace HospitalAPI.DTO
 {
     public class DoctorDTO
-    {
+    {   
      
         public int Id { get; set; }
         public string FirstName { get; set; }

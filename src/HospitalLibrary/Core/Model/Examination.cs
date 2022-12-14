@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using HospitalLibrary.Core.Model.ValueObjects;
+using HospitalLibrary.GraphicalEditor.Model;
 
 namespace HospitalLibrary.Core.Model
 {
@@ -12,7 +13,8 @@ namespace HospitalLibrary.Core.Model
         public Doctor Doctor { get; set; }
         public int PatientId { get; set; }
         public Patient Patient { get; set; }
-        [Column(TypeName = "jsonb")]
+        public int RoomId { get; set; }
+        public Room Room { get; set; }
         public DateRange DateRange { get; set; }
         public ExaminationStatus Status { get; set; }
 
@@ -20,12 +22,12 @@ namespace HospitalLibrary.Core.Model
         {
         }
 
-        public Examination(int id, int doctorId, int patientId, DateRange dateRange, ExaminationStatus status = ExaminationStatus.UPCOMING)
+        public Examination(int id, int doctorId, int patientId, int roomId, ExaminationStatus status = ExaminationStatus.UPCOMING)
         {
             Id = id;
             DoctorId = doctorId;
             PatientId = patientId;
-            DateRange = dateRange;
+            RoomId = roomId;
             Status = status;
         }
 
