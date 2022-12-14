@@ -57,7 +57,7 @@ namespace HospitalLibrary.Settings.DataSeed
                     End = new DateTime(2023, 2, 5, 9, 30, 0)
                 });
 
-                b.HasData(new Examination(6, 1, 1, 1, ExaminationStatus.CANCELED));
+                b.HasData(new Examination(6, 1, 1, 1, ExaminationStatus.UPCOMING));
                 b.OwnsOne(e => e.DateRange).HasData(new
                 {
                     ExaminationId = 6,
