@@ -12,6 +12,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using HospitalAPI.Extensions;
+using HospitalLibrary.Core.Enums;
 
 namespace HospitalAPI.Controllers
 {
@@ -155,6 +156,7 @@ namespace HospitalAPI.Controllers
                     RoomId = doctor.RoomId
                 };
                 examination.RoomId = doctor.RoomId;
+                examination.Status = ExaminationStatus.REGULAR;
                 return examination;
             }
             catch (Exception ex)

@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.ValueObjects;
 using System.ComponentModel.DataAnnotations;
 
 namespace HospitalAPI.DTO
@@ -11,5 +12,6 @@ namespace HospitalAPI.DTO
         public bool IsPublic { get; set; }
         [Required]
         public bool IsAnonymous { get; set; }
+        public FeedbackRating Rating { get; set; }
     }
 }

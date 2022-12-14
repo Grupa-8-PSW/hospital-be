@@ -35,7 +35,7 @@ namespace HospitalAPI.Security
             _mapper = mapper;
         }
 
-        public async Task<string> LoginInternAsync(LoginRequest loginRequest)
+        public async Task<String> LoginInternAsync(LoginRequest loginRequest)
         {
             var user = await _userManager.FindByNameAsync(loginRequest.Username);
             if (user == null)

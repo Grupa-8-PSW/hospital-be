@@ -36,8 +36,15 @@ namespace HospitalAPI.DTO
             CreateMap<Statistic, StatisticDTO>();
 
             CreateMap<ExaminationDTO, Examination>();
+
             CreateMap<Examination, ExaminationDTO>()
                 .ForMember(e => e.PatientFullName, o => o.MapFrom(f => f.Patient.FullName));
+
+            CreateMap<Examination, ViewExaminationDTO>()
+                .ForMember(o => o.DoctorFullName, b => b.MapFrom(z => z.Doctor.FullName))
+                .ForMember(o => o.FloorId, b => b.MapFrom(z => z.Room.FloorId))
+                .ForMember(o => o.RoomName, b => b.MapFrom(z => z.Room.Name))
+                .ForMember(o => o.StartTime, b => b.MapFrom(z => z.DateRange.Start));
 
         }
 
