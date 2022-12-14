@@ -8,6 +8,7 @@ namespace HospitalLibrary.GraphicalEditor.Model.DTO
 {
     public class EquipmentTransferDTO
     {
+        public int Id { get; set; }
         public int Amount { get; set; }
 
         public int FromRoomId { get; set; }
@@ -22,6 +23,8 @@ namespace HospitalLibrary.GraphicalEditor.Model.DTO
 
         public string EquipmentName { get; set; }
 
+
+        public EquipmentTransferDTO() { }
         public EquipmentTransferDTO(int amount, int fromRoomId, int toRoomId, DateTime startDate, DateTime endDate, int duration, string equipmentName)
         {
             Amount = amount;
@@ -33,6 +36,13 @@ namespace HospitalLibrary.GraphicalEditor.Model.DTO
             EquipmentName = equipmentName;
         }
 
-        public EquipmentTransferDTO() { }
+        public EquipmentTransferDTO(int id, DateTime startDate, DateTime endDate,int fromRoomId, int toRoomId)
+        {
+            Id = id;
+            StartDate = startDate;
+            EndDate = endDate;
+            FromRoomId= fromRoomId;
+            ToRoomId = toRoomId;  
+        }
     }
 }

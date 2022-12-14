@@ -4,6 +4,7 @@ using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Model.DTO;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
+using System.Collections.Generic;
 
 namespace HospitalLibrary.GraphicalEditor.Service
 {
@@ -11,15 +12,17 @@ namespace HospitalLibrary.GraphicalEditor.Service
     {
         private readonly IRoomRepository _roomRepository;
         private readonly IBedRepository _bedRepository;
+        private readonly IEquipmentRepository _equipmentRepository;
 
         private readonly IExaminationRepository _examinationRepository;
 
         public EquipmentTransferDTO dto;
 
-        public RoomService(IRoomRepository roomRepository, IExaminationRepository examinationRepository)
+        public RoomService(IRoomRepository roomRepository, IExaminationRepository examinationRepository, IEquipmentRepository equipmentRepository)
         {
             _roomRepository = roomRepository;
             _examinationRepository = examinationRepository;
+            _equipmentRepository = equipmentRepository;
         }
 
         public IEnumerable<Room> GetAll()
@@ -144,5 +147,36 @@ namespace HospitalLibrary.GraphicalEditor.Service
             return _roomRepository.GetFreeRooms();
         }
 
+
+        public SchedulesDTO GetSchedules(int id)
+        {
+            var examinationDTOs = EntityToEntityExeListDTO(_examinationRepository.GetByRoomId(id).ToList());
+            var equipmentTransferDTOs = EntityToEntityEquipListDTO(_equipmentRepository.GetEquipmentTransferByRoomId(id).ToList());
+
+
+            SchedulesDTO shedulesDto = new SchedulesDTO(examinationDTOs, equipmentTransferDTOs);
+            return shedulesDto;
+        }
+        private List<ExaminationDTO> EntityToEntityExeListDTO(List<Examination> entities) 
+        {
+            var retList = new List<ExaminationDTO>();
+            foreach (var item in entities)
+            {
+                retList.Add(new ExaminationDTO(item.Id, item.StartTime, item.Duration));
+            }
+            
+            return retList;
+        }
+
+        private List<EquipmentTransferDTO> EntityToEntityEquipListDTO(List<EquipmentTransfer> entities)
+        {
+            var retList = new List<EquipmentTransferDTO>();
+            foreach (var item in entities)
+            {
+                retList.Add(new EquipmentTransferDTO(item.Id, item.StartDate, item.EndDate, item.FromRoomId,item.ToRoomId));
+            }
+
+            return retList;
+        }
     }
 }
