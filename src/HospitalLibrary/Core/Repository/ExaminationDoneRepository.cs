@@ -64,8 +64,8 @@ namespace HospitalLibrary.Core.Repository
         public ExaminationDone? GetByExamination(int examinationId)
         {
             return _context.ExaminationsDone
-                .Include(x => x.Symptoms)
                 .Include(x => x.Prescriptions)
+                .Include(x => x.Symptoms)
                 .SingleOrDefault(x => x.ExaminationId == examinationId);
         }
     }

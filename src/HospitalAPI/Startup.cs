@@ -157,7 +157,7 @@ namespace HospitalAPI
             services.AddScoped<IMapper<ExaminationDone, ExaminationDoneDTO>, ExaminationDoneMapper>();
 
 
-            services.AddScoped<IMapper<ConsiliumRequest, ConsiliumRequestDTO>>();
+            services.AddScoped<IMapper<ConsiliumRequest, ConsiliumRequestDTO>, ConsiliumRequestMapper>();
 
             services.AddCors(options =>
             {
