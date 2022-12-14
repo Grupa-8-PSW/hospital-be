@@ -67,8 +67,8 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok(_mapper.Map<List<DoctorDTO>>(availableGeneralPracticioners));
         }
 
-        [HttpGet("/specialization")]
-        public ActionResult<List<DoctorDTO>> GetDoctorsBySpecialization(DoctorSpecialization specialization)
+        [HttpGet("specialization")]
+        public ActionResult<List<DoctorDTO>> GetDoctorsBySpecialization([FromQuery]DoctorSpecialization specialization)
         {
             var doctors = _doctorService.GetBySpecialization(specialization);
             return Ok(_mapper.Map<List<DoctorDTO>>(doctors));
