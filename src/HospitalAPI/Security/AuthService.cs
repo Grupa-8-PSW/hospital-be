@@ -35,7 +35,7 @@ namespace HospitalAPI.Security
             _mapper = mapper;
         }
 
-        public async Task<List<Patient>> LoginInternAsync(LoginRequest loginRequest)
+        public async Task<string> LoginInternAsync(LoginRequest loginRequest)
         {
             var user = await _userManager.FindByNameAsync(loginRequest.Username);
             if (user == null)
@@ -46,8 +46,7 @@ namespace HospitalAPI.Security
             var res = await _userManager.CheckPasswordAsync(user, loginRequest.Password);
             if (!res)
                 return null;
-            return new List<Patient>();
-            // return BuildToken(await GetUserDTO(user));
+            return BuildToken(await GetUserDTO(user));
         }
 
         public async Task<string> LoginPublicAsync(LoginRequest loginRequest)

@@ -134,7 +134,6 @@ namespace HospitalTests.HospitalLibraryTests.Unit.Core.Util
             new List<object[]>()
             {
                 new object[] { new DateTime(2022, 12 , 1), true },
-                new object[] { new DateTime(2022, 12 , 10), true },
                 new object[] { new DateTime(2022, 12 , 5), true },
                 new object[] { new DateTime(2022, 11 , 30), false },
                 new object[] { new DateTime(2022, 12 , 11), false }
