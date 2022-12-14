@@ -92,6 +92,30 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
 
             Assert.Equal(tendersCount + 1, newAllTendersPage.TendersCount());
 
+
+        }
+
+
+        [Fact]
+        public void NotSuccessfulSubmitWithFromDateMissing()
+        {
+            CreateTenderPage.InsertBloodQuantity("2");
+            CreateTenderPage.InsertBloodType("0+");
+            //CreateTenderPage.InsertFromDate("1016", "2022");
+
+            CreateTenderPage.InsertToDate("1018", "2022");
+            CreateTenderPage.SubmitForm();
+            CreateTenderPage.WaitForFormSubmit2();
+
+
+            Pages.AllTenders newAllTendersPage = new Pages.AllTenders(driver);
+
+            Assert.True("http://localhost:4200/tenders".Equals(driver.Url));
+
+            int i = 0;
+            //Assert.Equal(tendersCount + 1, newAllTendersPage.TendersCount());
+
+
         }
     }
 }

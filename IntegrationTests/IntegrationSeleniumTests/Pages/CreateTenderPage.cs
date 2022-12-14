@@ -124,6 +124,13 @@ namespace IntegrationTests.IntegrationSeleniumTests.Pages
             driver.SwitchTo().Alert().Accept();
         }
 
+
+        public void WaitForFormSubmit2()
+        {
+            var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
+
+        }
+
         public void WaitForFormSubmit()
         {
             var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
