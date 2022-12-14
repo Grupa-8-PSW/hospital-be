@@ -5,13 +5,17 @@ VisualStudioVersion = 17.2.32602.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4E6CA2FE-84A6-4CAF-ACAC-26F41B02E2E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalAPI", "src\HospitalAPI\HospitalAPI.csproj", "{B96F768B-263D-47B3-AFBC-6BA3F9E34C36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalAPI", "src\HospitalAPI\HospitalAPI.csproj", "{B96F768B-263D-47B3-AFBC-6BA3F9E34C36}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationAPI", "src\IntegrationAPI\IntegrationAPI.csproj", "{5E986A18-8FEB-4AFB-9843-B5E30DAF456D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationAPI", "src\IntegrationAPI\IntegrationAPI.csproj", "{5E986A18-8FEB-4AFB-9843-B5E30DAF456D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HospitalLibrary", "src\HospitalLibrary\HospitalLibrary.csproj", "{D4B8B668-2893-4448-8100-B8043F16E301}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalLibrary", "src\HospitalLibrary\HospitalLibrary.csproj", "{D4B8B668-2893-4448-8100-B8043F16E301}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationLibrary", "src\IntegrationLibrary\IntegrationLibrary.csproj", "{EEA7FD47-F7B5-407A-82D1-D84435989F48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationLibrary", "src\IntegrationLibrary\IntegrationLibrary.csproj", "{EEA7FD47-F7B5-407A-82D1-D84435989F48}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{4F0D5E16-B196-4834-B820-8B44DDE16F4D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalTests", "HospitalTests\HospitalTests.csproj", "{23A0D7FC-A0B9-4FBE-98DE-03EAF1082EE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +39,14 @@ Global
 		{EEA7FD47-F7B5-407A-82D1-D84435989F48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEA7FD47-F7B5-407A-82D1-D84435989F48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEA7FD47-F7B5-407A-82D1-D84435989F48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F0D5E16-B196-4834-B820-8B44DDE16F4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F0D5E16-B196-4834-B820-8B44DDE16F4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F0D5E16-B196-4834-B820-8B44DDE16F4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F0D5E16-B196-4834-B820-8B44DDE16F4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23A0D7FC-A0B9-4FBE-98DE-03EAF1082EE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23A0D7FC-A0B9-4FBE-98DE-03EAF1082EE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23A0D7FC-A0B9-4FBE-98DE-03EAF1082EE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23A0D7FC-A0B9-4FBE-98DE-03EAF1082EE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
