@@ -33,6 +33,10 @@ namespace IntegrationAPI.Connections
             _hospitalRabbitMqPublisher = hospitalRabbitMqPublisher;
         }
 
+        public HospitalHTTPConnection()
+        {
+        }
+
         public List<BloodUnitRequestDTO> GetAllBloodUnitRequests()
         {
             var client = new RestClient("http://localhost:5174/api/internal/BloodUnitRequest");
@@ -87,12 +91,13 @@ namespace IntegrationAPI.Connections
             return result;
         }
 
-        public void RestockBlood(List<BloodDTO> bloodList){
+        public RestResponse RestockBlood(List<BloodDTO> bloodList){
             var client = new RestClient("http://localhost:5174");
             var request = new RestRequest("/api/internal/Blood/restockBlood", Method.Put);
             var json = JsonConvert.SerializeObject(bloodList);
             request.AddBody(bloodList);
             RestResponse response = client.Execute(request);
+            return response;
         }
 
         public BloodUnitRequestDTO GetBloodRequestById(int id)

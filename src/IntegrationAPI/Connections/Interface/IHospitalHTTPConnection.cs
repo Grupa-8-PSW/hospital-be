@@ -6,6 +6,7 @@ using System.Text;
 using HospitalLibrary.Core.Model;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.DTO;
+using RestSharp;
 
 namespace IntegrationLibraryAPI.Connections
 {
@@ -21,7 +22,7 @@ namespace IntegrationLibraryAPI.Connections
 
         public void ChangeRequestStatus(BloodUnitRequestDTO bloodUnitRequestDto);
 
-        public void RestockBlood(List<BloodDTO> blood);
+        public RestResponse RestockBlood(List<BloodDTO> blood);
 
     }
 }

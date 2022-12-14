@@ -1,15 +1,22 @@
+
 ﻿using AutoMapper;
 using IntegrationAPI.ConnectionService.Interface;
 using IntegrationAPI.Controllers;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.DTO;
+
+﻿using IntegrationAPI.Controllers;
+using IntegrationLibrary.Core.Model;
+
 using IntegrationLibrary.Core.Service;
 using IntegrationLibrary.Core.Service.Interfaces;
 using IntegrationTeamTests.Setup;
 using iTextSharp.text;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
+
 using static IntegrationAPI.Mapper.IMapper;
+
 
 namespace IntegrationTests.IntegrationAPITests.IntegrationTests;
 
@@ -23,9 +30,11 @@ public class MonthlySubscriptionTests : BaseIntegrationTests
     private static MonthlySubscriptionController setupController(IServiceScope scope)
     {
         return new MonthlySubscriptionController(
+
             scope.ServiceProvider.GetRequiredService<IMonthlySubscriptionService>(), scope.ServiceProvider.GetRequiredService<IBloodBankService>(),
             scope.ServiceProvider.GetRequiredService<IBloodBankConnectionService>(),
             scope.ServiceProvider.GetRequiredService<IMapper<MonthlySubscription, MonthlySubscriptionDTO>>());
+
     }
 
 
@@ -35,6 +44,7 @@ public class MonthlySubscriptionTests : BaseIntegrationTests
         //Arange
         using var scope = Factory.Services.CreateScope();
         var controller = setupController(scope);
+
         List<IntegrationLibrary.Core.Model.ValueObject.Blood> bs = new List<IntegrationLibrary.Core.Model.ValueObject.Blood>();
         bs.Add(new IntegrationLibrary.Core.Model.ValueObject.Blood(HospitalLibrary.Core.Enums.BloodType.A_POSITIVE, 1));
         MonthlySubscriptionDTO subscription = new MonthlySubscriptionDTO();

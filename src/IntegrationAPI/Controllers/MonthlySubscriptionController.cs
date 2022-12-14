@@ -27,6 +27,7 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost]
+
         public String Create([FromBody]MonthlySubscriptionDTO subscription)
         {
             subscription.Bank =_bankService.GetById(subscription.BankId); 
@@ -50,6 +51,7 @@ namespace IntegrationAPI.Controllers
             {
                 _bloodBankConnectionService.SendMonthlySubscriptionOffer(monthlySubscriptionDTO, subscription.Bank.MonthlySubscriptionRoutingKey);
             }catch (Exception e) { Console.WriteLine(e); }
+
             return "success";
         }
 
