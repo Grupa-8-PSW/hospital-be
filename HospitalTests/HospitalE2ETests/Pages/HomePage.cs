@@ -11,7 +11,7 @@ public class HomePage
         By.CssSelector("button[routerLink='/auth/login']"));
 
     private IWebElement CalendarLink => _driver.FindElement(
-        By.CssSelector("a[routerLink='/calendar']"));
+        By.Id("a[routerLink='/calendar']"));
 
     public HomePage(IWebDriver driver)
     {
