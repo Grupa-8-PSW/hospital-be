@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HospitalAPI.Security.Models;
+using HospitalAPI.Web.Dto;
 using HospitalLibrary.Core.Model;
 
 namespace HospitalAPI.DTO
@@ -33,6 +34,11 @@ namespace HospitalAPI.DTO
             CreateMap<AvailableAppointmentsDTO, AvailableAppointments>();
 
             CreateMap<Statistic, StatisticDTO>();
+
+            CreateMap<ExaminationDTO, Examination>();
+            CreateMap<Examination, ExaminationDTO>()
+                .ForMember(e => e.PatientFullName, o => o.MapFrom(f => f.Patient.FullName));
+
         }
 
     }

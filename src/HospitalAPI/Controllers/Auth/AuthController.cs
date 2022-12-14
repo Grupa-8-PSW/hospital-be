@@ -26,7 +26,7 @@ namespace HospitalAPI.Controllers.Auth
                 return BadRequest();
             return Ok(new LoginResponse()
             {
-                Jwt = token
+                Jwt = ""
             });
         }
 

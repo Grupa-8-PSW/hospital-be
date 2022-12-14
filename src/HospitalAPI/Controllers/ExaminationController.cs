@@ -93,16 +93,6 @@ namespace HospitalAPI.Controllers
             return CreatedAtAction("GetById", new { id = examination.Id }, _examinationMapper.toDTO(examination));*/
         }
 
-        [HttpPost("test")]
-        public IActionResult Test(Testt date)
-        {
-            return Ok();
-        }
-
-        public class Testt { 
-            public DateTime DateTime { get; set; }
-        }
-
         // PUT api/rooms/2
         [HttpPut("{id}")]
         public ActionResult Update(int id, ExaminationDTO examinationDTO)
