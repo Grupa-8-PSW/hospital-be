@@ -45,7 +45,11 @@ namespace HospitalAPI
         {
             services.AddControllers();
 
-            services.AddDbContext<HospitalDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")));
+            services.AddDbContext<HospitalDbContext>(options => 
+            { 
+                options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")); 
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking); 
+            });
             services.AddDbContext<AppIdentityDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")));
 
             services.AddScoped(typeof(IFeedbackService), typeof(FeedbackService));
