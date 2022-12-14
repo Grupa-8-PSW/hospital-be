@@ -1,4 +1,5 @@
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.ValueObjects;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Model.DTO;
@@ -49,6 +50,25 @@ namespace HospitalLibrary.GraphicalEditor.Service
                 return null;
             }
 
+        }
+
+        public List<DateRange> GetAvailableIntervals(EquipmentTransferDTO dto)
+        {
+            List<DateRange> froms = GetById(dto.FromRoomId).GetAvailableIntervals(dto.StartDate, dto.EndDate, dto.Duration);
+            List<DateRange> tos = GetById(dto.ToRoomId).GetAvailableIntervals(dto.StartDate, dto.EndDate, dto.Duration);
+            List<DateRange> available = new();
+
+            foreach (DateRange from in froms)
+            {
+                foreach (DateRange to in tos)
+                {
+                    if (from.IncludesRange(to))
+                        available.Add(to);
+                    if (to.IncludesRange(from))
+                        available.Add(from);
+                }
+            }
+            return available;
         }
 
         public List<FreeSpaceDTO> GetTransferedEquipment(EquipmentTransferDTO dto)
