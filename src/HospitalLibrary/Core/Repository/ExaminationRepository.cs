@@ -34,7 +34,7 @@ namespace HospitalLibrary.Core.Repository
         {
             Examination examinationOld = _context.Examinations.Find(examination.Id);
             _context.Entry(examinationOld).CurrentValues.SetValues(examination);
-            //_context.Entry(examination).State = EntityState.Modified;
+            _context.Entry(examination).State = EntityState.Modified;
 
             try
             {
@@ -70,7 +70,7 @@ namespace HospitalLibrary.Core.Repository
 
         public IEnumerable<Examination> GetByPatientId(int patientId)
         {
-            return _context.Examinations.Include(ex => ex.Doctor).Where(ex => ex.PatientId == patientId).ToList();
+            return _context.Examinations.Include(ex => ex.Doctor).Include(ex => ex.Room).Where(ex => ex.PatientId == patientId).ToList();
         }
     }
 }

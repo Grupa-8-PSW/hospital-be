@@ -812,12 +812,12 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "Id", "Active", "BedId", "DischargeReason", "EndDate", "PatientId", "Reason", "RoomId", "StartDate" },
                 values: new object[,]
                 {
-                    { 1, false, 1, "abc", new DateTime(2022, 12, 14, 19, 4, 36, 835, DateTimeKind.Utc).AddTicks(7154), 1, "reason1", 1, new DateTime(2022, 12, 14, 19, 4, 36, 835, DateTimeKind.Utc).AddTicks(7153) },
-                    { 2, false, 2, "abc", new DateTime(2022, 12, 14, 19, 4, 36, 835, DateTimeKind.Utc).AddTicks(7199), 2, "reason2", 1, new DateTime(2022, 12, 14, 19, 4, 36, 835, DateTimeKind.Utc).AddTicks(7198) },
-                    { 3, false, 4, "abc", new DateTime(2022, 12, 14, 19, 4, 36, 835, DateTimeKind.Utc).AddTicks(7201), 3, "reason3", 2, new DateTime(2022, 12, 14, 19, 4, 36, 835, DateTimeKind.Utc).AddTicks(7201) },
-                    { 4, true, 1, "abc", null, 1, "reason1", 1, new DateTime(2022, 12, 14, 19, 4, 36, 835, DateTimeKind.Utc).AddTicks(7202) },
-                    { 5, true, 2, "abc", null, 2, "reason2", 1, new DateTime(2022, 12, 14, 19, 4, 36, 835, DateTimeKind.Utc).AddTicks(7203) },
-                    { 6, true, 4, "abc", null, 3, "reason3", 2, new DateTime(2022, 12, 14, 19, 4, 36, 835, DateTimeKind.Utc).AddTicks(7203) }
+                    { 1, false, 1, "abc", new DateTime(2022, 12, 14, 19, 16, 33, 136, DateTimeKind.Utc).AddTicks(2585), 1, "reason1", 1, new DateTime(2022, 12, 14, 19, 16, 33, 136, DateTimeKind.Utc).AddTicks(2584) },
+                    { 2, false, 2, "abc", new DateTime(2022, 12, 14, 19, 16, 33, 136, DateTimeKind.Utc).AddTicks(2588), 2, "reason2", 1, new DateTime(2022, 12, 14, 19, 16, 33, 136, DateTimeKind.Utc).AddTicks(2587) },
+                    { 3, false, 4, "abc", new DateTime(2022, 12, 14, 19, 16, 33, 136, DateTimeKind.Utc).AddTicks(2589), 3, "reason3", 2, new DateTime(2022, 12, 14, 19, 16, 33, 136, DateTimeKind.Utc).AddTicks(2589) },
+                    { 4, true, 1, "abc", null, 1, "reason1", 1, new DateTime(2022, 12, 14, 19, 16, 33, 136, DateTimeKind.Utc).AddTicks(2590) },
+                    { 5, true, 2, "abc", null, 2, "reason2", 1, new DateTime(2022, 12, 14, 19, 16, 33, 136, DateTimeKind.Utc).AddTicks(2591) },
+                    { 6, true, 4, "abc", null, 3, "reason3", 2, new DateTime(2022, 12, 14, 19, 16, 33, 136, DateTimeKind.Utc).AddTicks(2591) }
                 });
 
             migrationBuilder.InsertData(
@@ -825,8 +825,8 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "Id", "Amount", "DoctorId", "Reason", "TherapySubject", "TherapyType", "TreatmentHistoryId", "WhenPrescribed" },
                 values: new object[,]
                 {
-                    { 1, 1, 1, "Headache", "Bromazepam 500mg", 0, 1, new DateTime(2022, 12, 14, 19, 4, 36, 835, DateTimeKind.Utc).AddTicks(7226) },
-                    { 2, 1, 2, "Blood loss", "A+ 500ml", 1, 1, new DateTime(2022, 12, 14, 19, 4, 36, 835, DateTimeKind.Utc).AddTicks(7228) }
+                    { 1, 1, 1, "Headache", "Bromazepam 500mg", 0, 1, new DateTime(2022, 12, 14, 19, 16, 33, 136, DateTimeKind.Utc).AddTicks(2614) },
+                    { 2, 1, 2, "Blood loss", "A+ 500ml", 1, 1, new DateTime(2022, 12, 14, 19, 16, 33, 136, DateTimeKind.Utc).AddTicks(2616) }
                 });
 
             migrationBuilder.CreateIndex(

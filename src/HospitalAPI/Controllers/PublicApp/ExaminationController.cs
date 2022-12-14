@@ -15,20 +15,24 @@ namespace HospitalAPI.Controllers.PublicApp
     {
         private readonly IMapper _mapper;
         private readonly IAppointmentService _appointmentService;
+        private readonly IDoctorService _doctorService;
         private readonly IExaminationService _examinationService;
 
         public ExaminationController(
             IMapper mapper,
-            IExaminationService examinationService)
+            IExaminationService examinationService,
+            IDoctorService doctorService)
         {
             _mapper = mapper;
             _examinationService = examinationService;
+            _doctorService = doctorService;
         }
 
         [HttpPost]
         public ActionResult Create(ExaminationDTO examinationDTO)
         {
             var examination = _mapper.Map<Examination>(examinationDTO);
+            examination.RoomId = _doctorService.GetById(examinationDTO.DoctorId).RoomId;
             _examinationService.Create(examination);
             return Ok();
         }
