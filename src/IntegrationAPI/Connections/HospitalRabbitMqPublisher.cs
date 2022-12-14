@@ -11,6 +11,13 @@ namespace IntegrationAPI.Connections
 {
     public class HospitalRabbitMqPublisher : IHospitalRabbitMqPublisher
     {
+        private readonly IConfiguration _config;
+
+        public HospitalRabbitMqPublisher(IConfiguration config)
+        {
+            _config = config;
+        }
+
         public void SendBloodUnitRequest(BloodUnitRequestDTO bloodUnitRequestDTO)
         {
             BloodUnitRequestMessageDTO message =  BloodUnitRequestMessageMapper.ToMessage(bloodUnitRequestDTO);
@@ -19,15 +26,16 @@ namespace IntegrationAPI.Connections
             using (var channel = connection.CreateModel())
             {
                 var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
-
-                channel.BasicPublish(exchange: "bloodRequestExchange",
-                                     routingKey: "bloodRequests.randomString",
+                string exchange = _config.GetSection("bloodRequestExchange").Value;
+                string routingKey = _config.GetSection("bloodRequestRoutingKey").Value;
+                channel.BasicPublish(exchange: exchange,
+                                     routingKey: routingKey,
                                      basicProperties: null,
                                      body: body);
             }
         }
 
-        public void SendMonthlySubscriptionOffer(MonthlySubscriptionDTO monthlySubscriptionDTO, string routingKey)
+        public void SendMonthlySubscriptionOffer(MonthlySubscriptionMessageDTO monthlySubscriptionDTO, string routingKey)
         {
             var factory = new ConnectionFactory() { HostName = "localhost" };
             using (var connection = factory.CreateConnection())

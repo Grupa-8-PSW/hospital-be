@@ -1,31 +1,38 @@
-﻿using HospitalAPI.DTO;
-using HospitalLibrary.Core.Enums;
-using HospitalLibrary.Core.Model;
+﻿using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibrary.Core.Model;
-using IntegrationLibrary.Core.Model.DTO;
-using BloodDTO = IntegrationLibrary.Core.Model.DTO.BloodDTO;
+using static IntegrationAPI.Mapper.IMapper;
+using System.Collections.ObjectModel;
 
 namespace IntegrationAPI.Mapper
 {
-    public static class MonthlySubscriptionMapper
+    public class MonthlySubscriptionMapper : IMapper<MonthlySubscription, MonthlySubscriptionDTO>
     {
-        public static MonthlySubscriptionDTO ToDTO(MonthlySubscription monthlySubscription)
+        public MonthlySubscriptionDTO toDTO(MonthlySubscription model)
         {
-            MonthlySubscriptionDTO monthlySubscriptionDTO = new MonthlySubscriptionDTO();
-            monthlySubscriptionDTO.BloodBankAPIKey = monthlySubscription.Bank.APIKey;
-            List<BloodDTO> bloodDTOList = new List<BloodDTO>();
-            foreach(IntegrationLibrary.Core.Model.ValueObject.Blood blood in monthlySubscription.RequestedBlood)
-            {
-                BloodDTO bloodDTO = new BloodDTO();
-                BloodType bloodType = blood.BloodType;
-                bloodDTO.Type = Enum.GetName(bloodType.GetType(), bloodType);
-                bloodDTO.Quantity = blood.Quantity;
-                bloodDTOList.Add(bloodDTO);
-            }
-            monthlySubscriptionDTO.HospitalSubscriptionId = monthlySubscription.Id;
-            monthlySubscriptionDTO.RequestedBlood = bloodDTOList;
-            monthlySubscriptionDTO.DeliveryDate = monthlySubscription.DeliveryDate.ToString("dd/MM/yyyy");
-            return monthlySubscriptionDTO;
+            throw new NotImplementedException();
+        }
+
+        public Collection<MonthlySubscriptionDTO> toDTO(Collection<MonthlySubscription> models)
+        {
+            throw new NotImplementedException();
+        }
+
+        public MonthlySubscription toModel(MonthlySubscriptionDTO dto)
+        {
+            MonthlySubscription monthlySubscription = new MonthlySubscription(
+                dto.Id,
+                dto.RequestedBlood,
+                dto.DeliveryDate,
+                dto.Bank,
+                dto.BankId,
+                dto.Status
+                );
+            return monthlySubscription;
+        }
+
+        public Collection<MonthlySubscription> toModel(Collection<MonthlySubscriptionDTO> dtos)
+        {
+            throw new NotImplementedException();
         }
     }
 }

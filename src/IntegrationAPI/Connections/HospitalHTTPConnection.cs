@@ -38,7 +38,6 @@ namespace IntegrationAPI.Connections
             var client = new RestClient("http://localhost:5174/api/internal/BloodUnitRequest");
             var request = new RestRequest();
 
-
             RestResponse response = client.Get(request);
 
             List<BloodUnitRequestDTO> result = JsonConvert.DeserializeObject<List<BloodUnitRequestDTO>>( response.Content);
@@ -74,7 +73,6 @@ namespace IntegrationAPI.Connections
             {
                 Console.WriteLine(ex.ToString());
             }
-            
         }
 
         public List<BloodDTO> GetAllBlood()

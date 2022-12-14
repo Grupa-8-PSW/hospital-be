@@ -29,9 +29,16 @@ namespace IntegrationAPI.Connections
             var factory = new ConnectionFactory { HostName = "localhost", Port = 5672, UserName = "guest", Password = "guest" };
             try
             {
+                string hospitalQueue;
+                using (var scope = serviceProvider.CreateScope())
+                {
+                    var scopedService = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+                    hospitalQueue = scopedService.GetSection("hospitalQueue").Value;
+
+                }
                 connection = factory.CreateConnection();
                 channel = connection.CreateModel();
-                channel.QueueDeclare(queue: "hospitalQueue",
+                channel.QueueDeclare(queue: hospitalQueue,
                                       durable: false,
                                       exclusive: false,
                                       autoDelete: false,
@@ -48,7 +55,7 @@ namespace IntegrationAPI.Connections
                     TryParseBloodRequestDelivery(jsonMessage);
 
                 };
-                channel.BasicConsume(queue: "hospitalQueue",
+                channel.BasicConsume(queue: hospitalQueue,
                                        autoAck: true,
                                        consumer: consumer);
             }

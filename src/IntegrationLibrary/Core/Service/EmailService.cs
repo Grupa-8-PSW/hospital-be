@@ -39,6 +39,12 @@ namespace IntegrationLibrary.Core.Service
             template.AppendLine("<b><h1>***SUCCESSFUL REGISTRATION***</h1></b>");
             template.AppendLine("<p><h3>Password: " + password + "</h3></p>");
             template.AppendLine("<p><h3>API Key: " + api + "</h3></p>");
+            string bloodRequestRoutingKey = _config.GetSection("bloodRequestRoutingKey").Value;
+            string bloodRequestExchange = _config.GetSection("bloodRequestExchange").Value;
+            template.AppendLine("<p><h3>Blood Request routing key: " + bloodRequestRoutingKey + "</h3></p>");
+            template.AppendLine("<p><h3>Blood Request exchange: " + bloodRequestExchange + "</h3></p>");
+            string hospitalQueue = _config.GetSection("hospitalQueue").Value;
+            template.AppendLine("<p><h3>Hospital receiving queue: " + hospitalQueue + "</h3></p>");
             email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUsername").Value));
             email.To.Add(MailboxAddress.Parse(address));
             email.Subject = "Your bank has been successfully registered";
@@ -92,6 +98,23 @@ namespace IntegrationLibrary.Core.Service
             email.Body = new TextPart(TextFormat.Html) { Text = rejectTemplate.ToString() };
         }
 
+        public void SendRejectMonthlyDeliveryEmail(string date)
+        {
+            var rejectEmail = new MimeMessage();
+            GenerateRejectMonthlyDeliveryMail(rejectEmail, date);
+            SmtpClient smtp = SetupSmtpClient(rejectEmail);
+        }
+
+        public void GenerateRejectMonthlyDeliveryMail(MimeMessage email, string Date)
+        {
+            rejectTemplate.AppendLine("<b><h1>***Monthly Delivery Canceled***</h1></b>");
+            rejectTemplate.AppendLine("<p>Monthly Delivery for "+ Date + " has been canceled" + "</p>");
+            email.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUsername").Value));
+            email.To.Add(MailboxAddress.Parse("davidmijailovic9@gmail.com"));
+            email.Subject = "Sorry, monthly delivery has been canceled";
+            email.Body = new TextPart(TextFormat.Html) { Text = rejectTemplate.ToString() };
+
+        }
     }
 }
 

@@ -18,6 +18,8 @@ namespace IntegrationTests.IntegrationSeleniumTests.Pages
 
         private ReadOnlyCollection<IWebElement> Tenders => driver.FindElements(By.Id("offerCard"));
 
+        
+
         public AllTenders(IWebDriver driver)
         {
             this.driver = driver;

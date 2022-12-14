@@ -76,7 +76,7 @@ namespace IntegrationLibrary.Core.Service
             return true;
         }
 
-        public void SendMonthlySubscriptionOffer(MonthlySubscriptionDTO monthlySubscriptionDTO, string routingKey)
+        public void SendMonthlySubscriptionOffer(MonthlySubscriptionMessageDTO monthlySubscriptionDTO, string routingKey)
         {
 
             _hospitalRabbitMqPublisher.SendMonthlySubscriptionOffer(monthlySubscriptionDTO, routingKey);

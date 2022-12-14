@@ -17,13 +17,31 @@ namespace IntegrationTests.IntegrationAPITests.IntegrationTests
 {
     public class TenderTests : BaseIntegrationTests
     {
+
         public TenderTests(TestDatabaseFactory<IntegrationAPI.Startup> databaseFactory) : base(databaseFactory)
         {
 
         }
+
         private static TenderController SetupController(IServiceScope scope)
         {
             return new TenderController(scope.ServiceProvider.GetRequiredService<ITenderService>());
+        }
+
+        [Fact]
+        public void TestCreateTender()
+        {
+            //Arange
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            List<IntegrationLibrary.Core.Model.ValueObject.Blood> bs = new List<IntegrationLibrary.Core.Model.ValueObject.Blood>();
+            bs.Add(new IntegrationLibrary.Core.Model.ValueObject.Blood(HospitalLibrary.Core.Enums.BloodType.A_POSITIVE, 1));
+
+            //Act
+            String retVal = controller.Create(new Tender(TenderStatus.Active, new DateRange(new DateTime(2022, 12, 3), new DateTime(2022, 12, 15)), bs));
+
+            //Assert
+            Assert.Equal("Success", retVal);
         }
 
         [Fact]

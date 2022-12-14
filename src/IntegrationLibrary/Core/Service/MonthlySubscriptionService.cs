@@ -10,10 +10,12 @@ namespace IntegrationLibrary.Core.Service;
 public class MonthlySubscriptionService : IMonthlySubscriptionService
 {
     private readonly IMonthlySubscriptionRepository _repository;
+    private readonly IEmailService emailService;
 
-    public MonthlySubscriptionService(IMonthlySubscriptionRepository repository)
+    public MonthlySubscriptionService(IMonthlySubscriptionRepository repository, IEmailService emailService)
     {
         _repository = repository;
+        this.emailService = emailService;
     }
 
     public IEnumerable<MonthlySubscription> GetAll()
@@ -47,24 +49,39 @@ public class MonthlySubscriptionService : IMonthlySubscriptionService
     public List<BloodDTO> GetBloodIfDelivered(MonthlySubscriptionDeliveryDTO subscriptionDeliveryDTO)
     {
         List<BloodDTO> bloodDTOs = new List<BloodDTO>();
+        MonthlySubscription monthlySubscription = _repository.GetById(subscriptionDeliveryDTO.hospitalSubscriptionId);
         if (subscriptionDeliveryDTO.delivered)
         {
-            MonthlySubscription monthlySubscription = _repository.GetById(subscriptionDeliveryDTO.hospitalSubscriptionId);
             if(monthlySubscription != null)
             {   
                 foreach(Blood blood in monthlySubscription.RequestedBlood)
                 {
-                    BloodDTO bloodDTO = new BloodDTO();
-                    bloodDTO.Type = Enum.GetName(blood.BloodType.GetType(), blood.BloodType);
-                    bloodDTO.Quantity = blood.Quantity;
-                    bloodDTO.Id = (int)blood.BloodType + 1;
-                    bloodDTOs.Add(bloodDTO);
+                    GetBloodListDTO(bloodDTOs, blood);
                 }
             }
         }else
         {
-
+            emailService.SendRejectMonthlyDeliveryEmail(monthlySubscription.DeliveryDate.ToString()); ;
         }
+        SetNextDeliveryDate(monthlySubscription);
         return bloodDTOs;
+    }
+
+    private void SetNextDeliveryDate(MonthlySubscription? monthlySubscription)
+    {
+        if(monthlySubscription != null)
+        {
+            monthlySubscription.SetNextDeliveryDate();
+            _repository.Update(monthlySubscription);
+        }
+    }
+
+    private static void GetBloodListDTO(List<BloodDTO> bloodDTOs, Blood blood)
+    {
+        BloodDTO bloodDTO = new BloodDTO();
+        bloodDTO.Type = Enum.GetName(blood.BloodType.GetType(), blood.BloodType);
+        bloodDTO.Quantity = blood.Quantity;
+        bloodDTO.Id = (int)blood.BloodType + 1;
+        bloodDTOs.Add(bloodDTO);
     }
 }

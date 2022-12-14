@@ -21,13 +21,24 @@ namespace IntegrationAPI.Controllers
 
         // POST: TenderController/Create
         [HttpPost]
-        public void Create(Tender tender)
+        public String Create(Tender tender)
         {
             if (!ModelState.IsValid)
             {
                 Console.WriteLine(ModelState);
             }
-            _service.Create(tender);
+
+            try
+            {
+                _service.Create(tender);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return "Error in creation";
+            }
+
+            return "Success";
         }
 
         // POST: TenderController/getAllForOffers
