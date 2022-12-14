@@ -5,6 +5,9 @@ using HospitalLibrary.GraphicalEditor.Model.DTO;
 using HospitalLibrary.GraphicalEditor.Model.Map;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
+using System;
+using System.Threading;
+using Org.BouncyCastle.Asn1.X500;
 
 namespace HospitalLibrary.GraphicalEditor.Service
 {
@@ -58,11 +61,17 @@ namespace HospitalLibrary.GraphicalEditor.Service
             oldRoom = GetById(dto.OldRoomId);
 
             SeparatedRoomsDTO newRooms = new SeparatedRoomsDTO();
-          
-            MapRoom firstRoom = new MapRoom(oldRoom.Map.X, oldRoom.Map.Y, (oldRoom.Map.X + oldRoom.Map.Width) / 2, oldRoom.Map.Height, "blue");
-            newRooms.FirstRoom = new Room(oldRoom.Id, Core.Enums.RoomType.OTHER, oldRoom.Number, dto.NewRoom1Name, firstRoom, oldRoom.FloorId, null);
-            MapRoom secondRoom = new MapRoom((oldRoom.Map.X + oldRoom.Map.Width) / 2, oldRoom.Map.Y, oldRoom.Map.X + oldRoom.Map.Width,oldRoom.Map.Height, "blue");
-            newRooms.SecondRoom = new Room(oldRoom.Id + 100, Core.Enums.RoomType.OPERATIONS, oldRoom.Number + "a", dto.NewRoom2Name, secondRoom, oldRoom.FloorId, null);
+
+            Random rnd = new Random();
+            MapRoom firstRoom = new MapRoom(oldRoom.Map.X, oldRoom.Map.Y, oldRoom.Map.Width / 2, oldRoom.Map.Height, "blue");
+            newRooms.FirstRoom = new Room(rnd.Next(30, 3000), Core.Enums.RoomType.OTHER, oldRoom.Number, dto.NewRoom1Name, firstRoom, oldRoom.FloorId, null);
+            MapRoom secondRoom = new MapRoom(oldRoom.Map.X , oldRoom.Map.Y + oldRoom.Map.Width / 2, oldRoom.Map.Width / 2,oldRoom.Map.Height, "blue");
+            newRooms.SecondRoom = new Room(rnd.Next(30, 3000), Core.Enums.RoomType.OPERATIONS, oldRoom.Number + "a", dto.NewRoom2Name, secondRoom, oldRoom.FloorId, null);
+
+           
+            _roomRepository.Create(newRooms.FirstRoom);
+            _roomRepository.Create(newRooms.SecondRoom);
+            _roomRepository.Delete(oldRoom);
 
             return newRooms;
         }
@@ -71,6 +80,7 @@ namespace HospitalLibrary.GraphicalEditor.Service
         {
             Room oldRoom1 = new Room();
             Room oldRoom2 = new Room();
+            Random rnd = new Random();
 
             oldRoom1 = GetById(dto.OldRoom1Id);
             oldRoom2 = GetById(dto.OldRoom2Id);
@@ -78,7 +88,11 @@ namespace HospitalLibrary.GraphicalEditor.Service
             MergedRoomDTO newRoom = new MergedRoomDTO();
 
             MapRoom mergedRoomMap = new MapRoom(oldRoom1.Map.X, oldRoom1.Map.Y, oldRoom1.Map.Width + oldRoom2.Map.Width, (oldRoom1.Map.Height + oldRoom2.Map.Height) / 2, "blue");
-            newRoom.Room = new Room(oldRoom1.Id, Core.Enums.RoomType.OTHER, oldRoom1.Number, dto.NewRoomName, mergedRoomMap, oldRoom1.FloorId, null);
+            newRoom.Room = new Room(rnd.Next(30, 300), Core.Enums.RoomType.OTHER, oldRoom1.Number, dto.NewRoomName, mergedRoomMap, oldRoom1.FloorId, null);
+
+            _roomRepository.Create(newRoom.Room);
+            _roomRepository.Delete(oldRoom1);
+            _roomRepository.Delete(oldRoom2);
 
             return newRoom;
         }

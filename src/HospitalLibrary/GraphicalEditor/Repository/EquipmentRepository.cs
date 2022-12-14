@@ -37,7 +37,8 @@ namespace HospitalLibrary.GraphicalEditor.Repository
 
         public Equipment GetEquipmentByRoomIdAndName(int roomId, string name)
         {
-            return (Equipment)_context.Equipments.Where(f => (f.RoomId == roomId && f.Name == name));
+            return _context.Equipments.Where(f => (f.RoomId == roomId && f.Name == name)).FirstOrDefault<Equipment>();
+          //  return _context.Rooms.Include(r => r.Beds).Where(r => r.Id == id).FirstOrDefault<Room>();
         }
        
         public void Create(Equipment equip)
