@@ -23,6 +23,8 @@ namespace HospitalLibrary.GraphicalEditor.Model.DTO
 
         public string EquipmentName { get; set; }
 
+
+        public EquipmentTransferDTO() { }
         public EquipmentTransferDTO(int amount, int fromRoomId, int toRoomId, DateTime startDate, DateTime endDate, int duration, string equipmentName)
         {
             Amount = amount;
