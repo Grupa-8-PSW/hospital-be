@@ -10,4 +10,5 @@ public interface IConsiliumService
     Task<bool> UpdateConsilium(Consilium consilium);
     Task<bool> DeleteConsilium(int id);
     Task<List<Consilium>> GetAllIncludeDoctors();
+    Task<Consilium?> CreateConsiliumByRequest(ConsiliumRequest consiliumRequest);
 }
