@@ -21,6 +21,8 @@ using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibraryAPI.Connections;
 using Newtonsoft.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
+using IntegrationAPI.ExceptionHandler.Exceptions;
+using IntegrationAPI.Middlewares;
 
 namespace IntegrationAPI.Connections
 {
@@ -164,8 +166,7 @@ namespace IntegrationAPI.Connections
             var bloodBanks = _bankService.GetAll();
             foreach (var bloodBank in bloodBanks)
             {
-                RestClient restClient =
-                    BloodBankConnectionValidator.ValidateURL(bloodBank.ServerAddress + api);
+                RestClient restClient = BloodBankConnectionValidator.ValidateURL(bloodBank.ServerAddress + api);
                 RestRequest request = new RestRequest();
                 request.AddParameter("url", url);
                 request.AddHeader("apiKey", bloodBank.APIKey);
@@ -197,10 +198,11 @@ namespace IntegrationAPI.Connections
                 Console.WriteLine(e);
             }
             bool hasEnoughBlood =  JsonSerializer.Deserialize<bool>(Boolean.Parse(res.Content));
+
             if (hasEnoughBlood)
-            {
-                _hospitalHttpConnection.RestockBlood(urgentRequest.bloodUnits);
-            }
+               _hospitalHttpConnection.RestockBlood(urgentRequest.bloodUnits);
+            else
+               Console.WriteLine("The blood bank does not have enough blood !");
 
         }
 
