@@ -37,7 +37,7 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok(_mapper.Map<List<AvailableAppointmentsDTO>>(availableAppointments));
         }
 
-        [HttpGet("/available/doctor-date")]
+        [HttpGet("available/doctor-date")]
         public ActionResult<AvailableAppointmentsDTO> GetAvailableAppointmentsByDateDoctor(
             [FromQuery] DateTime date,
             [FromQuery] int doctorId)
