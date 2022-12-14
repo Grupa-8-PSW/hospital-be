@@ -2,7 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
-namespace HospitalTests.HospitalE2ETests.Pages;
+namespace HospitalTests.HospitalE2ETests.Pages.Intern;
 
 public class LoginPage
 {

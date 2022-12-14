@@ -42,11 +42,11 @@ namespace HospitalLibrary.Core.Service
         {
             var availableAppointments = new List<AvailableAppointments>();
             var doctorsAvailableAppointments = GetAvailableAppointments(dateRange, doctorId);
-            /*if (doctorsAvailableAppointments.Slots.Count != 0)
+            if (doctorsAvailableAppointments.Slots.Count != 0)
             {
                 availableAppointments.Add(doctorsAvailableAppointments);
                 return availableAppointments;
-            }*/
+            }
             return ApplyAppointmentPriority(dateRange, doctorId, priority);
         }
 
