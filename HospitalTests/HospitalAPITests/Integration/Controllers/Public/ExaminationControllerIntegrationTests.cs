@@ -20,7 +20,7 @@ namespace HospitalTests.HospitalAPITests.Integration.Controllers.Public
 
         private static ExaminationController SetupController(IServiceScope scope)
         {
-            return new ExaminationController(scope.ServiceProvider.GetRequiredService<IMapper>(), scope.ServiceProvider.GetRequiredService<IExaminationService>(), scope.ServiceProvider.GetRequiredService<IDoctorService>(), scope.ServiceProvider.GetRequiredService<IPatientService>());
+            return new ExaminationController(scope.ServiceProvider.GetRequiredService<IMapper>(), scope.ServiceProvider.GetRequiredService<IExaminationService>(), scope.ServiceProvider.GetRequiredService<IDoctorService>(), scope.ServiceProvider.GetRequiredService<IPatientService>(), scope.ServiceProvider.GetRequiredService<IAppointmentService>());
         }
 
         [Fact]

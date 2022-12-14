@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HospitalAPI.DTO;
 using HospitalAPI.Security;
 using HospitalAPI.Web.Dto;
 using HospitalLibrary.Core.Model;
