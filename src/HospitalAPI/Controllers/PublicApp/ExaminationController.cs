@@ -20,11 +20,13 @@ namespace HospitalAPI.Controllers.PublicApp
         public ExaminationController(
             IMapper mapper,
             IExaminationService examinationService,
-            IDoctorService doctorService)
+            IDoctorService doctorService,
+            IPatientService patientService)
         {
             _mapper = mapper;
             _examinationService = examinationService;
             _doctorService = doctorService;
+            _patientService = patientService;
         }
 
         [HttpPost]
