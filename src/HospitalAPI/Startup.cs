@@ -152,6 +152,8 @@ namespace HospitalAPI
             services.AddScoped<IResponseMapper<Consilium, ConsiliumResponse>, ConsiliumResponseMapper>();
             services.AddScoped<IResponseMapper<Doctor, ConsiliumDoctorResponse>, ConsiliumDoctorResponseMapper>();
 
+            services.AddScoped<IMapper<ConsiliumRequest, ConsiliumRequestDTO>>();
+
             services.AddCors(options =>
             {
                 options.AddPolicy(name: "InternAllow",
