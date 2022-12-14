@@ -14,7 +14,7 @@ namespace IntegrationAPI.Mapper
             MonthlySubscriptionDTO monthlySubscriptionDTO = new MonthlySubscriptionDTO();
             monthlySubscriptionDTO.BloodBankAPIKey = monthlySubscription.Bank.APIKey;
             List<BloodDTO> bloodDTOList = new List<BloodDTO>();
-            foreach(IntegrationLibrary.Core.Model.Blood blood in monthlySubscription.RequestedBlood)
+            foreach(IntegrationLibrary.Core.Model.ValueObject.Blood blood in monthlySubscription.RequestedBlood)
             {
                 BloodDTO bloodDTO = new BloodDTO();
                 BloodType bloodType = blood.BloodType;
@@ -22,8 +22,9 @@ namespace IntegrationAPI.Mapper
                 bloodDTO.Quantity = blood.Quantity;
                 bloodDTOList.Add(bloodDTO);
             }
+            monthlySubscriptionDTO.HospitalSubscriptionId = monthlySubscription.Id;
             monthlySubscriptionDTO.RequestedBlood = bloodDTOList;
-            monthlySubscriptionDTO.DeliveryDate = monthlySubscription.DeliveryDate;
+            monthlySubscriptionDTO.DeliveryDate = monthlySubscription.DeliveryDate.ToString("dd/MM/yyyy");
             return monthlySubscriptionDTO;
         }
     }

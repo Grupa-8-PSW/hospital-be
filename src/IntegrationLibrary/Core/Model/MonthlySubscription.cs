@@ -4,17 +4,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IntegrationLibrary.Core.Model.ValueObject;
 
 namespace IntegrationLibrary.Core.Model
 {
     public class MonthlySubscription
     {
-        public int Id { get; set; }
-        public List<Blood> RequestedBlood { get; set; }
-        public DateTime DeliveryDate { get; set; }
-        public BloodBank Bank { get; set; }
-        public int BankId { get; set; }
-        public SubscriptionStatus Status { get; set; }
+        public int Id { get; private set; }
+        public List<Blood> RequestedBlood { get; private set; }
+        public DateTime DeliveryDate { get; private set; }
+        public BloodBank Bank { get; private set; }
+        public int BankId { get; private set; }
+        public SubscriptionStatus Status { get; private set; }
 
         public MonthlySubscription(List<Blood> requestedBlood, DateTime deliveryDate, BloodBank bank, int bankId, SubscriptionStatus status)
         {
@@ -29,6 +30,15 @@ namespace IntegrationLibrary.Core.Model
         {
                 
         }
-        
+
+        internal void ChangeStatus(SubscriptionStatus status)
+        {
+            this.Status = status;
+        }
+
+        public void AddBank(BloodBank bloodBank)
+        {
+            this.Bank = bloodBank;
+        }
     }
 }

@@ -21,7 +21,7 @@ namespace IntegrationLibrary.Persistence
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<BloodBank>().HasData(
-                new BloodBank() { Id = 1, Email = "test@test.com", Name = "bloodBank", ServerAddress = "htttp://localhost:8081/", APIKey="123" }
+                new BloodBank() { Id = 1, Email = "test@test.com", Name = "bloodBank", ServerAddress = "htttp://localhost:8081/", APIKey="123", MonthlySubscriptionRoutingKey= "monthlySubscriptionsRoutingKey29"}
             );
 
             modelBuilder.Entity<TenderOffer>()

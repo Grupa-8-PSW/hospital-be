@@ -25,14 +25,15 @@ namespace IntegrationAPI.Controllers
         [HttpPost]
         public void Create(MonthlySubscription subscription)
         {
-            subscription.Bank = _bankService.GetById(subscription.BankId); 
+            subscription.AddBank(_bankService.GetById(subscription.BankId)); 
             if (!ModelState.IsValid)
             {
                 Console.WriteLine(ModelState);
             }
             _service.Create(subscription);
-            MonthlySubscriptionDTO monthlySubscriptionDTO = MonthlySubscriptionMapper.ToDTO(subscription);
-            _bloodBankConnectionService.SendMonthlySubscriptionOffer(monthlySubscriptionDTO);
+            MonthlySubscription created = _service.GetLast();
+            MonthlySubscriptionDTO monthlySubscriptionDTO = MonthlySubscriptionMapper.ToDTO(created);
+            _bloodBankConnectionService.SendMonthlySubscriptionOffer(monthlySubscriptionDTO, subscription.Bank.MonthlySubscriptionRoutingKey);
         }
 
         [HttpGet]

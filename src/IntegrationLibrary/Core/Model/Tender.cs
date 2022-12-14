@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IntegrationLibrary.Core.Model.ValueObject;
 
 namespace IntegrationLibrary.Core.Model
 {

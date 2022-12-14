@@ -204,7 +204,7 @@ namespace IntegrationLibrary.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<List<BloodOffer>>("Offers")
+                    b.Property<List<Blood>>("Offers")
                         .IsRequired()
                         .HasColumnType("jsonb");
 

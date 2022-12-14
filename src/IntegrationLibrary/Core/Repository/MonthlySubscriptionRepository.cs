@@ -22,4 +22,20 @@ public class MonthlySubscriptionRepository : IMonthlySubscriptionRepository
     {
         return _context.MonthlySubscription.ToList();
     }
+
+    public MonthlySubscription GetById(int id)
+    {
+        return _context.MonthlySubscription.Find(id);
+    }
+
+    public MonthlySubscription GetLast()
+    {
+        return _context.MonthlySubscription.OrderBy(x => x.Id).Last();
+    }
+
+    public void Update(MonthlySubscription monthlySubscription)
+    {
+        _context.MonthlySubscription.Update(monthlySubscription);
+        _context.SaveChanges();
+    }
 }

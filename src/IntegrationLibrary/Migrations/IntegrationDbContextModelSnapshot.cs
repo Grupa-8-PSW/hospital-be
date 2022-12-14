@@ -41,6 +41,10 @@ namespace IntegrationLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("MonthlySubscriptionRoutingKey")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -63,6 +67,7 @@ namespace IntegrationLibrary.Migrations
                             Id = 1,
                             APIKey = "123",
                             Email = "test@test.com",
+                            MonthlySubscriptionRoutingKey = "monthlySubscriptionsRoutingKey29",
                             Name = "bloodBank",
                             Password = "unknown",
                             ServerAddress = "htttp://localhost:8081/"
@@ -206,7 +211,7 @@ namespace IntegrationLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<List<BloodOffer>>("Offers")
+                    b.Property<List<Blood>>("Offers")
                         .IsRequired()
                         .HasColumnType("jsonb");
 

@@ -49,8 +49,8 @@ namespace IntegrationTests.IntegrationAPITests.IntegrationTests
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            List<IntegrationLibrary.Core.Model.Blood> bs = new List<IntegrationLibrary.Core.Model.Blood>();
-            bs.Add(new IntegrationLibrary.Core.Model.Blood(HospitalLibrary.Core.Enums.BloodType.A_POSITIVE, 1));
+            List<IntegrationLibrary.Core.Model.ValueObject.Blood> bs = new List<IntegrationLibrary.Core.Model.ValueObject.Blood>();
+            bs.Add(new IntegrationLibrary.Core.Model.ValueObject.Blood(HospitalLibrary.Core.Enums.BloodType.A_POSITIVE, 1));
 
             controller.Create(new Tender(TenderStatus.Active, new DateRange(new DateTime(2022, 12, 3), new DateTime(2022, 12, 15)), bs));
             controller.Create(new Tender(TenderStatus.Active, new DateRange(new DateTime(2022, 12, 3), new DateTime(2022, 12, 15)), bs));

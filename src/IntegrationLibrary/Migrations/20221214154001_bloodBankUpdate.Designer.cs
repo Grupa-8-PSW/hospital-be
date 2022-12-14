@@ -15,8 +15,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221212183616_testna")]
-    partial class testna
+    [Migration("20221214154001_bloodBankUpdate")]
+    partial class bloodBankUpdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,6 +43,10 @@ namespace IntegrationLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("MonthlySubscriptionRoutingKey")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -63,9 +67,10 @@ namespace IntegrationLibrary.Migrations
                         new
                         {
                             Id = 1,
-                            APIKey = "unknown",
+                            APIKey = "123",
                             Email = "test@test.com",
-                            Name = "testName",
+                            MonthlySubscriptionRoutingKey = "monthlySubscriptionsRoutingKey29",
+                            Name = "bloodBank",
                             Password = "unknown",
                             ServerAddress = "htttp://localhost:8081/"
                         });
@@ -204,11 +209,18 @@ namespace IntegrationLibrary.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<List<BloodOffer>>("Offers")
+                    b.Property<string>("BloodBankName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<List<Blood>>("Offers")
                         .IsRequired()
                         .HasColumnType("jsonb");
 
                     b.Property<int>("TenderID")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TenderOfferStatus")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");

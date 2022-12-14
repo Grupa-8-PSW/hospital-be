@@ -76,9 +76,10 @@ namespace IntegrationLibrary.Core.Service
             return true;
         }
 
-        public void SendMonthlySubscriptionOffer(MonthlySubscriptionDTO monthlySubscriptionDTO)
+        public void SendMonthlySubscriptionOffer(MonthlySubscriptionDTO monthlySubscriptionDTO, string routingKey)
         {
-            _hospitalRabbitMqPublisher.SendMonthlySubscriptionOffer(monthlySubscriptionDTO);
+
+            _hospitalRabbitMqPublisher.SendMonthlySubscriptionOffer(monthlySubscriptionDTO, routingKey);
         }
     }
 }

@@ -86,6 +86,8 @@ namespace IntegrationAPI
                 .AddScheme<AuthenticationSchemeOptions, AuthHandler>("Default", null);
             services.AddAuthorization();
 
+
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

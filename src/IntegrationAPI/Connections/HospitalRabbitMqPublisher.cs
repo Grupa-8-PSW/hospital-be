@@ -27,16 +27,22 @@ namespace IntegrationAPI.Connections
             }
         }
 
-        public void SendMonthlySubscriptionOffer(MonthlySubscriptionDTO monthlySubscriptionDTO)
+        public void SendMonthlySubscriptionOffer(MonthlySubscriptionDTO monthlySubscriptionDTO, string routingKey)
         {
             var factory = new ConnectionFactory() { HostName = "localhost" };
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
+                channel.QueueDeclare(queue: routingKey,
+                                      durable: false,
+                                      exclusive: false,
+                                      autoDelete: false,
+                                      arguments: null);
+
                 var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(monthlySubscriptionDTO));
 
                 channel.BasicPublish(exchange: "",
-                                     routingKey: "monthlySubscriptonsRoutingKey29",
+                                     routingKey: routingKey,
                                      basicProperties: null,
                                      body: body);
             }

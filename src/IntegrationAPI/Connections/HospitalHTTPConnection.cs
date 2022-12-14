@@ -97,6 +97,17 @@ namespace IntegrationAPI.Connections
             RestResponse response = client.Execute(request);
         }
 
+        public BloodUnitRequestDTO GetBloodRequestById(int id)
+        {
+            var client = new RestClient("http://localhost:5174");
+            var request = new RestRequest("/api/internal/BloodUnitRequest/" + id, Method.Get);
+
+
+            RestResponse response = client.Get(request);
+
+            BloodUnitRequestDTO result = JsonConvert.DeserializeObject<BloodUnitRequestDTO>(response.Content);
+            return result;
+        }
     }
 }
 

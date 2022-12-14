@@ -26,7 +26,7 @@ namespace IntegrationLibrary.Core.Service
 
         }
 
-        public void SendEmail(string emailBB, string password, string API)
+        public async void SendEmail(string emailBB, string password, string API)
         {
             var email = new MimeMessage();
             GenerateEmail(email, emailBB,  password,  API);
@@ -45,19 +45,19 @@ namespace IntegrationLibrary.Core.Service
             email.Body = new TextPart(TextFormat.Html) { Text = template.ToString() };
         }
 
-        public void SendSuccessEmail(string emailBB, int tenderId, string APIKey)
+        public async void SendSuccessEmail(string emailBB, int tenderId, string APIKey)
         {
             var successEmail = new MimeMessage();
             GenerateSuccessTenderEmail(successEmail, emailBB, tenderId, APIKey);
             SmtpClient smtp = SetupSmtpClient(successEmail);
         }
 
-        public void SendRejectEmail(string emailBB)
+        public async void SendRejectEmail(string emailBB)
         {
 
             var rejectEmail = new MimeMessage();
             GenerateRejectTenderEmail(rejectEmail, emailBB);
-            SmtpClient smtp = SetupSmtpClient(rejectEmail);
+            SmtpClient smtp =  SetupSmtpClient(rejectEmail);
         }
 
         private SmtpClient SetupSmtpClient(MimeMessage successEmail)

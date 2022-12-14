@@ -11,8 +11,8 @@ namespace IntegrationLibrary.Core.Model.DTO
     {
 
         public List<BloodDTO> RequestedBlood { get; set; }
-        public string HospitalSubscriptionId { get; set; }
-        public DateTime DeliveryDate { get; set; }
+        public int HospitalSubscriptionId { get; set; }
+        public string DeliveryDate { get; set; }
         public string BloodBankAPIKey { get; set; }
 
         public MonthlySubscriptionDTO()
