@@ -1,6 +1,7 @@
 ﻿using HospitalLibrary.Core.Model;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.DTO;
+using Microsoft.JSInterop.Infrastructure;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
@@ -33,15 +34,16 @@ namespace IntegrationAPI.Mapper
 
         public BloodBankNews toModel(BloodBankNewsDTO dto)
         {
-            BloodBankNews bloodBankNews = new BloodBankNews();
-            bloodBankNews.Id = dto.Id;
-            bloodBankNews.BloodBankId = dto.BloodBankId;
-            bloodBankNews.Published = dto.Published;
-            bloodBankNews.Archived = dto.Published;
-            bloodBankNews.Subject = dto.Subject;
-            bloodBankNews.Text = dto.Text;
-            bloodBankNews.ImgSrc = dto.ImgSrc;
-            bloodBankNews.BloodBank = dto.BloodBank;
+            BloodBankNews bloodBankNews = new BloodBankNews(
+                dto.Text,
+                dto.Subject,
+                dto.Id,
+                dto.ImgSrc,
+                dto.Published,
+                dto.Archived,
+                dto.BloodBank,
+                dto.BloodBankId
+                );
             return bloodBankNews;
 
         }

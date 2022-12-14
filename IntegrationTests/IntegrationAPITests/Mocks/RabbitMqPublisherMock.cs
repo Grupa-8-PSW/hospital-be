@@ -17,7 +17,7 @@ namespace IntegrationTests.IntegrationAPITests.Mocks
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
-                channel.QueueDeclare(queue: "news",
+                channel.QueueDeclare(queue: "hospitalQueue",
                                       durable: false,
                                       exclusive: false,
                                       autoDelete: false,
@@ -25,7 +25,7 @@ namespace IntegrationTests.IntegrationAPITests.Mocks
                 var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
                 
                 channel.BasicPublish(exchange: "",
-                                     routingKey: "news",
+                                     routingKey: "hospitalQueue",
                                      basicProperties: null,
                                      body: body);
             }

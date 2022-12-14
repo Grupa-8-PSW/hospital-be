@@ -14,7 +14,7 @@ namespace IntegrationAPI
                 .UseWindowsService()
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddHostedService<BloodBankHTTPConnection>();
+                    //services.AddHostedService<BloodBankHTTPConnection>();
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

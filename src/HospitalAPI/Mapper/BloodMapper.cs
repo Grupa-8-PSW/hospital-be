@@ -4,6 +4,7 @@ using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Model;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Collections.ObjectModel;
+using HospitalLibrary.Core.Enums;
 
 namespace HospitalAPI.Mapper
 {
@@ -28,10 +29,21 @@ namespace HospitalAPI.Mapper
 
         public Blood toModel(BloodDTO dto)
         {
-            var blood = new Blood();
-            blood.Id = dto.Id;
+            Blood blood = new Blood();
+            if (dto.Id != null)
+            {
+                blood.Id = dto.Id;
+            }
+
+            BloodType bloodType;
+            if (!Enum.TryParse<BloodType>(dto.Type, out bloodType))
+            {
+                return null;
+            }
+
+            blood.Type = bloodType;
             blood.Quantity = dto.Quantity;
-            blood.Type = Enum.Parse<BloodType>(dto.Type);
+
             return blood;
         }
 

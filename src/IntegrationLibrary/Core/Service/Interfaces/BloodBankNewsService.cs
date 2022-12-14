@@ -22,13 +22,13 @@ namespace IntegrationLibrary.Core.Service.Interfaces
 
         public void ArchiveNews(BloodBankNews bloodBankNews)
         {
-            bloodBankNews.Archived = true;
+            bloodBankNews.ArchiveNews();
             bloodBankNewsRepository.Update(bloodBankNews);
         }
 
         public void PublishNews(BloodBankNews bloodBankNews)
         {
-            bloodBankNews.Published = true;
+            bloodBankNews.PublishNews();
             bloodBankNewsRepository.Update(bloodBankNews);
         }
 

@@ -1,6 +1,7 @@
 ﻿using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace IntegrationLibrary.Core.Repository
 {
@@ -39,6 +40,11 @@ namespace IntegrationLibrary.Core.Repository
         {
             _context.BloodBanks.Remove(bloodBank);
             _context.SaveChanges();
+        }
+
+        public BloodBank getByName(string bloodBankName)
+        {
+            return _context.BloodBanks.FirstOrDefault(b => b.Name == bloodBankName);
         }
     }
 }
