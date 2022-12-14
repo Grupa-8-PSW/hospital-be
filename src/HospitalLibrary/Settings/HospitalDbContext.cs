@@ -59,6 +59,8 @@ namespace HospitalLibrary.Settings
             modelBuilder.SeedTherapy();
             modelBuilder.SeedAllergen();
             modelBuilder.SeedSymptoms();
+            modelBuilder.SeedExamination();
+
 
             base.OnModelCreating(modelBuilder);
 

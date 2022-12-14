@@ -41,5 +41,18 @@ namespace HospitalTests.HospitalAPITests.Integration
             Assert.NotNull(result);
             Assert.IsType<ExaminationDoneDTO>(result);
         }
+
+        [Fact]
+        public void Get_all_symptoms_from_database()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = ((OkObjectResult)controller.GetAllSymptoms())?.Value as List<Symptom>;
+
+            Assert.NotNull(result);
+            Assert.IsType<List<Symptom>>(result);
+            Assert.NotEmpty(result);
+        }
     }
 }
