@@ -7,10 +7,10 @@ namespace HospitalAPI.DTO
     {
         public int? Id { get; set; }
         public int ExaminationId { get; set; }
-        public ExaminationDTO ExaminationDTO { get; set; } 
+        public ExaminationDTO? ExaminationDTO { get; set; } 
         public List<Symptom> Symptoms { get; set; }
         public string Record { get; set; }
-        public List<Prescription> Prescriptions { get; set; }    //dto?
+        public List<Prescription>? Prescriptions { get; set; }    //dto?
 
         public ExaminationDoneDTO()
         {
@@ -24,6 +24,14 @@ namespace HospitalAPI.DTO
             Symptoms = symptoms;
             Record = record;
             Prescriptions = prescriptions;
+        }
+
+        public ExaminationDoneDTO(int? id, int examinationId, List<Symptom> symptoms, string record)
+        {
+            Id = id;
+            ExaminationId = examinationId;
+            Symptoms = symptoms;
+            Record = record;
         }
     }
 }
