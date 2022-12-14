@@ -47,7 +47,7 @@ namespace IntegrationLibrary.Core.Service
         public Tender UpdateStatus(int tenderID)
         {
             Tender tender = _tenderRepository.GetById(tenderID);
-            tender.Status = TenderStatus.Inactive;
+            tender.EndTenderLifeCycle();
             _tenderRepository.Update(tender);
             return tender;
         }
