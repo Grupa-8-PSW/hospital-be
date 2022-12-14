@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -219,7 +219,7 @@ namespace HospitalLibrary.Migrations
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
-                    Pin = table.Column<string>(type: "text", nullable: false),
+                    Pin_Value = table.Column<string>(type: "text", nullable: false),
                     Gender = table.Column<int>(type: "integer", nullable: false),
                     BloodType = table.Column<int>(type: "integer", nullable: false),
                     AddressId = table.Column<int>(type: "integer", nullable: false),
@@ -777,13 +777,13 @@ namespace HospitalLibrary.Migrations
 
             migrationBuilder.InsertData(
                 table: "Patients",
-                columns: new[] { "Id", "AddressId", "BloodType", "Email", "FirstName", "Gender", "LastName", "Pin", "SelectedDoctorId", "UserId" },
+                columns: new[] { "Id", "AddressId", "BloodType", "Email", "FirstName", "Gender", "LastName", "SelectedDoctorId", "UserId", "Pin_Value" },
                 values: new object[,]
                 {
-                    { 1, 1, 0, "peraperic@gmail.com", "Pera", 0, "Peric", "2201000120492", 1, 1 },
-                    { 2, 2, 7, "markomarkovic@gmail.com", "Marko", 0, "Markovic", "1412995012451", 2, 1 },
-                    { 3, 3, 5, "dusanbaljinac@gmail.com", "Dusan", 0, "Baljinac", "2008004124293", 1, 1 },
-                    { 4, 4, 3, "slobodanradulovic@gmail.com", "Slobodan", 0, "Radulovic", "1111978020204", 2, 1 }
+                    { 1, 1, 0, "peraperic@gmail.com", "Pera", 0, "Peric", 1, 2, "2201000120492" },
+                    { 2, 2, 7, "markomarkovic@gmail.com", "Marko", 0, "Markovic", 2, 3, "1412995012451" },
+                    { 3, 3, 5, "dusanbaljinac@gmail.com", "Dusan", 0, "Baljinac", 1, 4, "2008004124293" },
+                    { 4, 4, 3, "slobodanradulovic@gmail.com", "Slobodan", 0, "Radulovic", 2, 5, "1111978020204" }
                 });
 
             migrationBuilder.InsertData(
@@ -812,12 +812,12 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "Id", "Active", "BedId", "DischargeReason", "EndDate", "PatientId", "Reason", "RoomId", "StartDate" },
                 values: new object[,]
                 {
-                    { 1, false, 1, "abc", new DateTime(2022, 12, 14, 18, 23, 23, 710, DateTimeKind.Utc).AddTicks(9607), 1, "reason1", 1, new DateTime(2022, 12, 14, 18, 23, 23, 710, DateTimeKind.Utc).AddTicks(9607) },
-                    { 2, false, 2, "abc", new DateTime(2022, 12, 14, 18, 23, 23, 710, DateTimeKind.Utc).AddTicks(9610), 2, "reason2", 1, new DateTime(2022, 12, 14, 18, 23, 23, 710, DateTimeKind.Utc).AddTicks(9610) },
-                    { 3, false, 4, "abc", new DateTime(2022, 12, 14, 18, 23, 23, 710, DateTimeKind.Utc).AddTicks(9612), 3, "reason3", 2, new DateTime(2022, 12, 14, 18, 23, 23, 710, DateTimeKind.Utc).AddTicks(9611) },
-                    { 4, true, 1, "abc", null, 1, "reason1", 1, new DateTime(2022, 12, 14, 18, 23, 23, 710, DateTimeKind.Utc).AddTicks(9612) },
-                    { 5, true, 2, "abc", null, 2, "reason2", 1, new DateTime(2022, 12, 14, 18, 23, 23, 710, DateTimeKind.Utc).AddTicks(9613) },
-                    { 6, true, 4, "abc", null, 3, "reason3", 2, new DateTime(2022, 12, 14, 18, 23, 23, 710, DateTimeKind.Utc).AddTicks(9614) }
+                    { 1, false, 1, "abc", new DateTime(2022, 12, 14, 19, 4, 36, 835, DateTimeKind.Utc).AddTicks(7154), 1, "reason1", 1, new DateTime(2022, 12, 14, 19, 4, 36, 835, DateTimeKind.Utc).AddTicks(7153) },
+                    { 2, false, 2, "abc", new DateTime(2022, 12, 14, 19, 4, 36, 835, DateTimeKind.Utc).AddTicks(7199), 2, "reason2", 1, new DateTime(2022, 12, 14, 19, 4, 36, 835, DateTimeKind.Utc).AddTicks(7198) },
+                    { 3, false, 4, "abc", new DateTime(2022, 12, 14, 19, 4, 36, 835, DateTimeKind.Utc).AddTicks(7201), 3, "reason3", 2, new DateTime(2022, 12, 14, 19, 4, 36, 835, DateTimeKind.Utc).AddTicks(7201) },
+                    { 4, true, 1, "abc", null, 1, "reason1", 1, new DateTime(2022, 12, 14, 19, 4, 36, 835, DateTimeKind.Utc).AddTicks(7202) },
+                    { 5, true, 2, "abc", null, 2, "reason2", 1, new DateTime(2022, 12, 14, 19, 4, 36, 835, DateTimeKind.Utc).AddTicks(7203) },
+                    { 6, true, 4, "abc", null, 3, "reason3", 2, new DateTime(2022, 12, 14, 19, 4, 36, 835, DateTimeKind.Utc).AddTicks(7203) }
                 });
 
             migrationBuilder.InsertData(
@@ -825,8 +825,8 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "Id", "Amount", "DoctorId", "Reason", "TherapySubject", "TherapyType", "TreatmentHistoryId", "WhenPrescribed" },
                 values: new object[,]
                 {
-                    { 1, 1, 1, "Headache", "Bromazepam 500mg", 0, 1, new DateTime(2022, 12, 14, 18, 23, 23, 710, DateTimeKind.Utc).AddTicks(9647) },
-                    { 2, 1, 2, "Blood loss", "A+ 500ml", 1, 1, new DateTime(2022, 12, 14, 18, 23, 23, 710, DateTimeKind.Utc).AddTicks(9650) }
+                    { 1, 1, 1, "Headache", "Bromazepam 500mg", 0, 1, new DateTime(2022, 12, 14, 19, 4, 36, 835, DateTimeKind.Utc).AddTicks(7226) },
+                    { 2, 1, 2, "Blood loss", "A+ 500ml", 1, 1, new DateTime(2022, 12, 14, 19, 4, 36, 835, DateTimeKind.Utc).AddTicks(7228) }
                 });
 
             migrationBuilder.CreateIndex(

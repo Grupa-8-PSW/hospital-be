@@ -2,7 +2,7 @@
 
 namespace HospitalAPI.DTO
 {
-    public class AppointmentDTO
+    public class ViewExaminationDTO
     {
         public int Id { get; set; }
         public DateTime StartTime { get; set; }

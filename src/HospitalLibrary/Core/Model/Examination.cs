@@ -31,5 +31,14 @@ namespace HospitalLibrary.Core.Model
             Status = status;
         }
 
+        public Examination(int id, int doctorId, int patientId, int roomId, DateRange dateRange, ExaminationStatus status = ExaminationStatus.UPCOMING)
+        {
+            Id = id;
+            DoctorId = doctorId;
+            PatientId = patientId;
+            RoomId = roomId;
+            DateRange = dateRange;
+            Status = status;
+        }
     }
 }

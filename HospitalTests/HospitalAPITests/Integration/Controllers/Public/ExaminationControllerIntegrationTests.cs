@@ -1,78 +1,67 @@
-﻿using AngleSharp.Css;
-using AutoMapper;
-using HospitalAPI;
+﻿using HospitalAPI.Controllers.InternalApp;
 using HospitalAPI.Controllers.PublicApp;
 using HospitalAPI.DTO;
-using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Service;
 using HospitalTests.HospitalAPITests.Setup;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using AutoMapper;
+using HospitalAPI;
 using Shouldly;
+using Castle.Core.Resource;
+using Newtonsoft.Json;
+using HospitalLibrary.Core.Model;
 
 namespace HospitalTests.HospitalAPITests.Integration.Controllers.Public
 {
     public class ExaminationControllerIntegrationTests : BaseIntegrationTest
     {
-        public ExaminationControllerIntegrationTests(TestDatabaseFactory<Startup> factory) : base(factory)
+        public ExaminationControllerIntegrationTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
+
+        private static ExaminationController SetupController(IServiceScope scope)
         {
+            return new ExaminationController(scope.ServiceProvider.GetRequiredService<IMapper>(), scope.ServiceProvider.GetRequiredService<IExaminationService>());
         }
 
-        [Theory]
-        [MemberData(nameof(GetRecommendedExaminationTimeTestData))]
-        public void GetRecommendedExaminationTime_ReturnsDataRangeList(
-            DateTime from,
-            DateTime to,
-            int doctorId,
-            AppointmentPriority priority)
+        [Fact]
+        public void Retrieves_examinations()
         {
-            // Arange
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            // Act
-            var result = controller.GetRecommendedExaminationTime(from, to, doctorId, priority);
+            var result = controller.GetExaminationsForPatient();
 
-            // Assert
-            result.Result.ShouldBeOfType(typeof(OkObjectResult));
-            ((OkObjectResult)result.Result).Value.ShouldBeOfType(typeof(List<AvailableAppointmentsDTO>));
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType(typeof(OkObjectResult));
+            ((OkObjectResult)result).Value.ShouldBeOfType(typeof(List<ViewExaminationDTO>));
         }
 
-        [Theory, MemberData(nameof(GetAvailableExaminationTestData))]
-        public void Get_available_examinations_by_doctor_and_date(DateTime date, int doctorId)
+        [Fact]
+        public void Cancels_examination()
         {
-            // Arange
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
 
-            // Act
-            var result = controller.GetAvailableAppointmentsByDateDoctor(date, doctorId);
+            var result = controller.CancelExamination(6);
 
-            // Assert
-            result.Result.ShouldBeOfType(typeof(OkObjectResult));
-            ((OkObjectResult)result.Result).Value.ShouldBeOfType(typeof(AvailableAppointmentsDTO));
-
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType(typeof(OkObjectResult));
+            ((OkObjectResult)result).Value.ShouldBeOfType(typeof(bool));
+            ((OkObjectResult)result).Value.ShouldBe(true);
         }
 
-        private AppointmentController SetupController(IServiceScope scope)
+        [Fact]
+        public void Fails_to_cancel_appointment()
         {
-            var mapper = scope.ServiceProvider.GetRequiredService<IMapper>();
-            var appointmentService = scope.ServiceProvider.GetRequiredService<IAppointmentService>();
-            return new AppointmentController(mapper, appointmentService);
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+
+            var result = controller.CancelExamination(1);
+
+            result.ShouldNotBeNull();
+            result.ShouldBeOfType(typeof(OkObjectResult));
+            ((OkObjectResult)result).Value.ShouldBeOfType(typeof(bool));
+            ((OkObjectResult)result).Value.ShouldBe(false);
         }
-
-        private static IEnumerable<object[]> GetRecommendedExaminationTimeTestData() =>
-            new List<object[]>()
-            {
-                new object[] { new DateTime(2022, 12, 1), new DateTime(2022, 12, 10), 1, AppointmentPriority.DOCTOR },
-                new object[] { new DateTime(2022, 1, 1), new DateTime(2022, 1, 5), 1, AppointmentPriority.DATE }
-            };
-        private static IEnumerable<object[]> GetAvailableExaminationTestData() =>
-            new List<object[]>()
-            {
-                new object[] { new DateTime(2022, 12, 1), 1 },
-                new object[] { new DateTime(2022, 12, 1), 2 },
-            };
-
     }
 }

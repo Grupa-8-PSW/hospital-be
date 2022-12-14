@@ -12,7 +12,6 @@ namespace HospitalLibrary.Core.Model
         public string LastName { get; set; }
         public string FullName { get => FirstName + " " + LastName; }
         public string Email { get; set; }
-        [Column(TypeName = "jsonb")]
         public Pin Pin { get; set; }
         public Gender Gender { get; set; }
         public BloodType BloodType { get; set; }
@@ -22,6 +21,20 @@ namespace HospitalLibrary.Core.Model
         public List<Allergen> Allergens { get; set; }
         public int SelectedDoctorId { get; set; }
         public int UserId { get; set; }
+
+        public Patient(int id, string firstName, string lastName, string email, Gender gender,
+            BloodType bloodType, int addressId, int selectedDoctorId, int userId)
+        {
+            Id = id;
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            Gender = gender;
+            BloodType = bloodType;
+            AddressId = addressId;
+            SelectedDoctorId = selectedDoctorId;
+            UserId = userId;
+        }
 
         public Patient(int id, string firstName, string lastName, string email, Pin pin, Gender gender,
             BloodType bloodType, int addressId, int selectedDoctorId, int userId)

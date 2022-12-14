@@ -31,10 +31,6 @@ public class Pin : ValueObject
         {
             throw new ArgumentException("Invalid PIN.");
         }
-        else if (CheckIfDayExistsInMonth(day, month))
-        {
-            throw new ArgumentException("Invalid PIN. Month " + month + ". doesn't have that many days.");
-        }
 
     }
 
@@ -50,18 +46,6 @@ public class Pin : ValueObject
             yearString = "2" + Value.Substring(4, 3);
         }
         return yearString;
-    }
-
-    private bool CheckIfDayExistsInMonth(int day, int month)
-    {
-        bool retVal = true;
-        if ((month == 1 && day > 31) || (month == 3 && day > 31) || (month == 5 && day > 31) || (month == 7 && day > 31) ||
-            (month == 8 && day > 31) || (month == 10 && day > 31) || (month == 12 && day > 31) || (month == 4 && day > 30) ||
-            (month == 6 && day > 30) || (month == 9 && day > 30) || (month == 11 && day > 30) || (month == 2 && day > 29))
-        {
-            retVal = false;
-        }
-        return retVal;
     }
 
     public override bool Equals(object? obj)

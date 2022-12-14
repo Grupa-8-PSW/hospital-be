@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HospitalAPI.DTO;
 using HospitalAPI.Web.Dto;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
@@ -34,14 +35,14 @@ namespace HospitalAPI.Controllers.PublicApp
 
         [HttpGet("patient")]
         [Authorize(Roles = "Patient")]
-        public ActionResult GetAppointmentsForPatient()
+        public ActionResult GetExaminationsForPatient()
         {
-            return Ok(_mapper.Map<List<AppointmentDTO>>(_examinationService.GetByPatientId(1)));
+            return Ok(_mapper.Map<List<ViewExaminationDTO>>(_examinationService.GetByPatientId(1)));
         }
 
         [HttpDelete("{id}")]
         [Authorize(Roles = "Patient")]
-        public ActionResult CancelAppointment(int id)
+        public ActionResult CancelExamination(int id)
         {
             bool isCancellable = _examinationService.CheckIfCancellable(id);
             if (!isCancellable)
