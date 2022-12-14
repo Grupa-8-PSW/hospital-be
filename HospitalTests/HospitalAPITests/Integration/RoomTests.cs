@@ -134,13 +134,11 @@ namespace HospitalTests.HospitalAPITests.Integration
             Assert.NotNull(freeSpace);
         }
 
-        /*
-        [Fact]
+      /*  [Fact]
         public void Separating_room()
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            //int oldRoomId, string newRoom1Name, string newRoom1Type, string newRoom2Name, string newRoom2Type
             RoomForSeparateDTO dto = new RoomForSeparateDTO(2,"Ortopedija", "OTHER", "Pedijatrija", "OTHER");
             var separatedRoom = ((OkObjectResult)controller.GetSeparatedRooms(dto))?.Value as List<SeparatedRoomsDTO>;
 
@@ -153,7 +151,6 @@ namespace HospitalTests.HospitalAPITests.Integration
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            //int oldRoom1Id, int oldRoom2Id, string newRoomName, string newRoomType
             RoomsForMergeDTO dto = new RoomsForMergeDTO(1, 2, "Logopedija", "OTHER");
             var mergedRoom = ((OkObjectResult)controller.GetMergedRoom(dto))?.Value as List<MergedRoomDTO>;
 
