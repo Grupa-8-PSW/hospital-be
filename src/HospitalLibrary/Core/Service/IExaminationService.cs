@@ -10,7 +10,7 @@ namespace HospitalLibrary.Core.Service
     public interface IExaminationService
     {
         IEnumerable<Examination> GetAll();
-        Examination GetById(int id);
+        Examination? GetById(int id);
         bool Create(Examination examination);
         bool Update(Examination examination);
         void Delete(Examination examination);
