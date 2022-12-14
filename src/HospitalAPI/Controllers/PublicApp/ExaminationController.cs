@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HospitalAPI.Security;
 using HospitalAPI.Web.Dto;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
@@ -14,6 +15,7 @@ namespace HospitalAPI.Controllers.PublicApp
         private readonly IAppointmentService _appointmentService;
         private readonly IDoctorService _doctorService;
         private readonly IExaminationService _examinationService;
+        private readonly IPatientService _patientService;
 
         public ExaminationController(
             IMapper mapper,
@@ -28,6 +30,9 @@ namespace HospitalAPI.Controllers.PublicApp
         [HttpPost]
         public ActionResult Create(ExaminationDTO examinationDTO)
         {
+            var userId = User.UserId();
+            var patient = _patientService.GetByUserId(userId);
+            examinationDTO.PatientId = patient.Id;
             var examination = _mapper.Map<Examination>(examinationDTO);
             examination.RoomId = _doctorService.GetById(examinationDTO.DoctorId).RoomId;
             _examinationService.Create(examination);
