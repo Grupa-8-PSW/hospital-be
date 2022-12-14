@@ -18,14 +18,24 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost]
-        public void Create(MonthlySubscription subscription)
+        public String Create(MonthlySubscription subscription)
         {
             subscription.Bank = _bankService.GetById(subscription.BankId); 
             if (!ModelState.IsValid)
             {
                 Console.WriteLine(ModelState);
             }
-            _service.Create(subscription);
+
+            try
+            {
+                _service.Create(subscription);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return "error";
+            }
+            return "success";
         }
 
         [HttpGet]
