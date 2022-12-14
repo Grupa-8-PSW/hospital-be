@@ -11,11 +11,9 @@ namespace HospitalLibrary.Core.Repository
         void Create(Examination examination);
         void Update(Examination examination);
         void Delete(Examination examination);
-
-
         IEnumerable<Examination> GetByDate(DateTime startTime);
         IEnumerable<Examination> GetByDoctorAndDate(int doctorId, DateTime date);
         public List<DateRange> GetByDoctorAndDateRange(int doctorId, DateRange dateRange);
-
+        IEnumerable<Examination> GetByPatientId(int patientId);
     }
 }

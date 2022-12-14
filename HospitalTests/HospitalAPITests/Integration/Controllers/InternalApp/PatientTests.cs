@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
 
-namespace HospitalTests.HospitalAPITests.Integration.Controller.InternalApp
+namespace HospitalTests.HospitalAPITests.Integration.Controllers.InternalApp
 {
     public class PatientTests : BaseIntegrationTest
     {

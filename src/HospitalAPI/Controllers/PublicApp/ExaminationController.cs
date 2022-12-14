@@ -4,6 +4,8 @@ using HospitalAPI.Web.Dto;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.ValueObjects;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.Core.Util;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers.PublicApp
@@ -33,6 +35,7 @@ namespace HospitalAPI.Controllers.PublicApp
         }
 
         [HttpPost]
+        [Authorize(Roles = "Patient")]
         public ActionResult Create(ExaminationDTO examinationDTO)
         {
             var isFree = false;
@@ -58,5 +61,28 @@ namespace HospitalAPI.Controllers.PublicApp
             return Ok();
         }
 
+        [HttpGet("patient")]
+        [Authorize(Roles = "Patient")]
+        public ActionResult GetExaminationsForPatient()
+        {
+            var userId = User.UserId();
+            var patient = _patientService.GetByUserId(userId);
+            return Ok(_mapper.Map<List<ViewExaminationDTO>>(_examinationService.GetByPatientId(patient.Id)));
+        }
+
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Patient")]
+        public ActionResult CancelExamination(int id)
+        {
+            bool isCancellable = _examinationService.CheckIfCancellable(id);
+            if (!isCancellable)
+            {
+                return Ok(isCancellable);
+            }
+            else
+            {
+                return Ok(isCancellable);
+            }
+        }
     }
 }
