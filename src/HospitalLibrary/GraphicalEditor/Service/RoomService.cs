@@ -157,7 +157,6 @@ namespace HospitalLibrary.GraphicalEditor.Service
             SchedulesDTO shedulesDto = new SchedulesDTO(examinationDTOs, equipmentTransferDTOs);
             return shedulesDto;
         }
-
         private List<ExaminationDTO> EntityToEntityExeListDTO(List<Examination> entities) 
         {
             var retList = new List<ExaminationDTO>();

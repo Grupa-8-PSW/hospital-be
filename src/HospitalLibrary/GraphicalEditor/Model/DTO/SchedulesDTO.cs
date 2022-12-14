@@ -11,12 +11,12 @@ namespace HospitalLibrary.GraphicalEditor.Model.DTO
     {
         public List<EquipmentTransferDTO> EquipmentTransferDTOs { get; set; }
 
-        public List<ExaminationDTO> ExeminationDTOs { get; set; }
+        public List<ExaminationDTO> ExaminationDTOs { get; set; }
 
-        public SchedulesDTO(List<ExaminationDTO> exeminations, List<EquipmentTransferDTO> transfers)
+        public SchedulesDTO(List<ExaminationDTO> examinations, List<EquipmentTransferDTO> transfers)
         {
             EquipmentTransferDTOs = transfers;
-            ExeminationDTOs = exeminations;
+            ExaminationDTOs = examinations;
         }
 
     }
