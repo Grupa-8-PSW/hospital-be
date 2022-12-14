@@ -15,7 +15,6 @@ namespace HospitalLibrary.Core.Model
         public Patient Patient { get; set; }
         public int RoomId { get; set; }
         public Room Room { get; set; }
-        [Column(TypeName = "jsonb")]
         public DateRange DateRange { get; set; }
         public ExaminationStatus Status { get; set; }
 
@@ -24,12 +23,12 @@ namespace HospitalLibrary.Core.Model
         {
         }
 
-        public Examination(int id, int doctorId, int patientId, DateRange dateRange, ExaminationStatus status = ExaminationStatus.UPCOMING)
+        public Examination(int id, int doctorId, int patientId, int roomId, ExaminationStatus status = ExaminationStatus.UPCOMING)
         {
             Id = id;
             DoctorId = doctorId;
             PatientId = patientId;
-            DateRange = dateRange;
+            RoomId = roomId;
             Status = status;
         }
 
