@@ -858,7 +858,7 @@ namespace HospitalLibrary.Migrations
                             TherapySubject = "Bromazepam 500mg",
                             TherapyType = 0,
                             TreatmentHistoryId = 1,
-                            WhenPrescribed = new DateTime(2022, 12, 14, 18, 47, 7, 721, DateTimeKind.Utc).AddTicks(5975)
+                            WhenPrescribed = new DateTime(2022, 12, 14, 20, 23, 49, 946, DateTimeKind.Utc).AddTicks(184)
                         },
                         new
                         {
@@ -869,7 +869,7 @@ namespace HospitalLibrary.Migrations
                             TherapySubject = "A+ 500ml",
                             TherapyType = 1,
                             TreatmentHistoryId = 1,
-                            WhenPrescribed = new DateTime(2022, 12, 14, 18, 47, 7, 721, DateTimeKind.Utc).AddTicks(5977)
+                            WhenPrescribed = new DateTime(2022, 12, 14, 20, 23, 49, 946, DateTimeKind.Utc).AddTicks(186)
                         });
                 });
 
@@ -924,11 +924,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 1,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2022, 12, 14, 18, 47, 7, 721, DateTimeKind.Utc).AddTicks(5904),
+                            EndDate = new DateTime(2022, 12, 14, 20, 23, 49, 946, DateTimeKind.Utc).AddTicks(144),
                             PatientId = 1,
                             Reason = "reason1",
                             RoomId = 1,
-                            StartDate = new DateTime(2022, 12, 14, 18, 47, 7, 721, DateTimeKind.Utc).AddTicks(5904)
+                            StartDate = new DateTime(2022, 12, 14, 20, 23, 49, 946, DateTimeKind.Utc).AddTicks(143)
                         },
                         new
                         {
@@ -936,11 +936,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 2,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2022, 12, 14, 18, 47, 7, 721, DateTimeKind.Utc).AddTicks(5908),
+                            EndDate = new DateTime(2022, 12, 14, 20, 23, 49, 946, DateTimeKind.Utc).AddTicks(148),
                             PatientId = 2,
                             Reason = "reason2",
                             RoomId = 1,
-                            StartDate = new DateTime(2022, 12, 14, 18, 47, 7, 721, DateTimeKind.Utc).AddTicks(5908)
+                            StartDate = new DateTime(2022, 12, 14, 20, 23, 49, 946, DateTimeKind.Utc).AddTicks(148)
                         },
                         new
                         {
@@ -948,11 +948,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 4,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2022, 12, 14, 18, 47, 7, 721, DateTimeKind.Utc).AddTicks(5909),
+                            EndDate = new DateTime(2022, 12, 14, 20, 23, 49, 946, DateTimeKind.Utc).AddTicks(149),
                             PatientId = 3,
                             Reason = "reason3",
                             RoomId = 2,
-                            StartDate = new DateTime(2022, 12, 14, 18, 47, 7, 721, DateTimeKind.Utc).AddTicks(5909)
+                            StartDate = new DateTime(2022, 12, 14, 20, 23, 49, 946, DateTimeKind.Utc).AddTicks(149)
                         },
                         new
                         {
@@ -963,7 +963,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 1,
                             Reason = "reason1",
                             RoomId = 1,
-                            StartDate = new DateTime(2022, 12, 14, 18, 47, 7, 721, DateTimeKind.Utc).AddTicks(5940)
+                            StartDate = new DateTime(2022, 12, 14, 20, 23, 49, 946, DateTimeKind.Utc).AddTicks(150)
                         },
                         new
                         {
@@ -974,7 +974,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 2,
                             Reason = "reason2",
                             RoomId = 1,
-                            StartDate = new DateTime(2022, 12, 14, 18, 47, 7, 721, DateTimeKind.Utc).AddTicks(5941)
+                            StartDate = new DateTime(2022, 12, 14, 20, 23, 49, 946, DateTimeKind.Utc).AddTicks(151)
                         },
                         new
                         {
@@ -985,7 +985,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 3,
                             Reason = "reason3",
                             RoomId = 2,
-                            StartDate = new DateTime(2022, 12, 14, 18, 47, 7, 721, DateTimeKind.Utc).AddTicks(5942)
+                            StartDate = new DateTime(2022, 12, 14, 20, 23, 49, 946, DateTimeKind.Utc).AddTicks(153)
                         });
                 });
 
@@ -2319,7 +2319,48 @@ namespace HospitalLibrary.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.OwnsOne("HospitalLibrary.Core.Model.ValueObjects.FeedbackRating", "Rating", b1 =>
+                        {
+                            b1.Property<int>("FeedbackId")
+                                .HasColumnType("integer");
+
+                            b1.Property<int>("Rating")
+                                .HasColumnType("integer");
+
+                            b1.HasKey("FeedbackId");
+
+                            b1.ToTable("Feedbacks");
+
+                            b1.WithOwner()
+                                .HasForeignKey("FeedbackId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    FeedbackId = 1,
+                                    Rating = 3
+                                },
+                                new
+                                {
+                                    FeedbackId = 2,
+                                    Rating = 4
+                                },
+                                new
+                                {
+                                    FeedbackId = 3,
+                                    Rating = 5
+                                },
+                                new
+                                {
+                                    FeedbackId = 4,
+                                    Rating = 5
+                                });
+                        });
+
                     b.Navigation("Patient");
+
+                    b.Navigation("Rating")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Patient", b =>
