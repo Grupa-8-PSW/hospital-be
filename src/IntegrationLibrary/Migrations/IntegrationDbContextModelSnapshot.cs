@@ -41,6 +41,10 @@ namespace IntegrationLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("MonthlySubscriptionRoutingKey")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -63,9 +67,40 @@ namespace IntegrationLibrary.Migrations
                             Id = 1,
                             APIKey = "123",
                             Email = "test@test.com",
-                            Name = "bloodBank",
+                            MonthlySubscriptionRoutingKey = "monthlySubscriptions29",
+                            Name = "Banka 1",
                             Password = "unknown",
-                            ServerAddress = "htttp://localhost:8081/"
+                            ServerAddress = "http://localhost:8081/"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            APIKey = "321",
+                            Email = "test@test.com",
+                            MonthlySubscriptionRoutingKey = "monthlySubscriptions30",
+                            Name = "Banka 2",
+                            Password = "unknown",
+                            ServerAddress = "http://localhost:8082/"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            APIKey = "213",
+                            Email = "test@test.com",
+                            MonthlySubscriptionRoutingKey = "monthlySubscriptions31",
+                            Name = "Banka 3",
+                            Password = "unknown",
+                            ServerAddress = "http://localhost:8083/"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            APIKey = "231",
+                            Email = "test@test.com",
+                            MonthlySubscriptionRoutingKey = "monthlySubscriptions32",
+                            Name = "Banka 4",
+                            Password = "unknown",
+                            ServerAddress = "http://localhost:8084/"
                         });
                 });
 

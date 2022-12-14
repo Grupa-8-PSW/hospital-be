@@ -15,8 +15,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221212190724_dostaVise")]
-    partial class dostaVise
+    [Migration("20221214210144_bloodBankTestSeed")]
+    partial class bloodBankTestSeed
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,6 +43,10 @@ namespace IntegrationLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("MonthlySubscriptionRoutingKey")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -63,11 +67,42 @@ namespace IntegrationLibrary.Migrations
                         new
                         {
                             Id = 1,
-                            APIKey = "unknown",
+                            APIKey = "123",
                             Email = "test@test.com",
-                            Name = "testName",
+                            MonthlySubscriptionRoutingKey = "monthlySubscriptions29",
+                            Name = "Banka 1",
                             Password = "unknown",
-                            ServerAddress = "htttp://localhost:8081/"
+                            ServerAddress = "http://localhost:8081/"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            APIKey = "321",
+                            Email = "test@test.com",
+                            MonthlySubscriptionRoutingKey = "monthlySubscriptions30",
+                            Name = "Banka 2",
+                            Password = "unknown",
+                            ServerAddress = "http://localhost:8082/"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            APIKey = "213",
+                            Email = "test@test.com",
+                            MonthlySubscriptionRoutingKey = "monthlySubscriptions31",
+                            Name = "Banka 3",
+                            Password = "unknown",
+                            ServerAddress = "http://localhost:8083/"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            APIKey = "231",
+                            Email = "test@test.com",
+                            MonthlySubscriptionRoutingKey = "monthlySubscriptions32",
+                            Name = "Banka 4",
+                            Password = "unknown",
+                            ServerAddress = "http://localhost:8084/"
                         });
                 });
 
@@ -204,11 +239,18 @@ namespace IntegrationLibrary.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("BloodBankName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<List<BloodOffer>>("Offers")
                         .IsRequired()
                         .HasColumnType("jsonb");
 
                     b.Property<int>("TenderID")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TenderOfferStatus")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");

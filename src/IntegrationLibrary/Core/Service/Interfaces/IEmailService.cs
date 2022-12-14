@@ -13,5 +13,7 @@ namespace IntegrationLibrary.Core.Service.Interfaces
         void SendEmail(string emailBB, string password, string API);
         void SendSuccessEmail(string emailBB, int tenderId, string APIKey);
         void SendRejectEmail(string emailBB);
+
+        void SendRejectMonthlyDeliveryEmail(string emailBB);
     }
 }

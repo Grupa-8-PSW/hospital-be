@@ -208,7 +208,7 @@ namespace IntegrationLibrary.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<List<BloodOffer>>("Offers")
+                    b.Property<List<Blood>>("Offers")
                         .IsRequired()
                         .HasColumnType("jsonb");
 

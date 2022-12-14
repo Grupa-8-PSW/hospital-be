@@ -17,9 +17,8 @@ namespace IntegrationTests.IntegrationSeleniumTests.Pages
         private IWebElement EmailElement => driver.FindElement(By.Name("email"));
         private IWebElement NameElement => driver.FindElement(By.Name("name"));
         private IWebElement ServerAddressElement => driver.FindElement(By.Name("serverAddress"));
-
         private IWebElement SubmitButtonElement => driver.FindElement(By.Id("submit"));
-        
+
         public const string InvalidEmailMessage = "Email is Null/Empty/WhiteSpace.";
         public const string InvalidFormatEmailMessage = "Email is invalid.";
         public const string InvalidNameMessage = "Name is Null/Empty/WhiteSpace.";

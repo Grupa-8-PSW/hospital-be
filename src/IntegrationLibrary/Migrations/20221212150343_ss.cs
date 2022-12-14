@@ -53,7 +53,7 @@ namespace IntegrationLibrary.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     TenderID = table.Column<int>(type: "integer", nullable: false),
-                    Offers = table.Column<List<BloodOffer>>(type: "jsonb", nullable: false),
+                    Offers = table.Column<List<Blood>>(type: "jsonb", nullable: false),
                     BloodBankName = table.Column<string>(type: "text", nullable: false),
                     TenderOfferStatus = table.Column<int>(type: "integer", nullable: false)
                 },

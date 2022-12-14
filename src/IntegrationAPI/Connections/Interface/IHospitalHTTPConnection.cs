@@ -13,6 +13,9 @@ namespace IntegrationLibraryAPI.Connections
     public interface IHospitalHTTPConnection
     {
         public List<BloodUnitRequestDTO> GetAllBloodUnitRequests();
+        
+        public BloodUnitRequestDTO GetBloodRequestById(int id);
+
         public List<BloodUnitDTO> GetAllBloodUnits();
 
         public List<BloodDTO> GetAllBlood();
@@ -20,5 +23,6 @@ namespace IntegrationLibraryAPI.Connections
         public void ChangeRequestStatus(BloodUnitRequestDTO bloodUnitRequestDto);
 
         public RestResponse RestockBlood(List<BloodDTO> blood);
+
     }
 }

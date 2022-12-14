@@ -72,20 +72,21 @@ namespace IntegrationAPI
             services.AddScoped<ITenderService, TenderService>();
             services.AddScoped<ITenderRepository, TenderRepository>();
             services.AddScoped<ITenderService, TenderService>();
+
+            services.AddScoped<IHospitalRabbitMqPublisher, HospitalRabbitMqPublisher>();
+
             services.AddScoped<IMonthlySubscriptionRepository, MonthlySubscriptionRepository>();
             services.AddScoped<IMonthlySubscriptionService, MonthlySubscriptionService>();
-            services.AddScoped<IMapper<BloodBankNews, BloodBankNewsDTO>, BloodBankNewsMapper>();
 
+            services.AddScoped<IMapper<BloodBankNews, BloodBankNewsDTO>, BloodBankNewsMapper>();
+            services.AddScoped<IMapper<MonthlySubscription, MonthlySubscriptionDTO>, MonthlySubscriptionMapper>();
             services.AddTransient<ExceptionMiddleware>();
             services.AddScoped<IClientScheduledService, ClientScheduledService>();
-
             services.AddScoped<IHospitalAPIClient, HospitalAPIClient>();
-
-
-
             services.AddAuthentication("Default")
                 .AddScheme<AuthenticationSchemeOptions, AuthHandler>("Default", null);
             services.AddAuthorization();
+
 
 
         }

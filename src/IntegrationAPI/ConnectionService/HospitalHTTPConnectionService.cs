@@ -1,4 +1,5 @@
 ﻿using HospitalAPI.Connections;
+using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Model;
 using IntegrationAPI.ConnectionService.Interface;
 using IntegrationLibrary.Core.Model;
@@ -44,6 +45,26 @@ namespace IntegrationAPI.ConnectionService
             _connection.RestockBlood(bloods);
         }
 
+        public void RestockBloodIfDelivered(BloodUnitRequestDeliveryDTO bloodUnitRequestDeliveryDTO)
+        {
+            BloodUnitRequestDTO bloodUnitRequestDTO = _connection.GetBloodRequestById(bloodUnitRequestDeliveryDTO.hospitalRequestId);
+            if(bloodUnitRequestDTO != null)
+            {
+                BloodDTO bloodDTO = new ();
+                bloodDTO.Quantity = bloodUnitRequestDTO.AmountL;
+                bloodDTO.Type = bloodUnitRequestDTO.Type;
+                BloodType bloodType;
+                if (!Enum.TryParse<BloodType>(bloodDTO.Type, out bloodType))
+                {
+                    return;
+                }
+                bloodDTO.Id = (int)bloodType + 1;
+                List<BloodDTO> bloodDTOs = new ();
+                bloodDTOs.Add(bloodDTO);
+                RestockBlood(bloodDTOs);
+            }
+        }
+
         public Doctor GetDoctorById(int id)
         {
             var client = new RestClient("http://localhost:5174");
@@ -61,5 +82,7 @@ namespace IntegrationAPI.ConnectionService
             List<Doctor> doctors = JsonConvert.DeserializeObject<List<Doctor>>(response.Content);
             return doctors;
         }
+
+       
     }
 }
