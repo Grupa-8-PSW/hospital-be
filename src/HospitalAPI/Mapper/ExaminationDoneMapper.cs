@@ -17,7 +17,7 @@ namespace HospitalAPI.Mapper
             examinationDoneDTO.ExaminationId = examinationDone.ExaminationId;
             examinationDoneDTO.Record = examinationDone.Record;
             examinationDoneDTO.Prescriptions = new List<Prescription>(/*examinationDone.Prescriptions*/);//?
-            examinationDoneDTO.Symptoms = new List<Symptom>(/*examinationDone.Symptoms*/);//?
+            examinationDoneDTO.Symptoms = examinationDone.Symptoms;
 
             return examinationDoneDTO;
         }
@@ -39,7 +39,7 @@ namespace HospitalAPI.Mapper
             examinationDone.ExaminationId = dto.ExaminationId;
             examinationDone.Record = dto.Record;
             examinationDone.Prescriptions = new List<Prescription>(/*dto.Prescriptions*/);  //?
-            examinationDone.Symptoms = new List<Symptom>(/*dto.Symptoms*/); //?
+            examinationDone.Symptoms = dto.Symptoms; 
 
             return examinationDone;
         }
