@@ -1,5 +1,5 @@
-﻿using HospitalTests.HospitalE2ETests.Pages.Internal;
-using HospitalTests.HospitalE2ETests.Pages.Public;
+﻿using HospitalTests.HospitalE2ETests.Pages.Public;
+using HospitalTests.HospitalE2ETests.SecurityTests.Pages.Internal;
 using Microsoft.Extensions.Options;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -25,6 +25,7 @@ namespace HospitalTests.HospitalE2ETests.SecurityTests
             _driver = new ChromeDriver(options);
 
             _homePage = new InternalHomePage(_driver);
+
             _homePage.Navigate();
             _homePage.LoginLinkDisplayed().ShouldBe(true);
             _homePage.ClickLoginLink();
@@ -36,8 +37,8 @@ namespace HospitalTests.HospitalE2ETests.SecurityTests
             _loginPage.SubmitButtonElementDisplayed().ShouldBe(true);
             Login();
 
-            _driver.Url.ShouldBe(InternalHomePage.URI);
-            _homePage.ClickHandlingMaliciousPatientsLink();
+             _driver.Url.ShouldBe(InternalHomePage.URI);
+             _homePage.ClickHandlingMaliciousPatientsLink();
 
             _handlingMaliciousUsersPage = new HandlingMaliciousUsersPage(_driver);
             _driver.Url.ShouldBe(HandlingMaliciousUsersPage.URI);
@@ -71,7 +72,14 @@ namespace HospitalTests.HospitalE2ETests.SecurityTests
         {
             _handlingMaliciousUsersPage.ClickBlockElement();
             Assert.True(_handlingMaliciousUsersPage.GetBlockButtonState());
-           // Assert.Equal(_createFeedbackPage.GetValidMessage(), _createFeedbackPage.GetValidMessageFromElement());
+            Assert.Equal(_handlingMaliciousUsersPage.GetValidMessage1(), HandlingMaliciousUsersPage.ValidMessage1);
+        }
+        [Fact]
+        public void ValidUnblock()
+        {
+            _handlingMaliciousUsersPage.ClickBlockElement();
+            Assert.True(_handlingMaliciousUsersPage.GetUnblockButtonState());
+            Assert.Equal(_handlingMaliciousUsersPage.GetValidMessage2(), HandlingMaliciousUsersPage.ValidMessage2);
         }
         public void Dispose()
         {

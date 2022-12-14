@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 
-namespace HospitalTests.HospitalE2ETests.Pages.Public
+namespace HospitalTests.HospitalE2ETests.SecurityTests.Pages.Internal
 {
     public class InternalLoginPage
     {
@@ -50,7 +50,7 @@ namespace HospitalTests.HospitalE2ETests.Pages.Public
         public void WaitForLogin()
         {
             var wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 20));
-            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlToBe(HomePage.URI));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlToBe("http://localhost:4200/"));
         }
     }
 }
