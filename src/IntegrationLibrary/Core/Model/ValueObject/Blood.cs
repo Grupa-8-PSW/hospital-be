@@ -23,6 +23,8 @@ namespace IntegrationLibrary.Core.Model.ValueObject
             Validate();
         }
 
+        public Blood() { }
+
         private void Validate()
         {
             if (Quantity < 0 || BloodType == null)
