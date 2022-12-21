@@ -50,12 +50,9 @@ namespace IntegrationAPI
             services.AddScoped<IBloodConsumptionConfigurationRepository, BloodConsumptionConfigurationRepository>();
             services.AddScoped<IBloodConsumptionConfigurationService, BloodConsumptionConfigurationService>();
             services.AddHostedService<BloodBankRabbitMqConnection>();
-
             services.AddScoped<ITenderOfferService, TenderOfferService>();
             services.AddScoped<ITenderOfferRepository, TenderOfferRepository>();
-
             services.AddScoped<IUrgentRequestRepository, UrgentRequestRepository>();
-
             services.AddScoped<IBloodBankConnectionService, BloodBankConnectionService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IBloodBankService, BloodBankService>();
@@ -63,7 +60,6 @@ namespace IntegrationAPI
             services.AddScoped<IBloodBankHTTPConnection, BloodBankHTTPConnection>();
             services.AddScoped<IBloodBankConnectionService, BloodBankConnectionService>();
             services.AddScoped<IUrgentRequestService, UrgentRequestService>();
-
             services.AddScoped<ICredentialGenerator, CredentialGenerator>();
             services.AddScoped<IBloodBankHTTPConnection, BloodBankHTTPConnection>();
             services.AddScoped<IBloodService, BloodService>();
@@ -76,12 +72,9 @@ namespace IntegrationAPI
             services.AddScoped<ITenderService, TenderService>();
             services.AddScoped<ITenderRepository, TenderRepository>();
             services.AddScoped<ITenderService, TenderService>();
-
             services.AddScoped<IHospitalRabbitMqPublisher, HospitalRabbitMqPublisher>();
-
             services.AddScoped<IMonthlySubscriptionRepository, MonthlySubscriptionRepository>();
             services.AddScoped<IMonthlySubscriptionService, MonthlySubscriptionService>();
-
             services.AddScoped<IMapper<BloodBankNews, BloodBankNewsDTO>, BloodBankNewsMapper>();
             services.AddScoped<IMapper<MonthlySubscription, MonthlySubscriptionDTO>, MonthlySubscriptionMapper>();
             services.AddTransient<ExceptionMiddleware>();
@@ -90,7 +83,6 @@ namespace IntegrationAPI
             services.AddAuthentication("Default")
                 .AddScheme<AuthenticationSchemeOptions, AuthHandler>("Default", null);
             services.AddAuthorization();
-
 
 
         }
