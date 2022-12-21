@@ -15,5 +15,6 @@ namespace IntegrationLibrary.Core.Repository
         void Delete(Tender tender);
         void Update(Tender tender);
         IEnumerable<Tender> GetActiveTenders();
+        IEnumerable<Tender> GetAllBloodAmountsBetweenDates(DateTime start, DateTime end);
     }
 }

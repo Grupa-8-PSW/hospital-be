@@ -14,6 +14,8 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
     {
         private readonly IWebDriver driver;
         Pages.CheckForBloodTypePage checkForBloodTypePage;
+        private Pages.LoginPage loginPage;
+
 
         public CheckForBloodTypeTest()
         {
@@ -28,6 +30,17 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
             options.AddArguments("--disable-notifications");
 
             driver = new ChromeDriver(options);
+
+
+            loginPage = new Pages.LoginPage(driver);
+
+
+            loginPage.Navigate();
+            loginPage.EnsurePageIsDisplayed();
+            loginPage.InsertUsername("manager");
+            loginPage.InsertPassword("12345");
+            loginPage.Login();
+            loginPage.WaitForLogin();
 
             checkForBloodTypePage = new Pages.CheckForBloodTypePage(driver);
             checkForBloodTypePage.Navigate();

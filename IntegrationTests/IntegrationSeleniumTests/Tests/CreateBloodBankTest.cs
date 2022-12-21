@@ -17,25 +17,35 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
         private readonly IWebDriver driver;
         private Pages.ManagerPage managerPage;
         private Pages.CreateBloodBankPage createBloodBankPage;
+        private Pages.LoginPage loginPage;
         private int bloodBanksCount = 0;
 
         public CreateBloodBankTest()
         {
 
             ChromeOptions options = new ChromeOptions();
-            options.AddArguments("start-maximized");           
-            options.AddArguments("disable-infobars");           
-            options.AddArguments("--disable-extensions");       
-            options.AddArguments("--disable-gpu");             
-            options.AddArguments("--disable-dev-shm-usage");   
-            options.AddArguments("--no-sandbox");             
-            options.AddArguments("--disable-notifications");    
+            options.AddArguments("start-maximized");
+            options.AddArguments("disable-infobars");
+            options.AddArguments("--disable-extensions");
+            options.AddArguments("--disable-gpu");
+            options.AddArguments("--disable-dev-shm-usage");
+            options.AddArguments("--no-sandbox");
+            options.AddArguments("--disable-notifications");
 
             driver = new ChromeDriver(options);
 
- 
+            loginPage = new Pages.LoginPage(driver);
 
-            Pages.ManagerPage newManagerPage = new Pages.ManagerPage(driver); 
+
+            loginPage.Navigate();
+            loginPage.EnsurePageIsDisplayed();
+            loginPage.InsertUsername("manager");
+            loginPage.InsertPassword("12345");
+            loginPage.Login();
+            loginPage.WaitForLogin();
+
+
+            Pages.ManagerPage newManagerPage = new Pages.ManagerPage(driver);
             newManagerPage.Navigate();
             newManagerPage.EnsurePageIsDisplayed();
             Assert.True(newManagerPage.LinkDisplayed());
@@ -47,7 +57,7 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
             createBloodBankPage.EnsurePageIsDisplayed();
             Assert.Equal(driver.Url, Pages.CreateBloodBankPage.URI);
 
-            Assert.True(createBloodBankPage.EmailElementDisplayed()); 
+            Assert.True(createBloodBankPage.EmailElementDisplayed());
             Assert.True(createBloodBankPage.NameElementDisplayed());
             Assert.True(createBloodBankPage.ServerAddressDisplayed());
             Assert.True(createBloodBankPage.SubmitButtonElementDisplayed());
@@ -66,24 +76,24 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
             createBloodBankPage.InsertServerAddress("adresa.com");
             createBloodBankPage.SubmitForm();
 
-            createBloodBankPage.WaitForAlertDialog();      
-            Assert.Equal(createBloodBankPage.GetDialogMessage(), Pages.CreateBloodBankPage.InvalidEmailMessage);    
-            createBloodBankPage.ResolveAlertDialog();   
-            Assert.Equal(driver.Url, Pages.CreateBloodBankPage.URI);     
+            createBloodBankPage.WaitForAlertDialog();
+            Assert.Equal(createBloodBankPage.GetDialogMessage(), Pages.CreateBloodBankPage.InvalidEmailMessage);
+            createBloodBankPage.ResolveAlertDialog();
+            Assert.Equal(driver.Url, Pages.CreateBloodBankPage.URI);
         }
 
         [Fact]
         public void TestInvalidFormatEmail()
         {
             createBloodBankPage.InsertEmail("email");
-            createBloodBankPage.InsertName("Banka");   
+            createBloodBankPage.InsertName("Banka");
             createBloodBankPage.InsertServerAddress("adresa.com");
             createBloodBankPage.SubmitForm();
 
-            createBloodBankPage.WaitForAlertDialog(); 
-            Assert.Equal(createBloodBankPage.GetDialogMessage(), Pages.CreateBloodBankPage.InvalidFormatEmailMessage);   
-            createBloodBankPage.ResolveAlertDialog(); 
-            Assert.Equal(driver.Url, Pages.CreateBloodBankPage.URI); 
+            createBloodBankPage.WaitForAlertDialog();
+            Assert.Equal(createBloodBankPage.GetDialogMessage(), Pages.CreateBloodBankPage.InvalidFormatEmailMessage);
+            createBloodBankPage.ResolveAlertDialog();
+            Assert.Equal(driver.Url, Pages.CreateBloodBankPage.URI);
         }
 
         [Fact]
@@ -93,22 +103,22 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
             createBloodBankPage.InsertServerAddress("adresa.com");
             createBloodBankPage.SubmitForm();
 
-            createBloodBankPage.WaitForAlertDialog();  
-            Assert.Equal(createBloodBankPage.GetDialogMessage(), Pages.CreateBloodBankPage.InvalidNameMessage);   
-            createBloodBankPage.ResolveAlertDialog();        
-            Assert.Equal(driver.Url, Pages.CreateBloodBankPage.URI);   
+            createBloodBankPage.WaitForAlertDialog();
+            Assert.Equal(createBloodBankPage.GetDialogMessage(), Pages.CreateBloodBankPage.InvalidNameMessage);
+            createBloodBankPage.ResolveAlertDialog();
+            Assert.Equal(driver.Url, Pages.CreateBloodBankPage.URI);
         }
 
         [Fact]
         public void TestInvalidServerAddress()
         {
             createBloodBankPage.InsertEmail("email@mail.com");
-            createBloodBankPage.InsertName("Banka");  
+            createBloodBankPage.InsertName("Banka");
             createBloodBankPage.SubmitForm();
 
-            createBloodBankPage.WaitForAlertDialog(); 
+            createBloodBankPage.WaitForAlertDialog();
             Assert.Equal(createBloodBankPage.GetDialogMessage(), Pages.CreateBloodBankPage.InvalidServerAddressMessage);
-            createBloodBankPage.ResolveAlertDialog();  
+            createBloodBankPage.ResolveAlertDialog();
             Assert.Equal(driver.Url, Pages.CreateBloodBankPage.URI);
         }
 
@@ -117,11 +127,11 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
         {
 
             createBloodBankPage.InsertEmail("email@mail.com");
-            createBloodBankPage.InsertName("Banka");          
+            createBloodBankPage.InsertName("Banka");
             createBloodBankPage.InsertServerAddress("adresa.com");
             createBloodBankPage.SubmitForm();
-            createBloodBankPage.WaitForAlertDialog();         
-            Assert.Equal(createBloodBankPage.GetDialogMessage(), Pages.CreateBloodBankPage.CreatedBloodBankMessage); 
+            createBloodBankPage.WaitForAlertDialog();
+            Assert.Equal(createBloodBankPage.GetDialogMessage(), Pages.CreateBloodBankPage.CreatedBloodBankMessage);
             createBloodBankPage.ResolveAlertDialog();
             createBloodBankPage.WaitForFormSubmit();
 

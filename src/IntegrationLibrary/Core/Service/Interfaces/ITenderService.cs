@@ -18,5 +18,6 @@ namespace IntegrationLibrary.Core.Service.Interfaces
 
         public void Delete(Tender tender);
         Tender UpdateStatus(int tenderID);
+        List<Blood> GetAllBloodAmountsBetweenDates(DateTime from, DateTime to);
     }
 }

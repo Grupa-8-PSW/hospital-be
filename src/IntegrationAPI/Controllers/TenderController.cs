@@ -32,11 +32,14 @@ namespace IntegrationAPI.Controllers
 
         // POST: TenderController/getAllForOffers
         [HttpGet]
-        [Route("getAllForOffers")]
-        public ActionResult GetAllForOffers()
+        [Route("getAllBloodAmountsBetweenDates")]
+        public ActionResult GetAllBloodAmountsBetweenDates(DateTime from, DateTime to)
         {
-            return Ok(TenderOfferMapper.convertTenderTOBloodOffersDTO(_service.GetActiveTenders()));
+            
+            return Ok(_service.GetAllBloodAmountsBetweenDates(from, to));
         }
+
+
        
     }
 }
