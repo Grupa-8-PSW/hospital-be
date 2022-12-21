@@ -13,7 +13,7 @@ namespace IntegrationLibrary.Persistence
         public DbSet<TenderOffer> TenderOffer { get; set; }
         public IntegrationDbContext(DbContextOptions options) : base(options) { }
         public DbSet<Tender> Tenders { get; set; }
-
+        public DbSet<Ad> Ads { get; set; }
         public DbSet<MonthlySubscription> MonthlySubscription { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

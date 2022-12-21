@@ -15,8 +15,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221212183228_MonthlySubForeign")]
-    partial class MonthlySubForeign
+    [Migration("20221221193013_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,6 +26,23 @@ namespace IntegrationLibrary.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.Ad", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ads");
+                });
 
             modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodBank", b =>
                 {
@@ -40,6 +57,10 @@ namespace IntegrationLibrary.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("MonthlySubscriptionRoutingKey")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -63,11 +84,42 @@ namespace IntegrationLibrary.Migrations
                         new
                         {
                             Id = 1,
-                            APIKey = "unknown",
+                            APIKey = "123",
                             Email = "test@test.com",
-                            Name = "testName",
+                            MonthlySubscriptionRoutingKey = "monthlySubscriptions29",
+                            Name = "Banka 1",
                             Password = "unknown",
-                            ServerAddress = "htttp://localhost:8081/"
+                            ServerAddress = "http://localhost:8081/"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            APIKey = "321",
+                            Email = "test@test.com",
+                            MonthlySubscriptionRoutingKey = "monthlySubscriptions30",
+                            Name = "Banka 2",
+                            Password = "unknown",
+                            ServerAddress = "http://localhost:8082/"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            APIKey = "213",
+                            Email = "test@test.com",
+                            MonthlySubscriptionRoutingKey = "monthlySubscriptions31",
+                            Name = "Banka 3",
+                            Password = "unknown",
+                            ServerAddress = "http://localhost:8083/"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            APIKey = "231",
+                            Email = "test@test.com",
+                            MonthlySubscriptionRoutingKey = "monthlySubscriptions32",
+                            Name = "Banka 4",
+                            Password = "unknown",
+                            ServerAddress = "http://localhost:8084/"
                         });
                 });
 
@@ -204,11 +256,18 @@ namespace IntegrationLibrary.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<List<Blood>>("Offers")
+                    b.Property<string>("BloodBankName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<List<BloodOffer>>("Offers")
                         .IsRequired()
                         .HasColumnType("jsonb");
 
                     b.Property<int>("TenderID")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TenderOfferStatus")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");

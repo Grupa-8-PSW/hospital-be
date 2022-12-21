@@ -25,6 +25,23 @@ namespace IntegrationLibrary.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.Ad", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Ads");
+                });
+
             modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodBank", b =>
                 {
                     b.Property<int>("Id")

@@ -9,10 +9,23 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
-    public partial class ss : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Ads",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ImagePath = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ads", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "BloodBanks",
                 columns: table => new
@@ -23,7 +36,8 @@ namespace IntegrationLibrary.Migrations
                     Email = table.Column<string>(type: "text", nullable: false),
                     ServerAddress = table.Column<string>(type: "text", nullable: false),
                     Password = table.Column<string>(type: "text", nullable: false),
-                    APIKey = table.Column<string>(type: "text", nullable: false)
+                    APIKey = table.Column<string>(type: "text", nullable: false),
+                    MonthlySubscriptionRoutingKey = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,7 +67,7 @@ namespace IntegrationLibrary.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     TenderID = table.Column<int>(type: "integer", nullable: false),
-                    Offers = table.Column<List<Blood>>(type: "jsonb", nullable: false),
+                    Offers = table.Column<List<BloodOffer>>(type: "jsonb", nullable: false),
                     BloodBankName = table.Column<string>(type: "text", nullable: false),
                     TenderOfferStatus = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -125,8 +139,14 @@ namespace IntegrationLibrary.Migrations
 
             migrationBuilder.InsertData(
                 table: "BloodBanks",
-                columns: new[] { "Id", "APIKey", "Email", "Name", "Password", "ServerAddress" },
-                values: new object[] { 1, "123", "test@test.com", "bloodBank", "unknown", "htttp://localhost:8081/" });
+                columns: new[] { "Id", "APIKey", "Email", "MonthlySubscriptionRoutingKey", "Name", "Password", "ServerAddress" },
+                values: new object[,]
+                {
+                    { 1, "123", "test@test.com", "monthlySubscriptions29", "Banka 1", "unknown", "http://localhost:8081/" },
+                    { 2, "321", "test@test.com", "monthlySubscriptions30", "Banka 2", "unknown", "http://localhost:8082/" },
+                    { 3, "213", "test@test.com", "monthlySubscriptions31", "Banka 3", "unknown", "http://localhost:8083/" },
+                    { 4, "231", "test@test.com", "monthlySubscriptions32", "Banka 4", "unknown", "http://localhost:8084/" }
+                });
 
             migrationBuilder.InsertData(
                 table: "BloodBankNews",
@@ -146,6 +166,9 @@ namespace IntegrationLibrary.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Ads");
+
             migrationBuilder.DropTable(
                 name: "BloodBankNews");
 

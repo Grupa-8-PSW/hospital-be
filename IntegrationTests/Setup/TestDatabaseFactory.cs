@@ -60,8 +60,12 @@ namespace IntegrationTeamTests.Setup
             String dt = "2022-11-23 19:00:00+01";
             DateTime date = DateTime.Parse(dt);
             //context.BloodConsumptionConfiguration.Add(
-                //new BloodConsumptionConfiguration(10, date, TimeSpan.FromHours(3), TimeSpan.FromHours(50)));
+            //new BloodConsumptionConfiguration(10, date, TimeSpan.FromHours(3), TimeSpan.FromHours(50)));
             //context.BloodBankNews.Add(new BloodBankNews ( "text", "subject", 1, "img", false,  false, null, 1 ));
+
+            context.Ads.Add(new Ad(0, "ad0.jpg"));
+            context.Ads.Add(new Ad(0, "ad1.jpg"));
+            context.Ads.Add(new Ad(0, "ad2.jpg"));
 
             context.SaveChanges();
         }

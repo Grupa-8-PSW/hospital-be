@@ -72,6 +72,8 @@ namespace IntegrationAPI
             services.AddScoped<ITenderService, TenderService>();
             services.AddScoped<ITenderRepository, TenderRepository>();
             services.AddScoped<ITenderService, TenderService>();
+            services.AddScoped<IAdRepository, AdRepository>();
+            services.AddScoped<IAdService, AdService>();
 
             services.AddScoped<IHospitalRabbitMqPublisher, HospitalRabbitMqPublisher>();
 
@@ -118,6 +120,8 @@ namespace IntegrationAPI
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
+            app.UseStaticFiles();
 
 
             //AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
