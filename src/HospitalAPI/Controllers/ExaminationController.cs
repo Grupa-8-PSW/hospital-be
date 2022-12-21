@@ -145,7 +145,8 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpGet("{id}/generateReport")]
-        public async Task<ActionResult> DownloadReport(int id)
+        public async Task<ActionResult> DownloadReport(int id, [FromQuery] bool includeReport,
+            [FromQuery] bool includeSymptoms, [FromQuery] bool includePrescriptions)
         {
             try
             {
@@ -173,7 +174,8 @@ namespace HospitalAPI.Controllers
                 const string dirName = @"C:\\Temp\";
                 var fileName = $"ExaminationReport_{examinationDone.Id}.pdf";
 
-                var fullPath = reportGenerator.GenerateReport(dirName, fileName);
+                var fullPath = reportGenerator.GenerateReport(dirName, fileName,
+                    includeReport, includeSymptoms, includePrescriptions);
 
                 if (fullPath == null)
                 {
