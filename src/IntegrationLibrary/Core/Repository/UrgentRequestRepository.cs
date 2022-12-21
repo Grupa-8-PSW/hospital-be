@@ -30,7 +30,8 @@ namespace IntegrationLibrary.Core.Repository
 
         public IEnumerable<UrgentRequest> GetAll()
         {
-            return _context.UrgentRequest.ToList();
+            var list = _context.UrgentRequest.ToList();
+            return list;
         }
     }
 }
