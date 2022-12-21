@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Repository.Interfaces;
 using IntegrationLibrary.Persistence;
 using MimeKit;
 

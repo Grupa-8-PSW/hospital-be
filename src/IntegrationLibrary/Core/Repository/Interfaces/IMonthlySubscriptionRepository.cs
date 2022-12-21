@@ -1,6 +1,6 @@
 ﻿using IntegrationLibrary.Core.Model;
 
-namespace IntegrationLibrary.Core.Repository;
+namespace IntegrationLibrary.Core.Repository.Interfaces;
 
 public interface IMonthlySubscriptionRepository
 {

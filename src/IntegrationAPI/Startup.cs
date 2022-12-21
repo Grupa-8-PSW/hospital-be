@@ -21,7 +21,7 @@ using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibraryAPI.Connections;
 using Microsoft.Extensions.Options;
-
+using IntegrationLibrary.Core.Repository.Interfaces;
 
 namespace IntegrationAPI
 {
@@ -52,12 +52,14 @@ namespace IntegrationAPI
             services.AddHostedService<BloodBankRabbitMqConnection>();
             services.AddScoped<ITenderOfferService, TenderOfferService>();
             services.AddScoped<ITenderOfferRepository, TenderOfferRepository>();
+            services.AddScoped<IUrgentRequestRepository, UrgentRequestRepository>();
             services.AddScoped<IBloodBankConnectionService, BloodBankConnectionService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IBloodBankService, BloodBankService>();
             services.AddScoped<IBloodBankRepository, BloodBankRepository>();
             services.AddScoped<IBloodBankHTTPConnection, BloodBankHTTPConnection>();
             services.AddScoped<IBloodBankConnectionService, BloodBankConnectionService>();
+            services.AddScoped<IUrgentRequestService, UrgentRequestService>();
             services.AddScoped<ICredentialGenerator, CredentialGenerator>();
             services.AddScoped<IBloodBankHTTPConnection, BloodBankHTTPConnection>();
             services.AddScoped<IBloodService, BloodService>();

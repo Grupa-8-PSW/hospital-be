@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IntegrationLibrary.Core.Model;
 
-namespace IntegrationLibrary.Core.Repository
+namespace IntegrationLibrary.Core.Repository.Interfaces
 {
     public interface IBloodBankRepository
     {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using IntegrationLibrary.Core.Repository.Interfaces;
 
 namespace IntegrationLibrary.Core.Repository
 {

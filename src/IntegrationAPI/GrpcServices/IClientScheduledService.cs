@@ -2,6 +2,6 @@
 {
     public interface IClientScheduledService
     {
-        public void communicate(string apiKey);
+        public Task communicate(string apiKey);
     }
 }

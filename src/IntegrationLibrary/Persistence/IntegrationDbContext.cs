@@ -11,10 +11,14 @@ namespace IntegrationLibrary.Persistence
         public DbSet<BloodConsumptionConfiguration> BloodConsumptionConfiguration { get; set; }
         public DbSet<BloodBankNews> BloodBankNews { get; set; }
         public DbSet<TenderOffer> TenderOffer { get; set; }
-        public IntegrationDbContext(DbContextOptions options) : base(options) { }
+
+        public DbSet<UrgentRequest> UrgentRequest { get; set; }
+        
         public DbSet<Tender> Tenders { get; set; }
 
         public DbSet<MonthlySubscription> MonthlySubscription { get; set; }
+
+        public IntegrationDbContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -31,12 +35,16 @@ namespace IntegrationLibrary.Persistence
              .Property(b => b.Offers)
              .HasColumnType("jsonb");
 
-            
+
             modelBuilder.Entity<Tender>()
                 .Property(b => b.DateRange)
                 .HasColumnType("jsonb");
 
             modelBuilder.Entity<Tender>()
+                .Property(b => b.Blood)
+                .HasColumnType("jsonb");
+
+            modelBuilder.Entity<UrgentRequest>()
                 .Property(b => b.Blood)
                 .HasColumnType("jsonb");
 
