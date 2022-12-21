@@ -22,7 +22,7 @@ namespace HospitalTests.HospitalLibraryTests
             var examinationReportGenerator = new ExaminationReportGenerator(examinationDone);
 
             // Act
-            var fullPath = examinationReportGenerator.GenerateReport(dirName, fileName);
+            var fullPath = examinationReportGenerator.GenerateReport(dirName, fileName, true, true, true);
 
             // Assert
             fullPath.ShouldNotBeNull();
