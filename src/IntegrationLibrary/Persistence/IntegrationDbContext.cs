@@ -18,6 +18,8 @@ namespace IntegrationLibrary.Persistence
 
         public DbSet<MonthlySubscription> MonthlySubscription { get; set; }
 
+        public DbSet<BloodRequestDelivery> BloodRequestDelivery { get; set; }
+
         public IntegrationDbContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

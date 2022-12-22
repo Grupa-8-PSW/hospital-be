@@ -28,13 +28,12 @@ namespace IntegrationAPI.Controllers
 
         [Route("/api/[controller]/generatePdf")]
         [HttpGet]
-        public IActionResult GeneratePdf()
+        public async Task<IActionResult> GeneratePdf()
         {
             DateTime fromDate = new DateTime(2022, 12, 09);
             DateTime toDate = new DateTime(2022, 12, 22);
             var validList = _urgentRequestService.FindUrgentRequestsBetweenDates(fromDate, toDate);
-            return File(_urgentRequestService.GeneratePdf(validList, fromDate, toDate), "application/pdf", "urgentrequestreport.pdf");
-
+            return File(await _urgentRequestService.GeneratePdf(validList, fromDate, toDate), "application/pdf", "urgentrequestreport.pdf");
         }
 
     }
