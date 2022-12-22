@@ -19,7 +19,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace IntegrationAPI.Controllers
 {
 
-    [Authorize]
+
     [Route("api/[controller]")]
     [ApiController]
     public class BloodConsumptionConfigurationController : ControllerBase

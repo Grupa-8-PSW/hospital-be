@@ -10,6 +10,6 @@ namespace IntegrationLibrary.Core.Service.Interfaces
     public interface IUrgentRequestService
     {
         List<UrgentRequest> FindUrgentRequestsBetweenDates(DateTime fromDate, DateTime toDate);
-        byte[] GeneratePdf(List<UrgentRequest> urgentRequests, DateTime fromDate, DateTime toDate);
+        Task<byte[]> GeneratePdf(List<UrgentRequest> urgentRequests, DateTime fromDate, DateTime toDate);
     }
 }

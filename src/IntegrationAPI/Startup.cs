@@ -82,6 +82,9 @@ namespace IntegrationAPI
             services.AddScoped<IMonthlySubscriptionRepository, MonthlySubscriptionRepository>();
             services.AddScoped<IMonthlySubscriptionService, MonthlySubscriptionService>();
 
+            services.AddScoped<IBloodRequestDeliveryRepository, BloodRequestDeliveryRepository>();
+            services.AddScoped<IBloodRequestDeliveryService, BloodRequestDeliveryService>();
+
             services.AddScoped<IMapper<BloodBankNews, BloodBankNewsDTO>, BloodBankNewsMapper>();
             services.AddScoped<IMapper<MonthlySubscription, MonthlySubscriptionDTO>, MonthlySubscriptionMapper>();
             services.AddTransient<ExceptionMiddleware>();
