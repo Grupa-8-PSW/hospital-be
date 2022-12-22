@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Core.Model;
+﻿using HospitalLibrary.Core.Enums;
+using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.DTO;
 
 namespace IntegrationLibrary.Core.Service.Interfaces;
@@ -13,4 +14,5 @@ public interface IMonthlySubscriptionService
 
     void ChangeStatus(MonthlySubscriptionResponseDTO subscriptionResponse);
     List<BloodDTO> GetBloodIfDelivered(MonthlySubscriptionDeliveryDTO message);
+    public IEnumerable<MonthlySubscription> GetByBloodType(BloodType bloodType);
 }

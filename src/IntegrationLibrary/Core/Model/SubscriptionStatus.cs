@@ -1,4 +1,5 @@
-﻿public enum SubscriptionStatus{
+﻿
+public enum SubscriptionStatus{
     ACCEPTED,
     REJECTED,
     WAITING

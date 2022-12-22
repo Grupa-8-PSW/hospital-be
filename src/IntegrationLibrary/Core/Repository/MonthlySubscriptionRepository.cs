@@ -1,5 +1,8 @@
-﻿using IntegrationLibrary.Core.Model;
+﻿using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Model;
+using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace IntegrationLibrary.Core.Repository;
 
@@ -37,5 +40,10 @@ public class MonthlySubscriptionRepository : IMonthlySubscriptionRepository
     {
         _context.MonthlySubscription.Update(monthlySubscription);
         _context.SaveChanges();
+    }
+
+    public IEnumerable<MonthlySubscription> GetByBloodType(BloodType bloodType)
+    {
+        return _context.MonthlySubscription.Include(ms => ms.Bank).Where(ms => ms.RequestedBlood.Any(rb => rb.BloodType == bloodType)).ToList();
     }
 }

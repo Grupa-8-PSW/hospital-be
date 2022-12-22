@@ -4,6 +4,7 @@ using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibrary.Core.Model.ValueObject;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Service.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace IntegrationLibrary.Core.Service;
 
@@ -83,5 +84,10 @@ public class MonthlySubscriptionService : IMonthlySubscriptionService
         bloodDTO.Quantity = blood.Quantity;
         bloodDTO.Id = (int)blood.BloodType + 1;
         bloodDTOs.Add(bloodDTO);
+    }
+
+    public IEnumerable<MonthlySubscription> GetByBloodType(BloodType bloodType)
+    {
+        return _repository.GetByBloodType(bloodType);
     }
 }

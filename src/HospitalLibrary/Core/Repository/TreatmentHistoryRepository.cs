@@ -20,6 +20,7 @@ namespace HospitalLibrary.Core.Repository
             _context = context;
         }
 
+
         public IEnumerable<TreatmentHistory> GetAll()
         {
             return _context.TreatmentHistories.Include(th => th.Patient).ToList();

@@ -159,6 +159,7 @@ namespace HospitalAPI
 
 
             services.AddScoped<IMapper<ConsiliumRequest, ConsiliumRequestDTO>, ConsiliumRequestMapper>();
+            services.AddScoped<IBloodOrderHTTPConnection, BloodOrderHTTPConnection>();
 
             services.AddCors(options =>
             {

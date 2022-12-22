@@ -1,4 +1,5 @@
-﻿using IntegrationAPI.ConnectionService.Interface;
+﻿using HospitalLibrary.Core.Enums;
+using IntegrationAPI.ConnectionService.Interface;
 using IntegrationAPI.Mapper;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.DTO;
@@ -59,6 +60,18 @@ namespace IntegrationAPI.Controllers
         public ActionResult Get()
         {
             return Ok(_service.GetAll());
+        }
+
+        [HttpGet("{bloodType}")]
+        public ActionResult GetAll(string bloodType)
+        {
+            BloodType bloodTypeValidated;
+            if (!Enum.TryParse<BloodType>(bloodType, out bloodTypeValidated))
+                return BadRequest("Not valid blood type");
+
+            IEnumerable<MonthlySubscription> monthlySubscriptions = _service.GetByBloodType(bloodTypeValidated);
+
+            return Ok(monthlySubscriptions);
         }
     }
 }
