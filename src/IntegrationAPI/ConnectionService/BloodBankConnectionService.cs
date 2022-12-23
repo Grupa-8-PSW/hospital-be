@@ -21,17 +21,21 @@ namespace IntegrationLibrary.Core.Service
         private readonly ITenderOfferService _tenderOfferService;
         private readonly IBloodService _bloodService;
         private readonly IHospitalHTTPConnectionService _hospitalHTTPConnectionService;
+        private readonly IHospitalRabbitMqPublisher _hospitalRabbitMqPublisher;
+
         public BloodBankConnectionService(IBloodBankHTTPConnection bloodBankHTTPConnection, 
                                           IBloodBankService bloodBankService,
                                           IBloodService bloodService,
                                           IHospitalHTTPConnectionService hospitalHttpConnectionService,
-                                          ITenderOfferService tenderOfferService)
+                                          ITenderOfferService tenderOfferService,
+                                          IHospitalRabbitMqPublisher hospitalRabbitMqPublisher)
         {
             this.bloodBankHTTPConnection = bloodBankHTTPConnection;
             this.bloodBankService = bloodBankService;
             this._bloodService = bloodService;
             this._hospitalHTTPConnectionService = hospitalHttpConnectionService;
             this._tenderOfferService = tenderOfferService;
+            this._hospitalRabbitMqPublisher = hospitalRabbitMqPublisher;
         }
 
         public bool CheckForSpecificBloodType(int bloodBankId, string bloodType)
@@ -57,7 +61,8 @@ namespace IntegrationLibrary.Core.Service
             BloodUnitUrgentRequest request = new BloodUnitUrgentRequest();
             request.bloodUnits = _bloodService.GetMissingQuantities(_hospitalHTTPConnectionService.GetAllBlood());
             request.APIKey = apiKey;
-            bloodBankHTTPConnection.SendUrgentRequest(request);
+            string sendingStatus = "URGENT";
+            bloodBankHTTPConnection.SendUrgentRequest(request, sendingStatus);
             return true;
         }
 
@@ -68,8 +73,15 @@ namespace IntegrationLibrary.Core.Service
 
             request.bloodUnits = TenderOfferMapper.ToBloodDTO(tenderOffer.Offers);
             request.APIKey = apiKey;
-            bloodBankHTTPConnection.SendUrgentRequest(request);
+            string sendingStatus = "TENDER";
+            bloodBankHTTPConnection.SendUrgentRequest(request, sendingStatus);
             return true;
+        }
+
+        public void SendMonthlySubscriptionOffer(MonthlySubscriptionMessageDTO monthlySubscriptionDTO, string routingKey)
+        {
+
+            _hospitalRabbitMqPublisher.SendMonthlySubscriptionOffer(monthlySubscriptionDTO, routingKey);
         }
     }
 }

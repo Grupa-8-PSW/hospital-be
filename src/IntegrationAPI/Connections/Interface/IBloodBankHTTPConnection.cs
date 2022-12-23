@@ -10,6 +10,7 @@ namespace IntegrationAPI.Connections.Interface
         public bool CheckForSpecificBloodType(BloodBank bloodBank, string bloodType);
         public bool CheckBloodAmount(string api, string bloodType, double quant);
 
-        public void SendUrgentRequest(BloodUnitUrgentRequest bloodUnit);
+        public void SendUrgentRequest(BloodUnitUrgentRequest bloodUnit, string sendingStatus);
+
     }
 }

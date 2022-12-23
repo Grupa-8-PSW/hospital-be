@@ -87,16 +87,16 @@ namespace IntegrationAPI.Mapper
 
         
 
-        private static List<BloodOfferDTO> convFromTenderTOBloodAmounts(List<IntegrationLibrary.Core.Model.Blood> blood)
+        private static List<BloodOfferDTO> convFromTenderTOBloodAmounts(List<IntegrationLibrary.Core.Model.ValueObject.Blood> blood)
         {
             List<BloodOfferDTO> bos = new List<BloodOfferDTO>();
 
-            foreach (IntegrationLibrary.Core.Model.Blood b in blood)
+            foreach (IntegrationLibrary.Core.Model.ValueObject.Blood b in blood)
             {
                 bos.Add(new BloodOfferDTO()
                 {
                     BloodAmount = b.Quantity,
-                    BloodType = BlootTypeToString(b.BloodType),
+                    BloodType = BloodTypeToString(b.BloodType),
                     PriceAmount = 0
                 }); ;
             }
@@ -104,7 +104,7 @@ namespace IntegrationAPI.Mapper
             return bos;
         }
 
-        private static string BlootTypeToString(BloodType bloodType)
+        private static string BloodTypeToString(BloodType bloodType)
         {
             if (bloodType == BloodType.ZERO_POSITIVE)
                 return "0+";
@@ -146,6 +146,27 @@ namespace IntegrationAPI.Mapper
 
         }
 
+        private static BloodType BloodTypeAsStringToBloodType(string bloodType)
+        {
+            if (bloodType.Equals("ZERO_POSITIVE"))
+                return BloodType.ZERO_POSITIVE;
+            else if (bloodType.Equals("ZERO_NEGATIVE"))
+                return BloodType.ZERO_NEGATIVE;
+            else if (bloodType.Equals("A_POSITIVE"))
+                return BloodType.A_POSITIVE;
+            else if (bloodType.Equals("A_NEGATIVE"))
+                return BloodType.A_NEGATIVE;
+            else if (bloodType.Equals("B_NEGATIVE"))
+                return BloodType.B_NEGATIVE;
+            else if (bloodType.Equals("B_POSITIVE"))
+                return BloodType.B_POSITIVE;
+            else if (bloodType.Equals("AB_POSITIVE"))
+                return BloodType.AB_POSITIVE;
+            else
+                return BloodType.AB_NEGATIVE;
+
+        }
+
 
         internal static List<BloodDTO> ToBloodDTO(List<BloodOffer> offers)
         {
@@ -161,6 +182,32 @@ namespace IntegrationAPI.Mapper
             }
 
             return bloodDTOs;
+        }
+
+        internal static List<BloodOffer> BloodDtoToBlood(List<BloodDTO> bloods)
+        {
+            List<BloodOffer> blood = new List<BloodOffer>();
+
+            foreach (BloodDTO bloodDto in bloods)
+            {
+                BloodOffer bloodOffer = new BloodOffer(bloodDto.Type, bloodDto.Quantity);
+                blood.Add(bloodOffer);
+            }
+
+            return blood;
+        }
+
+        public static List<IntegrationLibrary.Core.Model.ValueObject.Blood> BloodDtoToBloodAmount(List<BloodDTO> bloodDTOs)
+        {
+            List<IntegrationLibrary.Core.Model.ValueObject.Blood> bloods = new List<IntegrationLibrary.Core.Model.ValueObject.Blood>();
+
+            foreach (BloodDTO bdto in bloodDTOs)
+            {
+            IntegrationLibrary.Core.Model.ValueObject.Blood b = new IntegrationLibrary.Core.Model.ValueObject.Blood(BloodTypeAsStringToBloodType(bdto.Type), bdto.Quantity);
+                bloods.Add(b);
+            }
+
+            return bloods;
         }
     }
 }

@@ -4,6 +4,7 @@ using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Service.Interfaces;
 using IntegrationLibrary.Core.Service;
 using IntegrationAPI.Mapper;
+using IntegrationLibrary.Core.Model.ValueObject;
 
 namespace IntegrationAPI.Controllers
 {
@@ -21,13 +22,24 @@ namespace IntegrationAPI.Controllers
 
         // POST: TenderController/Create
         [HttpPost]
-        public void Create(Tender tender)
+        public String Create(Tender tender)
         {
             if (!ModelState.IsValid)
             {
                 Console.WriteLine(ModelState);
             }
-            _service.Create(tender);
+
+            try
+            {
+                _service.Create(tender);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return "Error in creation";
+            }
+
+            return "Success";
         }
 
         // POST: TenderController/getAllForOffers
@@ -39,7 +51,5 @@ namespace IntegrationAPI.Controllers
             return Ok(_service.GetAllBloodAmountsBetweenDates(from, to));
         }
 
-
-       
     }
 }

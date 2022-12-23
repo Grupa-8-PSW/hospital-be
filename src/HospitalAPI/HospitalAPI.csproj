@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Security\Migrations\**" />
+    <Content Remove="Security\Migrations\**" />
+    <EmbeddedResource Remove="Security\Migrations\**" />
+    <None Remove="Security\Migrations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Mapper\BloodUnitRequestMapper.cs~RF1bdf681.TMP" />
   </ItemGroup>
 
@@ -48,7 +55,6 @@
     <Folder Include="Extensions\" />
     <Folder Include="Responses\" />
     <Folder Include="Requests\" />
-    <Folder Include="Security\Migrations\" />
   </ItemGroup>
 
 </Project>

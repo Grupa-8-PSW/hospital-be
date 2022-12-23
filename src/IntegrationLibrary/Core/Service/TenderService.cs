@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.DTO;
+using IntegrationLibrary.Core.Model.ValueObject;
 using IntegrationLibrary.Core.Repository;
+using IntegrationLibrary.Core.Repository.Interfaces;
 using IntegrationLibrary.Core.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,10 +17,12 @@ namespace IntegrationLibrary.Core.Service
     public class TenderService : ITenderService
     {
         private readonly ITenderRepository _tenderRepository;
+        private readonly ITenderOfferRepository _tenderOfferRepository;
 
-        public TenderService(ITenderRepository tenderRepository)
+        public TenderService(ITenderRepository tenderRepository, ITenderOfferRepository tenderOfferRepository)
         {
             _tenderRepository = tenderRepository;
+            _tenderOfferRepository = tenderOfferRepository;
         }
 
         public IEnumerable<Tender> GetAll()
@@ -48,7 +53,7 @@ namespace IntegrationLibrary.Core.Service
         public Tender UpdateStatus(int tenderID)
         {
             Tender tender = _tenderRepository.GetById(tenderID);
-            tender.Status = TenderStatus.Inactive;
+            tender.EndTenderLifeCycle();
             _tenderRepository.Update(tender);
             return tender;
         }

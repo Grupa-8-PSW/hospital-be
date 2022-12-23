@@ -1,4 +1,5 @@
 ﻿using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Repository.Interfaces;
 using IntegrationLibrary.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System;

@@ -6,8 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HospitalLibrary.Core.Enums;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
-namespace IntegrationLibrary.Core.Model
+namespace IntegrationLibrary.Core.Model.ValueObject
 {
     public class Blood : ValueObject<Blood>
     {
@@ -19,11 +20,20 @@ namespace IntegrationLibrary.Core.Model
         {
             Quantity = quantity;
             BloodType = bloodType;
+            Validate();
+        }
+
+
+
+        private void Validate()
+        {
+            if (Quantity < 0 || BloodType == null)
+                throw new Exception("Wrong Data");
         }
 
         protected override bool EqualsCore(Blood other)
         {
-            return BloodType==other.BloodType && Quantity==other.Quantity;
+            return BloodType == other.BloodType && Quantity == other.Quantity;
         }
 
         protected override int GetHashCodeCore()

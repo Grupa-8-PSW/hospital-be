@@ -21,5 +21,7 @@ namespace IntegrationAPI.ConnectionService.Interface
         public bool SendUrgentRequest(string apiKey);
         public bool SendTenderOffer(string apiKey, int tenderID);
 
+        public void SendMonthlySubscriptionOffer(MonthlySubscriptionMessageDTO monthlySubscriptionDTO, string monthlySubscriptionRoutingKey);
+
     }
 }

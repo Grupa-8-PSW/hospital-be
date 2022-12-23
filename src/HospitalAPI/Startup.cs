@@ -29,6 +29,7 @@ using AngleSharp.Io;
 using HospitalAPI.Responses;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
+
 namespace HospitalAPI
 {
     public class Startup
@@ -151,6 +152,13 @@ namespace HospitalAPI
 
             services.AddScoped<IResponseMapper<Consilium, ConsiliumResponse>, ConsiliumResponseMapper>();
             services.AddScoped<IResponseMapper<Doctor, ConsiliumDoctorResponse>, ConsiliumDoctorResponseMapper>();
+
+            services.AddScoped<IExaminationDoneRepository, ExaminationDoneRepository>();
+            services.AddScoped<IExaminationDoneService, ExaminationDoneService>();
+            services.AddScoped<IMapper<ExaminationDone, ExaminationDoneDTO>, ExaminationDoneMapper>();
+
+
+            services.AddScoped<IMapper<ConsiliumRequest, ConsiliumRequestDTO>, ConsiliumRequestMapper>();
 
             services.AddCors(options =>
             {

@@ -1,6 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
 using IntegrationLibrary.Core.Model;
-using IntegrationLibrary.Core.Repository;
+using IntegrationLibrary.Core.Repository.Interfaces;
 using IntegrationLibrary.Core.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;

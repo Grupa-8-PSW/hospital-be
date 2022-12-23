@@ -16,7 +16,6 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
         Pages.CheckForBloodTypePage checkForBloodTypePage;
         private Pages.LoginPage loginPage;
 
-
         public CheckForBloodTypeTest()
         {
 
@@ -30,8 +29,6 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
             options.AddArguments("--disable-notifications");
 
             driver = new ChromeDriver(options);
-
-
             loginPage = new Pages.LoginPage(driver);
 
 

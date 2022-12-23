@@ -36,7 +36,6 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
 
             loginPage = new Pages.LoginPage(driver);
 
-
             loginPage.Navigate();
             loginPage.EnsurePageIsDisplayed();
             loginPage.InsertUsername("manager");

@@ -23,7 +23,7 @@ namespace HospitalLibrary.Core.Repository
             return _context.Examinations.ToList();
         }
 
-        public Examination GetById(int id)
+        public Examination? GetById(int id)
         {
             return _context.Examinations.Find(id);
         }

@@ -3,6 +3,7 @@ using System;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221208010415_SeedSymptoms1")]
+    partial class SeedSymptoms1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -562,6 +564,28 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("Examinations");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.ExaminationDone", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ExaminationId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Record")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExaminationId");
+
+                    b.ToTable("ExaminationsDone");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.Feedback", b =>
                 {
                     b.Property<int>("Id")
@@ -790,6 +814,63 @@ namespace HospitalLibrary.Migrations
                         });
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Prescription", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("ExaminationDoneId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExaminationDoneId");
+
+                    b.ToTable("Prescription");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Symptom", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("ExaminationDoneId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExaminationDoneId");
+
+                    b.ToTable("Symptoms");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Temperatura"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Glavobolja"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Bol u stomaku"
+                        });
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.Therapy", b =>
                 {
                     b.Property<int>("Id")
@@ -839,7 +920,7 @@ namespace HospitalLibrary.Migrations
                             TherapySubject = "Bromazepam 500mg",
                             TherapyType = 0,
                             TreatmentHistoryId = 1,
-                            WhenPrescribed = new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(3006)
+                            WhenPrescribed = new DateTime(2022, 12, 8, 1, 4, 9, 992, DateTimeKind.Utc).AddTicks(4395)
                         },
                         new
                         {
@@ -850,7 +931,7 @@ namespace HospitalLibrary.Migrations
                             TherapySubject = "A+ 500ml",
                             TherapyType = 1,
                             TreatmentHistoryId = 1,
-                            WhenPrescribed = new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(3007)
+                            WhenPrescribed = new DateTime(2022, 12, 8, 1, 4, 9, 992, DateTimeKind.Utc).AddTicks(4406)
                         });
                 });
 
@@ -905,11 +986,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 1,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2975),
+                            EndDate = new DateTime(2022, 12, 8, 1, 4, 9, 992, DateTimeKind.Utc).AddTicks(4131),
                             PatientId = 1,
                             Reason = "reason1",
                             RoomId = 1,
-                            StartDate = new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2974)
+                            StartDate = new DateTime(2022, 12, 8, 1, 4, 9, 992, DateTimeKind.Utc).AddTicks(4127)
                         },
                         new
                         {
@@ -917,11 +998,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 2,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2978),
+                            EndDate = new DateTime(2022, 12, 8, 1, 4, 9, 992, DateTimeKind.Utc).AddTicks(4152),
                             PatientId = 2,
                             Reason = "reason2",
                             RoomId = 1,
-                            StartDate = new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2978)
+                            StartDate = new DateTime(2022, 12, 8, 1, 4, 9, 992, DateTimeKind.Utc).AddTicks(4151)
                         },
                         new
                         {
@@ -929,11 +1010,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 4,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2979),
+                            EndDate = new DateTime(2022, 12, 8, 1, 4, 9, 992, DateTimeKind.Utc).AddTicks(4159),
                             PatientId = 3,
                             Reason = "reason3",
                             RoomId = 2,
-                            StartDate = new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2979)
+                            StartDate = new DateTime(2022, 12, 8, 1, 4, 9, 992, DateTimeKind.Utc).AddTicks(4158)
                         },
                         new
                         {
@@ -944,7 +1025,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 1,
                             Reason = "reason1",
                             RoomId = 1,
-                            StartDate = new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2980)
+                            StartDate = new DateTime(2022, 12, 8, 1, 4, 9, 992, DateTimeKind.Utc).AddTicks(4161)
                         },
                         new
                         {
@@ -955,7 +1036,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 2,
                             Reason = "reason2",
                             RoomId = 1,
-                            StartDate = new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2980)
+                            StartDate = new DateTime(2022, 12, 8, 1, 4, 9, 992, DateTimeKind.Utc).AddTicks(4166)
                         },
                         new
                         {
@@ -966,7 +1047,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 3,
                             Reason = "reason3",
                             RoomId = 2,
-                            StartDate = new DateTime(2022, 12, 6, 11, 36, 22, 933, DateTimeKind.Utc).AddTicks(2981)
+                            StartDate = new DateTime(2022, 12, 8, 1, 4, 9, 992, DateTimeKind.Utc).AddTicks(4169)
                         });
                 });
 
@@ -2208,6 +2289,17 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Room");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.ExaminationDone", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Examination", "Examination")
+                        .WithMany()
+                        .HasForeignKey("ExaminationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Examination");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.Feedback", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Patient", "Patient")
@@ -2236,6 +2328,20 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Address");
 
                     b.Navigation("selectedDoctor");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Prescription", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.ExaminationDone", null)
+                        .WithMany("Prescriptions")
+                        .HasForeignKey("ExaminationDoneId");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Symptom", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.ExaminationDone", null)
+                        .WithMany("Symptoms")
+                        .HasForeignKey("ExaminationDoneId");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Therapy", b =>
@@ -2315,6 +2421,13 @@ namespace HospitalLibrary.Migrations
                         .IsRequired();
 
                     b.Navigation("Floor");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.ExaminationDone", b =>
+                {
+                    b.Navigation("Prescriptions");
+
+                    b.Navigation("Symptoms");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Patient", b =>

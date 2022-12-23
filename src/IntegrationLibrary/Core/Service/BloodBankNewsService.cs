@@ -1,13 +1,14 @@
 ﻿using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.DTO;
-using IntegrationLibrary.Core.Repository;
+using IntegrationLibrary.Core.Repository.Interfaces;
+using IntegrationLibrary.Core.Service.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Service.Interfaces
+namespace IntegrationLibrary.Core.Service
 {
     public class BloodBankNewsService : IBloodBankNewsService
     {
@@ -22,13 +23,13 @@ namespace IntegrationLibrary.Core.Service.Interfaces
 
         public void ArchiveNews(BloodBankNews bloodBankNews)
         {
-            bloodBankNews.Archived = true;
+            bloodBankNews.ArchiveNews();
             bloodBankNewsRepository.Update(bloodBankNews);
         }
 
         public void PublishNews(BloodBankNews bloodBankNews)
         {
-            bloodBankNews.Published = true;
+            bloodBankNews.PublishNews();
             bloodBankNewsRepository.Update(bloodBankNews);
         }
 
@@ -37,11 +38,11 @@ namespace IntegrationLibrary.Core.Service.Interfaces
             BloodBank bloodBank = bloodBankRepository.GetByApiKey(bloodBankNewsDTO.bloodBankApiKey);
             if (bloodBank != null)
             {
-                BloodBankNews bloodBankNews = new BloodBankNews(bloodBankNewsDTO.text, bloodBankNewsDTO.subject, 
+                BloodBankNews bloodBankNews = new BloodBankNews(bloodBankNewsDTO.text, bloodBankNewsDTO.subject,
                                                                 bloodBankNewsDTO.imgSrc, false, false, bloodBank, bloodBank.Id);
                 bloodBankNewsRepository.Create(bloodBankNews);
             }
-            
+
         }
 
         public void Delete(BloodBankNews bloodBankNews)
@@ -59,6 +60,6 @@ namespace IntegrationLibrary.Core.Service.Interfaces
             return bloodBankNewsRepository.GetById(id);
         }
 
-        
+
     }
 }

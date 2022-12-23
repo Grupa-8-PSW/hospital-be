@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Core.Repository
+namespace IntegrationLibrary.Core.Repository.Interfaces
 {
     public interface IBloodBankNewsRepository
     {
