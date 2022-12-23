@@ -52,5 +52,11 @@ namespace IntegrationLibrary.Core.Repository
         {
             return _context.Tenders.Where(p => p.Status.Equals(TenderStatus.Active));
         }
+
+        public IEnumerable<Tender> GetAllBloodAmountsBetweenDates(DateTime start, DateTime end)
+        {
+            return _context.Tenders.Where(t => t.Status.Equals(TenderStatus.Inactive) && t.DateRange.Start >= start && t.DateRange.Start <= end);
+        }
+
     }
 }

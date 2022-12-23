@@ -10,6 +10,7 @@ using IntegrationLibrary.Core.Model.ValueObject;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Repository.Interfaces;
 using IntegrationLibrary.Core.Service.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace IntegrationLibrary.Core.Service
 {
@@ -57,27 +58,36 @@ namespace IntegrationLibrary.Core.Service
             return tender;
         }
 
-        public List<BloodOffer> GetBloodFromTenders(DateTime startTime, DateTime endTime)
+        public List<Blood> GetAllBloodAmountsBetweenDates(DateTime from, DateTime to)
         {
-            List<BloodOffer> toRet = new List<BloodOffer>();
-            foreach (Tender tender in GetAll())
-            {
-                if (tender.DateRange.Start > startTime && tender.DateRange.End < endTime)
-                {
-                    foreach (TenderOffer tenderOffer in _tenderOfferRepository.GetAllByTennderID(tender.Id))
-                    {
-                        if (tenderOffer.TenderOfferStatus.ToString().Equals("APPROVE"))
-                        {
-                            foreach (BloodOffer offer in tenderOffer.Offers)
-                            {
-                                toRet.Add(offer);
-                            }
-                        }
-                    }
+            List<Blood> bloods = initializeList();
+
+            IEnumerable<Tender> tenders = _tenderRepository.GetAllBloodAmountsBetweenDates(from, to);
+
+            foreach(Tender tender in tenders ) {
+                foreach (Blood blood in tender.Blood) {
+                    foreach (var bl in bloods.Where(x => x.BloodType.Equals(blood.BloodType)))
+                        bl.Quantity = bl.Quantity + blood.Quantity;
                 }
             }
-        
-            return toRet;
+            
+            return bloods;
         }
+
+        private List<Blood> initializeList()
+        {
+            List<Blood> bloods = new List<Blood>();
+            bloods.Add(new Blood(HospitalLibrary.Core.Enums.BloodType.ZERO_POSITIVE, 0));
+            bloods.Add(new Blood(HospitalLibrary.Core.Enums.BloodType.A_POSITIVE, 0));
+            bloods.Add(new Blood(HospitalLibrary.Core.Enums.BloodType.B_POSITIVE, 0));
+            bloods.Add(new Blood(HospitalLibrary.Core.Enums.BloodType.AB_POSITIVE, 0));
+            bloods.Add(new Blood(HospitalLibrary.Core.Enums.BloodType.ZERO_NEGATIVE, 0));
+            bloods.Add(new Blood(HospitalLibrary.Core.Enums.BloodType.AB_NEGATIVE, 0));
+            bloods.Add(new Blood(HospitalLibrary.Core.Enums.BloodType.AB_POSITIVE, 0));
+            bloods.Add(new Blood(HospitalLibrary.Core.Enums.BloodType.A_NEGATIVE, 0));
+            bloods.Add(new Blood(HospitalLibrary.Core.Enums.BloodType.B_NEGATIVE, 0));
+            return bloods;
+        }
+
     }
 }

@@ -14,7 +14,7 @@ namespace IntegrationLibrary.Core.Model.ValueObject
     {
         public BloodType BloodType { get; }
 
-        public int Quantity { get; }
+        public int Quantity { get; set; }
 
         public Blood(BloodType bloodType, int quantity)
         {
