@@ -36,6 +36,7 @@ namespace IntegrationLibrary.Core.Model.ValueObject
             return BloodType == other.BloodType && Quantity == other.Quantity;
         }
 
+
         protected override int GetHashCodeCore()
         {
             unchecked

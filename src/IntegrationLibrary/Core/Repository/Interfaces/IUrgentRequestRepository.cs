@@ -13,5 +13,7 @@ namespace IntegrationLibrary.Core.Repository.Interfaces
         UrgentRequest SaveUrgentRequest(UrgentRequest urgentRequest);
 
         IEnumerable<UrgentRequest> GetAll();
+
+        IEnumerable<UrgentRequest> GetAllBloodAmountsBetweenDates(DateTime start, DateTime end);
     }
 }

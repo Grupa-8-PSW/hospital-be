@@ -11,6 +11,8 @@ using Firebase.Auth;
 using Firebase.Storage;
 using System.Threading.Tasks;
 using HospitalLibrary.Core.Enums;
+using IntegrationLibrary.Core.Repository;
+using IntegrationLibrary.Core.Model.ValueObject;
 
 namespace IntegrationLibrary.Core.Service
 {
@@ -37,19 +39,59 @@ namespace IntegrationLibrary.Core.Service
             return validRequests;
         }
 
+        public List<Blood> GetAllBloodAmountsBetweenDates(DateTime from, DateTime to)
+        {
+            List<Blood> bloods = initializeList();
+            foreach (UrgentRequest urgentRequest in FindUrgentRequestsBetweenDates(from, to))
+            {
+                foreach (Blood blood in urgentRequest.Blood)
+                {
+                    foreach (var bl in bloods.Where(x => x.BloodType.Equals(blood.BloodType)))
+                        bl.Quantity = bl.Quantity + blood.Quantity;
+                }
+            }
+            return bloods;
+        }
+
+        public List<UrgentRequest> GetSummarizedUrgentRequests(DateTime from, DateTime to)
+        {
+           List<UrgentRequest> sumRequests = new List<UrgentRequest>();
+           List<Blood> bloods = initializeList();
+           UrgentRequest sumRequest = FindUrgentRequestsBetweenDates(from, to).First();
+           foreach (UrgentRequest urgentRequest in FindUrgentRequestsBetweenDates(from, to))
+           {
+                if (urgentRequest.BloodBankId.Equals(sumRequest.BloodBankId))
+                {
+                    foreach (Blood blood in urgentRequest.Blood)
+                    {
+                        foreach (var bl in bloods.Where(x => x.BloodType.Equals(blood.BloodType)))
+                            bl.Quantity = bl.Quantity + blood.Quantity;
+
+                    }
+                    sumRequest.Blood = bloods;
+                    sumRequest.BloodBankId = urgentRequest.BloodBankId;
+                }
+           }
+            sumRequests.Add(sumRequest);
+            return sumRequests;
+        }
+
+
+
+
+
         public async Task<byte[]> GeneratePdf(List<UrgentRequest> urgentRequests, DateTime fromDate, DateTime toDate)
+
         {
             using (MemoryStream ms = new MemoryStream())
             {
-
                 Document document = new Document(PageSize.A4, 25, 25, 30, 30);
-
                 PdfWriter writer = PdfWriter.GetInstance(document, ms);
-
                 writer.Open();
-
                 document.Open();
+
                 CreateTable(urgentRequests, fromDate, toDate, document);
+
                 document.Close();
                 writer.Close();
                 var constant = ms.ToArray();
@@ -97,126 +139,29 @@ namespace IntegrationLibrary.Core.Service
         private void CreateTable(List<UrgentRequest> urgentRequests, DateTime fromDate, DateTime toDate, Document document)
         {
             PdfPTable table = new PdfPTable(9);
+            CreateHeaderCell(table, "Blood Bank Name");
+            CreateHeaderCell(table, "A+");
+            CreateHeaderCell(table, "A-");
+            CreateHeaderCell(table, "B+");
+            CreateHeaderCell(table, "B-");
+            CreateHeaderCell(table, "AB+");
+            CreateHeaderCell(table, "AB-");
+            CreateHeaderCell(table, "0+");
+            CreateHeaderCell(table, "0-");
 
 
-            PdfPCell cell = new PdfPCell(new Phrase("Blood Bank name", new Font(Font.FontFamily.HELVETICA, 10)));
-            cell.BackgroundColor = BaseColor.PINK;
-            cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.TOP_BORDER | Rectangle.LEFT_BORDER |
-                           Rectangle.RIGHT_BORDER;
-            cell.BorderWidthBottom = 1f;
-            cell.BorderWidthTop = 1f;
-            cell.BorderWidthLeft = 1f;
-            cell.BorderWidthRight = 1f;
-            cell.HorizontalAlignment = Element.ALIGN_CENTER;
-            cell.VerticalAlignment = Element.ALIGN_CENTER;
-            table.AddCell(cell);
-
-
-            PdfPCell cell1 = new PdfPCell(new Phrase("A+", new Font(Font.FontFamily.HELVETICA, 10)));
-            cell1.BackgroundColor = BaseColor.PINK;
-            cell1.Border = Rectangle.BOTTOM_BORDER | Rectangle.TOP_BORDER | Rectangle.LEFT_BORDER |
-                           Rectangle.RIGHT_BORDER;
-            cell1.BorderWidthBottom = 1f;
-            cell1.BorderWidthTop = 1f;
-            cell1.BorderWidthLeft = 1f;
-            cell1.BorderWidthRight = 1f;
-            cell1.HorizontalAlignment = Element.ALIGN_CENTER;
-            cell1.VerticalAlignment = Element.ALIGN_CENTER;
-            table.AddCell(cell1);
-
-            PdfPCell cell2 = new PdfPCell(new Phrase("A-", new Font(Font.FontFamily.HELVETICA, 10)));
-            cell2.BackgroundColor = BaseColor.PINK;
-            cell2.Border = Rectangle.BOTTOM_BORDER | Rectangle.TOP_BORDER | Rectangle.LEFT_BORDER |
-                           Rectangle.RIGHT_BORDER;
-            cell2.BorderWidthBottom = 1f;
-            cell2.BorderWidthTop = 1f;
-            cell2.BorderWidthLeft = 1f;
-            cell2.BorderWidthRight = 1f;
-            cell2.HorizontalAlignment = Element.ALIGN_CENTER;
-            cell2.VerticalAlignment = Element.ALIGN_CENTER;
-            table.AddCell(cell2);
-
-            PdfPCell cell3 = new PdfPCell(new Phrase("B+", new Font(Font.FontFamily.HELVETICA, 10)));
-            cell3.BackgroundColor = BaseColor.PINK;
-            cell3.Border = Rectangle.BOTTOM_BORDER | Rectangle.TOP_BORDER | Rectangle.LEFT_BORDER |
-                           Rectangle.RIGHT_BORDER;
-            cell3.BorderWidthBottom = 1f;
-            cell3.BorderWidthTop = 1f;
-            cell3.BorderWidthLeft = 1f;
-            cell3.BorderWidthRight = 1f;
-            cell3.HorizontalAlignment = Element.ALIGN_CENTER;
-            cell3.VerticalAlignment = Element.ALIGN_CENTER;
-            table.AddCell(cell3);
-
-            PdfPCell cell4 = new PdfPCell(new Phrase("B-", new Font(Font.FontFamily.HELVETICA, 10)));
-            cell4.BackgroundColor = BaseColor.PINK;
-            cell4.Border = Rectangle.BOTTOM_BORDER | Rectangle.TOP_BORDER | Rectangle.LEFT_BORDER |
-                           Rectangle.RIGHT_BORDER;
-            cell4.BorderWidthBottom = 1f;
-            cell4.BorderWidthTop = 1f;
-            cell4.BorderWidthLeft = 1f;
-            cell4.BorderWidthRight = 1f;
-            cell4.HorizontalAlignment = Element.ALIGN_CENTER;
-            cell4.VerticalAlignment = Element.ALIGN_CENTER;
-            table.AddCell(cell4);
-
-            PdfPCell cell5 = new PdfPCell(new Phrase("AB+", new Font(Font.FontFamily.HELVETICA, 10)));
-            cell5.BackgroundColor = BaseColor.PINK;
-            cell5.Border = Rectangle.BOTTOM_BORDER | Rectangle.TOP_BORDER | Rectangle.LEFT_BORDER |
-                           Rectangle.RIGHT_BORDER;
-            cell5.BorderWidthBottom = 1f;
-            cell5.BorderWidthTop = 1f;
-            cell5.BorderWidthLeft = 1f;
-            cell5.BorderWidthRight = 1f;
-            cell5.HorizontalAlignment = Element.ALIGN_CENTER;
-            cell5.VerticalAlignment = Element.ALIGN_CENTER;
-            table.AddCell(cell5);
-
-            PdfPCell cell6 = new PdfPCell(new Phrase("AB-", new Font(Font.FontFamily.HELVETICA, 10)));
-            cell6.BackgroundColor = BaseColor.PINK;
-            cell6.Border = Rectangle.BOTTOM_BORDER | Rectangle.TOP_BORDER | Rectangle.LEFT_BORDER |
-                           Rectangle.RIGHT_BORDER;
-            cell6.BorderWidthBottom = 1f;
-            cell6.BorderWidthTop = 1f;
-            cell6.BorderWidthLeft = 1f;
-            cell6.BorderWidthRight = 1f;
-            cell6.HorizontalAlignment = Element.ALIGN_CENTER;
-            cell6.VerticalAlignment = Element.ALIGN_CENTER;
-            table.AddCell(cell6);
-
-            PdfPCell cell7 = new PdfPCell(new Phrase("O+", new Font(Font.FontFamily.HELVETICA, 10)));
-            cell7.BackgroundColor = BaseColor.PINK;
-            cell7.Border = Rectangle.BOTTOM_BORDER | Rectangle.TOP_BORDER | Rectangle.LEFT_BORDER |
-                           Rectangle.RIGHT_BORDER;
-            cell7.BorderWidthBottom = 1f;
-            cell7.BorderWidthTop = 1f;
-            cell7.BorderWidthLeft = 1f;
-            cell7.BorderWidthRight = 1f;
-            cell7.HorizontalAlignment = Element.ALIGN_CENTER;
-            cell7.VerticalAlignment = Element.ALIGN_CENTER;
-            table.AddCell(cell7);
-
-            PdfPCell cell8 = new PdfPCell(new Phrase("O-", new Font(Font.FontFamily.HELVETICA, 10)));
-            cell8.BackgroundColor = BaseColor.PINK;
-            cell8.Border = Rectangle.BOTTOM_BORDER | Rectangle.TOP_BORDER | Rectangle.LEFT_BORDER |
-                           Rectangle.RIGHT_BORDER;
-            cell8.BorderWidthBottom = 1f;
-            cell8.BorderWidthTop = 1f;
-            cell8.BorderWidthLeft = 1f;
-            cell8.BorderWidthRight = 1f;
-            cell8.HorizontalAlignment = Element.ALIGN_CENTER;
-            cell8.VerticalAlignment = Element.ALIGN_CENTER;
-            table.AddCell(cell8);
-
-            Paragraph para1 = new Paragraph("Report from date " + fromDate.Date + " to date " + toDate.Date, new Font(Font.FontFamily.HELVETICA, 20));
+            Paragraph para1 = new Paragraph("Report from date " + fromDate.Date.ToShortDateString() + " to date " + toDate.Date.ToShortDateString(), new Font(Font.FontFamily.HELVETICA, 20));
             para1.Alignment = Element.ALIGN_CENTER;
             para1.SpacingAfter = 10;
             document.Add(para1);
+
+
 
             foreach (UrgentRequest urgentRequest in urgentRequests)
             {
 
                 PdfPCell cell_1 = new PdfPCell(new Phrase(""));
+
                 cell_1.Phrase.Add(_bankRepository.GetById(urgentRequest.BloodBankId).Name);
                 cell_1.HorizontalAlignment = Element.ALIGN_CENTER;
                 table.AddCell(cell_1);
@@ -233,6 +178,21 @@ namespace IntegrationLibrary.Core.Service
             }
 
             document.Add(table);
+        }
+
+        private static void CreateHeaderCell(PdfPTable table, string headerText)
+        {
+            PdfPCell cell = new PdfPCell(new Phrase(headerText, new Font(Font.FontFamily.HELVETICA, 10)));
+            cell.BackgroundColor = BaseColor.RED;
+            cell.Border = Rectangle.BOTTOM_BORDER | Rectangle.TOP_BORDER | Rectangle.LEFT_BORDER |
+                           Rectangle.RIGHT_BORDER;
+            cell.BorderWidthBottom = 1f;
+            cell.BorderWidthTop = 1f;
+            cell.BorderWidthLeft = 1f;
+            cell.BorderWidthRight = 1f;
+            cell.HorizontalAlignment = Element.ALIGN_CENTER;
+            cell.VerticalAlignment = Element.ALIGN_CENTER;
+            table.AddCell(cell);
         }
 
         private static void CreateQuantityCell(PdfPTable table, UrgentRequest urgentRequest, BloodType bloodType)
@@ -254,5 +214,20 @@ namespace IntegrationLibrary.Core.Service
             }
             table.AddCell(qCell);
         }
+
+        private List<Blood> initializeList()
+        {
+            List<Blood> bloods = new List<Blood>();
+            bloods.Add(new Blood(BloodType.ZERO_POSITIVE, 0));
+            bloods.Add(new Blood(BloodType.ZERO_NEGATIVE, 0));
+            bloods.Add(new Blood(BloodType.A_POSITIVE, 0));
+            bloods.Add(new Blood(BloodType.A_NEGATIVE, 0));
+            bloods.Add(new Blood(BloodType.B_POSITIVE, 0));
+            bloods.Add(new Blood(BloodType.B_NEGATIVE, 0));
+            bloods.Add(new Blood(BloodType.AB_POSITIVE, 0));
+            bloods.Add(new Blood(BloodType.AB_NEGATIVE, 0));
+            return bloods;
+        }
+
     }
 }
