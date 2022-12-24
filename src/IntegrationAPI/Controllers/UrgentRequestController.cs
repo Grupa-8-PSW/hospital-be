@@ -25,7 +25,7 @@ namespace IntegrationAPI.Controllers
         {
             DateTime fromDate = new DateTime(2022, 12, 09);
             DateTime toDate = new DateTime(2022, 12, 22);
-            return File(await _urgentRequestService.GeneratePdf(_urgentRequestService.GetUniqueUrgentRequests(fromDate, toDate), fromDate, toDate), "application/pdf", "urgentrequestreport.pdf");
+            return File(await _urgentRequestService.GeneratePdf(_urgentRequestService.GetSummarizedUrgentRequests(fromDate, toDate), fromDate, toDate), "application/pdf", "urgentrequestreport.pdf");
 
         }
 

@@ -53,7 +53,7 @@ namespace IntegrationLibrary.Core.Service
             return bloods;
         }
 
-        public List<UrgentRequest> GetUniqueUrgentRequests(DateTime from, DateTime to)
+        public List<UrgentRequest> GetSummarizedUrgentRequests(DateTime from, DateTime to)
         {
            List<UrgentRequest> sumRequests = new List<UrgentRequest>();
            List<Blood> bloods = initializeList();
