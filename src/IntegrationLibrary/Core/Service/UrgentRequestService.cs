@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Firebase.Auth;
+using Firebase.Storage;
 using System.Threading.Tasks;
 using HospitalLibrary.Core.Enums;
 using IntegrationLibrary.Core.Repository;
@@ -35,22 +37,6 @@ namespace IntegrationLibrary.Core.Service
                 Console.WriteLine("Za ovaj period nema nabavljene krvi");
 
             return validRequests;
-        }
-
-
-
-        private List<Blood> initializeList()
-        {
-            List<Blood> bloods = new List<Blood>();
-            bloods.Add(new Blood(BloodType.ZERO_POSITIVE, 0));
-            bloods.Add(new Blood(BloodType.ZERO_NEGATIVE, 0));
-            bloods.Add(new Blood(BloodType.A_POSITIVE, 0));
-            bloods.Add(new Blood(BloodType.A_NEGATIVE, 0));
-            bloods.Add(new Blood(BloodType.B_POSITIVE, 0));
-            bloods.Add(new Blood(BloodType.B_NEGATIVE, 0));
-            bloods.Add(new Blood(BloodType.AB_POSITIVE, 0));
-            bloods.Add(new Blood(BloodType.AB_NEGATIVE, 0));
-            return bloods;
         }
 
         public List<Blood> GetAllBloodAmountsBetweenDates(DateTime from, DateTime to)
@@ -94,8 +80,8 @@ namespace IntegrationLibrary.Core.Service
 
 
 
+        public async Task<byte[]> GeneratePdf(List<UrgentRequest> urgentRequests, DateTime fromDate, DateTime toDate)
 
-        public byte[] GeneratePdf(List<UrgentRequest> urgentRequests, DateTime fromDate, DateTime toDate)
         {
             using (MemoryStream ms = new MemoryStream())
             {
@@ -104,54 +90,94 @@ namespace IntegrationLibrary.Core.Service
                 writer.Open();
                 document.Open();
 
-                PdfPTable table = new PdfPTable(9);
-                CreateHeaderCell(table, "Blood Bank Name");
-                CreateHeaderCell(table, "A+");
-                CreateHeaderCell(table, "A-");
-                CreateHeaderCell(table, "B+");
-                CreateHeaderCell(table, "B-");
-                CreateHeaderCell(table, "AB+");
-                CreateHeaderCell(table, "AB-");
-                CreateHeaderCell(table, "0+");
-                CreateHeaderCell(table, "0-");
+                CreateTable(urgentRequests, fromDate, toDate, document);
 
-
-                Paragraph para1 = new Paragraph("Report from date " + fromDate.Date.ToShortDateString() + " to date " + toDate.Date.ToShortDateString(), new Font(Font.FontFamily.HELVETICA, 20));
-                para1.Alignment = Element.ALIGN_CENTER;
-                para1.SpacingAfter = 10;
-                document.Add(para1);
-
-
-
-                foreach (UrgentRequest urgentRequest in urgentRequests)
-                {
-
-                    PdfPCell cell_1 = new PdfPCell(new Phrase(""));
-
-                    cell_1.Phrase.Add(_bankRepository.GetById(urgentRequest.BloodBankId).Name);
-                    cell_1.HorizontalAlignment = Element.ALIGN_CENTER;
-                    table.AddCell(cell_1);
-
-                    CreateQuantityCell(table, urgentRequest, BloodType.A_POSITIVE);
-                    CreateQuantityCell(table, urgentRequest, BloodType.A_NEGATIVE);
-                    CreateQuantityCell(table, urgentRequest, BloodType.B_POSITIVE);
-                    CreateQuantityCell(table, urgentRequest, BloodType.B_NEGATIVE);
-                    CreateQuantityCell(table, urgentRequest, BloodType.AB_POSITIVE);
-                    CreateQuantityCell(table, urgentRequest, BloodType.AB_NEGATIVE);
-                    CreateQuantityCell(table, urgentRequest, BloodType.ZERO_POSITIVE);
-                    CreateQuantityCell(table, urgentRequest, BloodType.ZERO_NEGATIVE);
-
-                }
-
-                document.Add(table);
                 document.Close();
                 writer.Close();
                 var constant = ms.ToArray();
+                try
+                {
+                    await UploadFile(constant);
 
+                }catch(Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                }
                 return constant;
+            }
+        }
 
+        private async Task<byte[]> UploadFile(byte[] file)
+        {
+            var stream = new MemoryStream(file);
+
+            //authentication
+            var auth = new FirebaseAuthProvider(new FirebaseConfig("AIzaSyAQTVZHRWBwsKNe7VVV7X5uCOqyb33MEUA"));
+            var a = await auth.SignInWithEmailAndPasswordAsync("asdf@gmail.com", "asdf123");
+
+            // Constructr FirebaseStorage, path to where you want to upload the file and Put it there
+            var task = new FirebaseStorage(
+                "isapsw-6ef61.appspot.com",
+                new FirebaseStorageOptions
+                {
+                    AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
+                    ThrowOnCancel = true,
+                })
+                .Child("urgentRequestStatistics")
+                .Child("urgentRequests" + Guid.NewGuid() + ".pdf")
+                .PutAsync(stream);
+
+            // Track progress of the upload
+            task.Progress.ProgressChanged += (s, e) => Console.WriteLine($"Progress: {e.Percentage} %");
+
+            // await the task to wait until upload completes and get the download url
+            var downloadUrl = await task;
+            stream.Close();
+            return file;
+        }
+
+        private void CreateTable(List<UrgentRequest> urgentRequests, DateTime fromDate, DateTime toDate, Document document)
+        {
+            PdfPTable table = new PdfPTable(9);
+            CreateHeaderCell(table, "Blood Bank Name");
+            CreateHeaderCell(table, "A+");
+            CreateHeaderCell(table, "A-");
+            CreateHeaderCell(table, "B+");
+            CreateHeaderCell(table, "B-");
+            CreateHeaderCell(table, "AB+");
+            CreateHeaderCell(table, "AB-");
+            CreateHeaderCell(table, "0+");
+            CreateHeaderCell(table, "0-");
+
+
+            Paragraph para1 = new Paragraph("Report from date " + fromDate.Date.ToShortDateString() + " to date " + toDate.Date.ToShortDateString(), new Font(Font.FontFamily.HELVETICA, 20));
+            para1.Alignment = Element.ALIGN_CENTER;
+            para1.SpacingAfter = 10;
+            document.Add(para1);
+
+
+
+            foreach (UrgentRequest urgentRequest in urgentRequests)
+            {
+
+                PdfPCell cell_1 = new PdfPCell(new Phrase(""));
+
+                cell_1.Phrase.Add(_bankRepository.GetById(urgentRequest.BloodBankId).Name);
+                cell_1.HorizontalAlignment = Element.ALIGN_CENTER;
+                table.AddCell(cell_1);
+
+                CreateQuantityCell(table, urgentRequest, BloodType.A_POSITIVE);
+                CreateQuantityCell(table, urgentRequest, BloodType.A_NEGATIVE);
+                CreateQuantityCell(table, urgentRequest, BloodType.B_POSITIVE);
+                CreateQuantityCell(table, urgentRequest, BloodType.B_NEGATIVE);
+                CreateQuantityCell(table, urgentRequest, BloodType.AB_POSITIVE);
+                CreateQuantityCell(table, urgentRequest, BloodType.AB_NEGATIVE);
+                CreateQuantityCell(table, urgentRequest, BloodType.ZERO_POSITIVE);
+                CreateQuantityCell(table, urgentRequest, BloodType.ZERO_NEGATIVE);
 
             }
+
+            document.Add(table);
         }
 
         private static void CreateHeaderCell(PdfPTable table, string headerText)
@@ -188,5 +214,20 @@ namespace IntegrationLibrary.Core.Service
             }
             table.AddCell(qCell);
         }
+
+        private List<Blood> initializeList()
+        {
+            List<Blood> bloods = new List<Blood>();
+            bloods.Add(new Blood(BloodType.ZERO_POSITIVE, 0));
+            bloods.Add(new Blood(BloodType.ZERO_NEGATIVE, 0));
+            bloods.Add(new Blood(BloodType.A_POSITIVE, 0));
+            bloods.Add(new Blood(BloodType.A_NEGATIVE, 0));
+            bloods.Add(new Blood(BloodType.B_POSITIVE, 0));
+            bloods.Add(new Blood(BloodType.B_NEGATIVE, 0));
+            bloods.Add(new Blood(BloodType.AB_POSITIVE, 0));
+            bloods.Add(new Blood(BloodType.AB_NEGATIVE, 0));
+            return bloods;
+        }
+
     }
 }

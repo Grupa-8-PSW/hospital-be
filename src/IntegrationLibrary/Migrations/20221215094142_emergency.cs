@@ -4,7 +4,7 @@
 
 namespace IntegrationLibrary.Migrations
 {
-    public partial class HopefullyLast : Migration
+    public partial class emergency : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

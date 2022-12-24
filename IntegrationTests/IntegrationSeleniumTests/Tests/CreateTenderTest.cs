@@ -16,6 +16,8 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
         private readonly IWebDriver driver;
         private Pages.AllTenders allTendersPage;
         private Pages.CreateTenderPage CreateTenderPage;
+        private Pages.LoginPage loginPage;
+
         private int tendersCount = 0;
 
         public CreateTenderTest()
@@ -31,6 +33,16 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
             options.AddArguments("--disable-notifications");
 
             driver = new ChromeDriver(options);
+
+            loginPage = new Pages.LoginPage(driver);
+
+
+            loginPage.Navigate();
+            loginPage.EnsurePageIsDisplayed();
+            loginPage.InsertUsername("manager");
+            loginPage.InsertPassword("12345");
+            loginPage.Login();
+            loginPage.WaitForLogin();
 
             Pages.AllTenders newAllTendersPage = new Pages.AllTenders(driver);
             newAllTendersPage.Navigate();
@@ -112,10 +124,7 @@ namespace IntegrationTests.IntegrationSeleniumTests.Tests
 
             Assert.True("http://localhost:4200/tenders".Equals(driver.Url));
 
-            int i = 0;
-            //Assert.Equal(tendersCount + 1, newAllTendersPage.TendersCount());
-
-
+          
         }
     }
 }

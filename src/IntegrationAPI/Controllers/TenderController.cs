@@ -4,6 +4,7 @@ using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Service.Interfaces;
 using IntegrationLibrary.Core.Service;
 using IntegrationAPI.Mapper;
+using IntegrationLibrary.Core.Model.ValueObject;
 
 namespace IntegrationAPI.Controllers
 {
@@ -43,11 +44,12 @@ namespace IntegrationAPI.Controllers
 
         // POST: TenderController/getAllForOffers
         [HttpGet]
-        [Route("getAllForOffers")]
-        public ActionResult GetAllForOffers()
+        [Route("getAllBloodAmountsBetweenDates")]
+        public ActionResult GetAllBloodAmountsBetweenDates(DateTime from, DateTime to)
         {
-            return Ok(TenderOfferMapper.convertTenderTOBloodOffersDTO(_service.GetActiveTenders()));
+            
+            return Ok(_service.GetAllBloodAmountsBetweenDates(from, to));
         }
-       
+
     }
 }

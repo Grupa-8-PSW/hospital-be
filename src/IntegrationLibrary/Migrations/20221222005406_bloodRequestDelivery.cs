@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
-    public partial class ss : Migration
+    public partial class bloodRequestDelivery : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,7 +23,8 @@ namespace IntegrationLibrary.Migrations
                     Email = table.Column<string>(type: "text", nullable: false),
                     ServerAddress = table.Column<string>(type: "text", nullable: false),
                     Password = table.Column<string>(type: "text", nullable: false),
-                    APIKey = table.Column<string>(type: "text", nullable: false)
+                    APIKey = table.Column<string>(type: "text", nullable: false),
+                    MonthlySubscriptionRoutingKey = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -53,7 +54,7 @@ namespace IntegrationLibrary.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     TenderID = table.Column<int>(type: "integer", nullable: false),
-                    Offers = table.Column<List<Blood>>(type: "jsonb", nullable: false),
+                    Offers = table.Column<List<BloodOffer>>(type: "jsonb", nullable: false),
                     BloodBankName = table.Column<string>(type: "text", nullable: false),
                     TenderOfferStatus = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -78,6 +79,21 @@ namespace IntegrationLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UrgentRequest",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    BloodBankId = table.Column<int>(type: "integer", nullable: false),
+                    ObtainedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Blood = table.Column<List<Blood>>(type: "jsonb", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UrgentRequest", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BloodBankNews",
                 columns: table => new
                 {
@@ -95,6 +111,28 @@ namespace IntegrationLibrary.Migrations
                     table.PrimaryKey("PK_BloodBankNews", x => x.Id);
                     table.ForeignKey(
                         name: "FK_BloodBankNews_BloodBanks_BloodBankId",
+                        column: x => x.BloodBankId,
+                        principalTable: "BloodBanks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BloodRequestDelivery",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Type = table.Column<int>(type: "integer", nullable: false),
+                    AmountL = table.Column<int>(type: "integer", nullable: false),
+                    DeliveryDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    BloodBankId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BloodRequestDelivery", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BloodRequestDelivery_BloodBanks_BloodBankId",
                         column: x => x.BloodBankId,
                         principalTable: "BloodBanks",
                         principalColumn: "Id",
@@ -125,8 +163,14 @@ namespace IntegrationLibrary.Migrations
 
             migrationBuilder.InsertData(
                 table: "BloodBanks",
-                columns: new[] { "Id", "APIKey", "Email", "Name", "Password", "ServerAddress" },
-                values: new object[] { 1, "123", "test@test.com", "bloodBank", "unknown", "htttp://localhost:8081/" });
+                columns: new[] { "Id", "APIKey", "Email", "MonthlySubscriptionRoutingKey", "Name", "Password", "ServerAddress" },
+                values: new object[,]
+                {
+                    { 1, "123", "test@test.com", "monthlySubscriptions29", "Banka 1", "unknown", "http://localhost:8081/" },
+                    { 2, "321", "test@test.com", "monthlySubscriptions30", "Banka 2", "unknown", "http://localhost:8082/" },
+                    { 3, "213", "test@test.com", "monthlySubscriptions31", "Banka 3", "unknown", "http://localhost:8083/" },
+                    { 4, "231", "test@test.com", "monthlySubscriptions32", "Banka 4", "unknown", "http://localhost:8084/" }
+                });
 
             migrationBuilder.InsertData(
                 table: "BloodBankNews",
@@ -136,6 +180,11 @@ namespace IntegrationLibrary.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_BloodBankNews_BloodBankId",
                 table: "BloodBankNews",
+                column: "BloodBankId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BloodRequestDelivery_BloodBankId",
+                table: "BloodRequestDelivery",
                 column: "BloodBankId");
 
             migrationBuilder.CreateIndex(
@@ -153,6 +202,9 @@ namespace IntegrationLibrary.Migrations
                 name: "BloodConsumptionConfiguration");
 
             migrationBuilder.DropTable(
+                name: "BloodRequestDelivery");
+
+            migrationBuilder.DropTable(
                 name: "MonthlySubscription");
 
             migrationBuilder.DropTable(
@@ -160,6 +212,9 @@ namespace IntegrationLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "Tenders");
+
+            migrationBuilder.DropTable(
+                name: "UrgentRequest");
 
             migrationBuilder.DropTable(
                 name: "BloodBanks");
