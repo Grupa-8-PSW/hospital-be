@@ -16,7 +16,6 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Validation;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 using HospitalAPI.Mapper;
-using HospitalLibrary.Core.Util;
 using HospitalAPI.Connections;
 using Microsoft.AspNetCore.Identity;
 using HospitalAPI.Security;
@@ -29,6 +28,7 @@ using AngleSharp.Io;
 using HospitalAPI.Responses;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Runtime.Serialization;
+using HospitalLibrary.Core.DomainService;
 
 namespace HospitalAPI
 {
@@ -160,7 +160,7 @@ namespace HospitalAPI
             services.AddScoped<IResponseMapper<Consilium, ConsiliumResponse>, ConsiliumResponseMapper>();
             services.AddScoped<IResponseMapper<Doctor, ConsiliumDoctorResponse>, ConsiliumDoctorResponseMapper>();
 
-            services.AddScoped<HospitalLibrary.Core.Util.DoctorScheduler>();
+            services.AddScoped<DoctorScheduler>();
 
             services.AddCors(options =>
             {

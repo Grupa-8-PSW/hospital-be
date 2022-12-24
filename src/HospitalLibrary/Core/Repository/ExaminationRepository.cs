@@ -32,9 +32,11 @@ namespace HospitalLibrary.Core.Repository
 
         public void Update(Examination examination)
         {
-            Examination examinationOld = _context.Examinations.Find(examination.Id);
-            _context.Entry(examinationOld).CurrentValues.SetValues(examination);
-            _context.Entry(examination).State = EntityState.Modified;
+            var examinationEntry = _context.Attach(examination);
+            examinationEntry.State = EntityState.Modified;
+            var dateRangeEntry = examinationEntry.Reference(e => e.DateRange);
+            dateRangeEntry.TargetEntry.Property(dr => dr.Start).IsModified = true;
+            dateRangeEntry.TargetEntry.Property(dr => dr.End).IsModified = true;
 
             try
             {

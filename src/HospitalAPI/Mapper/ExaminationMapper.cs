@@ -37,8 +37,7 @@ namespace HospitalAPI.Web.Mapper
             }
             examination.DoctorId = dto.DoctorId;
             examination.PatientId = dto.PatientId;
-            /*examination.Duration = dto.Duration;
-            examination.StartTime = DateTime.ParseExact(dto.StartTime, "dd/MM/yyyy HH:mm", null); //DateTime.Parse(dto.StartTime, null, System.Globalization.DateTimeStyles.RoundtripKind);*/
+            examination.DateRange = dto.DateRange;
 
             return examination;
         }

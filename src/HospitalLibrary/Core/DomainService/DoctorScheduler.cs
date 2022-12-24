@@ -1,7 +1,6 @@
-﻿
-using HospitalLibrary.Core.Model.ValueObjects;
+﻿using HospitalLibrary.Core.Model.ValueObjects;
 
-namespace HospitalLibrary.Core.Util
+namespace HospitalLibrary.Core.DomainService
 {
     public class DoctorScheduler
     {
@@ -21,8 +20,8 @@ namespace HospitalLibrary.Core.Util
         }
 
         public List<DateRange> FindAvailableAppointments(
-            DateOnly date, 
-            int slotDuration, 
+            DateOnly date,
+            int slotDuration,
             List<DateRange> doctorAppointments)
         {
             var availableSlots = new List<DateRange>();
@@ -39,7 +38,17 @@ namespace HospitalLibrary.Core.Util
                 else
                     time = time.AddMinutes(appointmentToCheck.DurationInMinutes);
             }
-            return (slotDuration == BASE_SLOT_DURATION) ? availableSlots : MergeSlots(availableSlots, (slotDuration / BASE_SLOT_DURATION));
+            return slotDuration == BASE_SLOT_DURATION ? availableSlots : MergeSlots(availableSlots, slotDuration / BASE_SLOT_DURATION);
+        }
+
+        public bool IsAvailable(DateRange dateRange, List<DateRange> doctorsBusyAppointments)
+        {
+            foreach (var busyAppointment in doctorsBusyAppointments)
+            {
+                if (busyAppointment.IsOverlapped(dateRange))
+                    return false;
+            }
+            return true;
         }
 
         private static List<DateRange> MergeSlots(List<DateRange> slots, int slotsToMerge)

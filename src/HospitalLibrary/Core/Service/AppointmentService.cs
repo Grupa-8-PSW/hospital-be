@@ -1,8 +1,8 @@
-﻿using HospitalLibrary.Core.Enums;
+﻿using HospitalLibrary.Core.DomainService;
+using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.ValueObjects;
 using HospitalLibrary.Core.Repository;
-using HospitalLibrary.Core.Util;
 
 namespace HospitalLibrary.Core.Service
 {

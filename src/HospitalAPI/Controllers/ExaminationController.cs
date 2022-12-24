@@ -13,6 +13,7 @@ using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using HospitalAPI.Extensions;
 using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Model.ValueObjects;
 
 namespace HospitalAPI.Controllers
 {
@@ -72,26 +73,24 @@ namespace HospitalAPI.Controllers
 
         // POST api/rooms
         [HttpPost]
-        public ActionResult Create(Examination examinationDTO)
+        public ActionResult Create(PostExaminationRequest postExaminationRequest)
         {
-            _examinationService.Create(examinationDTO);
-            return Ok();
-            /*if (!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
+            
             var examination = CreateExaminationFromPostRequest(postExaminationRequest);
 
-            Examination examination = _examinationMapper.toModel(examinationDTO);
-            // examination.RoomId = doctor.RoomId;
-
-            bool succes = _examinationService.Create(examination);
-            if (!succes)
+            var success = _examinationService.Create(examination);
+            if (!success)
             {
                 return BadRequest("Poruka .....");
             }
-            return CreatedAtAction("GetById", new { id = examination.Id }, _examinationMapper.toDTO(examination));*/
+            return CreatedAtAction("GetById", new
+            {
+                id = examination.Id
+            }, _examinationMapper.toDTO(examination));
         }
 
         // PUT api/rooms/2
@@ -140,23 +139,25 @@ namespace HospitalAPI.Controllers
             _examinationService.Delete(examination);
             return NoContent();
         }
-        /*
+        
+
         private Examination CreateExaminationFromPostRequest(PostExaminationRequest postExaminationRequest)
         {
             try
             {
-                var doctorId = HttpContext.GetUserId();
+                //var doctorId = HttpContext.GetUserId();
+                var doctorId = 1;
                 var doctor = _doctorService.GetById(doctorId);
+                var startTime = DateTime.ParseExact(postExaminationRequest.StartTime, "dd/MM/yyyy HH:mm", null);
                 var examination = new Examination
                 {
                     DoctorId = doctorId,
-                    Duration = postExaminationRequest.Duration,
                     PatientId = postExaminationRequest.PatientId,
-                    StartTime = DateTime.ParseExact(postExaminationRequest.StartTime, "dd/MM/yyyy HH:mm", null),
+                    DateRange = new DateRange(startTime, startTime.AddMinutes(postExaminationRequest.Duration)),
                     RoomId = doctor.RoomId
                 };
                 examination.RoomId = doctor.RoomId;
-                examination.Status = ExaminationStatus.REGULAR;
+                examination.Status = ExaminationStatus.UPCOMING;
                 return examination;
             }
             catch (Exception ex)
@@ -165,6 +166,6 @@ namespace HospitalAPI.Controllers
                 return null;
             }
 
-        }*/
+        }
     }
 }

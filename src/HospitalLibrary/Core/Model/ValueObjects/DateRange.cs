@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace HospitalLibrary.Core.Model.ValueObjects;
@@ -19,22 +18,19 @@ public class DateRange : ValueObject
         Validate();
     }
 
-    public bool Includes(DateTime date)
+    public bool Contains(DateTime date)
     {
         return date >= Start && date <= End;
     }
 
-    public bool IncludesRange(DateRange dateRange)
+    public bool Contains(DateRange dateRange)
     {
         return (dateRange.Start >= Start && dateRange.Start <= End) &&
                (dateRange.End >= Start && dateRange.End <= End);
     }
 
-    public bool OverlapsWith(DateRange dateRange)
-    {
-        return (dateRange.Start >= Start && dateRange.Start <= End) ||
-               (dateRange.End >= Start && dateRange.End <= End);
-    }
+    public bool IsOverlapped(DateRange dateRange) => (Start < dateRange.End && dateRange.Start < End);
+
     private void Validate()
     {
         if (Start > End)
@@ -46,10 +42,6 @@ public class DateRange : ValueObject
         yield return Start;
         yield return End;
     }
-
-    public bool Contains(DateTime date) => (date >= Start && date < End);
-
-    public bool IsOverlapped(DateRange dateRange) => (Start < dateRange.End && dateRange.Start < End);
 
     public DateRange ExtendByDays(int days)
     {
@@ -72,4 +64,12 @@ public class DateRange : ValueObject
         for (var day = Start.Date; day.Date <= End.Date; day = day.AddDays(1))
             yield return day;
     }
+
+    public static bool operator ==(DateRange a, DateRange b)
+        => (a.Start == b.Start) && (a.End == b.End);
+
+    public static bool operator !=(DateRange a, DateRange b)
+        => (a.Start != b.Start) || (a.End != b.End);
+
+
 }

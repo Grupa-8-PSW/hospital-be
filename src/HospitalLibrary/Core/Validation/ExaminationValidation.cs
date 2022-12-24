@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.ValueObjects;
 using HospitalLibrary.Core.Repository;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 
@@ -46,29 +47,31 @@ namespace HospitalLibrary.Core.Validation
             return suggestedTime;*/
             return null;
         }
+
         public bool DateCheck(DateTime start, DateTime? end)
         {
             var diffOfDates = start - end;
             return diffOfDates?.Minutes > 15;
         }
-        public bool Validate(int doctorId, DateTime startTime, int duration)
+
+        public bool Validate(int doctorId, DateRange dateRange)
         {
-            /*Doctor doctor = _doctorRepository.GetById(doctorId);
-            if (!DateContainsDate(doctor.StartWork, doctor.EndWork, startTime, startTime.AddMinutes(duration)))
+            Doctor doctor = _doctorRepository.GetById(doctorId);
+            if (doctor.WorkHour.Contains(dateRange))
             {
                 return false;
             }
 
 
-            IEnumerable<Examination> examinations = _examinationRepository.GetByDoctorIdAndDate(doctorId, startTime);
+            IEnumerable<Examination> examinations = _examinationRepository.GetByDoctorAndDate(doctorId, dateRange.Start.Date);
             foreach (Examination examination in examinations)
             {
-                if (Intertwine(startTime, duration, examination.StartTime, examination.Duration))
+                if (dateRange.IsOverlapped(examination.DateRange))
                 {
                     return false;
                 }
-            }*/
-
+            }
+            
             return true;
         }
 

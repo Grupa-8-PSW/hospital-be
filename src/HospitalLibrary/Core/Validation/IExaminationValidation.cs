@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Model.ValueObjects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace HospitalLibrary.Core.Validation
 {
     public interface IExaminationValidation
     {
-        bool Validate(int doctorId, DateTime startTime, int duration);
+        bool Validate(int doctorId, DateRange dateRange);
 
         List<string> SuggestFreeTime(int doctorId, DateTime startTime, int duration);
 
