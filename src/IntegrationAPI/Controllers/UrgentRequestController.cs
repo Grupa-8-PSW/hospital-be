@@ -18,13 +18,6 @@ namespace IntegrationAPI.Controllers
             _urgentRequestService = urgentRequestService;
         }
 
-        [HttpGet]
-        public ActionResult FindUrgentRequestsBetweenDates()
-        {
-            DateTime fromDate = new DateTime(2022, 12, 09);
-            DateTime toDate = new DateTime(2022, 12, 22);
-            return Ok(_urgentRequestService.FindUrgentRequestsBetweenDates(fromDate, toDate));
-        }
 
         [Route("/api/[controller]/generatePdf")]
         [HttpGet]
@@ -32,8 +25,8 @@ namespace IntegrationAPI.Controllers
         {
             DateTime fromDate = new DateTime(2022, 12, 09);
             DateTime toDate = new DateTime(2022, 12, 22);
-            var validList = _urgentRequestService.FindUrgentRequestsBetweenDates(fromDate, toDate);
-            return File(await _urgentRequestService.GeneratePdf(validList, fromDate, toDate), "application/pdf", "urgentrequestreport.pdf");
+            return File(await _urgentRequestService.GeneratePdf(_urgentRequestService.GetUniqueUrgentRequests(fromDate, toDate), fromDate, toDate), "application/pdf", "urgentrequestreport.pdf");
+
         }
 
     }

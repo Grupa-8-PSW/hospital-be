@@ -33,5 +33,10 @@ namespace IntegrationLibrary.Core.Repository
             var list = _context.UrgentRequest.ToList();
             return list;
         }
+
+        public IEnumerable<UrgentRequest> GetAllBloodAmountsBetweenDates(DateTime start, DateTime end)
+        {
+            return _context.UrgentRequest.Where(u => u.ObtainedDate >= start && u.ObtainedDate <= end);
+        }
     }
 }
