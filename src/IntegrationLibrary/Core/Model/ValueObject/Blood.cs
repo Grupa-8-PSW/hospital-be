@@ -14,7 +14,7 @@ namespace IntegrationLibrary.Core.Model.ValueObject
     {
         public BloodType BloodType { get; }
 
-        public int Quantity { get; }
+        public int Quantity { get; set; }
 
         public Blood(BloodType bloodType, int quantity)
         {
@@ -35,6 +35,7 @@ namespace IntegrationLibrary.Core.Model.ValueObject
         {
             return BloodType == other.BloodType && Quantity == other.Quantity;
         }
+
 
         protected override int GetHashCodeCore()
         {

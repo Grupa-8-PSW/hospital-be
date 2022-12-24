@@ -9,7 +9,7 @@ namespace IntegrationLibrary.Core.Model
 {
     public class UrgentRequest
     {
-        public int Id { get; private set; }
+        public int Id { get; set; }
         public int BloodBankId { get;  set; }
         public DateTime ObtainedDate { get;  set; }
         public List<Blood> Blood { get;  set; }
@@ -19,6 +19,10 @@ namespace IntegrationLibrary.Core.Model
             BloodBankId = bloodBankId;
             Blood = blood;
             ObtainedDate = obtainedDate;
+        }
+
+        public UrgentRequest()
+        {
         }
     }
 }
