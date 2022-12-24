@@ -58,7 +58,7 @@ namespace HospitalAPI.Controllers.PublicApp
             var userId = User.UserId();
             var patient = _patientService.GetByUserId(userId);
             var feedback = _mapper.Map<Feedback>(feedbackDTO);
-            feedback.Patient = patient;
+            feedback.PatientId = patient.Id;
             var newFeedback = _feedbackService.Create(feedback);
             return CreatedAtAction(nameof(Get), new { id = newFeedback.Id }, _mapper.Map<PublicFeedbackDTO>(newFeedback));
         }

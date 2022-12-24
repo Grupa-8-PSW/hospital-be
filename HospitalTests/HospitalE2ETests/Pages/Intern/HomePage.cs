@@ -1,6 +1,6 @@
 ﻿using OpenQA.Selenium;
 
-namespace HospitalTests.HospitalE2ETests.Pages;
+namespace HospitalTests.HospitalE2ETests.Pages.Intern;
 
 public class HomePage
 {
@@ -12,6 +12,9 @@ public class HomePage
 
     private IWebElement CalendarLink => _driver.FindElement(
         By.CssSelector("a[routerLink='/calendar']"));
+
+    private IWebElement PublicFeedbackApprovalLink => _driver.FindElement(
+        By.Id("feedback-approval"));
 
     public HomePage(IWebDriver driver)
     {
@@ -36,6 +39,11 @@ public class HomePage
     public void GoToCalendar()
     {
         CalendarLink.Click();
+    }
+
+    public void GoToPublicFeedbackApproval()
+    {
+        PublicFeedbackApprovalLink.Click();
     }
 
     public void Navigate()

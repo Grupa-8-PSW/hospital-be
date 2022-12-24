@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.ValueObjects;
 using HospitalLibrary.Core.Repository;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 
@@ -22,7 +23,7 @@ namespace HospitalLibrary.Core.Validation
 
         public List<string> SuggestFreeTime(int doctorId, DateTime startTime, int duration)
         {
-            List<Examination> examinations = _examinationRepository.GetByDoctorIdAndDate(doctorId, startTime).ToList();
+            /*List<Examination> examinations = _examinationRepository.GetByDoctorIdAndDate(doctorId, startTime).ToList();
             examinations.Sort((ex1, ex2) => DateTime.Compare(ex1.StartTime, ex2.StartTime));
 
             Doctor doctor = _doctorRepository.GetById(doctorId);
@@ -43,37 +44,40 @@ namespace HospitalLibrary.Core.Validation
             {
                 suggestedTime.Add(begin.ToString("HH:mm") + " - " + doctor.EndWork.ToString("HH:mm"));
             }
-            return suggestedTime;
+            return suggestedTime;*/
+            return null;
         }
+
         public bool DateCheck(DateTime start, DateTime? end)
         {
             var diffOfDates = start - end;
             return diffOfDates?.Minutes > 15;
         }
-        public bool Validate(int doctorId, DateTime startTime, int duration)
+
+        public bool Validate(int doctorId, DateRange dateRange)
         {
             Doctor doctor = _doctorRepository.GetById(doctorId);
-            if (!DateContainsDate(doctor.StartWork, doctor.EndWork, startTime, startTime.AddMinutes(duration)))
+            if (doctor.WorkHour.Contains(dateRange))
             {
                 return false;
             }
 
 
-            IEnumerable<Examination> examinations = _examinationRepository.GetByDoctorIdAndDate(doctorId, startTime);
+            IEnumerable<Examination> examinations = _examinationRepository.GetByDoctorAndDate(doctorId, dateRange.Start.Date);
             foreach (Examination examination in examinations)
             {
-                if (Intertwine(startTime, duration, examination.StartTime, examination.Duration))
+                if (dateRange.IsOverlapped(examination.DateRange))
                 {
                     return false;
                 }
             }
-
+            
             return true;
         }
 
         public bool ValidateNotIncludingExaminationId(int doctorId, DateTime startTime, int duration, int examinationIdToIgnore)
         {
-            Doctor doctor = _doctorRepository.GetById(doctorId);
+            /*Doctor doctor = _doctorRepository.GetById(doctorId);
             if (!DateContainsDate(doctor.StartWork, doctor.EndWork, startTime, startTime.AddMinutes(duration)))
             {
                 return false;
@@ -87,7 +91,7 @@ namespace HospitalLibrary.Core.Validation
                 {
                     return false;
                 }
-            }
+            }*/
 
             return true;
         }

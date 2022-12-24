@@ -1,5 +1,7 @@
-﻿namespace HospitalLibrary.Core.Enums
+﻿
+namespace HospitalLibrary.Core.Enums
 {
+
     public enum DoctorSpecialization
     {
         GENERAL_PRACTICIONER,
@@ -8,4 +10,5 @@
         GYNECOLOGIST,
         NEUROLOGIST
     }
+
 }

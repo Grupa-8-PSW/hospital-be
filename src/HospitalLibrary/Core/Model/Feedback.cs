@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using HospitalLibrary.Core.Model.ValueObjects;
+using System.ComponentModel.DataAnnotations;
 
 namespace HospitalLibrary.Core.Model
 {
@@ -10,6 +11,7 @@ namespace HospitalLibrary.Core.Model
         public DateOnly CreationDate { get; set; }
         public bool IsAnonymous { get; set; }
         public bool IsPublic { get; set; }
+        public FeedbackRating Rating { get; set; }
         public FeedbackStatus Status { get; set; }
 
         public Feedback()

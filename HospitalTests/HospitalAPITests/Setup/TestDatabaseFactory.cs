@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection.Emit;
 using HospitalLibrary.Core.Model.ValueObjects;
+using Microsoft.Extensions.Options;
 
 namespace HospitalTests.HospitalAPITests.Setup
 {
@@ -33,7 +34,11 @@ namespace HospitalTests.HospitalAPITests.Setup
         {
             var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<HospitalDbContext>));
             services.Remove(descriptor);
-            services.AddDbContext<HospitalDbContext>(opt => opt.UseNpgsql(CreateConnectionStringForTest()));
+            services.AddDbContext<HospitalDbContext>(opt =>
+            {
+                opt.UseNpgsql(CreateConnectionStringForTest());
+                opt.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            });
 
             descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<AppIdentityDbContext>));
             services.Remove(descriptor);

@@ -35,10 +35,15 @@ namespace HospitalLibrary.Settings
         public DbSet<Symptom> Symptoms { get; set; }
 
 
-        public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
+
+        public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
+        {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
             modelBuilder.Entity<MedicalDrugs>()
                 .HasIndex(m => m.Code)
                 .IsUnique();
@@ -47,10 +52,12 @@ namespace HospitalLibrary.Settings
                 .IsUnique();
 
             modelBuilder.SeedMap();
+
             modelBuilder.SeedAddress();
             modelBuilder.SeedDoctor();
             modelBuilder.SeedPatient();
             modelBuilder.SeedFeedback();
+            modelBuilder.SeedExamination();
 
             modelBuilder.SeedBed();
             modelBuilder.SeedMedicalDrugs();
@@ -59,8 +66,6 @@ namespace HospitalLibrary.Settings
             modelBuilder.SeedTherapy();
             modelBuilder.SeedAllergen();
             modelBuilder.SeedSymptoms();
-            modelBuilder.SeedExamination();
-
 
             base.OnModelCreating(modelBuilder);
 

@@ -31,7 +31,7 @@ namespace HospitalTests.HospitalLibraryTests
             Assert.True(allTherapies.Count() == 2);
         }
 
-
+        /*
         private static ITherapyRepository CreateTherapyStubRepository()
         {
             var stubRepository = new Mock<ITherapyRepository>();
@@ -50,7 +50,7 @@ namespace HospitalTests.HospitalLibraryTests
             return stubRepository.Object;
 
 
-        }
+        }*/
 
 
 

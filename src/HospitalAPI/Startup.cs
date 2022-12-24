@@ -16,7 +16,6 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Validation;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 using HospitalAPI.Mapper;
-using HospitalLibrary.Core.Util;
 using HospitalAPI.Connections;
 using Microsoft.AspNetCore.Identity;
 using HospitalAPI.Security;
@@ -28,6 +27,8 @@ using System.Text.Json.Serialization;
 using AngleSharp.Io;
 using HospitalAPI.Responses;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Runtime.Serialization;
+using HospitalLibrary.Core.DomainService;
 
 
 namespace HospitalAPI
@@ -45,7 +46,11 @@ namespace HospitalAPI
         {
             services.AddControllers();
 
-            services.AddDbContext<HospitalDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")));
+            services.AddDbContext<HospitalDbContext>(options =>
+            {
+                options.UseNpgsql(Configuration.GetConnectionString("HospitalDB"));
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            });
             services.AddDbContext<AppIdentityDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")));
 
             services.AddScoped(typeof(IFeedbackService), typeof(FeedbackService));
@@ -104,6 +109,9 @@ namespace HospitalAPI
             services.AddScoped<IExaminationService, ExaminationService>();
             services.AddScoped<IExaminationRepository, ExaminationRepository>();
 
+            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+            services.AddScoped<IAppointmentService, AppointmentService>();
+
             services.AddScoped<IMapper<Examination, ExaminationDTO>, ExaminationMapper>();
             services.AddScoped<IMapper<TreatmentHistory, TreatmentHistoryDTO>, TreatmentHistoryMapper>();
             services.AddScoped<IMapper<Patient, PatientDTO>, PatientMapper>();  //mozda se ponovi pri merge
@@ -153,6 +161,7 @@ namespace HospitalAPI
             services.AddScoped<IResponseMapper<Consilium, ConsiliumResponse>, ConsiliumResponseMapper>();
             services.AddScoped<IResponseMapper<Doctor, ConsiliumDoctorResponse>, ConsiliumDoctorResponseMapper>();
 
+            services.AddScoped<DoctorScheduler>();
             services.AddScoped<IExaminationDoneRepository, ExaminationDoneRepository>();
             services.AddScoped<IExaminationDoneService, ExaminationDoneService>();
             services.AddScoped<IMapper<ExaminationDone, ExaminationDoneDTO>, ExaminationDoneMapper>();

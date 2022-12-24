@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Util;
 
 namespace HospitalLibrary.Core.Service
 {
@@ -16,5 +13,7 @@ namespace HospitalLibrary.Core.Service
         void Delete(Examination examination);
         IEnumerable<Examination> GetByDate(DateTime startTime);
         IEnumerable<Examination> GetByDoctorIdAndDate(int doctorId, DateTime startTime);
+        IEnumerable<Examination> GetByPatientId(int patientId);
+        bool CheckIfCancellable(int id);
     }
 }

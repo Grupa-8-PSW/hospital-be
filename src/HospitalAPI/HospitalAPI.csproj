@@ -53,6 +53,7 @@
 
   <ItemGroup>
     <Folder Include="Extensions\" />
+    <Folder Include="Migrations\" />
     <Folder Include="Responses\" />
     <Folder Include="Requests\" />
   </ItemGroup>
