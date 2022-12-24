@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Model.ValueObjects;
+﻿using HospitalLibrary.Core.DomainService;
+using HospitalLibrary.Core.Model.ValueObjects;
 using HospitalLibrary.Core.Util;
 using Shouldly;
 

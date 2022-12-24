@@ -23,6 +23,7 @@ namespace HospitalLibrary.Core.Repository
              return _context.Doctors.Where(d=>(d.Specialization==DoctorSpecialization.GENERAL_PRACTICIONER)).ToList();
             
         }
+
         public Doctor GetById(int id)
         {
             return _context.Doctors.Find(id);

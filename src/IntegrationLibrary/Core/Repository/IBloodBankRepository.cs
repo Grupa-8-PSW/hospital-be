@@ -14,6 +14,6 @@ namespace IntegrationLibrary.Core.Repository
         BloodBank GetById(int id);
         void Delete(BloodBank bloodBank);
         BloodBank GetByApiKey(string apiKey);
-
+        BloodBank getByName(string bloodBankName);
     }
 }

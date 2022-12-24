@@ -14,6 +14,9 @@ using Microsoft.Extensions.DependencyInjection;
 using IntegrationLibrary.Core.Service.Interfaces;
 using Shouldly;
 using Xunit;
+using IntegrationAPI.Connections;
+using IntegrationLibrary.Core.Model.DTO;
+using Moq;
 
 namespace IntegrationTests.IntegrationAPITests.IntegrationTests
 {
@@ -33,12 +36,25 @@ namespace IntegrationTests.IntegrationAPITests.IntegrationTests
             return new BloodUnitController(scope.ServiceProvider.GetRequiredService<IHospitalHTTPConnectionService>());
         }
 
+
         [Fact]
         public void Retrieves_All_BloodUnits()
         {
             IEnumerable<BloodUnit> allBloodUnits = GetAllBloodUnits();
 
             allBloodUnits.ShouldNotBeNull();
+        }
+
+        [Fact]
+        public void Response()
+        {
+            /*var mock = new Mock<HospitalHTTPConnection>();
+            HospitalHTTPConnection hospitalHTTPConnection = new HospitalHTTPConnection();
+            List<BloodDTO> bloodDTOs = new List<BloodDTO>();
+            BloodDTO blood = new BloodDTO(1,"ZERO_POSITIVE", 100);
+            bloodDTOs.Add(blood);
+            mock.Verify(n => n.RestockBlood(bloodDTOs));*/
+            
         }
     }
 }

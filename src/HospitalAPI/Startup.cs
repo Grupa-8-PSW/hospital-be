@@ -30,6 +30,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Runtime.Serialization;
 using HospitalLibrary.Core.DomainService;
 
+
 namespace HospitalAPI
 {
     public class Startup
@@ -161,6 +162,12 @@ namespace HospitalAPI
             services.AddScoped<IResponseMapper<Doctor, ConsiliumDoctorResponse>, ConsiliumDoctorResponseMapper>();
 
             services.AddScoped<DoctorScheduler>();
+            services.AddScoped<IExaminationDoneRepository, ExaminationDoneRepository>();
+            services.AddScoped<IExaminationDoneService, ExaminationDoneService>();
+            services.AddScoped<IMapper<ExaminationDone, ExaminationDoneDTO>, ExaminationDoneMapper>();
+
+
+            services.AddScoped<IMapper<ConsiliumRequest, ConsiliumRequestDTO>, ConsiliumRequestMapper>();
 
             services.AddCors(options =>
             {

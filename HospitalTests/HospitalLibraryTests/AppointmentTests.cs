@@ -14,7 +14,7 @@ namespace HospitalTests
         [Fact]
         public void Checks_if_cancellable()
         {
-            ExaminationService service = new ExaminationService(CreateStubRepository());
+            ExaminationService service = new ExaminationService(CreateStubRepository(), null, null);
 
             bool isCancellable = service.CheckIfCancellable(1);
 

@@ -61,13 +61,13 @@ namespace HospitalTests.HospitalAPITests.Integration.Controllers.Public
             return new AppointmentController(mapper, appointmentService);
         }
 
-        private static IEnumerable<object[]> GetRecommendedExaminationTimeTestData() =>
+        public static IEnumerable<object[]> GetRecommendedExaminationTimeTestData() =>
             new List<object[]>()
             {
                 new object[] { new DateTime(2022, 12, 1), new DateTime(2022, 12, 10), 1, AppointmentPriority.DOCTOR },
                 new object[] { new DateTime(2022, 1, 1), new DateTime(2022, 1, 5), 1, AppointmentPriority.DATE }
             };
-        private static IEnumerable<object[]> GetAvailableExaminationTestData() =>
+        public static IEnumerable<object[]> GetAvailableExaminationTestData() =>
             new List<object[]>()
             {
                 new object[] { new DateTime(2022, 12, 1), 1 },

@@ -9,6 +9,7 @@ namespace HospitalLibrary.Core.Service
 {
     public interface IBloodService : IEntityService<Blood>
     {
+        public void RestockBlood(int id, Blood entity);
 
     }
 }

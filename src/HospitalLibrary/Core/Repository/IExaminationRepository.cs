@@ -7,7 +7,7 @@ namespace HospitalLibrary.Core.Repository
     public interface IExaminationRepository
     {
         IEnumerable<Examination> GetAll();
-        Examination GetById(int id);
+        Examination? GetById(int id);
         void Create(Examination examination);
         void Update(Examination examination);
         void Delete(Examination examination);

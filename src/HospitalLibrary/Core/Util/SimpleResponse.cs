@@ -10,12 +10,17 @@ namespace HospitalLibrary.Core.Util
     public class SimpleResponse
     {
         public HttpStatusCode StatusCode { get; set; }
-        public object body { get; set; }
+        public object? Body { get; set; }
 
         public SimpleResponse(HttpStatusCode statusCode, object body)
         {
             StatusCode = statusCode;
-            this.body = body;   
+            Body = body;
+        }
+
+        public SimpleResponse()
+        {
+
         }
     }
 }

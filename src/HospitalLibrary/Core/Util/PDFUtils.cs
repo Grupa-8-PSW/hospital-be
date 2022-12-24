@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace HospitalLibrary.Core.Util
 {
     public class ParagraphInfo
-    { 
+    {
         public string Name { get; set; }
         public string Style { get; set; }
         public string BookmarkName { get; set; }
@@ -23,7 +23,7 @@ namespace HospitalLibrary.Core.Util
         public Unit SpaceBefore { get; set; } = "0cm";
         public Color FontColor { get; set; } = Color.Parse("#0BDA51");
 
-        public ParagraphInfo(string style, string bookmarkName, string name, 
+        public ParagraphInfo(string style, string bookmarkName, string name,
             ParagraphAlignment? allignment = null, string? text = null)
         {
             Name = name;
@@ -154,15 +154,15 @@ namespace HospitalLibrary.Core.Util
         {
             if (rows.Count != 0 && (columns.Length != rows[0].CellsText.Length))
             {
-                throw new Exception("Number of columns must be same as number of cells per row.");    
+                throw new Exception("Number of columns must be same as number of cells per row.");
             }
 
             Table table = new Table();
             table.Borders.Width = 0.75;
 
             // Calculating column width
-            int sectionWidth = (int)document.DefaultPageSetup.PageWidth 
-                - (int)document.DefaultPageSetup.LeftMargin 
+            int sectionWidth = (int)document.DefaultPageSetup.PageWidth
+                - (int)document.DefaultPageSetup.LeftMargin
                 - (int)document.DefaultPageSetup.RightMargin;
             float columnWidth = sectionWidth / columns.Length;
 
@@ -184,7 +184,7 @@ namespace HospitalLibrary.Core.Util
             for (int i = 0; i < rows.Count; i++)
             {
                 row = table.AddRow();
-                
+
                 for (int j = 0; j < rows[i].CellsText.Length; j++)
                 {
                     Cell cell = row.Cells[j];
@@ -194,7 +194,7 @@ namespace HospitalLibrary.Core.Util
             }
 
             table.SetEdge(0, 0, columns.Length, rows.Count, Edge.Box, BorderStyle.Single, 1.5, Colors.Black);
-            
+
             document.LastSection.Add(table);
         }
     }

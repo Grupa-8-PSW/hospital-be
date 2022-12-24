@@ -89,7 +89,7 @@ namespace HospitalTests.HospitalLibraryTests.Unit.Core.Util
             Should.Throw<Exception>(() => dateRange.ExtendByDays(-10));
         }
 
-        private static IEnumerable<object[]> IsOverlappedTestData() =>
+        public static IEnumerable<object[]> IsOverlappedTestData() =>
             new List<object[]>()
             {
                 new object[] { 
@@ -130,7 +130,7 @@ namespace HospitalTests.HospitalLibraryTests.Unit.Core.Util
                 }
             };
 
-        private static IEnumerable<object[]> ContainsTestData() =>
+        public static IEnumerable<object[]> ContainsTestData() =>
             new List<object[]>()
             {
                 new object[] { new DateTime(2022, 12 , 1), true },

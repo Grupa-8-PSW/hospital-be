@@ -30,7 +30,7 @@ namespace HospitalLibrary.Core.DomainService
             {
                 var dateTimeToCheck = date.ToDateTime(time);
                 var appointmentToCheck = doctorAppointments.Find(a => a.Contains(dateTimeToCheck));
-                if (appointmentToCheck == null)
+                if (appointmentToCheck is null)
                 {
                     availableSlots.Add(new DateRange(dateTimeToCheck, dateTimeToCheck.AddMinutes(BASE_SLOT_DURATION)));
                     time = time.AddMinutes(BASE_SLOT_DURATION);
