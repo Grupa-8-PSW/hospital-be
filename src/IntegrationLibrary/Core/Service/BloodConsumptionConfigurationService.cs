@@ -104,6 +104,8 @@ namespace IntegrationLibrary.Core.Service
                 writer.Close();
                 var constant = ms.ToArray();
 
+                Guid uniqueSuffix = Guid.NewGuid();
+                File.WriteAllBytesAsync("./Reports/report" + ".PDF", constant);
                 return constant;
 
 
