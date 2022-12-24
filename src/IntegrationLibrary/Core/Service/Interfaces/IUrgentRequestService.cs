@@ -12,7 +12,7 @@ namespace IntegrationLibrary.Core.Service.Interfaces
     {
         List<UrgentRequest> FindUrgentRequestsBetweenDates(DateTime fromDate, DateTime toDate);
         List<Blood> GetAllBloodAmountsBetweenDates(DateTime from, DateTime to);
-        List<UrgentRequest> GetUniqueUrgentRequests(DateTime from, DateTime to);
+        List<UrgentRequest> GetSummarizedUrgentRequests(DateTime from, DateTime to);
         Task<byte[]> GeneratePdf(List<UrgentRequest> urgentRequests, DateTime fromDate, DateTime toDate);
 
     }
