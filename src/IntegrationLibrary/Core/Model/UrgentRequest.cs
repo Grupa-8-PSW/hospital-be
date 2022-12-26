@@ -21,6 +21,16 @@ namespace IntegrationLibrary.Core.Model
             ObtainedDate = obtainedDate;
         }
 
+        public UrgentRequest(int id, int bloodBankId, DateTime obtainedDate, List<Blood> blood)
+        {
+            Id = id;
+            BloodBankId = bloodBankId;
+            Blood = blood;
+            ObtainedDate = obtainedDate;
+        }
+
+
+
         public UrgentRequest()
         {
         }
