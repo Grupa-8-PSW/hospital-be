@@ -54,5 +54,20 @@ namespace IntegrationLibrary.Core.Repository
         {
             return  _context.TenderOffer.Where(p => p.TenderID.Equals(tenderID)).Where(p => p.TenderOfferStatus.Equals(TenderOfferStatus.APPROVE)).First();
         }
+
+
+        public TenderOffer GetAcceptOffer(int tenderId)
+        {
+            var toRet = _context.TenderOffer
+                .FromSqlRaw("select * from \"TenderOffer\" where \"TenderID\" = {0} and \"TenderOfferStatus\" = 1",
+                    tenderId).FirstOrDefault();
+
+            if (toRet == null)
+            {
+                return null;
+            }
+
+            return toRet;
+        }
     }
 }

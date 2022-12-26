@@ -45,10 +45,10 @@ namespace IntegrationAPI.Controllers
         // POST: TenderController/getAllForOffers
         [HttpGet]
         [Route("getAllBloodAmountsBetweenDates")]
-        public ActionResult GetAllBloodAmountsBetweenDates(DateTime from, DateTime to)
+        public List<Dictionary<string, int>> GetAllBloodAmountsBetweenDates(DateTime from, DateTime to)
         {
-            
-            return Ok(_service.GetAllBloodAmountsBetweenDates(from, to));
+            List<Dictionary<string, int>> allOffers = _service.GetBloodAmountsBetweenDates(from, to);
+            return allOffers;
         }
 
     }
