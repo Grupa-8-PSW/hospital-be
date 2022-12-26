@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using HospitalLibrary.Core.Enums;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Model.ValueObject;
+using IntegrationLibrary.Core.Model.DTO;
 
 namespace IntegrationLibrary.Core.Service
 {
@@ -38,6 +39,7 @@ namespace IntegrationLibrary.Core.Service
 
             return validRequests;
         }
+
 
         public List<Blood> GetAllBloodAmountsBetweenDates(DateTime from, DateTime to)
         {

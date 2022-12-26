@@ -1,4 +1,5 @@
 ﻿
+using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Service;
 using IntegrationLibrary.Core.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -27,6 +28,13 @@ namespace IntegrationAPI.Controllers
             DateTime toDate = new DateTime(2022, 12, 22);
             return File(await _urgentRequestService.GeneratePdf(_urgentRequestService.GetSummarizedUrgentRequests(fromDate, toDate), fromDate, toDate), "application/pdf", "urgentrequestreport.pdf");
 
+        }
+
+        [Route("/api/[controller]/getData")]
+        [HttpGet]
+        public List<UrgentRequest> GetDataBetweenDates(DateTime from, DateTime to)
+        {
+            return _urgentRequestService.GetSummarizedUrgentRequests(from, to);
         }
 
     }
