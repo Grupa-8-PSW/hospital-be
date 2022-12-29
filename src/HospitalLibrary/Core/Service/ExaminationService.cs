@@ -32,6 +32,11 @@ namespace HospitalLibrary.Core.Service
             return _examinationRepository.GetById(id);
         }
 
+        public IEnumerable<Examination> GetByRoomId(int roomId)
+        {
+            return _examinationRepository.GetByRoomId(roomId);
+        }
+
         public bool Create(Examination examination)
         {
             if (!IsAvailable(examination))

@@ -244,7 +244,18 @@ namespace HospitalAPI.Controllers
                 Console.WriteLine(ex.Message);
                 return null;
             }
+        }
 
+        [HttpGet("room/{roomId}")]
+        public ActionResult GetByRoomId(int roomId)
+        {
+            var examination = _examinationService.GetByRoomId(roomId);
+            if (examination == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(examination);
         }
     }
 }

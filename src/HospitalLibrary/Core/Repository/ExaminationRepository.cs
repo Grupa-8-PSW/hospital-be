@@ -64,6 +64,11 @@ namespace HospitalLibrary.Core.Repository
             return _context.Examinations.Where(ex => ex.DoctorId == doctorId && ex.DateRange.Start.Date == date.Date).ToList();
         }
 
+        public IEnumerable<Examination> GetByRoomId(int roomId)
+        {
+            return _context.Examinations.Where(x => x.RoomId == roomId).ToList();
+        }
+
         public List<DateRange> GetByDoctorAndDateRange(int doctorId, DateRange dateRange)
             => _context.Examinations
             .Where(ex => ex.DoctorId == doctorId && ex.DateRange.Start.Date == dateRange.Start.Date)
