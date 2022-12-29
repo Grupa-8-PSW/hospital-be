@@ -1,15 +1,13 @@
-﻿using HospitalLibrary.GraphicalEditor.Model;
-using HospitalLibrary.GraphicalEditor.Model.DTO;
+﻿using HospitalLibrary.GraphicalEditor.Model.DTO;
+using HospitalLibrary.GraphicalEditor.Service;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers.Map
 {
-
     [Route("api/map/floor/rooms/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Manager")]
+    //[Authorize(Roles = "Manager")]
     public class RoomController : ControllerBase
     {
         private readonly IRoomService _roomService;
@@ -39,19 +37,25 @@ namespace HospitalAPI.Controllers.Map
                 return NotFound();
             }
 
-            return Ok(room);
+            return Ok(new RoomDTO(room));
         }
 
         [HttpGet("get/by/floor/{id}")]
         public IActionResult GetRoomsByFloorId(int id)
         {
-            var rooms = _roomService.GetRoomsByFloorId(id);
-            if (rooms == null)
+            List<RoomDTO> rooms = new();
+            foreach (var room in _roomService.GetRoomsByFloorId(id))
             {
-                return NotFound();
+                rooms.Add(new RoomDTO(room));
             }
-
             return Ok(rooms);
+        }
+
+        [HttpGet("get/schedules/{id}")]
+        public IActionResult getSchedulesDTO(int id)
+        {
+            var shedulesDto = _roomService.GetSchedules(id);
+            return Ok(shedulesDto);
         }
 
         [HttpGet("search")]
@@ -74,6 +78,13 @@ namespace HospitalAPI.Controllers.Map
                 rooms.Add(new RoomDTO(room));
             }
             return Ok(rooms);
+        }
+
+        [HttpPost("get/transferedEquipment")]
+        public IActionResult GetAvailableTerminsForTransfer(EquipmentTransferDTO dto)
+        {
+            List<FreeSpaceDTO> freeSpace = _roomService.GetTransferedEquipment(dto);
+            return Ok(freeSpace);
         }
 
     }

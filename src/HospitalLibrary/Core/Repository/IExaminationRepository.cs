@@ -1,6 +1,5 @@
 ﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.ValueObjects;
-using HospitalLibrary.Core.Util;
 
 namespace HospitalLibrary.Core.Repository
 {
@@ -15,5 +14,6 @@ namespace HospitalLibrary.Core.Repository
         IEnumerable<Examination> GetByDoctorAndDate(int doctorId, DateTime date);
         public List<DateRange> GetByDoctorAndDateRange(int doctorId, DateRange dateRange);
         IEnumerable<Examination> GetByPatientId(int patientId);
+        IEnumerable<Examination> GetByRoomId(int roomId);
     }
 }

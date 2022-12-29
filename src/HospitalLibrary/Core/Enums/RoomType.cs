@@ -8,7 +8,11 @@ namespace HospitalLibrary.Core.Enums
 {
     public enum RoomType
     {
+        OTHER,
         LYING,
-        OTHER
+        CAFETERIA,
+        OPERATIONS,
+        MAGAZINE
+      
     }
 }

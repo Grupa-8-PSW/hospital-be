@@ -1,6 +1,4 @@
-﻿using HospitalLibrary.Core.Enums;
-using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Util;
+﻿using HospitalLibrary.Core.Model;
 
 namespace HospitalLibrary.Core.Service
 {
@@ -15,5 +13,6 @@ namespace HospitalLibrary.Core.Service
         IEnumerable<Examination> GetByDoctorIdAndDate(int doctorId, DateTime startTime);
         IEnumerable<Examination> GetByPatientId(int patientId);
         bool CheckIfCancellable(int id);
+        IEnumerable<Examination> GetByRoomId(int roomId);
     }
 }
