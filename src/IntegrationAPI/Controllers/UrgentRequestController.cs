@@ -1,5 +1,6 @@
 ﻿
 using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibrary.Core.Service;
 using IntegrationLibrary.Core.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -32,9 +33,16 @@ namespace IntegrationAPI.Controllers
 
         [Route("/api/[controller]/getData")]
         [HttpGet]
-        public List<UrgentRequest> GetDataBetweenDates(DateTime from, DateTime to)
+        public ActionResult GetDataBetweenDates(DateTime from, DateTime to)
         {
-            return _urgentRequestService.GetSummarizedUrgentRequests(from, to);
+            return Ok(_urgentRequestService.GetSummarizedRequests(from, to));
+        }
+
+        [Route("/api/[controller]/getQuantitiesPerTypeStatistic")]
+        [HttpGet]
+        public ActionResult GetQuantitiesPerTypeStatistic(DateTime from, DateTime to)
+        {
+            return Ok(_urgentRequestService.GetBloodAmountsPerTypeForAllBloodBanks(from, to));
         }
 
     }
