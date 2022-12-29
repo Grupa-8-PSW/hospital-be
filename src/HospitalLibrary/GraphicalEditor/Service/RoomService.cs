@@ -4,7 +4,6 @@ using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Model.DTO;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
-using System.Collections.Generic;
 
 namespace HospitalLibrary.GraphicalEditor.Service
 {
@@ -68,18 +67,18 @@ namespace HospitalLibrary.GraphicalEditor.Service
 
             foreach (Examination exam in fromRoomExaminations)
             {
-                while (startDate < exam.StartTime)
+                while (startDate < exam.DateRange.Start)
                 {
                     FreeSpaceDTO freeSpace = new FreeSpaceDTO();
                     freeSpace.StartTime = startDate;
                     freeSpace.EndTime = startDate.AddHours(dto.Duration);
-                    if (freeSpace.EndTime <= exam.StartTime)
+                    if (freeSpace.EndTime <= exam.DateRange.Start)
                     {
                         freeSpacesFromRoom.Add(freeSpace);
                     }
                     startDate = startDate.AddHours(0.5);
                 }
-                startDate = startDate.AddMinutes(exam.Duration);
+                startDate = startDate.AddMinutes(exam.DateRange.DurationInMinutes);
             }
 
             while (startDate < endDate)
@@ -98,19 +97,19 @@ namespace HospitalLibrary.GraphicalEditor.Service
             foreach (Examination exam in toRoomExaminations)
             {
 
-                while (startDate < exam.StartTime)
+                while (startDate < exam.DateRange.Start)
                 {
                     FreeSpaceDTO freeSpace = new FreeSpaceDTO();
                     freeSpace.StartTime = startDate;
                     freeSpace.EndTime = startDate.AddHours(dto.Duration);
-                    if (freeSpace.EndTime <= exam.StartTime)
+                    if (freeSpace.EndTime <= exam.DateRange.Start)
                     {
                         freeSpacesToRoom.Add(freeSpace);
                     }
                     startDate = startDate.AddHours(0.5);
                 }
 
-                startDate = startDate.AddMinutes(exam.Duration);
+                startDate = startDate.AddMinutes(exam.DateRange.DurationInMinutes);
 
             }
 
@@ -157,14 +156,14 @@ namespace HospitalLibrary.GraphicalEditor.Service
             SchedulesDTO shedulesDto = new SchedulesDTO(examinationDTOs, equipmentTransferDTOs);
             return shedulesDto;
         }
-        private List<ExaminationDTO> EntityToEntityExeListDTO(List<Examination> entities) 
+        private List<ExaminationDTO> EntityToEntityExeListDTO(List<Examination> entities)
         {
             var retList = new List<ExaminationDTO>();
             foreach (var item in entities)
             {
-                retList.Add(new ExaminationDTO(item.Id, item.StartTime, item.Duration));
+                retList.Add(new ExaminationDTO(item.Id, item.DateRange.Start, item.DateRange.DurationInMinutes));
             }
-            
+
             return retList;
         }
 
@@ -173,7 +172,7 @@ namespace HospitalLibrary.GraphicalEditor.Service
             var retList = new List<EquipmentTransferDTO>();
             foreach (var item in entities)
             {
-                retList.Add(new EquipmentTransferDTO(item.Id, item.StartDate, item.EndDate, item.FromRoomId,item.ToRoomId));
+                retList.Add(new EquipmentTransferDTO(item.Id, item.StartDate, item.EndDate, item.FromRoomId, item.ToRoomId));
             }
 
             return retList;
