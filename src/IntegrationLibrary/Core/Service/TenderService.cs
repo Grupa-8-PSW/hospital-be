@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using Firebase.Auth;
 using Firebase.Storage;
 using HospitalLibrary.Core.Enums;
@@ -66,36 +67,8 @@ namespace IntegrationLibrary.Core.Service
         }
 
 
-        public async Task<byte[]> GeneratePdf(List<UrgentRequest> urgentRequests, DateTime fromDate, DateTime toDate)
 
-        {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                Document document = new Document(PageSize.A4, 25, 25, 30, 30);
-                PdfWriter writer = PdfWriter.GetInstance(document, ms);
-                writer.Open();
-                document.Open();
-
-                CreateTable(urgentRequests, fromDate, toDate, document);
-
-                document.Close();
-                writer.Close();
-                var constant = ms.ToArray();
-                try
-                {
-                    await UploadFile(constant);
-
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.ToString());
-                }
-                return constant;
-            }
-        }
-
-
-        private void CreateTable(List<UrgentRequest> urgentRequests, DateTime fromDate, DateTime toDate, Document document)
+        private void CreateTable(List<Dictionary<String, int>> amountsForEachBloodBank, DateTime fromDate, DateTime toDate, Document document)
         {
             PdfPTable table = new PdfPTable(9);
             CreateHeaderCell(table, "Blood Bank Name");
@@ -116,23 +89,22 @@ namespace IntegrationLibrary.Core.Service
 
 
 
-            foreach (UrgentRequest urgentRequest in urgentRequests)
+            foreach (var amountForEachBank in amountsForEachBloodBank)
             {
-
                 PdfPCell cell_1 = new PdfPCell(new Phrase(""));
 
-                //cell_1.Phrase.Add(_bankRepository.GetById(urgentRequest.BloodBankId).Name);
+                cell_1.Phrase.Add(amountForEachBank.Keys.Last());
                 cell_1.HorizontalAlignment = Element.ALIGN_CENTER;
                 table.AddCell(cell_1);
 
-                CreateQuantityCell(table, urgentRequest, BloodType.A_POSITIVE);
-                CreateQuantityCell(table, urgentRequest, BloodType.A_NEGATIVE);
-                CreateQuantityCell(table, urgentRequest, BloodType.B_POSITIVE);
-                CreateQuantityCell(table, urgentRequest, BloodType.B_NEGATIVE);
-                CreateQuantityCell(table, urgentRequest, BloodType.AB_POSITIVE);
-                CreateQuantityCell(table, urgentRequest, BloodType.AB_NEGATIVE);
-                CreateQuantityCell(table, urgentRequest, BloodType.ZERO_POSITIVE);
-                CreateQuantityCell(table, urgentRequest, BloodType.ZERO_NEGATIVE);
+                CreateQuantityCell(table, amountForEachBank, "A+");
+                CreateQuantityCell(table, amountForEachBank, "A-");
+                CreateQuantityCell(table, amountForEachBank, "B+");
+                CreateQuantityCell(table, amountForEachBank, "B-");
+                CreateQuantityCell(table, amountForEachBank, "AB+");
+                CreateQuantityCell(table, amountForEachBank, "AB-");
+                CreateQuantityCell(table, amountForEachBank, "0+");
+                CreateQuantityCell(table, amountForEachBank, "0-");
 
             }
 
@@ -155,24 +127,23 @@ namespace IntegrationLibrary.Core.Service
             table.AddCell(cell);
         }
 
-        private static void CreateQuantityCell(PdfPTable table, UrgentRequest urgentRequest, BloodType bloodType)
+        private static void CreateQuantityCell(PdfPTable table, Dictionary<String, int> amountForBloodBank, String bloodType)
         {
             PdfPCell qCell = new PdfPCell(new Phrase(""));
-            for (int i = 0; i < urgentRequest.Blood.Count; i++)
+            qCell.HorizontalAlignment = Element.ALIGN_CENTER;
+
+
+            if (amountForBloodBank.ContainsKey(bloodType))
             {
-                if (urgentRequest.Blood[i].BloodType.Equals(bloodType))
-                {
-                    qCell.Phrase.Add(urgentRequest.Blood[i].Quantity.ToString());
-                    qCell.HorizontalAlignment = Element.ALIGN_CENTER;
-                    break;
-                }
-                else
-                {
-                    qCell.Phrase.Add("");
-                    qCell.HorizontalAlignment = Element.ALIGN_CENTER;
-                }
+                qCell.Phrase.Add(amountForBloodBank[bloodType].ToString());
+                qCell.HorizontalAlignment = Element.ALIGN_CENTER;
+               
             }
-            table.AddCell(qCell);
+            else
+            {
+                qCell.Phrase.Add("");
+                qCell.HorizontalAlignment = Element.ALIGN_CENTER;
+            }
         }
 
 
@@ -205,22 +176,6 @@ namespace IntegrationLibrary.Core.Service
             return file;
         }
 
-
-        public List<Blood> GetAllBloodAmountsBetweenDates(DateTime from, DateTime to)
-        {
-            List<Blood> bloods = initializeList();
-
-            IEnumerable<Tender> tenders = _tenderRepository.GetAllBloodAmountsBetweenDates(from, to);
-
-            foreach(Tender tender in tenders ) {
-                foreach (Blood blood in tender.Blood) {
-                    foreach (var bl in bloods.Where(x => x.BloodType.Equals(blood.BloodType)))
-                        bl.Quantity = bl.Quantity + blood.Quantity;
-                }
-            }
-            
-            return bloods;
-        }
 
         public List<Dictionary<string, int>> GetBloodAmountsBetweenDates(DateTime from, DateTime to)
         {
@@ -315,19 +270,33 @@ namespace IntegrationLibrary.Core.Service
             return sum;
         }
 
-        private List<Blood> initializeList()
-        {
-            List<Blood> bloods = new List<Blood>();
-            bloods.Add(new Blood(HospitalLibrary.Core.Enums.BloodType.ZERO_POSITIVE, 0));
-            bloods.Add(new Blood(HospitalLibrary.Core.Enums.BloodType.A_POSITIVE, 0));
-            bloods.Add(new Blood(HospitalLibrary.Core.Enums.BloodType.B_POSITIVE, 0));
-            bloods.Add(new Blood(HospitalLibrary.Core.Enums.BloodType.ZERO_NEGATIVE, 0));
-            bloods.Add(new Blood(HospitalLibrary.Core.Enums.BloodType.AB_NEGATIVE, 0));
-            bloods.Add(new Blood(HospitalLibrary.Core.Enums.BloodType.AB_POSITIVE, 0));
-            bloods.Add(new Blood(HospitalLibrary.Core.Enums.BloodType.A_NEGATIVE, 0));
-            bloods.Add(new Blood(HospitalLibrary.Core.Enums.BloodType.B_NEGATIVE, 0));
-            return bloods;
-        }
 
+        public async Task<byte[]> GeneratePdf(List<Dictionary<string, int>> amountsForEachBloodBank, DateTime fromDate, DateTime toDate)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                Document document = new Document(PageSize.A4, 25, 25, 30, 30);
+                PdfWriter writer = PdfWriter.GetInstance(document, ms);
+                writer.Open();
+                document.Open();
+
+                CreateTable(amountsForEachBloodBank, fromDate, toDate, document);
+
+                document.Close();
+                writer.Close();
+                var constant = ms.ToArray();
+                try
+                {
+                    await UploadFile(constant);
+
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                }
+                
+                return constant;
+            }
+        }
     }
 }

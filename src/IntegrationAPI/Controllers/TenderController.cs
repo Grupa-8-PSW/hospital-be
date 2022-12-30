@@ -55,10 +55,11 @@ namespace IntegrationAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GeneratePdf()
         {
-            DateTime fromDate = new DateTime(2022, 12, 09);
-            DateTime toDate = new DateTime(2022, 12, 22);
-            //return File(await _service.GeneratePdf(_urgentRequestService.GetSummarizedUrgentRequests(fromDate, toDate), fromDate, toDate), "application/pdf", "urgentrequestreport.pdf");
-            return Ok();
+
+            DateTime fromDate = new DateTime(2022, 11, 11);
+            DateTime toDate = new DateTime(2023, 12, 22);
+            return File(await _service.GeneratePdf(_service.GetBloodAmountsBetweenDates(fromDate, toDate), fromDate, toDate), "application/pdf", "urgentrequestreport.pdf");
+        
         }
 
 

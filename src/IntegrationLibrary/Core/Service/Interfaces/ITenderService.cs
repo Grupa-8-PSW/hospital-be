@@ -19,9 +19,8 @@ namespace IntegrationLibrary.Core.Service.Interfaces
 
         public void Delete(Tender tender);
         Tender UpdateStatus(int tenderID);
-        List<Blood> GetAllBloodAmountsBetweenDates(DateTime from, DateTime to);
 
         public List<Dictionary<string, int>> GetBloodAmountsBetweenDates(DateTime from, DateTime to);
-
+        Task<byte[]> GeneratePdf(List<Dictionary<string, int>> list, DateTime fromDate, DateTime toDate);
     }
 }
