@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using HospitalLibrary.Core.Enums;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Model.ValueObject;
+using IntegrationLibrary.Core.Model.DTO;
 
 namespace IntegrationLibrary.Core.Service
 {
@@ -25,41 +26,75 @@ namespace IntegrationLibrary.Core.Service
             _bankRepository = bloodBankRepository;
         }
 
-        public List<UrgentRequest> FindUrgentRequestsBetweenDates(DateTime fromDate, DateTime toDate)
+        public IEnumerable<UrgentRequest> FindUrgentRequestsBetweenDates(DateTime fromDate, DateTime toDate)
         {
-            List<UrgentRequest> validRequests = new List<UrgentRequest>();
-            foreach(UrgentRequest urgentRequest in (List<UrgentRequest>)_urgentRequestRepository.GetAll())
-            {
-                if (fromDate.Ticks < urgentRequest.ObtainedDate.Ticks && urgentRequest.ObtainedDate.Ticks < toDate.Ticks)
-                    validRequests.Add(urgentRequest);
-            }
-            if(validRequests.Count == 0)
-                Console.WriteLine("Za ovaj period nema nabavljene krvi");
-
-            return validRequests;
+            return _urgentRequestRepository.GetAllBloodAmountsBetweenDates(fromDate, toDate);
         }
 
-        public List<Blood> GetAllBloodAmountsBetweenDates(DateTime from, DateTime to)
+        public IEnumerable<UrgentRequest> FindUrgentRequestsBetweenDatesForBloodBank(DateTime fromDate, DateTime toDate, int bloodBankId)
         {
-            List<Blood> bloods = initializeList();
-            foreach (UrgentRequest urgentRequest in FindUrgentRequestsBetweenDates(from, to))
+            return _urgentRequestRepository.GetAllBloodAmountsBetweenDatesForBloodBank(fromDate, toDate, bloodBankId);
+        }
+        
+        public UrgentRequestAllBanksStatisticDTO GetSummarizedRequests(DateTime from, DateTime to)
+        {
+            UrgentRequestAllBanksStatisticDTO allBanksStatisticDTO = new ();
+            foreach(BloodBank bloodBank in _bankRepository.GetAll())
             {
-                foreach (Blood blood in urgentRequest.Blood)
+                List<Blood> bloodUnits = GetAllBloodUnitsForBloodBank(FindUrgentRequestsBetweenDatesForBloodBank(from, to, bloodBank.Id));
+                if(bloodUnits.Any())
                 {
-                    foreach (var bl in bloods.Where(x => x.BloodType.Equals(blood.BloodType)))
-                        bl.Quantity = bl.Quantity + blood.Quantity;
+                    allBanksStatisticDTO.BloodBanks.Add(bloodBank.Name);
+                    allBanksStatisticDTO.Quantities.Add(bloodUnits.Sum(unit => unit.Quantity));
                 }
             }
-            return bloods;
+            return allBanksStatisticDTO;
+        }
+        
+        public QuantitiesPerBloodTypeStatisticDTO GetBloodAmountsPerTypeForBloodBank(int bloodBankId, DateTime from, DateTime to)
+        {
+            IEnumerable<UrgentRequest> urgentRequests = FindUrgentRequestsBetweenDatesForBloodBank(from, to, bloodBankId);
+            List<Blood> bloodUnits = GetAllBloodUnitsForBloodBank(urgentRequests);
+            return GetQuantityPerTypeStatistic(bloodUnits);
+        }
+
+        public QuantitiesPerBloodTypeStatisticDTO GetBloodAmountsPerTypeForAllBloodBanks(DateTime from, DateTime to)
+        {
+            IEnumerable<UrgentRequest> urgentRequests = FindUrgentRequestsBetweenDates(from, to);
+            List<Blood> bloodUnits = GetAllBloodUnitsForBloodBank(urgentRequests);
+            return GetQuantityPerTypeStatistic(bloodUnits);
+        }
+
+        private static QuantitiesPerBloodTypeStatisticDTO GetQuantityPerTypeStatistic(List<Blood> bloodUnits)
+        {
+            QuantitiesPerBloodTypeStatisticDTO quantitiesPerBloodTypeStatistic = new();
+            foreach (BloodType type in Enum.GetValues(typeof(BloodType)))
+            {
+
+                double quantity = bloodUnits.Where(unit => unit.BloodType == type).Sum(unit => unit.Quantity);
+                quantitiesPerBloodTypeStatistic.Quantities.Add(quantity);
+                quantitiesPerBloodTypeStatistic.BloodTypes.Add(type);
+            }
+            return quantitiesPerBloodTypeStatistic;
+        }
+
+        public List<Blood> GetAllBloodUnitsForBloodBank(IEnumerable<UrgentRequest> urgentRequests)
+        {
+            List<Blood> allBloodUnits = new List<Blood>();
+            foreach(UrgentRequest urgentRequest in urgentRequests)
+            {
+                allBloodUnits.AddRange(urgentRequest.Blood);
+            }
+            return allBloodUnits;     
         }
 
         public List<UrgentRequest> GetSummarizedUrgentRequests(DateTime from, DateTime to)
         {
-           List<UrgentRequest> sumRequests = new List<UrgentRequest>();
-           List<Blood> bloods = initializeList();
-           UrgentRequest sumRequest = FindUrgentRequestsBetweenDates(from, to).First();
-           foreach (UrgentRequest urgentRequest in FindUrgentRequestsBetweenDates(from, to))
-           {
+            List<UrgentRequest> sumRequests = new List<UrgentRequest>();
+            List<Blood> bloods = InitializeList();
+            UrgentRequest sumRequest = FindUrgentRequestsBetweenDates(from, to).First();
+            foreach (UrgentRequest urgentRequest in FindUrgentRequestsBetweenDates(from, to))
+            {
                 if (urgentRequest.BloodBankId.Equals(sumRequest.BloodBankId))
                 {
                     foreach (Blood blood in urgentRequest.Blood)
@@ -71,14 +106,10 @@ namespace IntegrationLibrary.Core.Service
                     sumRequest.Blood = bloods;
                     sumRequest.BloodBankId = urgentRequest.BloodBankId;
                 }
-           }
+            }
             sumRequests.Add(sumRequest);
             return sumRequests;
         }
-
-
-
-
 
         public async Task<byte[]> GeneratePdf(List<UrgentRequest> urgentRequests, DateTime fromDate, DateTime toDate)
 
@@ -215,7 +246,7 @@ namespace IntegrationLibrary.Core.Service
             table.AddCell(qCell);
         }
 
-        private List<Blood> initializeList()
+        private static List<Blood> InitializeList()
         {
             List<Blood> bloods = new List<Blood>();
             bloods.Add(new Blood(BloodType.ZERO_POSITIVE, 0));

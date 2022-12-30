@@ -21,5 +21,7 @@ namespace IntegrationLibrary.Core.Service.Interfaces
         Tender UpdateStatus(int tenderID);
         List<Blood> GetAllBloodAmountsBetweenDates(DateTime from, DateTime to);
 
+        public List<Dictionary<string, int>> GetBloodAmountsBetweenDates(DateTime from, DateTime to);
+
     }
 }

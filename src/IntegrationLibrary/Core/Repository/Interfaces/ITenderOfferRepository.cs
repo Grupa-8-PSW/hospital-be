@@ -14,6 +14,8 @@ namespace IntegrationLibrary.Core.Repository.Interfaces
         IEnumerable<TenderOffer> GetAll();
         public IEnumerable<TenderOffer> GetAllByTennderID(int tenderID);
         public void UpdateTenderOffer(TenderOffer newTenderOffer);
-        public IEnumerable<TenderOffer> Getbetw(DateTime start, DateTime end);
+
+        public TenderOffer GetAcceptOffer(int tenderId);
+
     }
 }

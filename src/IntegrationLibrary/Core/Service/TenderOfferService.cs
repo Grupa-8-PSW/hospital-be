@@ -89,20 +89,5 @@ namespace IntegrationLibrary.Core.Service
             return _repository.GetAllByTennderID(tenderID);
         }
 
-        public IEnumerable<TenderOffer> GetAllBloodAmountsBetweenDates(DateTime from, DateTime to)
-        {
-
-            from = new DateTime(2022, 11, 11);
-            to = new DateTime(2023, 11, 11);
-
-            IEnumerable<TenderOffer> tenders = _repository.Getbetw(from, to);
-
-
-            return tenders;
-        }
-
-
-
-
     }
 }

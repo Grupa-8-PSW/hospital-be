@@ -55,6 +55,7 @@ namespace IntegrationLibrary.Persistence
                 .HasColumnType("jsonb");
 
             modelBuilder.SeedBloodBankNews();
+
         }
 
     }

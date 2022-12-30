@@ -222,6 +222,99 @@ namespace IntegrationLibrary.Core.Service
             return bloods;
         }
 
+        public List<Dictionary<string, int>> GetBloodAmountsBetweenDates(DateTime from, DateTime to)
+        {
+            List<TenderOffer> toRet = new List<TenderOffer>();
+            foreach (Tender tender in _tenderRepository.GetTendersBetweenDates(from, to))
+            {
+                if (_tenderOfferRepository.GetAcceptOffer(tender.Id) == null)
+                    continue;
+                
+                toRet.Add(_tenderOfferRepository.GetAcceptOffer(tender.Id));
+            }
+
+            List<String> bankNames = FindBankNames(toRet);
+
+            List<Dictionary<string, int>> quants = new List<Dictionary<string, int>>();
+
+            foreach (String bankName in bankNames)
+            {
+                quants.Add(new Dictionary<string, int>(CalculateQuantitiesForBank(bankName, toRet)));
+            }
+
+            return quants;
+        }
+
+        private List<String> FindBankNames(List<TenderOffer> offers)
+        {
+            List<String> allNames = new List<string>();
+            foreach (TenderOffer tenderOffer in offers)
+            {
+                allNames.Add(tenderOffer.BloodBankName);
+            }
+
+            return allNames.Distinct().ToList();
+
+        }
+
+        private Dictionary<string, int> CalculateQuantitiesForBank(String bankName, List<TenderOffer> allOffers)
+        {
+            List<String> allTypes = new List<string>();
+
+            foreach (TenderOffer tenderOffer in allOffers)
+            {
+                if (tenderOffer.BloodBankName.Equals(bankName))
+                {
+                    allTypes.AddRange(tenderOffer.Offers.Select(tenderOfferOffer => tenderOfferOffer.BloodType));
+                }
+            }
+
+            return FindQuantitiesForTypes(bankName, allOffers, allTypes.Distinct().ToList());
+        }
+
+
+        private Dictionary<string, int> FindQuantitiesForTypes(String bankName, List<TenderOffer> allOffers, List<String> allTypes)
+        {
+            Dictionary<string, int> typesAndQuantities = new Dictionary<string, int>();
+
+            foreach (var type in allTypes)
+            {
+                typesAndQuantities.Add(type, 0);
+            }
+
+            foreach (string type in allTypes)
+            {
+                foreach (TenderOffer tenderOffer in allOffers)
+                {
+                    if (tenderOffer.BloodBankName.Equals(bankName))
+                    {
+                        foreach (var offer in tenderOffer.Offers)
+                        {
+                            if (offer.BloodType.Equals(type))
+                            {
+                                typesAndQuantities[type] += offer.BloodAmount;
+                            }
+                        }
+                    }
+                }
+            }
+
+            typesAndQuantities.Add(bankName, GetSumForBank(typesAndQuantities));
+
+            return typesAndQuantities;
+        }
+
+        private int GetSumForBank(Dictionary<string, int> typesAndQuantities)
+        {
+            int sum = 0;
+            foreach (var item in typesAndQuantities)
+            {
+                sum += item.Value;
+            }
+
+            return sum;
+        }
+
         private List<Blood> initializeList()
         {
             List<Blood> bloods = new List<Blood>();

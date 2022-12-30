@@ -15,6 +15,5 @@ namespace IntegrationLibrary.Core.Service.Interfaces
         TenderOffer GetById(int tenderID);
         IEnumerable<TenderOffer> getOffersForTender(int tenderID);
         public void changeStatusForOffers(TenderOffer acceptedTenderOffer);
-        IEnumerable<TenderOffer> GetAllBloodAmountsBetweenDates(DateTime from, DateTime to);
     }
 }

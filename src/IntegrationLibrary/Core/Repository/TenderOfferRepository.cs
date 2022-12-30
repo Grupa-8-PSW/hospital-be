@@ -63,5 +63,19 @@ namespace IntegrationLibrary.Core.Repository
            
         }
 
+
+        public TenderOffer GetAcceptOffer(int tenderId)
+        {
+            var toRet = _context.TenderOffer
+                .FromSqlRaw("select * from \"TenderOffer\" where \"TenderID\" = {0} and \"TenderOfferStatus\" = 1",
+                    tenderId).FirstOrDefault();
+
+            if (toRet == null)
+            {
+                return null;
+            }
+
+            return toRet;
+        }
     }
 }

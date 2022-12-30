@@ -16,5 +16,7 @@ namespace IntegrationLibrary.Core.Repository.Interfaces
         void Update(Tender tender);
         IEnumerable<Tender> GetActiveTenders();
         IEnumerable<Tender> GetAllBloodAmountsBetweenDates(DateTime start, DateTime end);
+
+        public List<Tender> GetTendersBetweenDates(DateTime start, DateTime end);
     }
 }

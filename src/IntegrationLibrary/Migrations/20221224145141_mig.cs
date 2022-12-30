@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
-    public partial class urgentRequestMigration : Migration
+    public partial class mig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -118,6 +118,28 @@ namespace IntegrationLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BloodRequestDelivery",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Type = table.Column<int>(type: "integer", nullable: false),
+                    AmountL = table.Column<int>(type: "integer", nullable: false),
+                    DeliveryDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    BloodBankId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BloodRequestDelivery", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BloodRequestDelivery_BloodBanks_BloodBankId",
+                        column: x => x.BloodBankId,
+                        principalTable: "BloodBanks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MonthlySubscription",
                 columns: table => new
                 {
@@ -161,6 +183,11 @@ namespace IntegrationLibrary.Migrations
                 column: "BloodBankId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BloodRequestDelivery_BloodBankId",
+                table: "BloodRequestDelivery",
+                column: "BloodBankId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MonthlySubscription_BankId",
                 table: "MonthlySubscription",
                 column: "BankId");
@@ -173,6 +200,9 @@ namespace IntegrationLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "BloodConsumptionConfiguration");
+
+            migrationBuilder.DropTable(
+                name: "BloodRequestDelivery");
 
             migrationBuilder.DropTable(
                 name: "MonthlySubscription");
