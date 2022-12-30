@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Core.Model;
 using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Model.ValueObject;
 using IntegrationLibrary.Core.Repository.Interfaces;
 using IntegrationLibrary.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -53,6 +54,13 @@ namespace IntegrationLibrary.Core.Repository
         public TenderOffer GetAcceptedOffer(int tenderID)
         {
             return  _context.TenderOffer.Where(p => p.TenderID.Equals(tenderID)).Where(p => p.TenderOfferStatus.Equals(TenderOfferStatus.APPROVE)).First();
+        }
+
+        public IEnumerable<TenderOffer> Getbetw(DateTime start, DateTime end)
+        {
+            var s = _context.Tenders.Where(t => t.Status.Equals(TenderStatus.Inactive) && t.DateRange.Start >= start && t.DateRange.End <= end);
+            return _context.TenderOffer.Where(t => t.TenderOfferStatus.Equals(TenderOfferStatus.APPROVE)).Where(t => s.Any(item => item.Id.Equals(t.TenderID)));
+           
         }
 
 

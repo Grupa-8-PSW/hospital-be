@@ -12,7 +12,6 @@ using IntegrationAPI.ExceptionHandler.Validators;
 using IntegrationLibrary.Core.Service;
 using IntegrationLibrary.Core.Service.Interfaces;
 using HospitalLibrary.Core.Enums;
-using static iTextSharp.text.pdf.AcroFields;
 using IntegrationAPI.ConnectionService.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using HospitalAPI.Connections;

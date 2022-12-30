@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace IntegrationLibrary.Core.Model.ValueObject
 {
     public class BloodOffer  : ValueObject<BloodOffer>
+
     {
         public string BloodType { get; set; }
         public int BloodAmount { get; set; }
@@ -38,11 +39,6 @@ namespace IntegrationLibrary.Core.Model.ValueObject
         {
             if (BloodAmount < 0 || BloodAmount ==null || BloodType == null ) throw new Exception("Wrong data");
         }
-
-        // protected override bool EqualsCore(Blood other)
-        // {
-        //     throw new NotImplementedException();
-        // }
 
         protected override int GetHashCodeCore()
         {

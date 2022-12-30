@@ -16,5 +16,6 @@ namespace IntegrationLibrary.Core.Repository.Interfaces
         public void UpdateTenderOffer(TenderOffer newTenderOffer);
 
         public TenderOffer GetAcceptOffer(int tenderId);
+
     }
 }

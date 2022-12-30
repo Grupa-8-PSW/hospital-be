@@ -10,14 +10,14 @@ namespace IntegrationAPI.Mapper
 
         public static TenderOffer ToModel(TenderOfferDTO dto)
         {
-            TenderOffer to = new TenderOffer();
+            //TenderOffer to = new TenderOffer();
             
-            to.TenderID = dto.TenderID;
-            to.Offers = convBloodOffers(dto.BloodAmounts);
-            to.TenderOfferStatus = (TenderOfferStatus)dto.TenderOfferStatus;
-            to.BloodBankName = dto.BloodBankUsername;
-            to.Id = dto.Id;
-            return to;
+            //to.TenderID = dto.TenderID;
+            //to.Offers = convBloodOffers(dto.BloodAmounts);
+            //to.TenderOfferStatus = (TenderOfferStatus)dto.TenderOfferStatus;
+            //to.BloodBankName = dto.BloodBankUsername;
+            //to.Id = dto.Id;
+            return null;
         }
 
 
