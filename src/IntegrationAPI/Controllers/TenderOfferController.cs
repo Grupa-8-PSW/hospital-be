@@ -53,5 +53,15 @@ namespace IntegrationAPI.Controllers
             _connectionService.SendTenderOffer(APIKey, tenderId);
             return Ok();
         }
+
+        [HttpGet]
+        [Route("getAllBloodAmountsBetweenDatesWithBloodBankName")]
+        public ActionResult GetAllBloodAmountsBetweenDates()
+        {
+            DateTime from = new DateTime(2022, 11, 11);
+            DateTime to = new DateTime(2023, 12, 12);
+
+            return Ok(_tenderOfferService.GetAllBloodAmountsBetweenDates(from, to));
+        }
     }
 }

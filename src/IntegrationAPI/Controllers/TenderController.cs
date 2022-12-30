@@ -51,5 +51,16 @@ namespace IntegrationAPI.Controllers
             return Ok(_service.GetAllBloodAmountsBetweenDates(from, to));
         }
 
+        [Route("/api/[controller]/generatePdf")]
+        [HttpGet]
+        public async Task<IActionResult> GeneratePdf()
+        {
+            DateTime fromDate = new DateTime(2022, 12, 09);
+            DateTime toDate = new DateTime(2022, 12, 22);
+            //return File(await _service.GeneratePdf(_urgentRequestService.GetSummarizedUrgentRequests(fromDate, toDate), fromDate, toDate), "application/pdf", "urgentrequestreport.pdf");
+            return Ok();
+        }
+
+
     }
 }

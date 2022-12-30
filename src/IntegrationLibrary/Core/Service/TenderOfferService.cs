@@ -1,7 +1,11 @@
-﻿using HospitalLibrary.Core.Model;
+﻿
+using HospitalLibrary.Core.Model;
 using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Model.ValueObject;
+using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Repository.Interfaces;
 using IntegrationLibrary.Core.Service.Interfaces;
+using iTextSharp.text;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 using System;
@@ -84,5 +88,21 @@ namespace IntegrationLibrary.Core.Service
         {
             return _repository.GetAllByTennderID(tenderID);
         }
+
+        public IEnumerable<TenderOffer> GetAllBloodAmountsBetweenDates(DateTime from, DateTime to)
+        {
+
+            from = new DateTime(2022, 11, 11);
+            to = new DateTime(2023, 11, 11);
+
+            IEnumerable<TenderOffer> tenders = _repository.Getbetw(from, to);
+
+
+            return tenders;
+        }
+
+
+
+
     }
 }
