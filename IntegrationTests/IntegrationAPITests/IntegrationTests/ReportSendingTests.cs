@@ -19,7 +19,7 @@ namespace IntegrationTests.IntegrationAPITests.IntegrationTests
 
         [Fact]
         public void sendsReport()
-        {
+        { 
             var mock = new Mock<BloodBankHTTPConnection>();
             String dt = "2022-11-23 19:00:00+01";
             DateTime date = DateTime.Parse(dt);

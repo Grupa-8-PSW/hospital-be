@@ -13,9 +13,13 @@ using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Asn1.Cms;
 using IntegrationAPI.ConnectionService.Interface;
+using System.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IntegrationAPI.Controllers
 {
+
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BloodConsumptionConfigurationController : ControllerBase
@@ -41,9 +45,9 @@ namespace IntegrationAPI.Controllers
 
         [Route("/api/[controller]/generatePdf")]
         [HttpGet]
-        public IActionResult GenerateSeveralPdf()
+        public IActionResult GenerateSeveralPdf()   
         {
-            var validList =  _service.FindValidBloodUnits(_hospitalHTTPConnectionService.GetAllBloodUnits(), out var configuration);
+            var validList = _service.FindValidBloodUnits(_hospitalHTTPConnectionService.GetAllBloodUnits(), out var configuration);
             return File(_service.GeneratePdf(configuration.Last(), validList), "application/pdf", "bloodconsumptionreport.pdf");
 
         }

@@ -28,10 +28,14 @@
 		<PackageReference Include="PDFsharp-MigraDoc" Version="1.50.5147" />
 		<PackageReference Include="PdfSharpCore" Version="1.3.41" />
     <PackageReference Include="RestSharp" Version="108.0.2" />
+    <PackageReference Include="xunit" Version="2.4.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Core\Model\ValueObjects\" />
 	  <Folder Include="Migrations\" />
 	</ItemGroup>
 

@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IntegrationLibrary.Core.Model.DTO;
+
 
 namespace IntegrationAPI.ConnectionService.Interface
 {
@@ -15,5 +17,11 @@ namespace IntegrationAPI.ConnectionService.Interface
         Task<RestResponse> CheckForSpecificBloodTypeAmount(string bankName, string bloodType, double quantity);
 
         public bool CheckBloodAmount(int id, string bloodType, double quant);
+
+        public bool SendUrgentRequest(string apiKey);
+        public bool SendTenderOffer(string apiKey, int tenderID);
+
+        public void SendMonthlySubscriptionOffer(MonthlySubscriptionMessageDTO monthlySubscriptionDTO, string monthlySubscriptionRoutingKey);
+
     }
 }

@@ -38,5 +38,11 @@ namespace IntegrationLibrary.Core.Service
         {
             return _bloodBankRepository.GetById(id);
         }
+
+        public BloodBank GetByName(string bloodBankName)
+        {
+            return _bloodBankRepository.getByName(bloodBankName);
+
+        }
     }
 }
