@@ -13,5 +13,6 @@ namespace HospitalLibrary.Core.Repository
     public interface IBloodRepository : IEntityRepository<Blood>
     {
         public Blood GetByBloodType(BloodType bloodType);
+        public void RestockBlood(Blood blood);
     }
 }

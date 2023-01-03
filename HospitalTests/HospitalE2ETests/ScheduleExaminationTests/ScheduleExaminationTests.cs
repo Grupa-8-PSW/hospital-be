@@ -1,4 +1,6 @@
-﻿using HospitalTests.HospitalE2ETests.Pages;
+using HospitalTests.HospitalE2ETests.Pages.Intern;
+﻿using HospitalTests.HospitalAPITests.Setup;
+using HospitalTests.HospitalE2ETests.Pages;
 using HospitalTests.HospitalE2ETests.ScheduleExaminationTests.Pages;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;

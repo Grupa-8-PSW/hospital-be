@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,8 @@ namespace IntegrationLibrary.Core.Model
         public string Password { get; set; } = "unknown";
 
         public string APIKey { get; set; } = "unknown";
+
+        public string MonthlySubscriptionRoutingKey { get; set; }
 
         public BloodBank(string name, string email, string serverAddress, string password, string aPIKey)
         {

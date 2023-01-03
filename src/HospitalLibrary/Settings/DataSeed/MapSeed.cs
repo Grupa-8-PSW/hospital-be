@@ -1,5 +1,4 @@
 ﻿using HospitalLibrary.Core.Enums;
-using HospitalLibrary.Core.Model;
 using HospitalLibrary.GraphicalEditor.Model;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,7 +13,7 @@ namespace HospitalLibrary.Settings.DataSeed
                 new Building() { Id = 2, X = 600, Y = 100, Width = 150, Height = 450, Color = "gray", Name = "Too", Floors = new List<Floor>() },
                 new Building() { Id = 3, X = 400, Y = 600, Width = 400, Height = 130, Color = "gray", Name = "Tre", Floors = new List<Floor>() }
             );
-
+            /*
             modelBuilder.Entity<Doctor>().HasData(
                 new Doctor() { Id = 1, FirstName = "Pera", LastName = "Peric", RoomId = 1, StartWork = new DateTime(2022, 11, 22, 10, 10, 10, DateTimeKind.Utc), EndWork = new DateTime(2022, 11, 22, 18, 10, 10, DateTimeKind.Utc) },
                 new Doctor() { Id = 2, FirstName = "Sergej", LastName = "Milinkovic-Savic", RoomId = 1, StartWork = new DateTime(2022, 11, 22, 10, 10, 10, DateTimeKind.Utc), EndWork = new DateTime(2022, 11, 22, 19, 10, 10, DateTimeKind.Utc) }
@@ -26,7 +25,7 @@ namespace HospitalLibrary.Settings.DataSeed
                 new Examination() { Id = 3, DoctorId = 1, PatientId = 3, RoomId = 1, StartTime = new DateTime(2022, 11, 22, 11, 30, 00, DateTimeKind.Utc), Duration = 420 },
                 new Examination() { Id = 4, DoctorId = 2, PatientId = 4, RoomId = 2, StartTime = new DateTime(2022, 11, 22, 20, 30, 00, DateTimeKind.Utc), Duration = 150 }
              );
-
+            */
             modelBuilder.Entity<Floor>().HasData(
                 new Floor() { Id = 3, X = 100, Y = 70, Width = 300, Height = 100, Color = "white", Number = "Floor 3", BuildingId = 1, Rooms = new List<Room>() },
                 new Floor() { Id = 2, X = 100, Y = 170, Width = 300, Height = 100, Color = "white", Number = "Floor 2", BuildingId = 1, Rooms = new List<Room>() },

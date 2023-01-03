@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Security\Migrations\**" />
+    <Content Remove="Security\Migrations\**" />
+    <EmbeddedResource Remove="Security\Migrations\**" />
+    <None Remove="Security\Migrations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Mapper\BloodUnitRequestMapper.cs~RF1bdf681.TMP" />
   </ItemGroup>
 
@@ -33,6 +40,11 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.7" />
     <PackageReference Include="RestSharp" Version="108.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="xunit" Version="2.4.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -41,9 +53,9 @@
 
   <ItemGroup>
     <Folder Include="Extensions\" />
+    <Folder Include="Migrations\" />
     <Folder Include="Responses\" />
     <Folder Include="Requests\" />
-    <Folder Include="Security\Migrations\" />
   </ItemGroup>
 
 </Project>

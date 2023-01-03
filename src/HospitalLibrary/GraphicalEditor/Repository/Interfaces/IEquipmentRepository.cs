@@ -22,5 +22,7 @@ namespace HospitalLibrary.GraphicalEditor.Repository.Interfaces
         void Create(Equipment equip);
 
         void Update(Equipment equip);
+
+        IEnumerable<EquipmentTransfer> GetEquipmentTransferByRoomId(int id);
     }
 }

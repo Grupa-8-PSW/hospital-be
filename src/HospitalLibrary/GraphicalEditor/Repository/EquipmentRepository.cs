@@ -37,8 +37,9 @@ namespace HospitalLibrary.GraphicalEditor.Repository
 
         public Equipment GetEquipmentByRoomIdAndName(int roomId, string name)
         {
-            return _context.Equipments.Where(f => (f.RoomId == roomId && f.Name == name)).FirstOrDefault<Equipment>();
+          //  return _context.Equipments.Where(f => (f.RoomId == roomId && f.Name == name)).FirstOrDefault<Equipment>();
           //  return _context.Rooms.Include(r => r.Beds).Where(r => r.Id == id).FirstOrDefault<Room>();
+            return _context.Equipments.Where(f => f.RoomId == roomId && f.Name == name).FirstOrDefault();
         }
        
         public void Create(Equipment equip)
@@ -76,6 +77,11 @@ namespace HospitalLibrary.GraphicalEditor.Repository
             }
 
             return query.ToList();
+        }
+
+        public IEnumerable<EquipmentTransfer> GetEquipmentTransferByRoomId(int id)
+        {
+            return _context.EquipmentTransfers.Where(f => f.ToRoomId == id || f.FromRoomId == id).ToList();
         }
 
     }

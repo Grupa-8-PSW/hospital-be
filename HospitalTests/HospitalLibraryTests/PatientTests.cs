@@ -5,6 +5,7 @@ using HospitalLibrary.Core.Service;
 using HospitalLibrary.Settings;
 using Moq;
 using Shouldly;
+using HospitalLibrary.Core.Model.ValueObjects;
 
 namespace HospitalTests
 {
@@ -60,15 +61,6 @@ namespace HospitalTests
         }
 
         [Fact]
-        public void Calculates_age_from_pin()
-        {
-            PatientService service = new PatientService(CreateStubRepository());
-
-            int ageOfFirstPatient = service.CalculateAgeFromPin(service.GetById(1));
-
-            ageOfFirstPatient.ShouldBeGreaterThanOrEqualTo(22);
-        }
-        [Fact]
         public void Create_patient_and_add_allergens()
         {
             var service = new PatientService(CreateStubRepository());
@@ -83,10 +75,10 @@ namespace HospitalTests
         {
             List<Patient> patients = new List<Patient>();
             
-            Patient p1 = new Patient(1, "Pera", "Peric", "peraperic@gmail.com", "2201000120492", Gender.MALE, BloodType.ZERO_POSITIVE, 1, 1,1);
-            Patient p2 = new Patient(2, "Marko", "Markovic", "markomarkovic@gmail.com", "1412995012451", Gender.MALE, BloodType.B_NEGATIVE, 2, 1,2);
-            Patient p3 = new Patient(3, "Dusan", "Baljinac", "dusanbaljinac@gmail.com", "2008004124293", Gender.MALE, BloodType.B_NEGATIVE, 3, 2,3);
-            Patient p4 = new Patient(4, "Pera", "Peric", "peraperic@gmail.com", "2201000120492", Gender.MALE, BloodType.ZERO_POSITIVE, 1, 2,4);
+            Patient p1 = new Patient(1, "Pera", "Peric", "peraperic@gmail.com", new Pin("2201000120492"), Gender.MALE, BloodType.ZERO_POSITIVE, 1, 1,1);
+            Patient p2 = new Patient(2, "Marko", "Markovic", "markomarkovic@gmail.com", new Pin("1412995012451"), Gender.MALE, BloodType.B_NEGATIVE, 2, 1,2);
+            Patient p3 = new Patient(3, "Dusan", "Baljinac", "dusanbaljinac@gmail.com", new Pin("2008004124293"), Gender.MALE, BloodType.B_NEGATIVE, 3, 2,3);
+            Patient p4 = new Patient(4, "Pera", "Peric", "peraperic@gmail.com", new Pin("2201000120492"), Gender.MALE, BloodType.ZERO_POSITIVE, 1, 2,4);
 
             patients.Add(p1);
             patients.Add(p2);

@@ -15,15 +15,17 @@ namespace HospitalLibrary.GraphicalEditor.Service
     {
         private readonly IRoomRepository _roomRepository;
         private readonly IBedRepository _bedRepository;
+        private readonly IEquipmentRepository _equipmentRepository;
 
         private readonly IExaminationRepository _examinationRepository;
 
         public EquipmentTransferDTO dto;
 
-        public RoomService(IRoomRepository roomRepository, IExaminationRepository examinationRepository)
+        public RoomService(IRoomRepository roomRepository, IExaminationRepository examinationRepository, IEquipmentRepository equipmentRepository)
         {
             _roomRepository = roomRepository;
             _examinationRepository = examinationRepository;
+            _equipmentRepository = equipmentRepository;
         }
 
         public IEnumerable<Room> GetAll()
@@ -109,18 +111,18 @@ namespace HospitalLibrary.GraphicalEditor.Service
 
             foreach (Examination exam in fromRoomExaminations)
             {
-                while (startDate < exam.StartTime)
+                while (startDate < exam.DateRange.Start)
                 {
                     FreeSpaceDTO freeSpace = new FreeSpaceDTO();
                     freeSpace.StartTime = startDate;
                     freeSpace.EndTime = startDate.AddHours(dto.Duration);
-                    if (freeSpace.EndTime <= exam.StartTime)
+                    if (freeSpace.EndTime <= exam.DateRange.Start)
                     {
                         freeSpacesFromRoom.Add(freeSpace);
                     }
                     startDate = startDate.AddHours(0.5);
                 }
-                startDate = startDate.AddMinutes(exam.Duration);
+                startDate = startDate.AddMinutes(exam.DateRange.DurationInMinutes);
             }
 
             while (startDate < endDate)
@@ -139,19 +141,19 @@ namespace HospitalLibrary.GraphicalEditor.Service
             foreach (Examination exam in toRoomExaminations)
             {
 
-                while (startDate < exam.StartTime)
+                while (startDate < exam.DateRange.Start)
                 {
                     FreeSpaceDTO freeSpace = new FreeSpaceDTO();
                     freeSpace.StartTime = startDate;
                     freeSpace.EndTime = startDate.AddHours(dto.Duration);
-                    if (freeSpace.EndTime <= exam.StartTime)
+                    if (freeSpace.EndTime <= exam.DateRange.Start)
                     {
                         freeSpacesToRoom.Add(freeSpace);
                     }
                     startDate = startDate.AddHours(0.5);
                 }
 
-                startDate = startDate.AddMinutes(exam.Duration);
+                startDate = startDate.AddMinutes(exam.DateRange.DurationInMinutes);
 
             }
 
@@ -188,5 +190,36 @@ namespace HospitalLibrary.GraphicalEditor.Service
             return _roomRepository.GetFreeRooms();
         }
 
+
+        public SchedulesDTO GetSchedules(int id)
+        {
+            var examinationDTOs = EntityToEntityExeListDTO(_examinationRepository.GetByRoomId(id).ToList());
+            var equipmentTransferDTOs = EntityToEntityEquipListDTO(_equipmentRepository.GetEquipmentTransferByRoomId(id).ToList());
+
+
+            SchedulesDTO shedulesDto = new SchedulesDTO(examinationDTOs, equipmentTransferDTOs);
+            return shedulesDto;
+        }
+        private List<ExaminationDTO> EntityToEntityExeListDTO(List<Examination> entities)
+        {
+            var retList = new List<ExaminationDTO>();
+            foreach (var item in entities)
+            {
+                retList.Add(new ExaminationDTO(item.Id, item.DateRange.Start, item.DateRange.DurationInMinutes));
+            }
+
+            return retList;
+        }
+
+        private List<EquipmentTransferDTO> EntityToEntityEquipListDTO(List<EquipmentTransfer> entities)
+        {
+            var retList = new List<EquipmentTransferDTO>();
+            foreach (var item in entities)
+            {
+                retList.Add(new EquipmentTransferDTO(item.Id, item.StartDate, item.EndDate, item.FromRoomId, item.ToRoomId));
+            }
+
+            return retList;
+        }
     }
 }

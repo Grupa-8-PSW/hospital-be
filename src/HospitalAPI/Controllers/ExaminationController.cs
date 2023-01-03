@@ -9,9 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using System.Web.Http.Results;
 using HospitalAPI.Extensions;
+using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Model.ValueObjects;
+using HospitalLibrary.Core.Util;
+using Microsoft.Net.Http.Headers;
 
 namespace HospitalAPI.Controllers
 {
@@ -22,22 +28,26 @@ namespace HospitalAPI.Controllers
     {
         private readonly IExaminationService _examinationService;
         private readonly IDoctorService _doctorService;
+        private readonly IExaminationDoneService _examinationDoneService;
         private readonly IMapper<Examination, ExaminationDTO> _examinationMapper;
 
         public ExaminationController(IExaminationService examinationService,
             IDoctorService doctorService,
-            IMapper<Examination, ExaminationDTO> mapper)
+            IMapper<Examination, ExaminationDTO> mapper,
+            IExaminationDoneService examinationDoneService)
         {
             _examinationService = examinationService;
             _doctorService = doctorService;
             _examinationMapper = mapper;
+            _examinationDoneService = examinationDoneService;
         }
 
         // GET: api/rooms
         [HttpGet]
         public ActionResult GetAll()
         {
-            return Ok(_examinationService.GetAll());
+            var res =  _examinationService.GetAll();
+            return Ok(res);
         }
 
         // GET api/rooms/2
@@ -76,7 +86,7 @@ namespace HospitalAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            
             var examination = CreateExaminationFromPostRequest(postExaminationRequest);
 
             var success = _examinationService.Create(examination);
@@ -97,7 +107,7 @@ namespace HospitalAPI.Controllers
             Doctor doctor = _doctorService.GetById(examinationDTO.DoctorId);
 
             Examination examination = _examinationMapper.toModel(examinationDTO);
-            examination.RoomId = doctor.RoomId;
+            // examination.RoomId = doctor.RoomId;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -136,22 +146,97 @@ namespace HospitalAPI.Controllers
             _examinationService.Delete(examination);
             return NoContent();
         }
+        
+
+        [HttpGet("{id}/generateReport")]
+        public async Task<ActionResult> DownloadReport(int id, [FromQuery] bool includeReport,
+            [FromQuery] bool includeSymptoms, [FromQuery] bool includePrescriptions)
+        {
+            try
+            {
+                var examination = _examinationService.GetById(id);
+
+                if (examination == null)
+                {
+                    return NotFound();
+                }
+
+                if (examination.DateRange.Start.ToUniversalTime() > DateTime.UtcNow)
+                {
+                    return BadRequest();
+                }
+
+                var examinationDone = _examinationDoneService.GetByExamination(id);
+
+                if (examinationDone == null)
+                {
+                    return NotFound();
+                }
+
+                var reportGenerator = new ExaminationReportGenerator(examinationDone);
+
+                const string dirName = @"C:\\Temp\";
+                var fileName = $"ExaminationReport_{examinationDone.Id}.pdf";
+
+                var fullPath = reportGenerator.GenerateReport(dirName, fileName,
+                    includeReport, includeSymptoms, includePrescriptions);
+
+                if (fullPath == null)
+                {
+                    return new JsonResult(new SimpleResponse
+                    {
+                        StatusCode = HttpStatusCode.InternalServerError,
+                        Body = "Error generating examination report"
+                    });
+                }
+
+                await using var fs = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
+                var buffer = new byte[fs.Length];
+                var readBytes = await fs.ReadAsync(buffer, 0, (int)fs.Length);
+
+                if (readBytes != fs.Length)
+                {
+                    return new JsonResult(new SimpleResponse
+                    {
+                        StatusCode = HttpStatusCode.InternalServerError,
+                        Body = "Error reading file"
+                    });
+                }
+                var cd = new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = fileName
+                };
+                Response.Headers.Add(HeaderNames.ContentDisposition, cd.ToString());
+                return new FileContentResult(buffer, "application/pdf");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.StackTrace);
+                return new JsonResult(new SimpleResponse
+                {
+                    StatusCode = HttpStatusCode.InternalServerError,
+                    Body = "Error generating examination report"
+                });
+            }
+        }
 
         private Examination CreateExaminationFromPostRequest(PostExaminationRequest postExaminationRequest)
         {
             try
             {
-                var doctorId = HttpContext.GetUserId();
+                //var doctorId = HttpContext.GetUserId();
+                var doctorId = 1;
                 var doctor = _doctorService.GetById(doctorId);
+                var startTime = DateTime.ParseExact(postExaminationRequest.StartTime, "dd/MM/yyyy HH:mm", null);
                 var examination = new Examination
                 {
                     DoctorId = doctorId,
-                    Duration = postExaminationRequest.Duration,
                     PatientId = postExaminationRequest.PatientId,
-                    StartTime = DateTime.ParseExact(postExaminationRequest.StartTime, "dd/MM/yyyy HH:mm", null),
+                    DateRange = new DateRange(startTime, startTime.AddMinutes(postExaminationRequest.Duration)),
                     RoomId = doctor.RoomId
                 };
                 examination.RoomId = doctor.RoomId;
+                examination.Status = ExaminationStatus.UPCOMING;
                 return examination;
             }
             catch (Exception ex)

@@ -1,8 +1,11 @@
 ﻿using AngleSharp.Io;
+using AutoMapper;
 using HospitalAPI;
 using HospitalAPI.Controllers.InternalApp;
+using HospitalAPI.DTO;
 using HospitalAPI.Mapper;
 using HospitalAPI.Responses;
+using HospitalAPI.Web.Mapper;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.ValueObjects;
 using HospitalLibrary.Core.Service;
@@ -25,7 +28,8 @@ public class ConsiliumControllerTests : BaseIntegrationTest
     {
         return new ConsiliumController(
             scope.ServiceProvider.GetRequiredService<IConsiliumService>(),
-            scope.ServiceProvider.GetRequiredService<IResponseMapper<Consilium, ConsiliumResponse>>()
+            scope.ServiceProvider.GetRequiredService<IResponseMapper<Consilium, ConsiliumResponse>>(),
+            scope.ServiceProvider.GetRequiredService<IMapper<ConsiliumRequest, ConsiliumRequestDTO>>()
         );
     }
 
@@ -71,4 +75,44 @@ public class ConsiliumControllerTests : BaseIntegrationTest
 
         return consiliumResponses;
     }
+
+    [Fact]
+    public async void Creates_consilium_avaivable_by_doctors()
+    {
+        using var scope = Factory.Services.CreateScope();
+        var controller = SetupController(scope);
+
+
+        var responseAllCinsukumBefore = await (controller.GetAll());
+
+        List<int> doctorsId = new List<int>
+        {
+            1
+        };
+        ConsiliumRequestDTO consiliumRequestDTO = new ConsiliumRequestDTO() { Subject = "subect1", FromDate = "13/01/2023", ToDate = "15/01/2023", Duration = 60, IsDoctors = true, DoctorIds = doctorsId, DoctorSpecializationsWanted = null};
+        var result = ((CreatedAtActionResult)controller.Create(consiliumRequestDTO))?.Value as ConsiliumResponse;
+
+
+        var respomseAllConsiliumsAfter = await (controller.GetAll());
+
+
+
+        var okResponseBefore = responseAllCinsukumBefore.ShouldBeOfType<OkObjectResult>();
+        var consiliumsBefore = okResponseBefore.Value.ShouldBeOfType<List<ConsiliumResponse>>();
+
+        var okResponseAfter = respomseAllConsiliumsAfter.ShouldBeOfType<OkObjectResult>();
+        var consiliumsAfter = okResponseBefore.Value.ShouldBeOfType<List<ConsiliumResponse>>();
+        Assert.True(consiliumsBefore.Count + 1 == consiliumsAfter.Count);
+
+        result.ShouldNotBeNull();
+        var resultVar = result.ShouldBeOfType<OkObjectResult>();
+        var consiliumCreated = resultVar.Value.ShouldBeOfType<ConsiliumResponse>();
+        Assert.True(consiliumCreated.Doctors.Count() == 1);
+
+        
+
+    }
+
+
+
 }

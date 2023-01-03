@@ -42,4 +42,13 @@ public class ConsiliumService : IConsiliumService
     {
         return await _consiliumRepository.GetAllIncludeDoctors();
     }
+
+
+    public async Task<Consilium?> CreateConsiliumByRequest(ConsiliumRequest consiliumRequest)
+    {
+
+        throw new NotImplementedException();
+        //return await _consiliumRepository.Create(consilium);
+    }
+
 }

@@ -10,11 +10,18 @@ namespace IntegrationTeamTests.Setup
 {
     public class BaseIntegrationTests : IClassFixture<TestDatabaseFactory<Startup>>
     {
+        private TestDatabaseFactory<HospitalAPI.Startup> factory;
+
         protected TestDatabaseFactory<Startup> Factory { get; }
 
         public BaseIntegrationTests(TestDatabaseFactory<Startup> databaseFactory)
         {
             Factory = databaseFactory;
+        }
+
+        public BaseIntegrationTests(TestDatabaseFactory<HospitalAPI.Startup> factory)
+        {
+            this.factory = factory;
         }
     }
 }
