@@ -16,6 +16,7 @@
             Height = height;
             Color = color;
         }
+        public MapRoom() { }
 
         protected override bool EqualsCore(MapRoom room)
         {
