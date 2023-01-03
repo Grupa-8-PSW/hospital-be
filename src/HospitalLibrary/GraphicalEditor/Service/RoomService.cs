@@ -6,18 +6,13 @@ using HospitalLibrary.GraphicalEditor.Model.DTO;
 using HospitalLibrary.GraphicalEditor.Model.Map;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
-using System;
-using System.Threading;
-using Org.BouncyCastle.Asn1.X500;
 
 namespace HospitalLibrary.GraphicalEditor.Service
 {
     public class RoomService : IRoomService
     {
         private readonly IRoomRepository _roomRepository;
-        private readonly IBedRepository _bedRepository;
         private readonly IEquipmentRepository _equipmentRepository;
-
         private readonly IExaminationRepository _examinationRepository;
 
         public EquipmentTransferDTO dto;
@@ -68,9 +63,9 @@ namespace HospitalLibrary.GraphicalEditor.Service
             {
                 foreach (DateRange to in tos)
                 {
-                    if (from.IncludesRange(to))
+                    if (from.Contains(to))
                         available.Add(to);
-                    if (to.IncludesRange(from))
+                    if (to.Contains(from))
                         available.Add(from);
                 }
             }
@@ -87,9 +82,9 @@ namespace HospitalLibrary.GraphicalEditor.Service
             Random rnd = new Random();
             MapRoom firstRoom = new MapRoom(oldRoom.Map.X, oldRoom.Map.Y, oldRoom.Map.Width / 2, oldRoom.Map.Height, "blue");
             newRooms.FirstRoom = new Room(rnd.Next(30, 3000), Core.Enums.RoomType.OTHER, oldRoom.Number, dto.NewRoom1Name, firstRoom, oldRoom.FloorId, null);
-            MapRoom secondRoom = new MapRoom(oldRoom.Map.X , oldRoom.Map.Y + oldRoom.Map.Width / 2, oldRoom.Map.Width / 2,oldRoom.Map.Height, "blue");
+            MapRoom secondRoom = new MapRoom(oldRoom.Map.X, oldRoom.Map.Y + oldRoom.Map.Width / 2, oldRoom.Map.Width / 2, oldRoom.Map.Height, "blue");
             newRooms.SecondRoom = new Room(rnd.Next(30, 3000), Core.Enums.RoomType.OPERATIONS, oldRoom.Number + "a", dto.NewRoom2Name, secondRoom, oldRoom.FloorId, null);
- 
+
             _roomRepository.Create(newRooms.FirstRoom);
             _roomRepository.Create(newRooms.SecondRoom);
             _roomRepository.Delete(oldRoom);

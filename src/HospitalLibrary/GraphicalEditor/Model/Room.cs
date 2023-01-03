@@ -3,16 +3,12 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.ValueObjects;
 using HospitalLibrary.GraphicalEditor.Model.Map;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HospitalLibrary.GraphicalEditor.Model
 {
-    public class Room
+    public class Room : BaseEntityModel
     {
-        public int Id { get; set; }
-        [Required]
-
         public RoomType Type { get; set; }
         public string Number { get; set; }
         public string Name { get; set; }
@@ -21,14 +17,13 @@ namespace HospitalLibrary.GraphicalEditor.Model
         public MapRoom Map { get; set; }
         public int FloorId { get; set; }
         public virtual Floor Floor { get; set; }
-
-        //[Column(TypeName = "jsonb")]
-        //public ICollection<Equipment> Equipment { get; set; }
         public ICollection<Bed> Beds { get; set; }
         public ICollection<Examination> Examinations { get; set; }
         public ICollection<EquipmentTransfer> Transfers { get; set; }
+        public ICollection<Renovation> Renovations { get; set; }
 
-        //public ICollection<Renovation> Renovations { get; set; }
+        public Room()
+        { }
 
         public Room(int id, RoomType type, string number, string name, MapRoom map, int floorId, Floor floor)
         {
@@ -41,8 +36,6 @@ namespace HospitalLibrary.GraphicalEditor.Model
             Floor = floor;
         }
 
-        public Room() { }
-
         public List<DateRange> GetAvailableIntervals(DateTime from, DateTime to, int duration)
         {
             List<DateRange> intervals = CreateIntervals(from, to, duration);
@@ -51,28 +44,26 @@ namespace HospitalLibrary.GraphicalEditor.Model
             {
                 foreach (Examination examination in Examinations)
                 {
-                    DateRange interval = new(examination.StartTime,
-                        examination.StartTime.AddMinutes(examination.Duration));
+                    DateRange interval = new(examination.DateRange.Start,
+                        examination.DateRange.Start.AddMinutes(examination.DateRange.DurationInMinutes));
 
-                    if (interval.OverlapsWith(i))
+                    if (interval.IsOverlapped(i))
                         intervals.Remove(i);
                 }
                 foreach (EquipmentTransfer transfer in Transfers)
                 {
                     DateRange interval = new(transfer.StartDate, transfer.EndDate);
 
-                    if (interval.OverlapsWith(i))
+                    if (interval.IsOverlapped(i))
                         intervals.Remove(i);
                 }
-                /*
                 foreach (Renovation renovation in Renovations)
                 {
-                    DateRange interval = new(renovation.StartDate, renovation.EndDate);
+                    DateRange interval = new(renovation.DateRange.Start, renovation.DateRange.End);
 
-                    if (interval.OverlapsWith(i))
+                    if (interval.IsOverlapped(i))
                         intervals.Remove(i);
                 }
-                */
             }
             return intervals;
         }
@@ -83,7 +74,7 @@ namespace HospitalLibrary.GraphicalEditor.Model
             List<DateRange> intervals = new();
 
             DateRange interval = new(from, from.AddMinutes(minutes));
-            while (searchedInterval.IncludesRange(interval))
+            while (searchedInterval.Contains(interval))
             {
                 intervals.Add(interval);
                 interval = new(from.AddMinutes(30), from.AddMinutes(minutes + 30));
