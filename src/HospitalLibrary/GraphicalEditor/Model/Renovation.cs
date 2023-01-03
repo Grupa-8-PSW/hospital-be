@@ -12,6 +12,9 @@ namespace HospitalLibrary.GraphicalEditor.Model
         public RenovationType Type { get; set; }
         public Status Status { get; set; }
 
+        public Renovation()
+        { }
+
         public Renovation(int id, int roomId, Room room, DateRange dateRange, RenovationType type)
         {
             Id = id;
