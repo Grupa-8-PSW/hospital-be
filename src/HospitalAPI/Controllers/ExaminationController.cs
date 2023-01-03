@@ -68,6 +68,36 @@ namespace HospitalAPI.Controllers
             return Ok(examinationDTOs);
         }
 
+        [HttpGet("yearly/examinations")]
+        public ActionResult GetYearlyExaminations(int year)
+        {
+            
+            var examinations = _examinationService.GetByYear(year);
+            List<ExaminationDTO> examinationDTOs = new List<ExaminationDTO>();
+
+            foreach (Examination examination in examinations)
+            {
+                examinationDTOs.Add(_examinationMapper.toDTO(examination));     
+            }
+
+            return Ok(examinationDTOs);
+        }
+
+        [HttpGet("monthly/examinations")]
+        public ActionResult GetMonthlyExaminations(int month)
+        {
+
+            var examinations = _examinationService.GetByMonth(month);
+            List<ExaminationDTO> examinationDTOs = new List<ExaminationDTO>();
+
+            foreach (Examination examination in examinations)
+            {
+                examinationDTOs.Add(_examinationMapper.toDTO(examination));     
+            }
+
+            return Ok(examinationDTOs);
+        }
+
         // POST api/rooms
         [HttpPost]
         public ActionResult Create(PostExaminationRequest postExaminationRequest)

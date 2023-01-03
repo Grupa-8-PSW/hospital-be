@@ -61,6 +61,15 @@ namespace HospitalLibrary.Core.Repository
             return _context.Examinations.Where(ex => ex.StartTime.ToLocalTime().Date == startTime.ToLocalTime().Date).ToList();
         }
 
+        public IEnumerable<Examination> GetByYear(int startTime)
+        {
+            return _context.Examinations.Where(ex => ex.StartTime.ToLocalTime().Date.Year == startTime).ToList();
+        }
+        public IEnumerable<Examination> GetByMonth(int month)
+        {
+            return _context.Examinations.Where(ex => ex.StartTime.ToLocalTime().Date.Month == month).ToList();
+        }
+
         public IEnumerable<Examination> GetByDoctorIdAndDate(int doctorId, DateTime startTime)
         {
             return _context.Examinations.Where(ex => ex.DoctorId == doctorId && ex.StartTime.Date == startTime.Date).ToList();

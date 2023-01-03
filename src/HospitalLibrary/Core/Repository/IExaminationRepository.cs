@@ -18,6 +18,8 @@ namespace HospitalLibrary.Core.Repository
 
 
         IEnumerable<Examination> GetByDate(DateTime startTime);
+        IEnumerable<Examination> GetByYear(int startTime);
+        IEnumerable<Examination> GetByMonth(int month);
         IEnumerable<Examination> GetByDoctorIdAndDate(int doctorId, DateTime startTime);
         IEnumerable<Examination> GetByRoomId(int roomId);
     }

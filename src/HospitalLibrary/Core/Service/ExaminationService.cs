@@ -81,6 +81,16 @@ namespace HospitalLibrary.Core.Service
         {
             return _examinationRepository.GetByDate(startTime);
         }
+
+        public IEnumerable<Examination> GetByYear(int startTime)
+        {
+            return _examinationRepository.GetByYear(startTime);
+        }
+        public IEnumerable<Examination> GetByMonth(int month)
+        {
+            return _examinationRepository.GetByMonth(month);
+        }
+
         public IEnumerable<Examination> GetByDoctorIdAndDate(int doctorId, DateTime startTime)
         {
             return _examinationRepository.GetByDoctorIdAndDate(doctorId, startTime);
