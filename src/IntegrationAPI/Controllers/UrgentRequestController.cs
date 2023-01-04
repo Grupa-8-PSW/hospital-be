@@ -45,5 +45,12 @@ namespace IntegrationAPI.Controllers
             return Ok(_urgentRequestService.GetBloodAmountsPerTypeForAllBloodBanks(from, to));
         }
 
+        [Route("/api/[controller]/getQuantitiesPerTypeStatisticForBloodBank")]
+        [HttpGet]
+        public ActionResult GetQuantitiesPerTypeStatisticForSpecificBank(int bloodBankId, DateTime from, DateTime to)
+        {
+            return Ok(_urgentRequestService.GetBloodAmountsPerTypeForBloodBank(bloodBankId, from, to));
+        }
+
     }
 }
