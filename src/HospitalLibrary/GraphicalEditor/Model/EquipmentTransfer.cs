@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace HospitalLibrary.GraphicalEditor.Model
 {
@@ -25,5 +20,17 @@ namespace HospitalLibrary.GraphicalEditor.Model
         public int Duration { get; set; }
 
         public string EquipmentName { get; set; }
+
+        public EquipmentTransfer(int id, int amount, int fromRoomId, int toRoomId, DateTime startDate, DateTime endDate, int duration, string equipmentName)
+        {
+            Id = id;
+            Amount = amount;
+            FromRoomId = fromRoomId;
+            ToRoomId = toRoomId;
+            StartDate = startDate;
+            EndDate = endDate;
+            Duration = duration;
+            EquipmentName = equipmentName;
+        }
     }
 }

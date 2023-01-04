@@ -87,6 +87,19 @@ namespace HospitalAPI.Controllers.Map
             return Ok(freeSpace);
         }
 
+        [HttpPost("get/separatedRooms")]
+        public IActionResult GetSeparatedRooms(RoomForSeparateDTO dto)
+        {
+            SeparatedRoomsDTO separatedRooms = _roomService.GetSeparatedRooms(dto);
+            return Ok(separatedRooms);
+        }
+
+        [HttpPost("get/mergedRoom")]
+        public IActionResult GetMergedRoom(RoomsForMergeDTO dto)
+        {
+            MergedRoomDTO mergedRoom = _roomService.GetMergedRoom(dto);
+            return Ok(mergedRoom);
+        }
     }
 
 }

@@ -18,5 +18,7 @@ namespace HospitalLibrary.GraphicalEditor.Service.Interfaces
         List<FreeSpaceDTO> GetTransferedEquipment(EquipmentTransferDTO dto);
 
         SchedulesDTO GetSchedules(int id);
+        SeparatedRoomsDTO GetSeparatedRooms(RoomForSeparateDTO dto);
+        MergedRoomDTO GetMergedRoom(RoomsForMergeDTO dto);
     }
 }
