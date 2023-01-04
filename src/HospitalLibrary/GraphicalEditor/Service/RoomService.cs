@@ -53,10 +53,10 @@ namespace HospitalLibrary.GraphicalEditor.Service
 
         }
 
-        public List<DateRange> GetAvailableIntervals(EquipmentTransferDTO dto)
+        private List<DateRange> GetAvailableIntervals(int fromRoomId, int toRoomId, DateTime startDate, DateTime endDate, int durationInHours)
         {
-            List<DateRange> froms = GetById(dto.FromRoomId).GetAvailableIntervals(dto.StartDate, dto.EndDate, dto.Duration);
-            List<DateRange> tos = GetById(dto.ToRoomId).GetAvailableIntervals(dto.StartDate, dto.EndDate, dto.Duration);
+            List<DateRange> froms = GetAvailableSlots(fromRoomId, startDate, endDate, durationInHours);
+            List<DateRange> tos = GetAvailableSlots(toRoomId, startDate, endDate, durationInHours);
             List<DateRange> available = new();
 
             foreach (DateRange from in froms)
@@ -65,11 +65,63 @@ namespace HospitalLibrary.GraphicalEditor.Service
                 {
                     if (from.Contains(to))
                         available.Add(to);
-                    if (to.Contains(from))
+                    else if (to.Contains(from))
                         available.Add(from);
                 }
             }
             return available;
+        }
+
+        private List<DateRange> GetAvailableSlots(int roomId, DateTime from, DateTime to, int duration)
+        {
+            List<DateRange> intervals = CreateSlots(from, to, duration);
+
+            var examinations = _examinationRepository.GetByRoomId(roomId);
+            var transfers = _equipmentRepository.GetEquipmentTransferByRoomId(roomId);
+            //var renovations = _renovationRepository.GetByRoomId(roomId);
+
+            foreach (DateRange i in intervals)
+            {
+                foreach (Examination examination in examinations)
+                {
+                    DateRange interval = new(examination.DateRange.Start,
+                        examination.DateRange.Start.AddMinutes(examination.DateRange.DurationInMinutes));
+
+                    if (interval.IsOverlapped(i))
+                        intervals.Remove(i);
+                }
+                foreach (EquipmentTransfer transfer in transfers)
+                {
+                    DateRange interval = new(transfer.StartDate, transfer.EndDate);
+
+                    if (interval.IsOverlapped(i))
+                        intervals.Remove(i);
+                }
+                /*
+                foreach (Renovation renovation in Renovations)
+                {
+                    DateRange interval = new(renovation.DateRange.Start, renovation.DateRange.End);
+
+                    if (interval.IsOverlapped(i))
+                        intervals.Remove(i);
+                }
+                */
+            }
+            return intervals;
+        }
+
+        private List<DateRange> CreateSlots(DateTime from, DateTime to, int hours)
+        {
+            DateRange searchedInterval = new(from, to);
+            List<DateRange> slots = new();
+
+            DateRange slot = new(from, from.AddHours(hours));
+            while (searchedInterval.Contains(slot))
+            {
+                slots.Add(slot);
+                slot = new(slot.Start.AddMinutes(30), slot.End.AddMinutes(30));
+            }
+            return slots;
         }
 
         public SeparatedRoomsDTO GetSeparatedRooms(RoomForSeparateDTO dto)
@@ -116,88 +168,14 @@ namespace HospitalLibrary.GraphicalEditor.Service
 
         public List<FreeSpaceDTO> GetTransferedEquipment(EquipmentTransferDTO dto)
         {
-            IEnumerable<Examination> fromRoomExaminations = _examinationRepository.GetByRoomId(dto.FromRoomId);
-            IEnumerable<Examination> toRoomExaminations = _examinationRepository.GetByRoomId(dto.ToRoomId);
-            DateTime startDate = dto.StartDate.AddHours(1);
-            DateTime endDate = dto.EndDate.AddHours(1);
-            List<FreeSpaceDTO> freeSpacesFromRoom = new List<FreeSpaceDTO>();
-            List<FreeSpaceDTO> freeSpacesToRoom = new List<FreeSpaceDTO>();
-            List<FreeSpaceDTO> filteredFreeSpaces = new List<FreeSpaceDTO>();
+            List<DateRange> slots = GetAvailableIntervals(dto.FromRoomId, dto.ToRoomId, dto.StartDate.AddHours(1), dto.EndDate.AddHours(1), dto.Duration);
+            List<FreeSpaceDTO> dtos = new();
 
-            foreach (Examination exam in fromRoomExaminations)
+            foreach (var slot in slots)
             {
-                while (startDate < exam.DateRange.Start)
-                {
-                    FreeSpaceDTO freeSpace = new FreeSpaceDTO();
-                    freeSpace.StartTime = startDate;
-                    freeSpace.EndTime = startDate.AddHours(dto.Duration);
-                    if (freeSpace.EndTime <= exam.DateRange.Start)
-                    {
-                        freeSpacesFromRoom.Add(freeSpace);
-                    }
-                    startDate = startDate.AddHours(0.5);
-                }
-                startDate = startDate.AddMinutes(exam.DateRange.DurationInMinutes);
+                dtos.Add(new FreeSpaceDTO(slot.Start, slot.End));
             }
-
-            while (startDate < endDate)
-            {
-                FreeSpaceDTO freeSpace2 = new FreeSpaceDTO();
-                freeSpace2.StartTime = startDate;
-                freeSpace2.EndTime = startDate.AddHours(dto.Duration);
-                freeSpacesFromRoom.Add(freeSpace2);
-                startDate = startDate.AddHours(0.5);
-            }
-
-
-            startDate = dto.StartDate.AddHours(1);
-            endDate = dto.EndDate.AddHours(1);
-
-            foreach (Examination exam in toRoomExaminations)
-            {
-
-                while (startDate < exam.DateRange.Start)
-                {
-                    FreeSpaceDTO freeSpace = new FreeSpaceDTO();
-                    freeSpace.StartTime = startDate;
-                    freeSpace.EndTime = startDate.AddHours(dto.Duration);
-                    if (freeSpace.EndTime <= exam.DateRange.Start)
-                    {
-                        freeSpacesToRoom.Add(freeSpace);
-                    }
-                    startDate = startDate.AddHours(0.5);
-                }
-
-                startDate = startDate.AddMinutes(exam.DateRange.DurationInMinutes);
-
-            }
-
-            while (startDate < endDate)
-            {
-                FreeSpaceDTO freeSpace2 = new FreeSpaceDTO();
-                freeSpace2.StartTime = startDate;
-                freeSpace2.EndTime = startDate.AddHours(dto.Duration);
-                freeSpacesToRoom.Add(freeSpace2);
-                startDate = startDate.AddHours(0.5);
-            }
-
-
-            foreach (FreeSpaceDTO freeSpaceFrom in freeSpacesFromRoom)
-            {
-                foreach (FreeSpaceDTO freeSpaceTo in freeSpacesToRoom)
-                {
-                    if (freeSpaceFrom.StartTime >= freeSpaceTo.StartTime && freeSpaceFrom.EndTime <= freeSpaceTo.EndTime)
-                    {
-                        filteredFreeSpaces.Add(freeSpaceFrom);
-                    }
-                    else if (freeSpaceFrom.StartTime <= freeSpaceTo.StartTime && freeSpaceFrom.EndTime >= freeSpaceTo.EndTime)
-                    {
-                        filteredFreeSpaces.Add(freeSpaceTo);
-                    }
-                }
-            }
-
-            return filteredFreeSpaces;
+            return dtos;
         }
 
         public IEnumerable<Room> GetFreeRooms()
