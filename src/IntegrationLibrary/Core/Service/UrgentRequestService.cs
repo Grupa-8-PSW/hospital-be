@@ -1,8 +1,6 @@
 ﻿using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Repository.Interfaces;
 using IntegrationLibrary.Core.Service.Interfaces;
-using iTextSharp.text.pdf;
-using iTextSharp.text;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +12,8 @@ using HospitalLibrary.Core.Enums;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Model.ValueObject;
 using IntegrationLibrary.Core.Model.DTO;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace IntegrationLibrary.Core.Service
 {

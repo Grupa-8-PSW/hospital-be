@@ -16,6 +16,7 @@ namespace IntegrationLibrary.Core.Service.Interfaces
         Task<byte[]> GeneratePdf(List<UrgentRequest> urgentRequests, DateTime fromDate, DateTime toDate);
         UrgentRequestAllBanksStatisticDTO GetSummarizedRequests(DateTime from, DateTime to);
         QuantitiesPerBloodTypeStatisticDTO GetBloodAmountsPerTypeForAllBloodBanks(DateTime from, DateTime to);
+        QuantitiesPerBloodTypeStatisticDTO GetBloodAmountsPerTypeForBloodBank(int bloodBankId, DateTime from, DateTime to);
 
     }
 }
