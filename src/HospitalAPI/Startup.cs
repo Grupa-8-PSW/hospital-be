@@ -1,34 +1,30 @@
+using HospitalAPI.Connections;
+using HospitalAPI.Converters;
+using HospitalAPI.DTO;
+using HospitalAPI.Mapper;
+using HospitalAPI.Responses;
+using HospitalAPI.Security;
+using HospitalAPI.Security.Models;
+using HospitalAPI.Web.Dto;
+using HospitalAPI.Web.Mapper;
+using HospitalLibrary.Core.DomainService;
+using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Core.Service;
+using HospitalLibrary.Core.Validation;
 using HospitalLibrary.GraphicalEditor.Repository;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 using HospitalLibrary.GraphicalEditor.Repository.Map.Interfaces;
 using HospitalLibrary.GraphicalEditor.Service;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using HospitalLibrary.Settings;
-using HospitalLibrary.Core.Service;
-using HospitalLibrary.Core.Repository;
-using HospitalAPI.Converters;
-using HospitalAPI.DTO;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using HospitalAPI.Web.Dto;
-using HospitalAPI.Web.Mapper;
-using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Validation;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
-using HospitalAPI.Mapper;
-using HospitalAPI.Connections;
-using Microsoft.AspNetCore.Identity;
-using HospitalAPI.Security;
-using HospitalAPI.Security.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 using System.Text.Json.Serialization;
-using AngleSharp.Io;
-using HospitalAPI.Responses;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.Runtime.Serialization;
-using HospitalLibrary.Core.DomainService;
 
 
 namespace HospitalAPI
@@ -93,6 +89,12 @@ namespace HospitalAPI
 
             services.AddScoped<IEquipmentService, EquipmentService>();
             services.AddScoped<IEquipmentRepository, EquipmentRepository>();
+
+            services.AddScoped<IEquipmentTransferService, EquipmentTransferService>();
+            services.AddScoped<IEquipmentTransferRepository, EquipmentTransferRepository>();
+
+            services.AddScoped<IRenovationService, RenovationService>();
+            services.AddScoped<IRenovationRepository, RenovationRepository>();
 
             services.AddScoped<IMapBuildingService, MapBuildingService>();
             services.AddScoped<IMapBuildingRepository, MapBuildingRepository>();

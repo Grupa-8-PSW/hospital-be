@@ -23,6 +23,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Examination> Examinations { get; set; }
         public DbSet<TreatmentHistory> TreatmentHistories { get; set; }
         public DbSet<EquipmentTransfer> EquipmentTransfers { get; set; }
+        public DbSet<Renovation> Renovations { get; set; }
         public DbSet<Therapy> Therapies { get; set; }
         public DbSet<BloodUnit> BloodUnits { get; set; }
         public DbSet<MedicalDrugs> MedicalDrugs { get; set; }

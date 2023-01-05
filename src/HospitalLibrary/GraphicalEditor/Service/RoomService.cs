@@ -13,15 +13,21 @@ namespace HospitalLibrary.GraphicalEditor.Service
     {
         private readonly IRoomRepository _roomRepository;
         private readonly IEquipmentRepository _equipmentRepository;
+        private readonly IRenovationRepository _renovationRepository;
         private readonly IExaminationRepository _examinationRepository;
 
         public EquipmentTransferDTO dto;
 
-        public RoomService(IRoomRepository roomRepository, IExaminationRepository examinationRepository, IEquipmentRepository equipmentRepository)
+        public RoomService(
+            IRoomRepository roomRepository,
+            IExaminationRepository examinationRepository,
+            IEquipmentRepository equipmentRepository,
+            IRenovationRepository renovationRepository)
         {
             _roomRepository = roomRepository;
             _examinationRepository = examinationRepository;
             _equipmentRepository = equipmentRepository;
+            _renovationRepository = renovationRepository;
         }
 
         public IEnumerable<Room> GetAll()
@@ -78,7 +84,7 @@ namespace HospitalLibrary.GraphicalEditor.Service
 
             var examinations = _examinationRepository.GetByRoomId(roomId);
             var transfers = _equipmentRepository.GetEquipmentTransferByRoomId(roomId);
-            //var renovations = _renovationRepository.GetByRoomId(roomId);
+            var renovations = _renovationRepository.GetByRoomId(roomId);
 
             foreach (DateRange i in intervals)
             {
@@ -97,15 +103,13 @@ namespace HospitalLibrary.GraphicalEditor.Service
                     if (interval.IsOverlapped(i))
                         intervals.Remove(i);
                 }
-                /*
-                foreach (Renovation renovation in Renovations)
+                foreach (Renovation renovation in renovations)
                 {
                     DateRange interval = new(renovation.DateRange.Start, renovation.DateRange.End);
 
                     if (interval.IsOverlapped(i))
                         intervals.Remove(i);
                 }
-                */
             }
             return intervals;
         }
