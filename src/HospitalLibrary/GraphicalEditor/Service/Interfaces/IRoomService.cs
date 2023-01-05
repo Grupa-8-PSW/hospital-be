@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.ValueObjects;
 using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Model.DTO;
 
@@ -20,5 +21,7 @@ namespace HospitalLibrary.GraphicalEditor.Service.Interfaces
         SchedulesDTO GetSchedules(int id);
         SeparatedRoomsDTO GetSeparatedRooms(RoomForSeparateDTO dto);
         MergedRoomDTO GetMergedRoom(RoomsForMergeDTO dto);
+        List<DateRange> GetAvailableIntervals(int fromRoomId, int toRoomId, DateTime startDate, DateTime endDate, int durationInHours);
+        List<DateRange> GetAvailableSlots(int roomId, DateTime from, DateTime to, int duration);
     }
 }

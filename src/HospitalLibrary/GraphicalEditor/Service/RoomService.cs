@@ -53,7 +53,7 @@ namespace HospitalLibrary.GraphicalEditor.Service
 
         }
 
-        private List<DateRange> GetAvailableIntervals(int fromRoomId, int toRoomId, DateTime startDate, DateTime endDate, int durationInHours)
+        public List<DateRange> GetAvailableIntervals(int fromRoomId, int toRoomId, DateTime startDate, DateTime endDate, int durationInHours)
         {
             List<DateRange> froms = GetAvailableSlots(fromRoomId, startDate, endDate, durationInHours);
             List<DateRange> tos = GetAvailableSlots(toRoomId, startDate, endDate, durationInHours);
@@ -72,7 +72,7 @@ namespace HospitalLibrary.GraphicalEditor.Service
             return available;
         }
 
-        private List<DateRange> GetAvailableSlots(int roomId, DateTime from, DateTime to, int duration)
+        public List<DateRange> GetAvailableSlots(int roomId, DateTime from, DateTime to, int duration)
         {
             List<DateRange> intervals = CreateSlots(from, to, duration);
 
