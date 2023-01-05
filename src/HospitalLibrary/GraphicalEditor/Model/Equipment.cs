@@ -1,27 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
-using HospitalLibrary.Core.Enums;
+﻿using HospitalLibrary.Core.Model;
 
 namespace HospitalLibrary.GraphicalEditor.Model
 {
-    public class Equipment
+    public class Equipment : BaseEntityModel
     {
-        public int EquipmentId { get; set; }
-        [Required]
         public string Name { get; set; }
-
         public int Amount { get; set; }
-
         public int RoomId { get; set; }
+        public virtual Room Room { get; set; }
 
-        public Equipment(int equipmentId, string name, int amount, int roomId)
+        public Equipment(int id, string name, int amount, int roomId)
         {
-            EquipmentId = equipmentId;
+            Id = id;
             Name = name;
             Amount = amount;
             RoomId = roomId;
