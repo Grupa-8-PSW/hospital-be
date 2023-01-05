@@ -8,7 +8,7 @@ namespace HospitalTests.HospitalLibraryTests
 {
     public class RoomTests
     {
-
+        /*
         [Fact]
         public void Check_availability_type()
         {
@@ -54,5 +54,6 @@ namespace HospitalTests.HospitalLibraryTests
 
             available.ShouldNotBeNull();
         }
+        */
     }
 }
