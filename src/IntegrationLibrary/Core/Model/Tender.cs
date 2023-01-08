@@ -32,7 +32,7 @@ namespace IntegrationLibrary.Core.Model
             foreach(TenderOffer to in TenderOffers)
             {
                 if (to.Id == tenderOffer.Id)
-                    tenderOffer.Accept();
+                    to.Accept();
             }
         }
 
@@ -61,7 +61,7 @@ namespace IntegrationLibrary.Core.Model
 
         public void EndTenderLifeCycle()
         {
-            this.Status = TenderStatus.Inactive;
+            Status = TenderStatus.Inactive;
         }
 
         protected bool Equals(Tender other)
