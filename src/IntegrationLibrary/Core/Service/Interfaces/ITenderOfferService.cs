@@ -9,11 +9,10 @@ namespace IntegrationLibrary.Core.Service.Interfaces
 {
     public interface ITenderOfferService
     {
-        TenderOffer AcceptTenderOffer(TenderOffer tenderOffer);
-        public TenderOffer Create(TenderOffer tenderOffer);
+        TenderOffer AcceptTenderOffer(TenderOffer tenderOffer, int tenderId);
+        public TenderOffer Create(TenderOffer tenderOffer, int tenderId);
         IEnumerable<TenderOffer> GetAll();
-        TenderOffer GetById(int tenderID);
-        IEnumerable<TenderOffer> getOffersForTender(int tenderID);
-        public void changeStatusForOffers(TenderOffer acceptedTenderOffer);
+        TenderOffer GetAcceptedByTenderId(int tenderID);
+        IEnumerable<TenderOffer> GetOffersForTender(int tenderID);
     }
 }

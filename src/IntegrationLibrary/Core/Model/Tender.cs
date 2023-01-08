@@ -12,6 +12,7 @@ namespace IntegrationLibrary.Core.Model
         public int Id { get; private set; }
         public TenderStatus Status { get; private set; }
         public DateRange DateRange { get; private set; }
+        public List<TenderOffer> TenderOffers { get; private set; }
         public List<Blood> Blood { get; private set; }
 
         public Tender(TenderStatus status, DateRange dateRange, List<Blood> blood)
@@ -21,6 +22,47 @@ namespace IntegrationLibrary.Core.Model
             Blood = blood;
         }
 
+        public void AddOffer(TenderOffer offer)
+        {
+            TenderOffers.Add(offer);
+        }
+
+        public void AcceptOffer(TenderOffer tenderOffer)
+        {
+            foreach(TenderOffer to in TenderOffers)
+            {
+                if (to.Id == tenderOffer.Id)
+                    tenderOffer.Accept();
+            }
+        }
+
+        public void RejectOffers()
+        {
+            foreach (TenderOffer to in TenderOffers)
+            {
+                if (to.TenderOfferStatus == TenderOfferStatus.WAITING)
+                {
+                    to.Reject();
+                }
+            }
+        }
+
+        public void Close(TenderOffer acceptedTenderOffer)
+        {
+            AcceptOffer(acceptedTenderOffer);
+            RejectOffers();
+            EndTenderLifeCycle();
+        }
+
+        public TenderOffer GetAcceptedOffer()
+        {
+            return TenderOffers.FirstOrDefault(to => to.TenderOfferStatus == TenderOfferStatus.APPROVE);
+        }
+
+        public void EndTenderLifeCycle()
+        {
+            this.Status = TenderStatus.Inactive;
+        }
 
         protected bool Equals(Tender other)
         {
@@ -40,9 +82,8 @@ namespace IntegrationLibrary.Core.Model
             return HashCode.Combine(Id, (int)Status, DateRange, Blood);
         }
 
-        public void EndTenderLifeCycle()
-        {
-            this.Status = TenderStatus.Inactive;
-        }
+        
+
+        
     }
 }

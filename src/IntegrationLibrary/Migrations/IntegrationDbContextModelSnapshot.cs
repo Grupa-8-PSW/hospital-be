@@ -251,6 +251,10 @@ namespace IntegrationLibrary.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
+                    b.Property<List<TenderOffer>>("TenderOffers")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
                     b.HasKey("Id");
 
                     b.ToTable("Tenders");
@@ -271,9 +275,6 @@ namespace IntegrationLibrary.Migrations
                     b.Property<List<BloodOffer>>("Offers")
                         .IsRequired()
                         .HasColumnType("jsonb");
-
-                    b.Property<int>("TenderID")
-                        .HasColumnType("integer");
 
                     b.Property<int>("TenderOfferStatus")
                         .HasColumnType("integer");

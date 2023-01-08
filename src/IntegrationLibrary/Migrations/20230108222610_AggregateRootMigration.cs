@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
-    public partial class mig : Migration
+    public partial class AggregateRootMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -53,7 +53,6 @@ namespace IntegrationLibrary.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    TenderID = table.Column<int>(type: "integer", nullable: false),
                     Offers = table.Column<List<BloodOffer>>(type: "jsonb", nullable: false),
                     BloodBankName = table.Column<string>(type: "text", nullable: false),
                     TenderOfferStatus = table.Column<int>(type: "integer", nullable: false)
@@ -71,6 +70,7 @@ namespace IntegrationLibrary.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     DateRange = table.Column<DateRange>(type: "jsonb", nullable: false),
+                    TenderOffers = table.Column<List<TenderOffer>>(type: "jsonb", nullable: false),
                     Blood = table.Column<List<Blood>>(type: "jsonb", nullable: false)
                 },
                 constraints: table =>
