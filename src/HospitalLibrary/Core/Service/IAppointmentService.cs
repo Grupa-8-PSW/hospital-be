@@ -10,5 +10,7 @@ namespace HospitalLibrary.Core.Service
         public AvailableAppointments GetAvailableAppointments(DateTime date, int doctorId);
         public AvailableAppointments GetAvailableAppointments(DateRange dateRange, int doctorId);
         public List<AvailableAppointments> GetRecommendedAvailableAppointments(DateRange dateRange, int doctorId, AppointmentPriority priority);
+        public AppointmentStatistic GetStatistic();
+        
     }
 }
