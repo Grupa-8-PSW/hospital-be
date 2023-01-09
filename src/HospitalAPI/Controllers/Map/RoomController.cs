@@ -1,6 +1,5 @@
 ﻿using HospitalLibrary.Core.Model.ValueObjects;
 using HospitalLibrary.GraphicalEditor.Model.DTO;
-using HospitalLibrary.GraphicalEditor.Service;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -88,14 +87,14 @@ namespace HospitalAPI.Controllers.Map
             return Ok(freeSpace);
         }
 
-        [HttpGet("available")]
-        public IActionResult GetAvailableSlotsForRoom(DateTime start, DateTime end, int duration, int roomId, int? room2Id)
+        [HttpGet("available/{id}")]
+        public IActionResult GetAvailableSlotsForRoom(int id, DateTime start, DateTime end, int duration, int? roomId)
         {
             List<DateRange> slots;
-            if (room2Id != null)
-                slots = _roomService.GetAvailableIntervals(roomId, (int)room2Id, start, end, duration);
-            else 
-                slots = _roomService.GetAvailableSlots(roomId, start, end, duration);
+            if (roomId != null)
+                slots = _roomService.GetAvailableIntervals(id, (int)roomId, start, end, duration);
+            else
+                slots = _roomService.GetAvailableSlots(id, start, end, duration);
             return Ok(slots);
         }
 
