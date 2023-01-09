@@ -17,5 +17,10 @@ namespace HospitalLibrary.GraphicalEditor.BusinessUseCases
             _sessionRepository.Add(session);
         }
 
+        public List<RenovationSchedulingSession> GetAll()
+        {
+            return _sessionRepository.GetAll();
+        }
+
     }
 }

@@ -20,6 +20,11 @@ namespace HospitalLibrary.Core.Model.Aggregates.RenovationScheduling
             Causes(new SessionStarted(Id));
         }
 
+        public RenovationSchedulingSession(int id)
+        {
+            Causes(new SessionStarted(id));
+        }
+
         public void SelectRenovationType()
         {
             Causes(new RenovationTypeSelected(Id));

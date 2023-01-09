@@ -17,7 +17,7 @@ namespace HospitalAPI.Controllers.Map
         [HttpGet("renovation")]
         public IActionResult GetRenovationStatistics()
         {
-
+            
 
             return Ok();
         }

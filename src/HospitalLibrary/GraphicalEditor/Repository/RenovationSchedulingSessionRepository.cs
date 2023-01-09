@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Core.Model.Aggregates.RenovationScheduling;
+using HospitalLibrary.GraphicalEditor.BusinessUseCases;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 using HospitalLibrary.Settings;
 
@@ -13,6 +14,11 @@ namespace HospitalLibrary.GraphicalEditor.Repository
         }
 
         public RenovationSchedulingSession FindBy(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<RenovationSchedulingSession> GetAll()
         {
             throw new NotImplementedException();
         }
