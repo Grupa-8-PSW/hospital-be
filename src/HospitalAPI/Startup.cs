@@ -9,9 +9,11 @@ using HospitalAPI.Web.Dto;
 using HospitalAPI.Web.Mapper;
 using HospitalLibrary.Core.DomainService;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.Aggregates.RenovationScheduling;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Core.Validation;
+using HospitalLibrary.GraphicalEditor.BusinessUseCases;
 using HospitalLibrary.GraphicalEditor.Repository;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 using HospitalLibrary.GraphicalEditor.Repository.Map.Interfaces;
@@ -95,6 +97,9 @@ namespace HospitalAPI
 
             services.AddScoped<IRenovationService, RenovationService>();
             services.AddScoped<IRenovationRepository, RenovationRepository>();
+
+            services.AddScoped<ScheduleRenovation>();
+            services.AddScoped<IRenovationSchedulingSessionRepository, RenovationSchedulingSessionRepository>();
 
             services.AddScoped<IMapBuildingService, MapBuildingService>();
             services.AddScoped<IMapBuildingRepository, MapBuildingRepository>();
