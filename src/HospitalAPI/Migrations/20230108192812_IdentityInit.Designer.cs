@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalAPI.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20221214224440_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20230108192812_IdentityInit")]
+    partial class IdentityInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

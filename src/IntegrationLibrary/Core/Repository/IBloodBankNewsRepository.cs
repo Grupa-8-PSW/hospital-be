@@ -10,6 +10,7 @@ namespace IntegrationLibrary.Core.Repository
     public interface IBloodBankNewsRepository
     {
         IEnumerable<BloodBankNews> GetAll();
+        IEnumerable<BloodBankNews> GetAllPublished();
         void Create(BloodBankNews bloodBankNews);
         BloodBankNews GetById(int id);
         void Delete(BloodBankNews bloodBankNews);

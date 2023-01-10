@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalAPI.Migrations
 {
-    public partial class new_migration : Migration
+    public partial class IdentityInit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
