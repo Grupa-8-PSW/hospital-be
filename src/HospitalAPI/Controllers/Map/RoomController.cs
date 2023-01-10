@@ -87,6 +87,23 @@ namespace HospitalAPI.Controllers.Map
             return Ok(freeSpace);
         }
 
+        [HttpPost("get/available")]
+        public IActionResult GetAvailableSlots(RenovateIntervalsDTO dto)
+        {
+            List<DateRange> slots;
+            if (dto.roomId2 != null)
+                slots = _roomService.GetAvailableIntervals(dto.roomId, dto.roomId2, dto.startDate, dto.endDate, dto.duration);
+            else
+                slots = _roomService.GetAvailableSlots(dto.roomId, dto.startDate, dto.endDate, dto.duration);
+            List<FreeSpaceDTO> dtos = new();
+
+            foreach (var slot in slots)
+            {
+                dtos.Add(new FreeSpaceDTO(slot.Start, slot.End));
+            }
+            return Ok(dtos);
+        }
+
         [HttpGet("available/{id}")]
         public IActionResult GetAvailableSlotsForRoom(int id, DateTime start, DateTime end, int duration, int? roomId)
         {
