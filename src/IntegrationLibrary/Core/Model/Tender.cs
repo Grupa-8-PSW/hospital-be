@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IntegrationLibrary.Core.Model.ValueObject;
+using IntegrationLibrary.Core.Repository.Interfaces;
 
 namespace IntegrationLibrary.Core.Model
 {
@@ -14,13 +15,13 @@ namespace IntegrationLibrary.Core.Model
         public DateRange DateRange { get; private set; }
         public List<Blood> Blood { get; private set; }
 
+
         public Tender(TenderStatus status, DateRange dateRange, List<Blood> blood)
         {
             Status = status;
             DateRange = dateRange;
             Blood = blood;
         }
-
 
         protected bool Equals(Tender other)
         {
@@ -44,5 +45,7 @@ namespace IntegrationLibrary.Core.Model
         {
             this.Status = TenderStatus.Inactive;
         }
+        
+
     }
 }
