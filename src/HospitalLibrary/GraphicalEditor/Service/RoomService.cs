@@ -103,6 +103,7 @@ namespace HospitalLibrary.GraphicalEditor.Service
                     if (interval.IsOverlapped(i))
                         intervals.Remove(i);
                 }
+                /*
                 foreach (Renovation renovation in renovations)
                 {
                     DateRange interval = new(renovation.DateRange.Start, renovation.DateRange.End);
@@ -110,6 +111,7 @@ namespace HospitalLibrary.GraphicalEditor.Service
                     if (interval.IsOverlapped(i))
                         intervals.Remove(i);
                 }
+                */
             }
             return intervals;
         }

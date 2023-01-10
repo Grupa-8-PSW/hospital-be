@@ -1,28 +1,29 @@
-﻿using HospitalLibrary.Core.Model.ValueObjects;
-using HospitalLibrary.GraphicalEditor.Enums;
-
-namespace HospitalLibrary.GraphicalEditor.Model
+﻿namespace HospitalLibrary.GraphicalEditor.Model
 {
     public class Renovation
     {
         public int Id { get; set; }
+        public int Type { get; set; }
         public int RoomId { get; set; }
-        public Room Room { get; set; }
-        public DateRange DateRange { get; set; }
-        public RenovationType Type { get; set; }
-        public Status Status { get; set; }
+        public int Interval { get; set; }
+        public int Duration { get; set; }
+        public int Available { get; set; }
+        public int Changes { get; set; }
+        public int Schedule { get; set; }
 
         public Renovation()
         { }
 
-        public Renovation(int id, int roomId, Room room, DateRange dateRange, RenovationType type)
+        public Renovation(int id, int type, int roomId, int interval, int duration, int available, int changes, int schedule)
         {
             Id = id;
-            RoomId = roomId;
-            Room = room;
-            DateRange = dateRange;
             Type = type;
-            Status = Status.UPCOMING;
+            RoomId = roomId;
+            Interval = interval;
+            Duration = duration;
+            Available = available;
+            Changes = changes;
+            Schedule = schedule;
         }
     }
 }

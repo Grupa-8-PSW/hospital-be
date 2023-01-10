@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.GraphicalEditor.BusinessUseCases;
+﻿using HospitalLibrary.GraphicalEditor.Model.DTO;
+using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers.Map
@@ -7,19 +8,59 @@ namespace HospitalAPI.Controllers.Map
     [ApiController]
     public class StatisticsController : ControllerBase
     {
-        private readonly ScheduleRenovation _scheduleRenovation;
+        private readonly IRenovationService _renovationService;
 
-        public StatisticsController(ScheduleRenovation scheduleRenovation)
+        public StatisticsController(IRenovationService renovationService)
         {
-            _scheduleRenovation = scheduleRenovation;
+            _renovationService = renovationService;
         }
 
-        [HttpGet("renovation")]
+        [HttpGet("renovation/views")]
         public IActionResult GetRenovationStatistics()
         {
-            
-
-            return Ok();
+            List<RenovationSessionDTO> sessions = new();
+            foreach (var session in _renovationService.GetAll())
+            {
+                sessions.Add(new RenovationSessionDTO(session));
+            }
+            return Ok(sessions);
         }
+
+        [HttpGet("renovation/views/avg")]
+        public IActionResult GetRenovationStatisticsAvg()
+        {
+            List<RenovationSessionDTO> sessions = new();
+            List<int> types = new();
+            List<int> rooms = new();
+            List<int> intervals = new();
+            List<int> durations = new();
+            List<int> availability = new();
+            List<int> changes = new();
+            List<int> schedules = new();
+
+            foreach (var session in _renovationService.GetAll())
+            {
+                sessions.Add(new RenovationSessionDTO(session));
+                types.Add(session.Type);
+                rooms.Add(session.RoomId);
+                intervals.Add(session.Interval);
+                durations.Add(session.Duration);
+                availability.Add(session.Available);
+                changes.Add(session.Changes);
+                schedules.Add(session.Schedule);
+            }
+            List<double> ret = new()
+            {
+                types.Average(),
+                rooms.Average(),
+                intervals.Average(),
+                durations.Average(),
+                availability.Average(),
+                changes.Average(),
+                schedules.Average()
+            };
+            return Ok(ret);
+        }
+
     }
 }
