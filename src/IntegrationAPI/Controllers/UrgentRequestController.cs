@@ -25,7 +25,7 @@ namespace IntegrationAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GeneratePdf()
         {
-            DateTime fromDate = new DateTime(2022, 12, 09);
+            DateTime fromDate = new DateTime(2022, 12, 01);
             DateTime toDate = new DateTime(2022, 12, 22);
             return File(await _urgentRequestService.GeneratePdf(_urgentRequestService.GetSummarizedUrgentRequests(fromDate, toDate), fromDate, toDate), "application/pdf", "urgentrequestreport.pdf");
 
@@ -36,6 +36,15 @@ namespace IntegrationAPI.Controllers
         public ActionResult GetDataBetweenDates(DateTime from, DateTime to)
         {
             return Ok(_urgentRequestService.GetSummarizedRequests(from, to));
+        }
+
+        [Route("/api/[controller]/getDataTable")]
+        [HttpGet]
+        public ActionResult GetDataBetweenDatesTable()
+        {
+            DateTime fromD = new DateTime(2022, 12, 01);
+            DateTime toD = new DateTime(2022, 12, 22);
+            return Ok(_urgentRequestService.GetSummarizedUrgentRequests(fromD, toD));
         }
 
         [Route("/api/[controller]/getQuantitiesPerTypeStatistic")]

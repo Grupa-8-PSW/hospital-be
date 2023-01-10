@@ -209,6 +209,7 @@ namespace IntegrationLibrary.Core.Service
             }
 
             document.Add(table);
+
         }
 
         private static void CreateHeaderCell(PdfPTable table, string headerText)
