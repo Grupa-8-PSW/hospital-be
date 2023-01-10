@@ -14,10 +14,11 @@ namespace IntegrationAPI.Controllers
     {
 
         private readonly ITenderService _service;
-
-        public TenderController(ITenderService service)
+        private readonly ITenderRoot tenderRoot;
+        public TenderController(ITenderService service, ITenderRoot tenderRoot)
         {
-            _service = service;
+            this._service = service;
+            this.tenderRoot = tenderRoot;
         }
 
         // POST: TenderController/Create
@@ -47,21 +48,15 @@ namespace IntegrationAPI.Controllers
         [Route("getAllBloodAmountsBetweenDates")]
         public List<Dictionary<string, int>> GetAllBloodAmountsBetweenDates(DateTime from, DateTime to)
         {
-            List<Dictionary<string, int>> allOffers = _service.GetBloodAmountsBetweenDates(from, to);
-            return allOffers;
+            return tenderRoot.GetBloodAmountsBetweenDates(from, to);
         }
 
-        [Route("/api/[controller]/generatePdf")]
+        [Route("getTenderStatisticPDF")]
         [HttpGet]
-        public async Task<IActionResult> GeneratePdf()
+        public async Task<IActionResult> GeneratePdf(DateTime from, DateTime to)
         {
-
-            DateTime fromDate = new DateTime(2022, 11, 11);
-            DateTime toDate = new DateTime(2023, 12, 22);
-            return File(await _service.GeneratePdf(_service.GetBloodAmountsBetweenDates(fromDate, toDate), fromDate, toDate), "application/pdf", "urgentrequestreport.pdf");
+            return File(await _service.GeneratePdf(_service.GetBloodAmountsBetweenDates(from, to), from, to), "application/pdf", "tenders_report.pdf");
         
         }
-
-
     }
 }
