@@ -7,17 +7,20 @@ using System.Threading.Tasks;
 using HospitalLibrary.Core.Model.Aggregates;
 using HospitalLibrary.Core.Model.Aggregates.AppointmentScheduling.Events;
 using HospitalLibrary.Core.Model.ValueObjects;
+using HospitalLibrary.Core.Repository;
 
 namespace HospitalLibrary.Core.Model.Aggregates.AppointmentScheduling 
 { 
     public class AppointmentSchedulingSession : EventSourcedAggregate
     {
+        private readonly IAppointmentEventWrapperRepository _eventWrapperRepository;
         private int PatientId { get; set; }
         private IClock Clock { get; set; }
 
-        public AppointmentSchedulingSession()
+        public AppointmentSchedulingSession(IAppointmentEventWrapperRepository eventWrapperRepository)
         {
             PatientId = 0;
+            _eventWrapperRepository = eventWrapperRepository;
         }
 
         public AppointmentSchedulingSession(int patientId, IClock clock)
@@ -45,37 +48,37 @@ namespace HospitalLibrary.Core.Model.Aggregates.AppointmentScheduling
 
         public void SessionStarted()
         {
-            Causes(new SessionStarted(Id, Clock.Time()));
+            Causes(new SessionStarted(Clock.Time()));
         }
 
         public void SelectDateAndTime()
         {
 
-            Causes(new DateSelected(Id, Clock.Time(), new DateTime()));
+            Causes(new DateTimeSelected(Clock.Time(), new DateTime()));
         }
 
         public void SelectDoctorSpecialization()
         {
 
-            Causes(new DoctorSpecializationSelected(Id, Clock.Time(), Enums.DoctorSpecialization.GENERAL_PRACTICIONER));
+            Causes(new DoctorSpecializationSelected(Clock.Time(), Enums.DoctorSpecialization.GENERAL_PRACTICIONER));
         }
 
         public void SelectDoctor()
         {
 
-            Causes(new DoctorSelected(Id, Clock.Time(), 0));
+            Causes(new DoctorSelected(Clock.Time(), 0));
         }
 
         public void SelectAvailableAppointment()
         {
 
-            Causes(new AvailableAppointmentSelected(Id, Clock.Time(), 0));
+            Causes(new AvailableAppointmentSelected(Clock.Time(), 0));
         }
 
         public void ScheduleAppointment()
         {
 
-            Causes(new AppointmentScheduled(Id, Clock.Time(), new DateRange(DateTime.Now, DateTime.Now)));
+            Causes(new AppointmentScheduled(Clock.Time(), 0));
         }
 
         private void Causes(DomainEvent @event)
@@ -90,10 +93,15 @@ namespace HospitalLibrary.Core.Model.Aggregates.AppointmentScheduling
             Version = Version++;
         }
 
-        private void When(DateSelected dateTimeSelected)
+        private void When(SessionStarted sessionStarted)
+        {
+           
+        }
+
+        private void When(DateTimeSelected dateTimeSelected)
         {
             //KADA SE DESI OVAJ DOGADJAJ STA DA SE URADI DALJE? (WHEN DateTimeSelected DO ...)
-
+            
         }
 
         private void When(DoctorSpecializationSelected doctorSpecializationSelected)
