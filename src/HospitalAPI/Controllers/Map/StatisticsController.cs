@@ -26,10 +26,9 @@ namespace HospitalAPI.Controllers.Map
             return Ok(sessions);
         }
 
-        [HttpGet("renovation/views/avg")]
-        public IActionResult GetRenovationStatisticsAvg()
+        [HttpGet("renovation/views/sum")]
+        public IActionResult GetRenovationStatisticsTotal()
         {
-            List<RenovationSessionDTO> sessions = new();
             List<int> types = new();
             List<int> rooms = new();
             List<int> intervals = new();
@@ -40,7 +39,41 @@ namespace HospitalAPI.Controllers.Map
 
             foreach (var session in _renovationService.GetAll())
             {
-                sessions.Add(new RenovationSessionDTO(session));
+                types.Add(session.Type);
+                rooms.Add(session.RoomId);
+                intervals.Add(session.Interval);
+                durations.Add(session.Duration);
+                availability.Add(session.Available);
+                changes.Add(session.Changes);
+                schedules.Add(session.Schedule);
+            }
+
+            List<double> ret = new()
+            {
+                types.Sum(),
+                rooms.Sum(),
+                intervals.Sum(),
+                durations.Sum(),
+                availability.Sum(),
+                changes.Sum(),
+                schedules.Sum()
+            };
+            return Ok(ret);
+        }
+
+        [HttpGet("renovation/views/avg")]
+        public IActionResult GetRenovationStatisticsAvg()
+        {
+            List<int> types = new();
+            List<int> rooms = new();
+            List<int> intervals = new();
+            List<int> durations = new();
+            List<int> availability = new();
+            List<int> changes = new();
+            List<int> schedules = new();
+
+            foreach (var session in _renovationService.GetAll())
+            {
                 types.Add(session.Type);
                 rooms.Add(session.RoomId);
                 intervals.Add(session.Interval);
