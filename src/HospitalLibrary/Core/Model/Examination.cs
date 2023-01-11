@@ -6,9 +6,8 @@ using HospitalLibrary.GraphicalEditor.Model;
 
 namespace HospitalLibrary.Core.Model
 {
-    public class Examination
+    public class Examination : BaseEntityModel
     {
-        public int Id { get; set; }
         public int DoctorId { get; set; }
         public Doctor Doctor { get; set; }
         public int PatientId { get; set; }
