@@ -72,13 +72,13 @@ namespace HospitalLibrary.Core.Model.Aggregates.AppointmentScheduling
         public void SelectAvailableAppointment()
         {
 
-            Causes(new AvailableAppointmentSelected(Clock.Time(), 0));
+            Causes(new AvailableAppointmentSelected(Clock.Time(), new DateRange(DateTime.Now, DateTime.Now)));
         }
 
         public void ScheduleAppointment()
         {
 
-            Causes(new AppointmentScheduled(Clock.Time(), 0));
+            Causes(new AppointmentScheduled(Clock.Time()));
         }
 
         private void Causes(DomainEvent @event)

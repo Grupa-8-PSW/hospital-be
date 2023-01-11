@@ -10,11 +10,9 @@ namespace HospitalLibrary.Core.Model.Aggregates.AppointmentScheduling.Events
 {
     public class AppointmentScheduled : DomainEvent
     {
-        public AppointmentScheduled(DateTime timestamp, int appointmentId) : base(timestamp)
+        public AppointmentScheduled(DateTime timestamp) : base(timestamp)
         {
-            AppointmentId = appointmentId;
         }
 
-        public int AppointmentId { get; private set; }
     }
 }

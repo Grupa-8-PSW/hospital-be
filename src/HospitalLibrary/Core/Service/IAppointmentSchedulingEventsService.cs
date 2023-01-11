@@ -12,7 +12,7 @@ namespace HospitalLibrary.Core.Service
         public void SaveDateTimeSelectedEvent(int aggregateId, int patientId, DateTime selectedDateTime);
         public void SaveDoctorSpecializationSelectedEvent(int aggregateId, int patientId, DoctorSpecialization doctorSpecialization);
         public void SaveDoctorSelectedEvent(int aggregateId, int patientId, int doctorId);
-        public void SaveAppointmentSelectedEvent(int aggregateId, int patientId, int appointmentId);
-        public void SaveAppointmentScheduledEvent(int aggregateId, int patientId, int appointmentId);
+        public void SaveAppointmentSelectedEvent(int aggregateId, int patientId, DateRange dateRange);
+        public void SaveAppointmentScheduledEvent(int aggregateId, int patientId);
     }
 }

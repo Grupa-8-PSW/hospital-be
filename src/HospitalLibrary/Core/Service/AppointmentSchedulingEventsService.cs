@@ -70,25 +70,25 @@ namespace HospitalLibrary.Core.Service
             _eventWrapperRepository.Create(e);
         }
 
-        public void SaveAppointmentSelectedEvent(int aggregateId, int patientId, int appointmentId)
+        public void SaveAppointmentSelectedEvent(int aggregateId, int patientId, DateRange dateRange)
         {
             AppointmentEventWrapper e = new AppointmentEventWrapper()
             {
                 AggregateId = aggregateId,
                 PatientId = patientId,
-                Data = new AvailableAppointmentSelected(DateTime.Now, appointmentId),
+                Data = new AvailableAppointmentSelected(DateTime.Now, dateRange),
                 EventType = Enums.EventType.APPOINTMENT_SELECTED
             };
             _eventWrapperRepository.Create(e);
         }
 
-        public void SaveAppointmentScheduledEvent(int aggregateId, int patientId, int appointmentId)
+        public void SaveAppointmentScheduledEvent(int aggregateId, int patientId)
         {
             AppointmentEventWrapper e = new AppointmentEventWrapper()
             {
                 AggregateId = aggregateId,
                 PatientId = patientId,
-                Data = new AppointmentScheduled(DateTime.Now, appointmentId),
+                Data = new AppointmentScheduled(DateTime.Now),
                 EventType = Enums.EventType.SESSION_END
             };
             _eventWrapperRepository.Create(e);

@@ -27,68 +27,62 @@ namespace HospitalAPI.Controllers.PublicApp
 
 
         [HttpPost("sessionStarted")]
-        //[Authorize(Roles = "Patient")]
+        [Authorize(Roles = "Patient")]
         public ActionResult<int> SaveSessionStartedEvent()
         {
-            //var userId = User.UserId();
-            //var patient = _patientService.GetByUserId(userId);
-            //int aggregateId = _service.SaveSessionStartedEvent(patient.Id);
-            int aggregateId = _service.SaveSessionStartedEvent(1);
+            var userId = User.UserId();
+            var patient = _patientService.GetByUserId(userId);
+            int aggregateId = _service.SaveSessionStartedEvent(patient.Id);
             return Ok(aggregateId);
         }
 
         [HttpPost("dateTime")]
-        //[Authorize(Roles = "Patient")]
-        public ActionResult SaveDateTimeSelectedEvent(int aggregateId, DateTime selectedDateTime)
+        [Authorize(Roles = "Patient")]
+        public ActionResult SaveDateTimeSelectedEvent(DateEventDTO dateEventDto)
         {
-            //var userId = User.UserId();
-            //var patient = _patientService.GetByUserId(userId);
-            //_service.SaveDateTimeSelectedEvent(aggregateId, patient.Id, selectedDateTime);
-            _service.SaveDateTimeSelectedEvent(aggregateId, 1, selectedDateTime);
+            var userId = User.UserId();
+            var patient = _patientService.GetByUserId(userId);
+            _service.SaveDateTimeSelectedEvent(dateEventDto.AggregateId, patient.Id, dateEventDto.SelectedDate);
             return Ok();
         }
 
         [HttpPost("doctorSpecialization")]
-        //[Authorize(Roles = "Patient")]
-        public ActionResult SaveDoctorSpecializationSelectedEvent(int aggregateId, DoctorSpecialization doctorSpecialization)
+        [Authorize(Roles = "Patient")]
+        public ActionResult SaveDoctorSpecializationSelectedEvent(SpecializationEventDTO specializationEventDTO)
         {
-            //var userId = User.UserId();
-            //var patient = _patientService.GetByUserId(userId);
-            //_service.SaveDoctorSpecializationSelectedEvent(aggregateId, patient.Id, doctorSpecialization);
-            _service.SaveDoctorSpecializationSelectedEvent(aggregateId, 1, doctorSpecialization);
+            var userId = User.UserId();
+            var patient = _patientService.GetByUserId(userId);
+            _service.SaveDoctorSpecializationSelectedEvent(specializationEventDTO.AggregateId, patient.Id, specializationEventDTO.SelectedSpecialization);
             return Ok();
         }
 
         [HttpPost("doctor")]
-        //[Authorize(Roles = "Patient")]
-        public ActionResult SaveDoctorSelectedEvent(int aggregateId, int doctorId)
+        [Authorize(Roles = "Patient")]
+        public ActionResult SaveDoctorSelectedEvent(DoctorEventDTO doctorEventDTO)
         {
-            //var userId = User.UserId();
-            //var patient = _patientService.GetByUserId(userId);
-            //_service.SaveDoctorSelectedEvent(aggregateId, patient.Id, doctorId);
-            _service.SaveDoctorSelectedEvent(aggregateId, 1, doctorId);
+            var userId = User.UserId();
+            var patient = _patientService.GetByUserId(userId);
+            _service.SaveDoctorSelectedEvent(doctorEventDTO.AggregateId, patient.Id, doctorEventDTO.SelectedDoctor);
             return Ok();
         }
 
         [HttpPost("appointment")]
-        //[Authorize(Roles = "Patient")]
-        public ActionResult SaveAppointmentSelectedEvent(int aggregateId, int appointmentId)
+        [Authorize(Roles = "Patient")]
+        public ActionResult SaveAppointmentSelectedEvent(AppointmentEventDTO appointmentEventDTO)
         {
-            //var userId = User.UserId();
-            //var patient = _patientService.GetByUserId(userId);
-            //_service.SaveAppointmentSelectedEvent(aggregateId, patient.Id, appointmentId);
-            _service.SaveAppointmentSelectedEvent(aggregateId, 1, appointmentId);
+            var userId = User.UserId();
+            var patient = _patientService.GetByUserId(userId);
+            _service.SaveAppointmentSelectedEvent(appointmentEventDTO.AggregateId, patient.Id, appointmentEventDTO.SelectedSlot);
             return Ok();
         }
 
         [HttpPost("sessionEnded")]
-        //[Authorize(Roles = "Patient")]
-        public ActionResult SaveAppointmentScheduledEvent(int aggregateId, int appointmentId)
+        [Authorize(Roles = "Patient")]
+        public ActionResult SaveAppointmentScheduledEvent(SessionEndEventDTO sessionEndEventDTO)
         {
-            //var userId = User.UserId();
-            //var patient = _patientService.GetByUserId(userId);
-            //_service.SaveAppointmentScheduledEvent(aggregateId, patient.Id, appointmentId);
-            _service.SaveAppointmentScheduledEvent(aggregateId, 1, appointmentId);
+            var userId = User.UserId();
+            var patient = _patientService.GetByUserId(userId);
+            _service.SaveAppointmentScheduledEvent(sessionEndEventDTO.AggregateId, patient.Id);
             return Ok();
         }
     }

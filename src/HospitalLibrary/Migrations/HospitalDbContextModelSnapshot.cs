@@ -1018,7 +1018,7 @@ namespace HospitalLibrary.Migrations
                             TherapySubject = "Bromazepam 500mg",
                             TherapyType = 0,
                             TreatmentHistoryId = 1,
-                            WhenPrescribed = new DateTime(2023, 1, 11, 16, 56, 46, 54, DateTimeKind.Utc).AddTicks(8098)
+                            WhenPrescribed = new DateTime(2023, 1, 11, 17, 56, 55, 547, DateTimeKind.Utc).AddTicks(8827)
                         },
                         new
                         {
@@ -1029,7 +1029,7 @@ namespace HospitalLibrary.Migrations
                             TherapySubject = "A+ 500ml",
                             TherapyType = 1,
                             TreatmentHistoryId = 1,
-                            WhenPrescribed = new DateTime(2023, 1, 11, 16, 56, 46, 54, DateTimeKind.Utc).AddTicks(8100)
+                            WhenPrescribed = new DateTime(2023, 1, 11, 17, 56, 55, 547, DateTimeKind.Utc).AddTicks(8828)
                         });
                 });
 
@@ -1084,11 +1084,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 1,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2023, 1, 11, 16, 56, 46, 54, DateTimeKind.Utc).AddTicks(8071),
+                            EndDate = new DateTime(2023, 1, 11, 17, 56, 55, 547, DateTimeKind.Utc).AddTicks(8798),
                             PatientId = 1,
                             Reason = "reason1",
                             RoomId = 1,
-                            StartDate = new DateTime(2023, 1, 11, 16, 56, 46, 54, DateTimeKind.Utc).AddTicks(8070)
+                            StartDate = new DateTime(2023, 1, 11, 17, 56, 55, 547, DateTimeKind.Utc).AddTicks(8797)
                         },
                         new
                         {
@@ -1096,11 +1096,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 2,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2023, 1, 11, 16, 56, 46, 54, DateTimeKind.Utc).AddTicks(8074),
+                            EndDate = new DateTime(2023, 1, 11, 17, 56, 55, 547, DateTimeKind.Utc).AddTicks(8801),
                             PatientId = 2,
                             Reason = "reason2",
                             RoomId = 1,
-                            StartDate = new DateTime(2023, 1, 11, 16, 56, 46, 54, DateTimeKind.Utc).AddTicks(8074)
+                            StartDate = new DateTime(2023, 1, 11, 17, 56, 55, 547, DateTimeKind.Utc).AddTicks(8800)
                         },
                         new
                         {
@@ -1108,11 +1108,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 4,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2023, 1, 11, 16, 56, 46, 54, DateTimeKind.Utc).AddTicks(8075),
+                            EndDate = new DateTime(2023, 1, 11, 17, 56, 55, 547, DateTimeKind.Utc).AddTicks(8802),
                             PatientId = 3,
                             Reason = "reason3",
                             RoomId = 2,
-                            StartDate = new DateTime(2023, 1, 11, 16, 56, 46, 54, DateTimeKind.Utc).AddTicks(8075)
+                            StartDate = new DateTime(2023, 1, 11, 17, 56, 55, 547, DateTimeKind.Utc).AddTicks(8802)
                         },
                         new
                         {
@@ -1123,7 +1123,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 1,
                             Reason = "reason1",
                             RoomId = 1,
-                            StartDate = new DateTime(2023, 1, 11, 16, 56, 46, 54, DateTimeKind.Utc).AddTicks(8076)
+                            StartDate = new DateTime(2023, 1, 11, 17, 56, 55, 547, DateTimeKind.Utc).AddTicks(8803)
                         },
                         new
                         {
@@ -1134,7 +1134,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 2,
                             Reason = "reason2",
                             RoomId = 1,
-                            StartDate = new DateTime(2023, 1, 11, 16, 56, 46, 54, DateTimeKind.Utc).AddTicks(8077)
+                            StartDate = new DateTime(2023, 1, 11, 17, 56, 55, 547, DateTimeKind.Utc).AddTicks(8804)
                         },
                         new
                         {
@@ -1145,7 +1145,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 3,
                             Reason = "reason3",
                             RoomId = 2,
-                            StartDate = new DateTime(2023, 1, 11, 16, 56, 46, 54, DateTimeKind.Utc).AddTicks(8078)
+                            StartDate = new DateTime(2023, 1, 11, 17, 56, 55, 547, DateTimeKind.Utc).AddTicks(8805)
                         });
                 });
 
