@@ -3,6 +3,7 @@ using HospitalLibrary.GraphicalEditor.Model.Map;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings.DataSeed;
 using Microsoft.EntityFrameworkCore;
+using HospitalLibrary.Core.Model.Aggregates.AppointmentScheduling;
 
 namespace HospitalLibrary.Settings
 {
@@ -34,8 +35,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Consilium> Consiliums { get; set; }
         public DbSet<ExaminationDone> ExaminationsDone { get; set; }
         public DbSet<Symptom> Symptoms { get; set; }
-
-
+        public DbSet<AppointmentEventWrapper> AppointmentEventWrappers { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
         {

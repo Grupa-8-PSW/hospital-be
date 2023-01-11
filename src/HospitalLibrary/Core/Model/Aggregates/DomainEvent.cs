@@ -8,10 +8,10 @@ namespace HospitalLibrary.Core.Model.Aggregates
 {
     public abstract class DomainEvent
     {
-        public DomainEvent(int aggregateId)
+        public DomainEvent(DateTime timestamp)
         {
-            Id = aggregateId;
+            Timestamp = timestamp;
         }
-        public virtual int Id { get; set; }
+        public virtual DateTime Timestamp { get; set; }
     }
 }
