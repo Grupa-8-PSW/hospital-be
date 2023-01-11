@@ -9,7 +9,7 @@ namespace HospitalLibrary.Core.Model.Aggregates.AppointmentScheduling.Events
 {
     public class SessionStarted : DomainEvent
     {
-        public SessionStarted(int id) : base(id)
+        public SessionStarted(int id, DateTime timestamp) : base(id, timestamp)
         {
         }
 

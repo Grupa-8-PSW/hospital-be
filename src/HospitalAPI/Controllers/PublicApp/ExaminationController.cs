@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using AngleSharp.Io;
+using AutoMapper;
 using HospitalAPI.DTO;
 using HospitalAPI.Security;
 using HospitalAPI.Web.Dto;
@@ -8,7 +9,8 @@ using HospitalLibrary.Core.Service;
 using HospitalLibrary.Core.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Net.Http.Headers;
+using HospitalLibrary.Core.Util;
 namespace HospitalAPI.Controllers.PublicApp
 {
     [Route("api/public/[controller]")]
@@ -61,7 +63,29 @@ namespace HospitalAPI.Controllers.PublicApp
             _examinationService.Create(examination);
             return Ok();
         }
+        [HttpGet("generateReport/{id}")]
+        public ActionResult GeneratePdfReport(int id)
+        {
 
+
+            Examination _examination = _examinationService.GetById(id);
+            string fileName = "appointment " + id + "_report.pdf";
+            string dirName = @"C:\\Temp\";
+            var doctor = _doctorService.GetById(_examination.DoctorId);
+            var patient = _patientService.GetById(_examination.PatientId);
+            AppointmentReportGenerator appointmentToPdfConverter =
+                new AppointmentReportGenerator(_examination,patient,doctor);
+            string pdfPath = appointmentToPdfConverter.GenerateSummarizingReport(_examination,
+                dirName, fileName);
+            byte[] content = System.IO.File.ReadAllBytes(pdfPath);
+            var cd = new ContentDispositionHeaderValue("attachment")
+            {
+                FileName = fileName
+            };
+            Response.Headers.Add(HeaderNames.ContentDisposition, cd.ToString());
+            return File(content, "application/pdf");
+
+        }
         [HttpGet("patient")]
         [Authorize(Roles = "Patient")]
         public ActionResult GetExaminationsForPatient()
