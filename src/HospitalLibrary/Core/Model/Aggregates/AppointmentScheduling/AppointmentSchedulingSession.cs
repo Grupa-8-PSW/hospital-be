@@ -14,10 +14,15 @@ namespace HospitalLibrary.Core.Model.Aggregates.AppointmentScheduling
     {
         private int PatientId { get; set; }
 
-        public AppointmentSchedulingSession(int patientId)
+        private AppointmentSchedulingSession()
+        {
+            PatientId = 0;
+        }
+
+        public AppointmentSchedulingSession(int patientId, IClock clock)
         {
             PatientId = patientId;
-            Causes(new SessionStarted(Id));
+            Causes(new SessionStarted(Id, clock.Time()));
         }
 
         public AppointmentSchedulingSession(AppointmentSchedulingSessionSnapshot snapShot)
@@ -40,31 +45,31 @@ namespace HospitalLibrary.Core.Model.Aggregates.AppointmentScheduling
         public void SelectDateAndTime(IClock clock)
         {
 
-            Causes(new DateSelected(Id, new DateTime()));
+            Causes(new DateSelected(Id, clock.Time(), new DateTime()));
         }
 
         public void SelectDoctorSpecialization(IClock clock)
         {
 
-            Causes(new DoctorSpecializationSelected(Id, Enums.DoctorSpecialization.GENERAL_PRACTICIONER));
+            Causes(new DoctorSpecializationSelected(Id, clock.Time(), Enums.DoctorSpecialization.GENERAL_PRACTICIONER));
         }
 
         public void SelectDoctor(IClock clock)
         {
 
-            Causes(new DoctorSelected(Id, 0));
+            Causes(new DoctorSelected(Id, clock.Time(), 0));
         }
 
         public void SelectAvailableAppointment(IClock clock)
         {
 
-            Causes(new AvailableAppointmentSelected(Id, 0));
+            Causes(new AvailableAppointmentSelected(Id, clock.Time(), 0));
         }
 
         public void ScheduleAppointment(IClock clock)
         {
 
-            Causes(new AppointmentScheduled(Id, new DateRange(DateTime.Now, DateTime.Now)));
+            Causes(new AppointmentScheduled(Id, clock.Time(), new DateRange(DateTime.Now, DateTime.Now)));
         }
 
         private void Causes(DomainEvent @event)
