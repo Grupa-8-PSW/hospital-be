@@ -14,6 +14,7 @@ namespace HospitalLibrary.Core.Model
         public List<Symptom> Symptoms { get; set; }
         public string Record { get; set; }
         public List<Prescription> Prescriptions { get; set; }
-        
+
+       
     }
 }

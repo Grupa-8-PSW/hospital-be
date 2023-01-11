@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Core.DTO;
+using HospitalLibrary.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,6 @@ namespace HospitalLibrary.Core.Service
         void Delete(ExaminationDone examinationDone);
         IEnumerable<Symptom> GetAllSymptoms();
         ExaminationDone? GetByExamination(int examinationId);
+        AverageExamsPerMonthDto CalculateAverageNumOfExamsPerMonth();
     }
 }

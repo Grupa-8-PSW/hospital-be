@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Core.DTO;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Core.Validation;
 using System;
@@ -66,6 +67,35 @@ namespace HospitalLibrary.Core.Service
         public ExaminationDone? GetByExamination(int examinationId)
         {
             return _examinationDoneRepository.GetByExamination(examinationId);
+        }
+    
+        public AverageExamsPerMonthDto CalculateAverageNumOfExamsPerMonth()
+        {
+            List<ExaminationDone> finishedExams = _examinationDoneRepository.GetAllFinished().ToList();
+            List<TemporaryExamStatisticsDto> tempDtoList = new List<TemporaryExamStatisticsDto>();
+
+            foreach (ExaminationDone exam in finishedExams)
+            {
+                DateTime currentDT = exam.Examination.DateRange.End;
+                if (!tempDtoList.Exists(x => x.Month == currentDT.Month))
+                {
+                    TemporaryExamStatisticsDto dto = new TemporaryExamStatisticsDto(currentDT.Month, 1);
+                    tempDtoList.Add(dto);
+                }
+                else
+                {
+                    TemporaryExamStatisticsDto dto = tempDtoList.Find(x => x.Month == currentDT.Month);
+                    dto.ExamNum += 1;
+                }
+            }
+
+            List<MonthExamStatisticsDto> monthDtoList = new List<MonthExamStatisticsDto>();
+            tempDtoList.ForEach(e =>
+            {
+                MonthExamStatisticsDto monthExamStatisticsDto = new MonthExamStatisticsDto(e.Month, Math.Round((double)e.ExamNum/DateTime.DaysInMonth(2022, e.Month), 2));
+            });
+
+            return new AverageExamsPerMonthDto(monthDtoList);
         }
     }
 }

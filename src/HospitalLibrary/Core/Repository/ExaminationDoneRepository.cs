@@ -23,6 +23,19 @@ namespace HospitalLibrary.Core.Repository
             return _context.ExaminationsDone.ToList();
         }
 
+        public IEnumerable<ExaminationDone> GetAllFinished()
+        {
+            return _context.ExaminationsDone.Include(x => x.Examination)
+                                            .ThenInclude(x => x.Doctor)
+                                            .Include(x => x.Examination)
+                                            .ThenInclude(x => x.Patient)
+                                            .Include(x => x.Symptoms)
+                                            .Include(x => x.Examination)
+                                            .ThenInclude(x => x.Room)
+                                            .Include(x => x.Prescriptions)
+                                            .ToList();
+        }
+
         public ExaminationDone GetById(int id)
         {
             return _context.ExaminationsDone.Find(id);

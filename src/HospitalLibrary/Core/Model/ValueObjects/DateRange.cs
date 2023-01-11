@@ -15,7 +15,7 @@ public class DateRange : ValueObject
     {
         Start = start;
         End = end;
-        Validate();
+      //  Validate();
     }
 
     public bool Contains(DateTime date)
@@ -31,11 +31,12 @@ public class DateRange : ValueObject
 
     public bool IsOverlapped(DateRange dateRange) => (Start < dateRange.End && dateRange.Start < End);
 
+    /*
     private void Validate()
     {
-        if (Start > End)
+        if (Start < End)
             throw new ArgumentException("Invalid arguments, from must be before to");
-    }
+    } */
 
     protected override IEnumerable<object> GetEqualityComponents()
     {

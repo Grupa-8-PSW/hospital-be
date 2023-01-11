@@ -2,6 +2,7 @@
 using HospitalAPI.Requests;
 using HospitalAPI.Web.Dto;
 using HospitalAPI.Web.Mapper;
+using HospitalLibrary.Core.DTO;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using Microsoft.AspNetCore.Http;
@@ -115,6 +116,19 @@ namespace HospitalAPI.Controllers.InternalApp
         public ActionResult GetAllSymptoms()
         {
             return Ok(_examinationDoneService.GetAllSymptoms());
+        }
+
+        [HttpGet("statistics/exams-per-month")]
+        public ActionResult CalculateAverageNumberOfExamsPerMonth()
+        {
+            AverageExamsPerMonthDto dto = _examinationDoneService.CalculateAverageNumOfExamsPerMonth();
+
+            if (dto == null)
+            {
+                return NoContent();
+            }
+
+            return Ok(dto);
         }
     }
 }

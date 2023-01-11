@@ -60,6 +60,7 @@ namespace HospitalLibrary.Settings
             modelBuilder.SeedPatient();
             modelBuilder.SeedFeedback();
             modelBuilder.SeedExamination();
+            modelBuilder.SeedExaminationDone();
 
             modelBuilder.SeedBed();
             modelBuilder.SeedMedicalDrugs();
