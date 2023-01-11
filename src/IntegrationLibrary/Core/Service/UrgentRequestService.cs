@@ -106,13 +106,27 @@ namespace IntegrationLibrary.Core.Service
                     sumRequest.Blood = bloods;
                     sumRequest.BloodBankId = urgentRequest.BloodBankId;
                 }
+                else
+                {
+                    UrgentRequest request = new UrgentRequest();
+                    List<Blood> newBloods = InitializeList();
+                    foreach (Blood blood in urgentRequest.Blood)
+                    {
+                        foreach (var bl in newBloods.Where(x => x.BloodType.Equals(blood.BloodType)))
+                            bl.Quantity = bl.Quantity + blood.Quantity;
+
+                    }
+                    request.Blood = newBloods;
+                    request.BloodBankId = urgentRequest.BloodBankId;
+                    sumRequests.Add(request);
+                }
+               
             }
             sumRequests.Add(sumRequest);
             return sumRequests;
         }
 
         public async Task<byte[]> GeneratePdf(List<UrgentRequest> urgentRequests, DateTime fromDate, DateTime toDate)
-
         {
             using (MemoryStream ms = new MemoryStream())
             {
@@ -181,7 +195,7 @@ namespace IntegrationLibrary.Core.Service
             CreateHeaderCell(table, "0-");
 
 
-            Paragraph para1 = new Paragraph("Report from date " + fromDate.Date.ToShortDateString() + " to date " + toDate.Date.ToShortDateString(), new Font(Font.FontFamily.HELVETICA, 20));
+            Paragraph para1 = new Paragraph("Urgent request report from date " + fromDate.Date.ToShortDateString() + " to date " + toDate.Date.ToShortDateString(), new Font(Font.FontFamily.HELVETICA, 20));
             para1.Alignment = Element.ALIGN_CENTER;
             para1.SpacingAfter = 10;
             document.Add(para1);

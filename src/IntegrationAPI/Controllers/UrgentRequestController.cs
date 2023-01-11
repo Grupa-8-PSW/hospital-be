@@ -23,12 +23,9 @@ namespace IntegrationAPI.Controllers
 
         [Route("/api/[controller]/generatePdf")]
         [HttpGet]
-        public async Task<IActionResult> GeneratePdf()
+        public async Task<IActionResult> GeneratePdf(DateTime from, DateTime to)
         {
-            DateTime fromDate = new DateTime(2022, 12, 09);
-            DateTime toDate = new DateTime(2022, 12, 22);
-            return File(await _urgentRequestService.GeneratePdf(_urgentRequestService.GetSummarizedUrgentRequests(fromDate, toDate), fromDate, toDate), "application/pdf", "urgentrequestreport.pdf");
-
+            return File(await _urgentRequestService.GeneratePdf(_urgentRequestService.GetSummarizedUrgentRequests(from, to), from, to), "application/pdf", "urgentrequestreport.pdf");
         }
 
         [Route("/api/[controller]/getData")]
