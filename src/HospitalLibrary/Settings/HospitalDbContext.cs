@@ -34,7 +34,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Consilium> Consiliums { get; set; }
         public DbSet<ExaminationDone> ExaminationsDone { get; set; }
         public DbSet<Symptom> Symptoms { get; set; }
-
+        public DbSet<AppointmentEventWrapper> AppointmentEventWrappers { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
         {

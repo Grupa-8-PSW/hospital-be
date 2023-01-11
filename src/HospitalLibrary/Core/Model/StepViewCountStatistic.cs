@@ -6,31 +6,29 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Model
 {
-    public class PatientOnEachStepNumberStatistic
+    public class StepViewCountStatistic
     {
         public int StepOne { get; set; }
         public int StepTwo { get; set; }
         public int StepThree { get; set; }
         public int StepFour { get; set; }
-        public int StepFive { get; set; }
         
-        public PatientOnEachStepNumberStatistic()
+        public StepViewCountStatistic()
         {
             StepOne = 0;
             StepTwo = 0;
             StepThree = 0;
             StepFour = 0;
-            StepFive = 0;
         }
         
-        public PatientOnEachStepNumberStatistic(int one, int two, int three, int four, int five)
+        public StepViewCountStatistic(int one, int two, int three, int four)
         {
-            StepOne = one; StepTwo = two; StepThree = three; StepFour = four; StepFive = five;
+            StepOne = one; StepTwo = two; StepThree = three; StepFour = four;
         }
         public bool Check()
         {
             if (StepOne == 0 || StepTwo == 0 || StepThree == 0
-                || StepFour == 0 || StepFive == 0) return false;
+                || StepFour == 0) return false;
             return true;
         }
     }

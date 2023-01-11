@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Core.Model;
+using HospitalAPI.DTO;
 
 namespace HospitalAPI.Controllers.InternalApp
 {
@@ -14,16 +15,25 @@ namespace HospitalAPI.Controllers.InternalApp
     public class AppointmentController : ControllerBase
     {
         private readonly IAppointmentService _appointmentService;
+        private readonly IAppointmentSchedulingEventsService _appointmentSchedulingEventsService;
 
-        public AppointmentController(IAppointmentService appointmentService)
+        public AppointmentController(IAppointmentService appointmentService, IAppointmentSchedulingEventsService appointmentSchedulingEventsService)
         {
             _appointmentService = appointmentService;
+            _appointmentSchedulingEventsService = appointmentSchedulingEventsService;
         }
 
         [HttpGet("statistic")]
-        public ActionResult<AppointmentStatistic> GetStatistic()
+        public ActionResult<AppointmentEventStatisticDTO> GetStatistic()
         {
-            return Ok(_appointmentService.GetStatistic());
+            var dto = new AppointmentEventStatisticDTO()
+            {
+                AverageNumberOfStep = _appointmentSchedulingEventsService.GetAverageNumberOfSteps(),
+                AverageSecondsOfScheduling = _appointmentSchedulingEventsService.GetAverageDurationInMins(),
+                StepViewCountStatistic = _appointmentSchedulingEventsService.NumberOfViewsForStep()
+            };
+            
+            return Ok(dto);
         }
     }
 }
