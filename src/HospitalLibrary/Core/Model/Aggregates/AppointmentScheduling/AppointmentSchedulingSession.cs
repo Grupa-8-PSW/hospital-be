@@ -13,8 +13,9 @@ namespace HospitalLibrary.Core.Model.Aggregates.AppointmentScheduling
     public class AppointmentSchedulingSession : EventSourcedAggregate
     {
         private int PatientId { get; set; }
+        private IClock Clock { get; set; }
 
-        private AppointmentSchedulingSession()
+        public AppointmentSchedulingSession()
         {
             PatientId = 0;
         }
@@ -22,7 +23,7 @@ namespace HospitalLibrary.Core.Model.Aggregates.AppointmentScheduling
         public AppointmentSchedulingSession(int patientId, IClock clock)
         {
             PatientId = patientId;
-            Causes(new SessionStarted(Id, clock.Time()));
+            Clock = clock;
         }
 
         public AppointmentSchedulingSession(AppointmentSchedulingSessionSnapshot snapShot)
@@ -42,34 +43,39 @@ namespace HospitalLibrary.Core.Model.Aggregates.AppointmentScheduling
             return snapshot;
         }
 
-        public void SelectDateAndTime(IClock clock)
+        public void SessionStarted()
         {
-
-            Causes(new DateSelected(Id, clock.Time(), new DateTime()));
+            Causes(new SessionStarted(Id, Clock.Time()));
         }
 
-        public void SelectDoctorSpecialization(IClock clock)
+        public void SelectDateAndTime()
         {
 
-            Causes(new DoctorSpecializationSelected(Id, clock.Time(), Enums.DoctorSpecialization.GENERAL_PRACTICIONER));
+            Causes(new DateSelected(Id, Clock.Time(), new DateTime()));
         }
 
-        public void SelectDoctor(IClock clock)
+        public void SelectDoctorSpecialization()
         {
 
-            Causes(new DoctorSelected(Id, clock.Time(), 0));
+            Causes(new DoctorSpecializationSelected(Id, Clock.Time(), Enums.DoctorSpecialization.GENERAL_PRACTICIONER));
         }
 
-        public void SelectAvailableAppointment(IClock clock)
+        public void SelectDoctor()
         {
 
-            Causes(new AvailableAppointmentSelected(Id, clock.Time(), 0));
+            Causes(new DoctorSelected(Id, Clock.Time(), 0));
         }
 
-        public void ScheduleAppointment(IClock clock)
+        public void SelectAvailableAppointment()
         {
 
-            Causes(new AppointmentScheduled(Id, clock.Time(), new DateRange(DateTime.Now, DateTime.Now)));
+            Causes(new AvailableAppointmentSelected(Id, Clock.Time(), 0));
+        }
+
+        public void ScheduleAppointment()
+        {
+
+            Causes(new AppointmentScheduled(Id, Clock.Time(), new DateRange(DateTime.Now, DateTime.Now)));
         }
 
         private void Causes(DomainEvent @event)

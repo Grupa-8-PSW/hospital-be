@@ -10,12 +10,12 @@ namespace HospitalLibrary.Core.Service
 {
     public class AppointmentSchedulingEventsService : IAppointmentSchedulingEventsService
     {
-
         public AppointmentSchedulingEventsService() { }
 
         public void SaveSessionStartedEvent()
         {
-            
+            AppointmentSchedulingSession session = new AppointmentSchedulingSession(0, new SystemClock());
+            session.SessionStarted();
         }
 
         public void SaveDateTimeSelectedEvent(DateTime selectedDateTime)
