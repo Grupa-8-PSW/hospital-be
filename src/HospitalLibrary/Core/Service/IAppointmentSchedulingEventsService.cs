@@ -14,5 +14,8 @@ namespace HospitalLibrary.Core.Service
         public void SaveDoctorSelectedEvent(int aggregateId, int patientId, int doctorId);
         public void SaveAppointmentSelectedEvent(int aggregateId, int patientId, DateRange dateRange);
         public void SaveAppointmentScheduledEvent(int aggregateId, int patientId);
+        public int GetAverageNumberOfSteps();
+        public int GetAverageDurationInMins();
+        public StepViewCountStatistic NumberOfViewsForStep();
     }
 }

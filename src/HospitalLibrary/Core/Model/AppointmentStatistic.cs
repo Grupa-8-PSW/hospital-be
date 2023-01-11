@@ -8,8 +8,8 @@ namespace HospitalLibrary.Core.Model
 {
     public class AppointmentStatistic
     {
-        public PatientOnEachStepNumberStatistic? PatientOnEachStepNumber { get; set; }
-        public PatientOnEachStepMinutesStatistic? PatientOnEachStepDuration { get; set; }
+        public StepViewCountStatistic? PatientOnEachStepNumber { get; set; }
+        public SessionStepTimeSpent? PatientOnEachStepDuration { get; set; }
         public int AverageNumberOfStepForScheduleAppointment { get; set; }
         public int AverageDurationOfStepForScheduleAppointment { get; set; }
     }

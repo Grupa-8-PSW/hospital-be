@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Model.Aggregates.AppointmentScheduling;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
@@ -17,5 +18,10 @@ namespace HospitalLibrary.Core.Repository
 
         }
 
+        public List<int> GetScheduledAggregates()
+        {
+            return _dbContext.AppointmentEventWrappers.Where(e => e.EventType == EventType.SESSION_END)
+                                                      .Select(ev => ev.AggregateId).ToList();
+        }
     }
 }

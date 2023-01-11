@@ -5,6 +5,7 @@ namespace HospitalLibrary.Core.Repository
 {
     public interface IAppointmentEventWrapperRepository : IEntityRepository<AppointmentEventWrapper>
     {
+        public List<int> GetScheduledAggregates();
 
     }
 }
