@@ -19,7 +19,8 @@ namespace HospitalTests.HospitalAPITests.Integration.Controllers.InternalApp
         private static AppointmentController SetupController(IServiceScope scope)
         {
             var appointmentService = scope.ServiceProvider.GetRequiredService<IAppointmentService>();
-            return new AppointmentController(appointmentService);
+            var appointmentEventService = scope.ServiceProvider.GetRequiredService<IAppointmentSchedulingEventsService>();
+            return new AppointmentController(appointmentService, appointmentEventService);
         }
 
         [Fact]
@@ -35,11 +36,10 @@ namespace HospitalTests.HospitalAPITests.Integration.Controllers.InternalApp
 
             // Assert
             result.Result.ShouldBeOfType(typeof(OkObjectResult));
-            var value = ((OkObjectResult)result.Result).Value as AppointmentStatistic;
-            value.AverageDurationOfStepForScheduleAppointment.ShouldNotBe(0);
-            value.AverageNumberOfStepForScheduleAppointment.ShouldNotBe(0);
-            value.PatientOnEachStepDuration.Check().ShouldBe(true);
-            value.PatientOnEachStepNumber.Check().ShouldBe(true);
+            var value = ((OkObjectResult)result.Result).Value as AppointmentEventStatisticDTO;
+            value.AverageNumberOfStep.ShouldNotBe(0);
+            value.AverageSecondsOfScheduling.ShouldNotBe(0);
+            value.StepViewCountStatistic.Check().ShouldBe(true);
         }
     }
 }
