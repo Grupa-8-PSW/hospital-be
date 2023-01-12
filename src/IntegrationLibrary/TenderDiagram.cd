@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="IntegrationLibrary.Core.Model.ValueObject.Blood" Collapsed="true">
+    <Position X="13" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAQAAAAAQAAAAAAAAAgAAABAA=</HashCode>
+      <FileName>Core\Model\ValueObject\Blood.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IntegrationLibrary.Core.Model.ValueObject.BloodOffer" Collapsed="true">
+    <Position X="15.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAQCAAAAAAAAAQAAAAAQAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Core\Model\ValueObject\BloodOffer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IntegrationLibrary.Core.Model.ValueObject.Money" Collapsed="true">
+    <Position X="8.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAACAAAAAAAAAAACACAQAAAAAAAAAAgAABAA=</HashCode>
+      <FileName>Core\Model\ValueObject\Money.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IntegrationLibrary.Core.Model.DateRange" Collapsed="true">
+    <Position X="10.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAACAAAAAAAAAAAAAAAAQAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Core\Model\DateRange.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IntegrationLibrary.Core.Model.Tender" Collapsed="true">
+    <Position X="8.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAASAAAMIAAgAACAgAAAAAAAAAAAAIAAAAIAAACQAAA=</HashCode>
+      <FileName>Core\Model\Tender.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IntegrationLibrary.Core.Model.TenderOffer" Collapsed="true">
+    <Position X="10.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIACAAAAAAAQAAgAABAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>Core\Model\TenderOffer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IntegrationLibrary.Core.Model.ValueObject&lt;T&gt;" Collapsed="true">
+    <Position X="11.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAQAAIAAAAAAAAAABiA=</HashCode>
+      <FileName>Core\Model\ValueObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IntegrationLibrary.Core.Repository.TenderOfferRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAABAAAAAAAAAAAAAAAAEAAAgAAAAAAAAA=</HashCode>
+      <FileName>Core\Repository\TenderOfferRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.1" Collapsed="true" />
+  </Class>
+  <Class Name="IntegrationLibrary.Core.Repository.TenderRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAABAAAAAAAAABAAAEAAEAAAgAIAAAAAIA=</HashCode>
+      <FileName>Core\Repository\TenderRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="IntegrationLibrary.Core.Service.TenderOfferService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="15.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAhAAIAAAAAAAAAQAAAAAEAAAgAAAAEAAAA=</HashCode>
+      <FileName>Core\Service\TenderOfferService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="IntegrationLibrary.Core.Service.TenderService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACQAAABEAAAIAABADAAQAAhAABEgAEAAAgBAAAAAAIQ=</HashCode>
+      <FileName>Core\Service\TenderService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="IntegrationLibrary.Core.Repository.Interfaces.ITenderOfferRepository" Collapsed="true">
+    <Position X="13.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAEAAAgAAAAAAAAA=</HashCode>
+      <FileName>Core\Repository\Interfaces\ITenderOfferRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="IntegrationLibrary.Core.Repository.Interfaces.ITenderRepository" Collapsed="true">
+    <Position X="17.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAABAAAEAAEAAAgAIAAAAAIA=</HashCode>
+      <FileName>Core\Repository\Interfaces\ITenderRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="IntegrationLibrary.Core.Service.Interfaces.ITenderOfferService" Collapsed="true">
+    <Position X="15.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAgAAAAAAAAAAAAAAAAAAEAAAgAAAAAAAAA=</HashCode>
+      <FileName>Core\Service\Interfaces\ITenderOfferService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="IntegrationLibrary.Core.Service.Interfaces.ITenderService" Collapsed="true">
+    <Position X="12" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAEAAAAAAAAAAAQAAhAAAEAAEAAAgAAAAAAAIA=</HashCode>
+      <FileName>Core\Service\Interfaces\ITenderService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="IntegrationLibrary.Core.Model.ValueObject.Currency" Collapsed="true">
+    <Position X="8.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Core\Model\ValueObject\Currency.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TenderStatus" Collapsed="true">
+    <Position X="12" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Model\TenderStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TenderOfferStatus" Collapsed="true">
+    <Position X="10.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAQAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\Model\TenderStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

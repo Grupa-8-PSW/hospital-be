@@ -15,8 +15,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221224145141_mig")]
-    partial class mig
+    [Migration("20230109134228_tMig")]
+    partial class tMig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

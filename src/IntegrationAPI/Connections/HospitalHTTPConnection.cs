@@ -83,7 +83,7 @@ namespace IntegrationAPI.Connections
         {
             var client = new RestClient("http://localhost:5174/api/internal/Blood");
             var request = new RestRequest();
-
+             
 
             RestResponse response = client.Get(request);
 

@@ -25,18 +25,18 @@ namespace IntegrationAPI.Controllers
 
 
         [HttpPost]
-        public IActionResult CreateTenderOffer([FromBody] TenderOfferDTO dto)
+        public IActionResult CreateTenderOffer(TenderOfferDTO dto, int tenderId)
         {
-            return Ok(_tenderOfferService.Create(TenderOfferMapper.ToModel(dto)));
+            return Ok(_tenderOfferService.Create(TenderOfferMapper.ToModel(dto), tenderId));
 
         }
 
 
         [Route("/acceptOffer")]
         [HttpPost]
-        public IActionResult AcceptTenderOffer([FromBody] TenderOfferDTO dto)
+        public IActionResult AcceptTenderOffer(TenderOfferDTO dto, int tenderId)
         {
-            return Ok(_tenderOfferService.AcceptTenderOffer(TenderOfferMapper.ToModel(dto)));
+            return Ok(_tenderOfferService.AcceptTenderOffer(TenderOfferMapper.ToModel(dto), tenderId));
         }
 
 
@@ -44,7 +44,7 @@ namespace IntegrationAPI.Controllers
         [HttpGet]
         public IActionResult GetOffersForTender( int tenderID)
         {
-            return Ok(TenderOfferMapper.ToDTOs(_tenderOfferService.getOffersForTender(tenderID)));
+            return Ok(TenderOfferMapper.ToDTOs(_tenderOfferService.GetOffersForTender(tenderID)));
         }
 
         [HttpGet("sendTenderOffer")]
