@@ -149,6 +149,7 @@ namespace IntegrationLibrary.Core.Service
                 qCell.Phrase.Add("");
                 qCell.HorizontalAlignment = Element.ALIGN_CENTER;
             }
+            table.AddCell(qCell);
         }
 
 

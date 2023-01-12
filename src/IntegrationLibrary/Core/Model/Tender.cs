@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IntegrationLibrary.Core.Model.ValueObject;
+using IntegrationLibrary.Core.Repository.Interfaces;
 
 namespace IntegrationLibrary.Core.Model
 {
@@ -14,6 +15,7 @@ namespace IntegrationLibrary.Core.Model
         public DateRange DateRange { get; private set; }
         public List<TenderOffer> TenderOffers { get; private set; }
         public List<Blood> Blood { get; private set; }
+
 
         public Tender(TenderStatus status, DateRange dateRange, List<Blood> blood)
         {
@@ -63,7 +65,7 @@ namespace IntegrationLibrary.Core.Model
         {
             Status = TenderStatus.Inactive;
         }
-
+        
         protected bool Equals(Tender other)
         {
             return Id == other.Id && Status == other.Status && DateRange.Equals(other.DateRange) && Blood.Equals(other.Blood);
@@ -81,9 +83,5 @@ namespace IntegrationLibrary.Core.Model
         {
             return HashCode.Combine(Id, (int)Status, DateRange, Blood);
         }
-
-        
-
-        
     }
 }
