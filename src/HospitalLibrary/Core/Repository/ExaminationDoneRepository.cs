@@ -20,7 +20,14 @@ namespace HospitalLibrary.Core.Repository
 
         public IEnumerable<ExaminationDone> GetAll()
         {
-            return _context.ExaminationsDone.ToList();
+            return _context.ExaminationsDone
+                .Include(x => x.Prescriptions)
+                .ThenInclude(x => x.PrescriptionItem)
+                .ThenInclude(x => x.MedicalDrug)
+                .Include(x => x.Examination)
+                .Include(x => x.Examination.Doctor)
+                .Include(x => x.Examination.Patient)
+                .ToList();
         }
 
         public ExaminationDone GetById(int id)

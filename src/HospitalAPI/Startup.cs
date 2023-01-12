@@ -28,6 +28,7 @@ using AngleSharp.Io;
 using HospitalAPI.Responses;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Runtime.Serialization;
+using AutoMapper;
 using HospitalLibrary.Core.DomainService;
 
 
@@ -168,6 +169,9 @@ namespace HospitalAPI
 
 
             services.AddScoped<IMapper<ConsiliumRequest, ConsiliumRequestDTO>, ConsiliumRequestMapper>();
+
+            services.AddScoped<IMapper<ExaminationDone, ExaminationDocumentResponse>, ExaminationDocumentMapper>();
+            services.AddScoped<ISearchTextParserService, SearchTextParserService>();
 
             services.AddCors(options =>
             {
