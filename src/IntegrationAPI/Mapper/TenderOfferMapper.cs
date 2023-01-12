@@ -29,6 +29,7 @@ namespace IntegrationAPI.Mapper
                 ret.Add(new TenderOfferDTO()
                 {
                     BloodAmounts = convBloodOffersToDTO(to.Offers),
+                    TenderID = to.TenderID,
                     BloodBankUsername = to.BloodBankName,
                     Id = to.Id
                     

@@ -15,8 +15,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20230108222610_AggregateRootMigration")]
-    partial class AggregateRootMigration
+    [Migration("20221222005406_bloodRequestDelivery")]
+    partial class bloodRequestDelivery
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -253,10 +253,6 @@ namespace IntegrationLibrary.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
-                    b.Property<List<TenderOffer>>("TenderOffers")
-                        .IsRequired()
-                        .HasColumnType("jsonb");
-
                     b.HasKey("Id");
 
                     b.ToTable("Tenders");
@@ -277,6 +273,9 @@ namespace IntegrationLibrary.Migrations
                     b.Property<List<BloodOffer>>("Offers")
                         .IsRequired()
                         .HasColumnType("jsonb");
+
+                    b.Property<int>("TenderID")
+                        .HasColumnType("integer");
 
                     b.Property<int>("TenderOfferStatus")
                         .HasColumnType("integer");

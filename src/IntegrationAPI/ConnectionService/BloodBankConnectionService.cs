@@ -69,7 +69,7 @@ namespace IntegrationLibrary.Core.Service
         public bool SendTenderOffer(string apiKey, int tenderID)
         {
             BloodUnitUrgentRequest request = new BloodUnitUrgentRequest();
-            TenderOffer tenderOffer = _tenderOfferService.GetAcceptedByTenderId(tenderID);
+            TenderOffer tenderOffer = _tenderOfferService.GetById(tenderID);
 
             request.bloodUnits = TenderOfferMapper.ToBloodDTO(tenderOffer.Offers);
             request.APIKey = apiKey;

@@ -66,11 +66,6 @@ namespace IntegrationLibrary.Core.Service
             return tender;
         }
 
-        public void Update(Tender tender)
-        {
-            _tenderRepository.Update(tender);
-        }
-
 
 
         private void CreateTable(List<Dictionary<String, int>> amountsForEachBloodBank, DateTime fromDate, DateTime toDate, Document document)
@@ -188,10 +183,10 @@ namespace IntegrationLibrary.Core.Service
             List<TenderOffer> toRet = new List<TenderOffer>();
             foreach (Tender tender in _tenderRepository.GetTendersBetweenDates(from, to))
             {
-                if (tender.GetAcceptedOffer() == null)
+                if (_tenderOfferRepository.GetAcceptOffer(tender.Id) == null)
                     continue;
                 
-                toRet.Add(tender.GetAcceptedOffer());
+                toRet.Add(_tenderOfferRepository.GetAcceptOffer(tender.Id));
             }
 
             List<String> bankNames = FindBankNames(toRet);

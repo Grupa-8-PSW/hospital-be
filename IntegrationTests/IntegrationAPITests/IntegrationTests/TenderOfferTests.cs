@@ -33,7 +33,7 @@ namespace IntegrationTests.IntegrationAPITests.IntegrationTests
             return new TenderOfferController(scope.ServiceProvider.GetRequiredService<ITenderOfferService>(), scope.ServiceProvider.GetRequiredService<IBloodBankConnectionService>());
         }
 
-        /*[Fact]
+        [Fact]
         public void CreateTenderOffer()
         {
             // Arrange
@@ -65,9 +65,9 @@ namespace IntegrationTests.IntegrationAPITests.IntegrationTests
             Assert.NotNull(retVal);
             Assert.True(ValidateObjectWritenInBase(dto, createdTenderOffer));
 
-        }*/
+        }
 
-        /*[Fact]
+        [Fact]
         public void ValidateAcceptedTender()
         {
             // Arrange
@@ -85,7 +85,7 @@ namespace IntegrationTests.IntegrationAPITests.IntegrationTests
             //Assert
             Assert.True(ValidateStatusForAllTenders(acceptedTender));
 
-        }*/
+        }
 
         [Fact]
         public void GetOffersForTender()
@@ -107,7 +107,7 @@ namespace IntegrationTests.IntegrationAPITests.IntegrationTests
         }
 
 
-        /*private bool ValidateStatusForAllTenders(TenderOffer acceptedTender)
+        private bool ValidateStatusForAllTenders(TenderOffer acceptedTender)
         {
             using var scope = Factory.Services.CreateScope();
             var service = SetUpTenderOfferService(scope);
@@ -124,9 +124,9 @@ namespace IntegrationTests.IntegrationAPITests.IntegrationTests
 
             return true;
 
-        }*/
+        }
 
-        /*private bool ValidateObjectWritenInBase(TenderOfferDTO dto, TenderOffer retVal)
+        private bool ValidateObjectWritenInBase(TenderOfferDTO dto, TenderOffer retVal)
         {
             if(dto.TenderID.Equals(retVal.TenderID) &&
                 compareLists(dto.BloodAmounts, retVal.Offers) &&
@@ -134,7 +134,7 @@ namespace IntegrationTests.IntegrationAPITests.IntegrationTests
                 return true;
 
             return false;
-        }*/
+        }
 
         private bool compareLists(List<BloodOfferDTO> boDTO, List<BloodOffer> bo)
         {
@@ -205,9 +205,9 @@ namespace IntegrationTests.IntegrationAPITests.IntegrationTests
                 TenderOfferStatus = (int)TenderOfferStatus.WAITING
             };
 
-            controller.CreateTenderOffer(dto, 1);
-            controller.CreateTenderOffer(dto2, 1);
-            controller.CreateTenderOffer(dto3, 2); 
+            controller.CreateTenderOffer(dto);
+            controller.CreateTenderOffer(dto2);
+            controller.CreateTenderOffer(dto3); 
         }
     }
 }
