@@ -3,7 +3,6 @@ using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using IntegrationAPI.ExceptionHandler.Validators;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.DTO;
-using IntegrationLibrary.Core.Service;
 using IntegrationLibrary.Core.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -36,12 +35,6 @@ namespace IntegrationAPI.Controllers
         public ActionResult GetAll()
         {
             return Ok(_bloodBankService.GetAll());
-        }
-
-        [HttpGet("{id}")]
-        public ActionResult GetById(int id)
-        {
-            return Ok(_bloodBankService.GetById(id));
         }
 
         // POST api/bloodBanks

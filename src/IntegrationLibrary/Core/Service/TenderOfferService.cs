@@ -31,32 +31,47 @@ namespace IntegrationLibrary.Core.Service
             _tenderService = tenderService;
         }
 
-        public TenderOffer AcceptTenderOffer(TenderOffer acceptedTenderOffer, int tenderId)
+        public TenderOffer AcceptTenderOffer(TenderOffer acceptedTenderOffer)
         {
             BloodBank bb = _bankService.GetByName(acceptedTenderOffer.BloodBankName);
 
-            Tender tender = _tenderService.GetById(tenderId);
-            tender.Close(acceptedTenderOffer);
-            _tenderService.Update(tender);
-            _emailService.SendSuccessEmail(bb.Email, tenderId, bb.APIKey);
-            foreach(TenderOffer to in tender.TenderOffers)
+            changeStatusForOffers(acceptedTenderOffer);
+            ChangeTenderStatus(acceptedTenderOffer.TenderID);
+
+            _emailService.SendSuccessEmail(bb.Email, acceptedTenderOffer.TenderID, bb.APIKey);
+
+            foreach(TenderOffer to in _repository.GetAll())
             {
-                if (to.TenderOfferStatus == TenderOfferStatus.REJECT)
+                if (to.TenderOfferStatus == TenderOfferStatus.REJECT && to.TenderID.Equals(acceptedTenderOffer.TenderID))
                 {
                     BloodBank bb2 = _bankService.GetByName(acceptedTenderOffer.BloodBankName);
                     _emailService.SendRejectEmail(bb2.Email);
                 }
             }
             return acceptedTenderOffer;
-
         }
 
-        public TenderOffer Create(TenderOffer tenderOffer, int tenderId)
+        public void ChangeTenderStatus(int tenderID)
         {
-            Tender tender = _tenderService.GetById(tenderId);
-            tender.AddOffer(tenderOffer);
-            _tenderService.Update(tender);
-            return tenderOffer;
+            _tenderService.UpdateStatus(tenderID);
+        }
+
+        public void changeStatusForOffers(TenderOffer acceptedTenderOffer)
+        {
+            _repository.UpdateTenderOffer(acceptedTenderOffer);
+            foreach (TenderOffer to in _repository.GetAll())
+            {
+                if (to.TenderOfferStatus == TenderOfferStatus.WAITING && to.TenderID.Equals(acceptedTenderOffer.TenderID))
+                {
+                    to.TenderOfferStatus = TenderOfferStatus.REJECT;
+                    _repository.UpdateTenderOffer(to);
+                }
+            }
+        }
+
+        public TenderOffer Create(TenderOffer tenderOffer)
+        {
+            return _repository.Create(tenderOffer);
         }
 
         public IEnumerable<TenderOffer> GetAll()
@@ -64,14 +79,14 @@ namespace IntegrationLibrary.Core.Service
             return _repository.GetAll();
         }
 
-        public TenderOffer GetAcceptedByTenderId(int tenderID)
+        public TenderOffer GetById(int tenderID)
         {
-            return _tenderService.GetById(tenderID).GetAcceptedOffer();
+            return _repository.GetAcceptedOffer(tenderID);
         }
 
-        public IEnumerable<TenderOffer> GetOffersForTender(int tenderID)
+        public IEnumerable<TenderOffer> getOffersForTender(int tenderID)
         {
-            return _tenderService.GetById(tenderID).TenderOffers;
+            return _repository.GetAllByTennderID(tenderID);
         }
 
     }

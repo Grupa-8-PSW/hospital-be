@@ -11,15 +11,18 @@ namespace IntegrationLibrary.Core.Model
 {
     public class TenderOffer
     {
-        public int Id { get; private set; }
+        public int Id { get; set; }
         [Required]
-        public List<BloodOffer> Offers { get; private set; }
-        public string BloodBankName { get; private set; }
-        public TenderOfferStatus TenderOfferStatus { get; private set; }
+        public int TenderID { get; set; }
+        [Required]
+        public List<BloodOffer> Offers { get; set; }
+        public string BloodBankName { get; set; }
+        public TenderOfferStatus TenderOfferStatus { get; set; }
        
-        public TenderOffer(int id, List<BloodOffer> offers, string bloodBankName, TenderOfferStatus tenderOfferStatus)
+        public TenderOffer(int id, int tenderID, List<BloodOffer> offers, string bloodBankName, TenderOfferStatus tenderOfferStatus)
         {
             Id = id;
+            TenderID = tenderID;
             Offers = offers;
             BloodBankName = bloodBankName;
             TenderOfferStatus = tenderOfferStatus;
@@ -27,16 +30,6 @@ namespace IntegrationLibrary.Core.Model
 
         public TenderOffer()
         {
-        }
-
-        internal void Reject()
-        {
-            TenderOfferStatus = TenderOfferStatus.REJECT;
-        }
-
-        internal void Accept()
-        {
-            TenderOfferStatus = TenderOfferStatus.APPROVE;
         }
     }
 }
