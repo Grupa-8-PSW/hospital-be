@@ -1,6 +1,11 @@
-﻿using HospitalLibrary.Core.Model.ValueObjects;
+﻿using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.ValueObjects;
+using HospitalLibrary.Core.Repository;
 using HospitalLibrary.GraphicalEditor.Model;
+using HospitalLibrary.GraphicalEditor.Model.Map;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
+using HospitalLibrary.GraphicalEditor.Service;
 using Moq;
 using Shouldly;
 
@@ -8,28 +13,22 @@ namespace HospitalTests.HospitalLibraryTests
 {
     public class RoomTests
     {
-        /*
-        [Fact]
-        public void Check_availability_type()
-        {
-            var room = new Room();
-
-            var from = new DateTime(2022, 12, 10, 16, 30, 0, DateTimeKind.Utc);
-            var to = new DateTime(2022, 12, 20, 20, 15, 0, DateTimeKind.Utc);
-            int duration = 120;
-
-            var interval = room.GetAvailableIntervals(from, to, duration);
-
-            interval.ShouldBeOfType<List<DateRange>>();
-        }
 
         [Fact]
         public void Finds_available_intervals()
         {
-            var stubRepository = new Mock<IRoomRepository>();
-            //var stubEqipment = new Mock<IExaminationRepository>();
+            var stubRoom = new Mock<IRoomRepository>();
+            var stubExamination = new Mock<IExaminationRepository>();
+            var stubEquipmant = new Mock<IEquipmentRepository>();
+            var stubRenovation = new Mock<IRenovationRepository>();
 
             var rooms = new List<Room>();
+            var examinations = new List<Examination>();
+
+            var room1 = new Room(1, RoomType.OPERATIONS, "101", "Neurohirurgija", new MapRoom(), 1, new Floor());
+            var room2 = new Room(2, RoomType.CAFETERIA, "102", "Kafeterija", new MapRoom(), 1, new Floor());
+            rooms.Add(room1);
+            rooms.Add(room2);
 
             var from1 = new DateTime(2022, 12, 10, 1, 0, 0, DateTimeKind.Utc);
             var to1 = new DateTime(2022, 12, 10, 2, 30, 0, DateTimeKind.Utc);
@@ -39,21 +38,14 @@ namespace HospitalTests.HospitalLibraryTests
             var to2 = new DateTime(2022, 12, 11, 18, 0, 0, DateTimeKind.Utc);
             var transfer2 = new EquipmentTransfer(1, 20, 1, 2, from1, to1, 120, "test");
 
-            var room1 = new Room();
-            room1.Transfers = new List<EquipmentTransfer>();
-            room1.Transfers.Add(transfer1);
-            room1.Transfers.Add(transfer2);
+            stubRoom.Setup(r => r.GetAll()).Returns(rooms);
+            stubExamination.Setup(e => e.GetAll()).Returns(examinations);
 
-            rooms.Add(room1);
-
-            stubRepository.Setup(r => r.GetAll()).Returns(rooms);
-
-            //RoomService service = new(stubRepository.Object, stubEqipment.Object);
-
-            List<DateRange> available = room1.GetAvailableIntervals(new DateTime(2022, 12, 11, 4, 0, 0, DateTimeKind.Utc), new DateTime(2022, 12, 12, 4, 0, 0, DateTimeKind.Utc), 90);
+            RoomService service = new RoomService(stubRoom.Object, stubExamination.Object, stubEquipmant.Object, stubRenovation.Object);
+            List<DateRange> available = service.GetAvailableIntervals(1, 2, new DateTime(2022, 12, 11, 4, 0, 0, DateTimeKind.Utc), new DateTime(2022, 12, 12, 4, 0, 0, DateTimeKind.Utc), 90);
 
             available.ShouldNotBeNull();
         }
-        */
+        
     }
 }
