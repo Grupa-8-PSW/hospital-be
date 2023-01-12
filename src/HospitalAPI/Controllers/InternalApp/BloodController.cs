@@ -127,5 +127,33 @@ namespace HospitalAPI.Controllers.InternalApp
             return Ok(bloodList);
         }
 
+        [HttpGet("{year}/{bloodType}")]
+        public ActionResult GetBloodPerMonth(int year,string bloodType) 
+        {
+            List<double> bloodPerMonth = _bloodService.GetBloodPerMonth(year, bloodType);
+            if(bloodPerMonth == null)
+            {
+                return BadRequest(ModelState);
+            }
+            else
+            {
+                return Ok(bloodPerMonth);
+            }
+        }
+
+        [HttpGet("money/{year}")]
+        public ActionResult GetBloodPerMonth(int year)
+        {
+            List<double> moneyPerMonth = _bloodService.GetMoneyPerMonth(year);
+            if (moneyPerMonth == null)
+            {
+                return BadRequest(ModelState);
+            }
+            else
+            {
+                return Ok(moneyPerMonth);
+            }
+        }
+
     }
 }

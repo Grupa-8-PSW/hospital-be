@@ -53,5 +53,19 @@ namespace IntegrationAPI.Controllers
             _connectionService.SendTenderOffer(APIKey, tenderId);
             return Ok();
         }
+
+        [HttpGet("{year}/{bloodType}")]
+        public ActionResult GetBloodPerMonth(int year, string bloodType)
+        {
+            List<double> bloodAmountPerMonth = _tenderOfferService.GetBloodPerMonth(year, bloodType);
+            return Ok(bloodAmountPerMonth);
+        }
+
+        [HttpGet("{year}")]
+        public ActionResult GetMoneyPerMonth(int year)
+        {
+            List<decimal> bloodAmountPerMonth = _tenderOfferService.GetMoneyPerMonth(year);
+            return Ok(bloodAmountPerMonth);
+        }
     }
 }

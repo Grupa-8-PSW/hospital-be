@@ -11,7 +11,7 @@ namespace HospitalAPI
             using var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;
 
-           // await AppIdentityDbContextSeed.SeedAsync(services);
+           await AppIdentityDbContextSeed.SeedAsync(services);
 
             host.Run();
         }

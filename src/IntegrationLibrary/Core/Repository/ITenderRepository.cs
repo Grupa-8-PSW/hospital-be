@@ -15,5 +15,7 @@ namespace IntegrationLibrary.Core.Repository
         void Delete(Tender tender);
         void Update(Tender tender);
         IEnumerable<Tender> GetActiveTenders();
+
+        List<Tender> GetTendersByYear(int year);
     }
 }

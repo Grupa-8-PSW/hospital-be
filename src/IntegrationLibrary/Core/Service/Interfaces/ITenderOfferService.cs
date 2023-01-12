@@ -15,5 +15,8 @@ namespace IntegrationLibrary.Core.Service.Interfaces
         TenderOffer GetById(int tenderID);
         IEnumerable<TenderOffer> getOffersForTender(int tenderID);
         public void changeStatusForOffers(TenderOffer acceptedTenderOffer);
+        List<double> GetBloodPerMonth(int year, string bloodType);
+
+        List<decimal> GetMoneyPerMonth(int year);
     }
 }

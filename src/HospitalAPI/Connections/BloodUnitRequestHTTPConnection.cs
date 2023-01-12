@@ -21,7 +21,7 @@ namespace HospitalAPI.Connections
         public BloodUnitRequestDTO CreateBloodUnitRequestIntegration(BloodUnitRequestDTO dto)
         {
             var client = new RestClient("https://localhost:7131/");
-            var request = new RestRequest("api/BloodUnitRequest");
+            var request = new RestRequest("api/TenderOffer");
 
 
             request.AddJsonBody(dto);

@@ -51,5 +51,11 @@ namespace IntegrationLibrary.Core.Repository
         {
             return _context.Tenders.Where(p => p.Status.Equals(TenderStatus.Active));
         }
+
+        public List<Tender> GetTendersByYear(int year) 
+        {
+            var result =  _context.Tenders.Where(p =>p.DateRange.Start.Year == year && p.DateRange.End.Year == year).ToList();
+            return result;
+        }
     }
 }

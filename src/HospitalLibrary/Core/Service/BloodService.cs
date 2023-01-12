@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RestSharp;
+using Org.BouncyCastle.Asn1.Ocsp;
+using System.Text.Json;
 
 namespace HospitalLibrary.Core.Service
 {
@@ -48,6 +51,28 @@ namespace HospitalLibrary.Core.Service
             Blood oldBlood = _bloodRepo.GetByBloodType(blood.Type);
             blood.Quantity = oldBlood.Quantity + blood.Quantity;
             _bloodRepo.RestockBlood(blood);
+        }
+
+        public List<double> GetBloodPerMonth(int year, string bloodType)
+        {
+            using (var client = new HttpClient())
+            {
+                var endpoint = new Uri($"https://localhost:7131/api/TenderOffer/{year}/{bloodType}");
+                var result = client.GetAsync(endpoint).Result;
+                var json = result.Content.ReadAsStringAsync().Result;
+                return JsonSerializer.Deserialize<List<double>>(json);
+            }
+        }
+
+        public List<double> GetMoneyPerMonth(int year)
+        {
+            using (var client = new HttpClient())
+            {
+                var endpoint = new Uri($"https://localhost:7131/api/TenderOffer/{year}");
+                var result = client.GetAsync(endpoint).Result;
+                var json = result.Content.ReadAsStringAsync().Result;
+                return JsonSerializer.Deserialize<List<double>>(json);
+            }
         }
     }
 }

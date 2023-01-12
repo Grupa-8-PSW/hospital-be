@@ -1,9 +1,11 @@
 ﻿using HospitalLibrary.Core.Model;
 using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Model.ValueObject;
 using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,13 +20,15 @@ namespace IntegrationLibrary.Core.Service
         private readonly IEmailService _emailService;
         private readonly IBloodBankService _bankService;
         private readonly ITenderService _tenderService;
+        private readonly ITenderRepository _tenderRepository;
 
-        public TenderOfferService(ITenderOfferRepository repo, IEmailService emailService, IBloodBankService bankService, ITenderService tenderService)
+        public TenderOfferService(ITenderOfferRepository repo,ITenderRepository tenderRepository, IEmailService emailService, IBloodBankService bankService, ITenderService tenderService)
         {
             _repository = repo;
             _emailService = emailService;
             _bankService = bankService;
             _tenderService = tenderService;
+            _tenderRepository = tenderRepository;
         }
 
         public TenderOffer AcceptTenderOffer(TenderOffer acceptedTenderOffer)
@@ -83,6 +87,74 @@ namespace IntegrationLibrary.Core.Service
         public IEnumerable<TenderOffer> getOffersForTender(int tenderID)
         {
             return _repository.GetAllByTennderID(tenderID);
+        }
+
+        public List<double> GetBloodPerMonth(int year, string bloodType)
+        {
+            var tenders = _tenderRepository.GetTendersByYear(year);
+            List<TenderOffer> tenderOffers = new List<TenderOffer>();
+            foreach (Tender tender in tenders)
+            {
+                tenderOffers.Add(_repository.GetAcceptedOffer(tender.Id));
+
+            }
+            List<double> bloodPerMonth = new List<double>();
+            for (int i = 0; i < 12; i++)
+            {
+                bloodPerMonth.Add(0);
+            }
+            foreach(TenderOffer tOffer in tenderOffers)
+            {
+                foreach(BloodOffer bloodOffer in tOffer.Offers)
+                {
+                    if(bloodType == bloodOffer.BloodType)
+                    {
+                        foreach(Tender tender in tenders)
+                        {
+                            if(tOffer.TenderID == tender.Id)
+                            {
+                                bloodPerMonth[tender.DateRange.End.Month-1] += bloodOffer.BloodAmount;
+                            }
+                        }
+                        
+                    }
+                }
+            }
+            
+            return bloodPerMonth;
+        }
+
+        public List<decimal> GetMoneyPerMonth(int year)
+        {
+            var tenders = _tenderRepository.GetTendersByYear(year);
+            List<TenderOffer> tenderOffers = new List<TenderOffer>();
+            foreach (Tender tender in tenders)
+            {
+                tenderOffers.Add(_repository.GetAcceptedOffer(tender.Id));
+
+            }
+            List<decimal> moneyPerMonth = new List<decimal>();
+            for (int i = 0; i < 12; i++)
+            {
+                moneyPerMonth.Add(0);
+            }
+            foreach (TenderOffer tOffer in tenderOffers)
+            {
+                foreach (BloodOffer bloodOffer in tOffer.Offers)
+                {
+
+                        foreach (Tender tender in tenders)
+                        {
+                            if (tOffer.TenderID == tender.Id)
+                            {
+                                moneyPerMonth[tender.DateRange.End.Month - 1] += (Decimal)bloodOffer.Price.Amount;
+                            }
+                        }
+
+                }
+            }
+
+            return moneyPerMonth;
         }
     }
 }
