@@ -14,11 +14,9 @@ namespace IntegrationAPI.Controllers
     {
 
         private readonly ITenderService _service;
-        private readonly ITenderRoot tenderRoot;
-        public TenderController(ITenderService service, ITenderRoot tenderRoot)
+        public TenderController(ITenderService service)
         {
             this._service = service;
-            this.tenderRoot = tenderRoot;
         }
 
         // POST: TenderController/Create
@@ -48,7 +46,7 @@ namespace IntegrationAPI.Controllers
         [Route("getAllBloodAmountsBetweenDates")]
         public List<Dictionary<string, int>> GetAllBloodAmountsBetweenDates(DateTime from, DateTime to)
         {
-            return tenderRoot.GetBloodAmountsBetweenDates(from, to);
+            return _service.GetBloodAmountsBetweenDates(from, to);
         }
 
         [Route("getTenderStatisticPDF")]
