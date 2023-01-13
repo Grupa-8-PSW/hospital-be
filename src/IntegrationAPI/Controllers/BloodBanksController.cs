@@ -46,7 +46,7 @@ namespace IntegrationAPI.Controllers
             string password = _credentialGenerator.GeneratePassword();
             string api = _credentialGenerator.GenerateAPI();
 
-            BloodBank bloodBank = new BloodBank(bloodBankDTO.Name, bloodBankDTO.Email, bloodBankDTO.ServerAddress, password, api);
+            BloodBank bloodBank = new BloodBank(bloodBankDTO.Name, bloodBankDTO.Email, bloodBankDTO.ServerAddress, password, api, "https://firebasestorage.googleapis.com/v0/b/isapsw-6ef61.appspot.com/o/hospital%20images%2Fhospital1.jpg?alt=media&token=db040d31-6fb8-4615-a875-3ff3f4aa78f5");
 
             _bloodBankService.Create(bloodBank);
             _emailService.SendEmail(bloodBank.Email, bloodBank.Password, bloodBank.APIKey);

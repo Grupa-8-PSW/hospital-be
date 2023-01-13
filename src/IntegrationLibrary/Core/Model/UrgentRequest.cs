@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,6 +19,13 @@ namespace IntegrationLibrary.Core.Model
         {
             BloodBankId = bloodBankId;
             Blood = blood;
+            ObtainedDate = obtainedDate;
+        }
+
+        public UrgentRequest(int id, int bloodBankId, DateTime obtainedDate)
+        {
+            Id = id;
+            BloodBankId = bloodBankId;
             ObtainedDate = obtainedDate;
         }
 
