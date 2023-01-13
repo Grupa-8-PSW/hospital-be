@@ -18,7 +18,7 @@ namespace HospitalAPI.Controllers.Map
         [HttpGet("type")]
         public IActionResult CreateSessionStartedEvent()
         {
-            _scheduleRenovation.Create(new RenovationSchedulingSession());
+            //_scheduleRenovation.Create(new RenovationSchedulingSession());
             return Ok();
         }
 

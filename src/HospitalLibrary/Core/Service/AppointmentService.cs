@@ -50,6 +50,11 @@ namespace HospitalLibrary.Core.Service
             return ApplyAppointmentPriority(dateRange, doctorId, priority);
         }
 
+        public AppointmentStatistic GetStatistic()
+        {
+            throw new NotImplementedException();
+        }
+
         private List<AvailableAppointments> ApplyAppointmentPriority(DateRange dateRange, int doctorId, AppointmentPriority priority)
         {
             var availableAppointments = new List<AvailableAppointments>();

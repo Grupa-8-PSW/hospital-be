@@ -2,7 +2,7 @@
 {
     public class DurationSelected : DomainEvent
     {
-        public DurationSelected(int aggregateId) : base(aggregateId)
+        public DurationSelected(DateTime timestamp) : base(timestamp)
         {
         }
     }

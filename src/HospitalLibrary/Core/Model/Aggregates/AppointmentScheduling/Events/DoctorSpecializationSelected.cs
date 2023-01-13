@@ -10,7 +10,7 @@ namespace HospitalLibrary.Core.Model.Aggregates.AppointmentScheduling.Events
 {
     public class DoctorSpecializationSelected : DomainEvent
     {
-        public DoctorSpecializationSelected(int id, DoctorSpecialization doctorSpecialization) : base(id)
+        public DoctorSpecializationSelected(DateTime timestamp, DoctorSpecialization doctorSpecialization) : base(timestamp)
         {
             DoctorSpecialization = doctorSpecialization;
         }
