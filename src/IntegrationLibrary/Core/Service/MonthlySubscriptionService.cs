@@ -61,7 +61,7 @@ public class MonthlySubscriptionService : IMonthlySubscriptionService
             }
         }else
         {
-            emailService.SendRejectMonthlyDeliveryEmail(monthlySubscription.DeliveryDate.ToString()); ;
+            emailService.SendRejectMonthlyDeliveryEmail(monthlySubscription.DeliveryDate.ToString());
         }
         SetNextDeliveryDate(monthlySubscription);
         return bloodDTOs;
