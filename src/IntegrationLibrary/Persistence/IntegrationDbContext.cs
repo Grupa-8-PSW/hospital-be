@@ -1,4 +1,6 @@
-﻿using IntegrationLibrary.Core.Model;
+﻿using HospitalLibrary.Core.Enums;
+using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Model.ValueObject;
 using IntegrationLibrary.Persistence.DataSeed;
 using Microsoft.EntityFrameworkCore;
 using MimeKit;
@@ -27,10 +29,10 @@ namespace IntegrationLibrary.Persistence
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<BloodBank>().HasData(
-                new BloodBank() { Id = 1, Email = "test@test.com", Name = "Banka 1", ServerAddress = "http://localhost:8081/", APIKey="123", MonthlySubscriptionRoutingKey= "monthlySubscriptions29"},
-                new BloodBank() { Id = 2, Email = "test@test.com", Name = "Banka 2", ServerAddress = "http://localhost:8082/", APIKey = "321", MonthlySubscriptionRoutingKey = "monthlySubscriptions30" },
-                new BloodBank() { Id = 3, Email = "test@test.com", Name = "Banka 3", ServerAddress = "http://localhost:8083/", APIKey = "213", MonthlySubscriptionRoutingKey = "monthlySubscriptions31" },
-                new BloodBank() { Id = 4, Email = "test@test.com", Name = "Banka 4", ServerAddress = "http://localhost:8084/", APIKey = "231", MonthlySubscriptionRoutingKey = "monthlySubscriptions32" }
+                new BloodBank() { Id = 1, Email = "nbloodbank@mail.com", Name = "National blood bank", ServerAddress = "http://localhost:8081/", APIKey="123", MonthlySubscriptionRoutingKey= "monthlySubscriptions29", Image= "https://firebasestorage.googleapis.com/v0/b/isapsw-6ef61.appspot.com/o/hospital%20images%2Fhospital2.jpg?alt=media&token=86e5b815-e371-4b88-9411-fc5e6cc179df" },
+                new BloodBank() { Id = 2, Email = "bloodsource@mail.com", Name = "BloodSource", ServerAddress = "http://localhost:8082/", APIKey = "321", MonthlySubscriptionRoutingKey = "monthlySubscriptions30", Image= "https://firebasestorage.googleapis.com/v0/b/isapsw-6ef61.appspot.com/o/hospital%20images%2Fhospital3.jpg?alt=media&token=522f1c18-ae7f-494b-b696-091fac455630" },
+                new BloodBank() { Id = 3, Email = "bloodalliance@mail.com", Name = "The Blood Alliance", ServerAddress = "http://localhost:8083/", APIKey = "213", MonthlySubscriptionRoutingKey = "monthlySubscriptions31", Image= "https://firebasestorage.googleapis.com/v0/b/isapsw-6ef61.appspot.com/o/hospital%20images%2Fhospital4.jpg?alt=media&token=415ce5f8-c22d-4090-9ee2-3960d10a2b25" },
+                new BloodBank() { Id = 4, Email = "fingercross@mail.com", Name = "Finger cross", ServerAddress = "http://localhost:8084/", APIKey = "231", MonthlySubscriptionRoutingKey = "monthlySubscriptions32", Image= "https://firebasestorage.googleapis.com/v0/b/isapsw-6ef61.appspot.com/o/hospital%20images%2Fhospital1.jpg?alt=media&token=db040d31-6fb8-4615-a875-3ff3f4aa78f5" }
             );
 
             modelBuilder.Entity<TenderOffer>()
@@ -53,6 +55,7 @@ namespace IntegrationLibrary.Persistence
             modelBuilder.Entity<MonthlySubscription>()
                 .Property(b => b.RequestedBlood)
                 .HasColumnType("jsonb");
+
 
             modelBuilder.SeedBloodBankNews();
 

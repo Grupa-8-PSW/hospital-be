@@ -25,6 +25,292 @@ namespace IntegrationLibrary.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("ConsiliumDoctor", b =>
+                {
+                    b.Property<int>("ConsiliumsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("DoctorsId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ConsiliumsId", "DoctorsId");
+
+                    b.HasIndex("DoctorsId");
+
+                    b.ToTable("ConsiliumDoctor");
+                });
+
+            modelBuilder.Entity("FloorRoom", b =>
+                {
+                    b.Property<int>("FloorsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RoomsId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("FloorsId", "RoomsId");
+
+                    b.HasIndex("RoomsId");
+
+                    b.ToTable("FloorRoom");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Bed", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Available")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Bed");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Consilium", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Consilium");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("EndWork")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Specialization")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("StartWork")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Doctor");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Building", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Height")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Width")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("X")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Y")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Building");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Floor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BuildingId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Height")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Number")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Width")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("X")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Y")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BuildingId");
+
+                    b.ToTable("Floor");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Map.MapBuilding", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BuildingId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Height")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Width")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("X")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Y")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BuildingId")
+                        .IsUnique();
+
+                    b.ToTable("MapBuilding");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Map.MapFloor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("FloorId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Height")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Width")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("X")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Y")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FloorId")
+                        .IsUnique();
+
+                    b.ToTable("MapFloor");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Room", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("FloorId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Height")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Width")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("X")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Y")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Room");
+                });
+
             modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodBank", b =>
                 {
                     b.Property<int>("Id")
@@ -38,6 +324,10 @@ namespace IntegrationLibrary.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -66,9 +356,10 @@ namespace IntegrationLibrary.Migrations
                         {
                             Id = 1,
                             APIKey = "123",
-                            Email = "test@test.com",
+                            Email = "nbloodbank@mail.com",
+                            Image = "https://firebasestorage.googleapis.com/v0/b/isapsw-6ef61.appspot.com/o/hospital%20images%2Fhospital2.jpg?alt=media&token=86e5b815-e371-4b88-9411-fc5e6cc179df",
                             MonthlySubscriptionRoutingKey = "monthlySubscriptions29",
-                            Name = "Banka 1",
+                            Name = "National blood bank",
                             Password = "unknown",
                             ServerAddress = "http://localhost:8081/"
                         },
@@ -76,9 +367,10 @@ namespace IntegrationLibrary.Migrations
                         {
                             Id = 2,
                             APIKey = "321",
-                            Email = "test@test.com",
+                            Email = "bloodsource@mail.com",
+                            Image = "https://firebasestorage.googleapis.com/v0/b/isapsw-6ef61.appspot.com/o/hospital%20images%2Fhospital3.jpg?alt=media&token=522f1c18-ae7f-494b-b696-091fac455630",
                             MonthlySubscriptionRoutingKey = "monthlySubscriptions30",
-                            Name = "Banka 2",
+                            Name = "BloodSource",
                             Password = "unknown",
                             ServerAddress = "http://localhost:8082/"
                         },
@@ -86,9 +378,10 @@ namespace IntegrationLibrary.Migrations
                         {
                             Id = 3,
                             APIKey = "213",
-                            Email = "test@test.com",
+                            Email = "bloodalliance@mail.com",
+                            Image = "https://firebasestorage.googleapis.com/v0/b/isapsw-6ef61.appspot.com/o/hospital%20images%2Fhospital4.jpg?alt=media&token=415ce5f8-c22d-4090-9ee2-3960d10a2b25",
                             MonthlySubscriptionRoutingKey = "monthlySubscriptions31",
-                            Name = "Banka 3",
+                            Name = "The Blood Alliance",
                             Password = "unknown",
                             ServerAddress = "http://localhost:8083/"
                         },
@@ -96,9 +389,10 @@ namespace IntegrationLibrary.Migrations
                         {
                             Id = 4,
                             APIKey = "231",
-                            Email = "test@test.com",
+                            Email = "fingercross@mail.com",
+                            Image = "https://firebasestorage.googleapis.com/v0/b/isapsw-6ef61.appspot.com/o/hospital%20images%2Fhospital1.jpg?alt=media&token=db040d31-6fb8-4615-a875-3ff3f4aa78f5",
                             MonthlySubscriptionRoutingKey = "monthlySubscriptions32",
-                            Name = "Banka 4",
+                            Name = "Finger cross",
                             Password = "unknown",
                             ServerAddress = "http://localhost:8084/"
                         });
@@ -204,6 +498,57 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("BloodRequestDelivery");
                 });
 
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodUnitRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AmountL")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ManagerComment")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.ToTable("BloodUnitRequest");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AmountL = 20,
+                            CreationDate = new DateTime(2023, 1, 5, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            DoctorId = 1,
+                            ManagerComment = "",
+                            Reason = "Blood needed",
+                            Status = 2,
+                            Type = 2
+                        });
+                });
+
             modelBuilder.Entity("IntegrationLibrary.Core.Model.MonthlySubscription", b =>
                 {
                     b.Property<int>("Id")
@@ -306,6 +651,114 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("UrgentRequest");
                 });
 
+            modelBuilder.Entity("ConsiliumDoctor", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Consilium", null)
+                        .WithMany()
+                        .HasForeignKey("ConsiliumsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HospitalLibrary.Core.Model.Doctor", null)
+                        .WithMany()
+                        .HasForeignKey("DoctorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FloorRoom", b =>
+                {
+                    b.HasOne("HospitalLibrary.GraphicalEditor.Model.Floor", null)
+                        .WithMany()
+                        .HasForeignKey("FloorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HospitalLibrary.GraphicalEditor.Model.Room", null)
+                        .WithMany()
+                        .HasForeignKey("RoomsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Bed", b =>
+                {
+                    b.HasOne("HospitalLibrary.GraphicalEditor.Model.Room", null)
+                        .WithMany("Beds")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Consilium", b =>
+                {
+                    b.OwnsOne("HospitalLibrary.Core.Model.ValueObjects.DateRange", "Interval", b1 =>
+                        {
+                            b1.Property<int>("ConsiliumId")
+                                .HasColumnType("integer");
+
+                            b1.Property<DateTime>("From")
+                                .HasColumnType("timestamp with time zone");
+
+                            b1.Property<DateTime>("To")
+                                .HasColumnType("timestamp with time zone");
+
+                            b1.HasKey("ConsiliumId");
+
+                            b1.ToTable("Consilium");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ConsiliumId");
+                        });
+
+                    b.Navigation("Interval")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
+                {
+                    b.HasOne("HospitalLibrary.GraphicalEditor.Model.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Floor", b =>
+                {
+                    b.HasOne("HospitalLibrary.GraphicalEditor.Model.Building", "Building")
+                        .WithMany("Floors")
+                        .HasForeignKey("BuildingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Building");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Map.MapBuilding", b =>
+                {
+                    b.HasOne("HospitalLibrary.GraphicalEditor.Model.Building", "Building")
+                        .WithOne("Map")
+                        .HasForeignKey("HospitalLibrary.GraphicalEditor.Model.Map.MapBuilding", "BuildingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Building");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Map.MapFloor", b =>
+                {
+                    b.HasOne("HospitalLibrary.GraphicalEditor.Model.Floor", "Floor")
+                        .WithOne("Map")
+                        .HasForeignKey("HospitalLibrary.GraphicalEditor.Model.Map.MapFloor", "FloorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Floor");
+                });
+
             modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodBankNews", b =>
                 {
                     b.HasOne("IntegrationLibrary.Core.Model.BloodBank", "BloodBank")
@@ -328,6 +781,17 @@ namespace IntegrationLibrary.Migrations
                     b.Navigation("BloodBank");
                 });
 
+            modelBuilder.Entity("IntegrationLibrary.Core.Model.BloodUnitRequest", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+                });
+
             modelBuilder.Entity("IntegrationLibrary.Core.Model.MonthlySubscription", b =>
                 {
                     b.HasOne("IntegrationLibrary.Core.Model.BloodBank", "Bank")
@@ -337,6 +801,25 @@ namespace IntegrationLibrary.Migrations
                         .IsRequired();
 
                     b.Navigation("Bank");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Building", b =>
+                {
+                    b.Navigation("Floors");
+
+                    b.Navigation("Map")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Floor", b =>
+                {
+                    b.Navigation("Map")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Room", b =>
+                {
+                    b.Navigation("Beds");
                 });
 #pragma warning restore 612, 618
         }

@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
-    public partial class bloodRequestDelivery : Migration
+    public partial class migracijaD : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -24,6 +24,7 @@ namespace IntegrationLibrary.Migrations
                     ServerAddress = table.Column<string>(type: "text", nullable: false),
                     Password = table.Column<string>(type: "text", nullable: false),
                     APIKey = table.Column<string>(type: "text", nullable: false),
+                    Image = table.Column<string>(type: "text", nullable: false),
                     MonthlySubscriptionRoutingKey = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
@@ -163,13 +164,13 @@ namespace IntegrationLibrary.Migrations
 
             migrationBuilder.InsertData(
                 table: "BloodBanks",
-                columns: new[] { "Id", "APIKey", "Email", "MonthlySubscriptionRoutingKey", "Name", "Password", "ServerAddress" },
+                columns: new[] { "Id", "APIKey", "Email", "Image", "MonthlySubscriptionRoutingKey", "Name", "Password", "ServerAddress" },
                 values: new object[,]
                 {
-                    { 1, "123", "test@test.com", "monthlySubscriptions29", "Banka 1", "unknown", "http://localhost:8081/" },
-                    { 2, "321", "test@test.com", "monthlySubscriptions30", "Banka 2", "unknown", "http://localhost:8082/" },
-                    { 3, "213", "test@test.com", "monthlySubscriptions31", "Banka 3", "unknown", "http://localhost:8083/" },
-                    { 4, "231", "test@test.com", "monthlySubscriptions32", "Banka 4", "unknown", "http://localhost:8084/" }
+                    { 1, "123", "test@test.com", "https://firebasestorage.googleapis.com/v0/b/isapsw-6ef61.appspot.com/o/hospital%20images%2Fhospital2.jpg?alt=media&token=86e5b815-e371-4b88-9411-fc5e6cc179df", "monthlySubscriptions29", "Banka 1", "unknown", "http://localhost:8081/" },
+                    { 2, "321", "test@test.com", "https://firebasestorage.googleapis.com/v0/b/isapsw-6ef61.appspot.com/o/hospital%20images%2Fhospital3.jpg?alt=media&token=522f1c18-ae7f-494b-b696-091fac455630", "monthlySubscriptions30", "Banka 2", "unknown", "http://localhost:8082/" },
+                    { 3, "213", "test@test.com", "https://firebasestorage.googleapis.com/v0/b/isapsw-6ef61.appspot.com/o/hospital%20images%2Fhospital4.jpg?alt=media&token=415ce5f8-c22d-4090-9ee2-3960d10a2b25", "monthlySubscriptions31", "Banka 3", "unknown", "http://localhost:8083/" },
+                    { 4, "231", "test@test.com", "https://firebasestorage.googleapis.com/v0/b/isapsw-6ef61.appspot.com/o/hospital%20images%2Fhospital1.jpg?alt=media&token=db040d31-6fb8-4615-a875-3ff3f4aa78f5", "monthlySubscriptions32", "Banka 4", "unknown", "http://localhost:8084/" }
                 });
 
             migrationBuilder.InsertData(

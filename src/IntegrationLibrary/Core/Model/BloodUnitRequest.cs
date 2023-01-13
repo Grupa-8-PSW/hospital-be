@@ -44,6 +44,20 @@ namespace IntegrationLibrary.Core.Model
             DoctorId = doctorId;
             Doctor = doctor;
         }
+
+        public BloodUnitRequest(int id, BloodType type, int amountL, string reason, DateTime creationDate,
+    BloodUnitRequestStatus status, string managerComment, int doctorId)
+        {
+            Id = id;
+            Type = type;
+            AmountL = amountL;
+            Reason = reason;
+            CreationDate = creationDate;
+            Status = status;
+            ManagerComment = managerComment;
+            DoctorId = doctorId;
+
+        }
     }
 }
 

@@ -58,7 +58,7 @@ namespace IntegrationAPI.Controllers
             s.Add("AB+", 145);
             s.Add("B-", 121);
             s.Add("AB-", 130);
-            s.Add("Dr David Alba", 683);
+            s.Add("National Blood Bank", 683);
             ret.Add(s);
 
             Dictionary<string, int> s2 = new Dictionary<string, int>();
@@ -67,7 +67,7 @@ namespace IntegrationAPI.Controllers
             s2.Add("AB-", 115);
             s2.Add("0-", 141);
             s2.Add("AB+", 131);
-            s2.Add("UKC Kragujevac", 565);
+            s2.Add("Finger cross", 565);
             ret.Add(s2);
 
             Dictionary<string, int> s3 = new Dictionary<string, int>();
@@ -75,7 +75,7 @@ namespace IntegrationAPI.Controllers
             s3.Add("AB-", 64);
             s3.Add("0-", 31);
             s3.Add("0+", 21);
-            s3.Add("ZTK Vojvodina", 192);
+            s3.Add("BloodSource", 192);
             ret.Add(s3);
 
            

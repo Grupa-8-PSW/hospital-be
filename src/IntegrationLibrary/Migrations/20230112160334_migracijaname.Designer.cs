@@ -15,8 +15,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221222005406_bloodRequestDelivery")]
-    partial class bloodRequestDelivery
+    [Migration("20230112160334_migracijaname")]
+    partial class migracijaname
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,6 +40,10 @@ namespace IntegrationLibrary.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -68,9 +72,10 @@ namespace IntegrationLibrary.Migrations
                         {
                             Id = 1,
                             APIKey = "123",
-                            Email = "test@test.com",
+                            Email = "nbloodbank@mail.com",
+                            Image = "https://firebasestorage.googleapis.com/v0/b/isapsw-6ef61.appspot.com/o/hospital%20images%2Fhospital2.jpg?alt=media&token=86e5b815-e371-4b88-9411-fc5e6cc179df",
                             MonthlySubscriptionRoutingKey = "monthlySubscriptions29",
-                            Name = "Banka 1",
+                            Name = "National blood bank",
                             Password = "unknown",
                             ServerAddress = "http://localhost:8081/"
                         },
@@ -78,9 +83,10 @@ namespace IntegrationLibrary.Migrations
                         {
                             Id = 2,
                             APIKey = "321",
-                            Email = "test@test.com",
+                            Email = "bloodsource@mail.com",
+                            Image = "https://firebasestorage.googleapis.com/v0/b/isapsw-6ef61.appspot.com/o/hospital%20images%2Fhospital3.jpg?alt=media&token=522f1c18-ae7f-494b-b696-091fac455630",
                             MonthlySubscriptionRoutingKey = "monthlySubscriptions30",
-                            Name = "Banka 2",
+                            Name = "BloodSource",
                             Password = "unknown",
                             ServerAddress = "http://localhost:8082/"
                         },
@@ -88,9 +94,10 @@ namespace IntegrationLibrary.Migrations
                         {
                             Id = 3,
                             APIKey = "213",
-                            Email = "test@test.com",
+                            Email = "bloodalliance@mail.com",
+                            Image = "https://firebasestorage.googleapis.com/v0/b/isapsw-6ef61.appspot.com/o/hospital%20images%2Fhospital4.jpg?alt=media&token=415ce5f8-c22d-4090-9ee2-3960d10a2b25",
                             MonthlySubscriptionRoutingKey = "monthlySubscriptions31",
-                            Name = "Banka 3",
+                            Name = "The Blood Alliance",
                             Password = "unknown",
                             ServerAddress = "http://localhost:8083/"
                         },
@@ -98,9 +105,10 @@ namespace IntegrationLibrary.Migrations
                         {
                             Id = 4,
                             APIKey = "231",
-                            Email = "test@test.com",
+                            Email = "fingercross@mail.com",
+                            Image = "https://firebasestorage.googleapis.com/v0/b/isapsw-6ef61.appspot.com/o/hospital%20images%2Fhospital1.jpg?alt=media&token=db040d31-6fb8-4615-a875-3ff3f4aa78f5",
                             MonthlySubscriptionRoutingKey = "monthlySubscriptions32",
-                            Name = "Banka 4",
+                            Name = "Finger cross",
                             Password = "unknown",
                             ServerAddress = "http://localhost:8084/"
                         });

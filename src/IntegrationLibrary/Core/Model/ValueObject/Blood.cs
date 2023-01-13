@@ -12,7 +12,7 @@ namespace IntegrationLibrary.Core.Model.ValueObject
 {
     public class Blood : ValueObject<Blood>
     {
-        public BloodType BloodType { get; }
+        public BloodType BloodType { get; set; }
 
         public int Quantity { get; set; }
 
@@ -46,5 +46,6 @@ namespace IntegrationLibrary.Core.Model.ValueObject
                 return hashCode;
             }
         }
+
     }
 }
