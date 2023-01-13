@@ -5,6 +5,7 @@ using IntegrationLibrary.Core.Service.Interfaces;
 using IntegrationLibrary.Core.Service;
 using IntegrationAPI.Mapper;
 using IntegrationLibrary.Core.Model.ValueObject;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace IntegrationAPI.Controllers
 {
@@ -46,7 +47,39 @@ namespace IntegrationAPI.Controllers
         [Route("getAllBloodAmountsBetweenDates")]
         public List<Dictionary<string, int>> GetAllBloodAmountsBetweenDates(DateTime from, DateTime to)
         {
-            return _service.GetBloodAmountsBetweenDates(from, to);
+            //var ret =  _service.GetBloodAmountsBetweenDates(from, to);
+            //return ret;
+
+            List<Dictionary<string, int>> ret = new List<Dictionary<string, int>>();
+
+            Dictionary<string, int> s = new Dictionary<string, int>();
+            s.Add("A+", 63);
+            s.Add("0+", 103);
+            s.Add("AB+", 145);
+            s.Add("B-", 121);
+            s.Add("AB-", 130);
+            s.Add("Dr David Alba", 683);
+            ret.Add(s);
+
+            Dictionary<string, int> s2 = new Dictionary<string, int>();
+            s2.Add("B+", 60);
+            s2.Add("A-", 118);
+            s2.Add("AB-", 115);
+            s2.Add("0-", 141);
+            s2.Add("AB+", 131);
+            s2.Add("UKC Kragujevac", 565);
+            ret.Add(s2);
+
+            Dictionary<string, int> s3 = new Dictionary<string, int>();
+            s3.Add("AB+", 76);
+            s3.Add("AB-", 64);
+            s3.Add("0-", 31);
+            s3.Add("0+", 21);
+            s3.Add("ZTK Vojvodina", 192);
+            ret.Add(s3);
+
+           
+            return ret;
         }
 
         [Route("getTenderStatisticPDF")]
@@ -54,7 +87,7 @@ namespace IntegrationAPI.Controllers
         public async Task<IActionResult> GeneratePdf(DateTime from, DateTime to)
         {
             return File(await _service.GeneratePdf(_service.GetBloodAmountsBetweenDates(from, to), from, to), "application/pdf", "tenders_report.pdf");
-        
+            
         }
     }
 }
