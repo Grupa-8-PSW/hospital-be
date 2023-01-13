@@ -1,7 +1,9 @@
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.ValueObjects;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Model.DTO;
+using HospitalLibrary.GraphicalEditor.Model.Map;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 
@@ -10,18 +12,22 @@ namespace HospitalLibrary.GraphicalEditor.Service
     public class RoomService : IRoomService
     {
         private readonly IRoomRepository _roomRepository;
-        private readonly IBedRepository _bedRepository;
         private readonly IEquipmentRepository _equipmentRepository;
-
+        private readonly IRenovationRepository _renovationRepository;
         private readonly IExaminationRepository _examinationRepository;
 
         public EquipmentTransferDTO dto;
 
-        public RoomService(IRoomRepository roomRepository, IExaminationRepository examinationRepository, IEquipmentRepository equipmentRepository)
+        public RoomService(
+            IRoomRepository roomRepository,
+            IExaminationRepository examinationRepository,
+            IEquipmentRepository equipmentRepository,
+            IRenovationRepository renovationRepository)
         {
             _roomRepository = roomRepository;
             _examinationRepository = examinationRepository;
             _equipmentRepository = equipmentRepository;
+            _renovationRepository = renovationRepository;
         }
 
         public IEnumerable<Room> GetAll()
@@ -53,92 +59,129 @@ namespace HospitalLibrary.GraphicalEditor.Service
 
         }
 
+        public List<DateRange> GetAvailableIntervals(int fromRoomId, int toRoomId, DateTime startDate, DateTime endDate, int durationInHours)
+        {
+            List<DateRange> froms = GetAvailableSlots(fromRoomId, startDate, endDate, durationInHours);
+            List<DateRange> tos = GetAvailableSlots(toRoomId, startDate, endDate, durationInHours);
+            List<DateRange> available = new();
+
+            foreach (DateRange from in froms)
+            {
+                foreach (DateRange to in tos)
+                {
+                    if (from.Contains(to))
+                        available.Add(to);
+                    else if (to.Contains(from))
+                        available.Add(from);
+                }
+            }
+            return available;
+        }
+
+        public List<DateRange> GetAvailableSlots(int roomId, DateTime from, DateTime to, int duration)
+        {
+            List<DateRange> intervals = CreateSlots(from, to, duration);
+
+            var examinations = _examinationRepository.GetByRoomId(roomId);
+            var transfers = _equipmentRepository.GetEquipmentTransferByRoomId(roomId);
+            var renovations = _renovationRepository.GetByRoomId(roomId);
+
+            foreach (DateRange i in intervals)
+            {
+                foreach (Examination examination in examinations)
+                {
+                    DateRange interval = new(examination.DateRange.Start,
+                        examination.DateRange.Start.AddMinutes(examination.DateRange.DurationInMinutes));
+
+                    if (interval.IsOverlapped(i))
+                        intervals.Remove(i);
+                }
+                foreach (EquipmentTransfer transfer in transfers)
+                {
+                    DateRange interval = new(transfer.StartDate, transfer.EndDate);
+
+                    if (interval.IsOverlapped(i))
+                        intervals.Remove(i);
+                }
+                /*
+                foreach (Renovation renovation in renovations)
+                {
+                    DateRange interval = new(renovation.DateRange.Start, renovation.DateRange.End);
+
+                    if (interval.IsOverlapped(i))
+                        intervals.Remove(i);
+                }
+                */
+            }
+            return intervals;
+        }
+
+        private List<DateRange> CreateSlots(DateTime from, DateTime to, int hours)
+        {
+            DateRange searchedInterval = new(from, to);
+            List<DateRange> slots = new();
+
+            DateRange slot = new(from, from.AddHours(hours));
+            while (searchedInterval.Contains(slot))
+            {
+                slots.Add(slot);
+                slot = new(slot.Start.AddMinutes(30), slot.End.AddMinutes(30));
+            }
+            return slots;
+        }
+
+        public SeparatedRoomsDTO GetSeparatedRooms(RoomForSeparateDTO dto)
+        {
+            Room oldRoom = new Room();
+            oldRoom = GetById(dto.OldRoomId);
+
+            SeparatedRoomsDTO newRooms = new SeparatedRoomsDTO();
+
+            Random rnd = new Random();
+            MapRoom firstRoom = new MapRoom(oldRoom.Map.X, oldRoom.Map.Y, oldRoom.Map.Width / 2, oldRoom.Map.Height, "blue");
+            newRooms.FirstRoom = new Room(rnd.Next(30, 3000), Core.Enums.RoomType.OTHER, oldRoom.Number, dto.NewRoom1Name, firstRoom, oldRoom.FloorId, null);
+            MapRoom secondRoom = new MapRoom(oldRoom.Map.X, oldRoom.Map.Y + oldRoom.Map.Width / 2, oldRoom.Map.Width / 2, oldRoom.Map.Height, "blue");
+            newRooms.SecondRoom = new Room(rnd.Next(30, 3000), Core.Enums.RoomType.OPERATIONS, oldRoom.Number + "a", dto.NewRoom2Name, secondRoom, oldRoom.FloorId, null);
+
+            _roomRepository.Create(newRooms.FirstRoom);
+            _roomRepository.Create(newRooms.SecondRoom);
+            _roomRepository.Delete(oldRoom);
+
+            return newRooms;
+        }
+
+        public MergedRoomDTO GetMergedRoom(RoomsForMergeDTO dto)
+        {
+            Room oldRoom1 = new Room();
+            Room oldRoom2 = new Room();
+            Random rnd = new Random();
+
+            oldRoom1 = GetById(dto.OldRoom1Id);
+            oldRoom2 = GetById(dto.OldRoom2Id);
+
+            MergedRoomDTO newRoom = new MergedRoomDTO();
+            MapRoom mergedRoomMap = new MapRoom();
+
+            mergedRoomMap = new MapRoom(oldRoom1.Map.X, oldRoom1.Map.Y, oldRoom1.Map.Width + oldRoom2.Map.Width, (oldRoom1.Map.Height + oldRoom2.Map.Height) / 2, "blue");
+            newRoom.Room = new Room(rnd.Next(30, 300), Core.Enums.RoomType.OTHER, oldRoom1.Number, dto.NewRoomName, mergedRoomMap, oldRoom1.FloorId, null);
+
+            _roomRepository.Create(newRoom.Room);
+            _roomRepository.Delete(oldRoom1);
+            _roomRepository.Delete(oldRoom2);
+
+            return newRoom;
+        }
+
         public List<FreeSpaceDTO> GetTransferedEquipment(EquipmentTransferDTO dto)
         {
-            IEnumerable<Examination> fromRoomExaminations = _examinationRepository.GetByRoomId(dto.FromRoomId);
-            IEnumerable<Examination> toRoomExaminations = _examinationRepository.GetByRoomId(dto.ToRoomId);
-            DateTime startDate = dto.StartDate.AddHours(1);
-            DateTime endDate = dto.EndDate.AddHours(1);
-            List<FreeSpaceDTO> freeSpacesFromRoom = new List<FreeSpaceDTO>();
-            List<FreeSpaceDTO> freeSpacesToRoom = new List<FreeSpaceDTO>();
-            List<FreeSpaceDTO> filteredFreeSpaces = new List<FreeSpaceDTO>();
+            List<DateRange> slots = GetAvailableIntervals(dto.FromRoomId, dto.ToRoomId, dto.StartDate.AddHours(1), dto.EndDate.AddHours(1), dto.Duration);
+            List<FreeSpaceDTO> dtos = new();
 
-
-
-            foreach (Examination exam in fromRoomExaminations)
+            foreach (var slot in slots)
             {
-                while (startDate < exam.DateRange.Start)
-                {
-                    FreeSpaceDTO freeSpace = new FreeSpaceDTO();
-                    freeSpace.StartTime = startDate;
-                    freeSpace.EndTime = startDate.AddHours(dto.Duration);
-                    if (freeSpace.EndTime <= exam.DateRange.Start)
-                    {
-                        freeSpacesFromRoom.Add(freeSpace);
-                    }
-                    startDate = startDate.AddHours(0.5);
-                }
-                startDate = startDate.AddMinutes(exam.DateRange.DurationInMinutes);
+                dtos.Add(new FreeSpaceDTO(slot.Start, slot.End));
             }
-
-            while (startDate < endDate)
-            {
-                FreeSpaceDTO freeSpace2 = new FreeSpaceDTO();
-                freeSpace2.StartTime = startDate;
-                freeSpace2.EndTime = startDate.AddHours(dto.Duration);
-                freeSpacesFromRoom.Add(freeSpace2);
-                startDate = startDate.AddHours(0.5);
-            }
-
-
-            startDate = dto.StartDate.AddHours(1);
-            endDate = dto.EndDate.AddHours(1);
-
-            foreach (Examination exam in toRoomExaminations)
-            {
-
-                while (startDate < exam.DateRange.Start)
-                {
-                    FreeSpaceDTO freeSpace = new FreeSpaceDTO();
-                    freeSpace.StartTime = startDate;
-                    freeSpace.EndTime = startDate.AddHours(dto.Duration);
-                    if (freeSpace.EndTime <= exam.DateRange.Start)
-                    {
-                        freeSpacesToRoom.Add(freeSpace);
-                    }
-                    startDate = startDate.AddHours(0.5);
-                }
-
-                startDate = startDate.AddMinutes(exam.DateRange.DurationInMinutes);
-
-            }
-
-            while (startDate < endDate)
-            {
-                FreeSpaceDTO freeSpace2 = new FreeSpaceDTO();
-                freeSpace2.StartTime = startDate;
-                freeSpace2.EndTime = startDate.AddHours(dto.Duration);
-                freeSpacesToRoom.Add(freeSpace2);
-                startDate = startDate.AddHours(0.5);
-            }
-
-
-            foreach (FreeSpaceDTO freeSpaceFrom in freeSpacesFromRoom)
-            {
-                foreach (FreeSpaceDTO freeSpaceTo in freeSpacesToRoom)
-                {
-                    if (freeSpaceFrom.StartTime >= freeSpaceTo.StartTime && freeSpaceFrom.EndTime <= freeSpaceTo.EndTime)
-                    {
-                        filteredFreeSpaces.Add(freeSpaceFrom);
-                    }
-                    else if (freeSpaceFrom.StartTime <= freeSpaceTo.StartTime && freeSpaceFrom.EndTime >= freeSpaceTo.EndTime)
-                    {
-                        filteredFreeSpaces.Add(freeSpaceTo);
-                    }
-                }
-            }
-
-            return filteredFreeSpaces;
+            return dtos;
         }
 
         public IEnumerable<Room> GetFreeRooms()

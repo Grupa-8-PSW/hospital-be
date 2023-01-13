@@ -54,5 +54,16 @@ namespace HospitalLibrary.GraphicalEditor.Repository
             return _context.Rooms.ToList();
         }
 
+        public void Create(Room room)
+        {
+            _context.Rooms.Add(room);
+            _context.SaveChanges();
+        }
+
+        public void Delete(Room room)
+        {
+            _context.Rooms.Remove(room);
+            _context.SaveChanges();
+        }
     }
 }

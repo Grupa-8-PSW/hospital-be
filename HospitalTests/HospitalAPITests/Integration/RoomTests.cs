@@ -133,5 +133,28 @@ namespace HospitalTests.HospitalAPITests.Integration
 
             Assert.NotNull(freeSpace);
         }
+
+      /*  [Fact]
+        public void Separating_room()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            RoomForSeparateDTO dto = new RoomForSeparateDTO(2,"Ortopedija", "OTHER", "Pedijatrija", "OTHER");
+            var separatedRoom = ((OkObjectResult)controller.GetSeparatedRooms(dto))?.Value as List<SeparatedRoomsDTO>;
+
+            Assert.NotNull(separatedRoom);
+        } 
+
+        
+        [Fact]
+        public void Merging_Rooms()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            RoomsForMergeDTO dto = new RoomsForMergeDTO(1, 2, "Logopedija", "OTHER");
+            var mergedRoom = ((OkObjectResult)controller.GetMergedRoom(dto))?.Value as List<MergedRoomDTO>;
+
+            Assert.NotNull(mergedRoom);
+        } */
     }
 }
