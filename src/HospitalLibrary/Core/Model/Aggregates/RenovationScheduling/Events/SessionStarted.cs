@@ -2,7 +2,7 @@
 {
     public class SessionStarted : DomainEvent
     {
-        public SessionStarted(int aggregateId) : base(aggregateId)
+        public SessionStarted(DateTime timestamp) : base(timestamp)
         {
         }
     }

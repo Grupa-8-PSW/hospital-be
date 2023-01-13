@@ -5,6 +5,8 @@ namespace HospitalLibrary.Core.Model.Aggregates.RenovationScheduling
 {
     public class RenovationSchedulingSession : EventSourcedAggregate
     {
+        private IClock Clock { get; set; }
+
         public int InitialVersion { get; private set; }
 
         public RenovationSchedulingSessionSnapshot GetRenovationSchedulingSessionSnapshot()
@@ -15,39 +17,39 @@ namespace HospitalLibrary.Core.Model.Aggregates.RenovationScheduling
             };
         }
 
-        public RenovationSchedulingSession()
+        public RenovationSchedulingSession(IClock clock)
         {
-            Causes(new SessionStarted(Id));
+            Clock = clock;
         }
 
         public void SelectRenovationType()
         {
-            Causes(new RenovationTypeSelected(Id));
+            Causes(new RenovationTypeSelected(Clock.Time()));
         }
 
         public void SelectRoom()
         {
-            Causes(new RoomSelected(Id));
+            Causes(new RoomSelected(Clock.Time()));
         }
 
         public void SelectDateTime()
         {
-            Causes(new DateTimeSelected(Id));
+            Causes(new DateTimeSelected(Clock.Time()));
         }
 
         public void SelectDuration()
         {
-            Causes(new DurationSelected(Id));
+            Causes(new DurationSelected(Clock.Time()));
         }
 
         public void SelectAvailableSlot()
         {
-            Causes(new AvailableSlotSelected(Id));
+            Causes(new AvailableSlotSelected(Clock.Time()));
         }
 
         public void ScheduleRenovation()
         {
-            Causes(new RenovationScheduled(Id));
+            Causes(new RenovationScheduled(Clock.Time()));
         }
 
         public override void Apply(DomainEvent @event)

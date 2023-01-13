@@ -2,7 +2,7 @@
 {
     public class AvailableSlotSelected : DomainEvent
     {
-        public AvailableSlotSelected(int aggregateId) : base(aggregateId)
+        public AvailableSlotSelected(DateTime timestamp) : base(timestamp)
         {
         }
     }

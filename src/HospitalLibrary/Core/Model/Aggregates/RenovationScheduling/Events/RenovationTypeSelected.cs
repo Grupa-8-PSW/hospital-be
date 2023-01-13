@@ -2,7 +2,7 @@
 {
     public class RenovationTypeSelected : DomainEvent
     {
-        public RenovationTypeSelected(int aggregateId) : base(aggregateId)
+        public RenovationTypeSelected(DateTime timestamp) : base(timestamp)
         {
         }
     }
