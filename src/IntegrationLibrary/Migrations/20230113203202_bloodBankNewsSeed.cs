@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
-    public partial class mig : Migration
+    public partial class bloodBankNewsSeed : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -175,7 +175,13 @@ namespace IntegrationLibrary.Migrations
             migrationBuilder.InsertData(
                 table: "BloodBankNews",
                 columns: new[] { "Id", "Archived", "BloodBankId", "ImgSrc", "Published", "Subject", "Text" },
-                values: new object[] { 1, false, 1, "", false, "subject1", "text" });
+                values: new object[,]
+                {
+                    { 1, false, 1, "https://firebasestorage.googleapis.com/v0/b/isapsw-6ef61.appspot.com/o/9d54ef85-6fe8be15-untitled-10_850x460_acf_cropped.jpg?alt=media&token=3f080d8d-6bc1-4757-83ef-0dabfb6ea338", false, "Nestasica krvi", "Zbog konstantnog manjka krvi u odnosu na potrebe (posebno tokom praznika) i ovaj put organizujemo celodnevnu novogodisnju akciju davanja krvi. Krv mozete dati 26. janura od 8 do 13 ili od 15 do 18 casova. Ne sumnjamo u vasu humanost" },
+                    { 2, false, 2, "https://firebasestorage.googleapis.com/v0/b/isapsw-6ef61.appspot.com/o/h3.jpg?alt=media&token=482263cb-3590-405f-9c1e-e1fcd46b5229", false, "Novogodisnja akcija davanja krvi", "Prva ovogodisnja akcija davanja krvi bice realizovana u ponedeljak 09. januara od 8 do 12 casova. Zapocnite godinu humanim gestom i pomozite onima koji vam to nikada ne mogu vratiti." },
+                    { 3, false, 3, "https://firebasestorage.googleapis.com/v0/b/isapsw-6ef61.appspot.com/o/h4.jpeg?alt=media&token=5b420fc6-e490-453c-afce-5d57241eda35", false, "Nova akcija doniranja", "U ponedeljak, 05. decembra, od 8 do 12 casova realizuje se akcija dobrovoljnog davanja krvi u prostorijama Doma zdravlja. Kako je neuporedivo lepsi osecaj pomagati nego cekati pomoc od nekog pozivamo vas da i ovoga puta pokazete svoju humanost i spasete do tri zivota. " },
+                    { 4, false, 4, "https://firebasestorage.googleapis.com/v0/b/isapsw-6ef61.appspot.com/o/Blood-Donation-1.jpg?alt=media&token=71f3c7ae-e5a0-4d51-ade8-1e253deb212d", false, "Hitno potrebna krv!", "Vreme je novogodisnjeg darivanja. Darujte zivot na jednoj od dve akcije davanja krvi tokom sledece sedmice.  \r\nPonedeljak 20. ili cetvrtak 23. decembar u istom terminu - od 16 do 19 casova" }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BloodBankNews_BloodBankId",

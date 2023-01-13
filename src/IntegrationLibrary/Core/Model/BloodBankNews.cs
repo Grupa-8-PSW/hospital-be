@@ -8,19 +8,19 @@ namespace IntegrationLibrary.Core.Model
 {
     public class BloodBankNews
     {
-        public string Text { get;  private set; }
-        public string Subject { get; private set; }
-        public int Id { get; private set; }
+        public string Text { get;   set; }
+        public string Subject { get;  set; }
+        public int Id { get;  set; }
 
-        public string ImgSrc { get; private set; }
+        public string ImgSrc { get;  set; }
 
-        public int BloodBankId { get; private set; }  
+        public int BloodBankId { get;  set; }  
 
-        public BloodBank BloodBank { get; private set; }
+        public BloodBank BloodBank { get;  set; }
 
-        public bool Published { get; private  set;  }
+        public bool Published { get;   set;  }
 
-        public bool Archived { get; private set; }
+        public bool Archived { get; set; }
 
         public BloodBankNews(string text, string subject, int id, string imgSrc, bool published, bool archived, BloodBank bloodBank, int bloodBankId)
         {
