@@ -1,15 +1,11 @@
 ﻿using HospitalLibrary.Core.Model.Aggregates.RenovationScheduling;
+using HospitalLibrary.Core.Repository;
 
 namespace HospitalLibrary.GraphicalEditor.Repository.Interfaces
 {
-    public interface IRenovationSchedulingSessionRepository
+    public interface IRenovationSchedulingSessionRepository : IEntityRepository<RenovationEventWrapper>
     {
-        List<RenovationSchedulingSession> GetAll();
+        List<int> GetAll();
 
-        RenovationSchedulingSession FindBy(int id);
-
-        void Add(RenovationSchedulingSession renovationSchedulingSession);
-
-        void Save(RenovationSchedulingSession renovationSchedulingSession);
     }
 }

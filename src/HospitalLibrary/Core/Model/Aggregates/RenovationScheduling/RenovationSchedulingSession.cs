@@ -1,13 +1,23 @@
 ﻿using HospitalLibrary.Core.Model.Aggregates.RenovationScheduling.Events;
-using HospitalLibrary.Core.Model.ValueObjects;
+using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 
 namespace HospitalLibrary.Core.Model.Aggregates.RenovationScheduling
 {
     public class RenovationSchedulingSession : EventSourcedAggregate
     {
+        private readonly IRenovationSchedulingSessionRepository _renovationSchedulingSessionRepository;
+
         private IClock Clock { get; set; }
 
-        public int InitialVersion { get; private set; }
+        public RenovationSchedulingSession(IRenovationSchedulingSessionRepository renovationSchedulingSessionRepository)
+        {
+            _renovationSchedulingSessionRepository = renovationSchedulingSessionRepository;
+        }
+
+        public RenovationSchedulingSession(IClock clock)
+        {
+            Clock = clock;
+        }
 
         public RenovationSchedulingSessionSnapshot GetRenovationSchedulingSessionSnapshot()
         {
@@ -17,14 +27,9 @@ namespace HospitalLibrary.Core.Model.Aggregates.RenovationScheduling
             };
         }
 
-        public RenovationSchedulingSession(IClock clock)
+        public RenovationSchedulingSession()
         {
-            Clock = clock;
-        }
-
-        public RenovationSchedulingSession(int id)
-        {
-            Causes(new SessionStarted(id));
+            Causes(new SessionStarted(Clock.Time()));
         }
 
         public void SelectRenovationType()

@@ -15,52 +15,58 @@ namespace HospitalAPI.Controllers.Map
             _scheduleRenovation = scheduleRenovation;
         }
 
-        [HttpGet("type")]
+        [HttpPost("new")]
         public IActionResult CreateSessionStartedEvent()
         {
-            //_scheduleRenovation.Create(new RenovationSchedulingSession());
+            return Ok(_scheduleRenovation.CreateNewSessionEvent());
+        }
+
+        [HttpPost("type")]
+        public IActionResult CreateSessionStartedEvent(int id)
+        {
+            _scheduleRenovation.CreateSessionStartedEvent(id);
             return Ok();
         }
 
-        [HttpGet("room")]
-        public IActionResult CreateTypeSelectedEvent(string type)
+        [HttpPost("room")]
+        public IActionResult CreateTypeSelectedEvent(int id)
         {
-            //.SelectRenovationType();
+            _scheduleRenovation.CreateTypeSelectedEvent(id);
             return Ok();
         }
 
-        [HttpGet("interval")]
-        public IActionResult CreateRoomSelectedEvent()
+        [HttpPost("interval")]
+        public IActionResult CreateRoomSelectedEvent(int id)
         {
-            //.SelectRoom();
+            _scheduleRenovation.CreateRoomSelectedEvent(id);
             return Ok();
         }
 
-        [HttpGet("duration")]
-        public IActionResult CreateDateTimeSelectedEvent()
+        [HttpPost("duration")]
+        public IActionResult CreateDateTimeSelectedEvent(int id)
         {
-            //.SelectDateTime();
+            _scheduleRenovation.CreateDateTimeSelectedEvent(id);
             return Ok();
         }
 
-        [HttpGet("available")]
-        public IActionResult CreateDurationSelectedvent()
+        [HttpPost("available")]
+        public IActionResult CreateDurationSelectedvent(int id)
         {
-            //.SelectDuration();
+            _scheduleRenovation.CreateDurationSelectedvent(id);
             return Ok();
         }
 
-        [HttpGet("create")]
-        public IActionResult CreateAvailableSlotSelectedEvent()
+        [HttpPost("create")]
+        public IActionResult CreateAvailableSlotSelectedEvent(int id)
         {
-            //.SelectAvailableSlot();
+            _scheduleRenovation.CreateAvailableSlotSelectedEvent(id);
             return Ok();
         }
 
-        [HttpGet("schedule")]
-        public IActionResult CreateRenovationScheduledEvent()
+        [HttpPost("schedule")]
+        public IActionResult CreateRenovationScheduledEvent(int id)
         {
-            //.ScheduleRenovation();
+            _scheduleRenovation.CreateRenovationScheduledEvent(id);
             return Ok();
         }
 

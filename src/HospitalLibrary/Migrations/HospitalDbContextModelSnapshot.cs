@@ -115,6 +115,63 @@ namespace HospitalLibrary.Migrations
                         });
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Aggregates.AppointmentScheduling.AppointmentEventWrapper", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AggregateId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AggregateId"));
+
+                    b.Property<object>("Data")
+                        .IsRequired()
+                        .HasColumnType("json");
+
+                    b.Property<int>("EventType")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("AppointmentEventWrappers");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Aggregates.RenovationScheduling.RenovationEventWrapper", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AggregateId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AggregateId"));
+
+                    b.Property<object>("Data")
+                        .IsRequired()
+                        .HasColumnType("json");
+
+                    b.Property<int>("EventType")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RenovationEventWrappers");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.Allergen", b =>
                 {
                     b.Property<int>("Id")
@@ -972,7 +1029,7 @@ namespace HospitalLibrary.Migrations
                             TherapySubject = "Bromazepam 500mg",
                             TherapyType = 0,
                             TreatmentHistoryId = 1,
-                            WhenPrescribed = new DateTime(2023, 1, 10, 17, 13, 57, 141, DateTimeKind.Utc).AddTicks(7178)
+                            WhenPrescribed = new DateTime(2023, 1, 13, 20, 14, 9, 860, DateTimeKind.Utc).AddTicks(9721)
                         },
                         new
                         {
@@ -983,7 +1040,7 @@ namespace HospitalLibrary.Migrations
                             TherapySubject = "A+ 500ml",
                             TherapyType = 1,
                             TreatmentHistoryId = 1,
-                            WhenPrescribed = new DateTime(2023, 1, 10, 17, 13, 57, 141, DateTimeKind.Utc).AddTicks(7180)
+                            WhenPrescribed = new DateTime(2023, 1, 13, 20, 14, 9, 860, DateTimeKind.Utc).AddTicks(9723)
                         });
                 });
 
@@ -1038,11 +1095,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 1,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2023, 1, 10, 17, 13, 57, 141, DateTimeKind.Utc).AddTicks(7124),
+                            EndDate = new DateTime(2023, 1, 13, 20, 14, 9, 860, DateTimeKind.Utc).AddTicks(9617),
                             PatientId = 1,
                             Reason = "reason1",
                             RoomId = 1,
-                            StartDate = new DateTime(2023, 1, 10, 17, 13, 57, 141, DateTimeKind.Utc).AddTicks(7123)
+                            StartDate = new DateTime(2023, 1, 13, 20, 14, 9, 860, DateTimeKind.Utc).AddTicks(9616)
                         },
                         new
                         {
@@ -1050,11 +1107,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 2,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2023, 1, 10, 17, 13, 57, 141, DateTimeKind.Utc).AddTicks(7128),
+                            EndDate = new DateTime(2023, 1, 13, 20, 14, 9, 860, DateTimeKind.Utc).AddTicks(9621),
                             PatientId = 2,
                             Reason = "reason2",
                             RoomId = 1,
-                            StartDate = new DateTime(2023, 1, 10, 17, 13, 57, 141, DateTimeKind.Utc).AddTicks(7128)
+                            StartDate = new DateTime(2023, 1, 13, 20, 14, 9, 860, DateTimeKind.Utc).AddTicks(9621)
                         },
                         new
                         {
@@ -1062,11 +1119,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 4,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2023, 1, 10, 17, 13, 57, 141, DateTimeKind.Utc).AddTicks(7130),
+                            EndDate = new DateTime(2023, 1, 13, 20, 14, 9, 860, DateTimeKind.Utc).AddTicks(9623),
                             PatientId = 3,
                             Reason = "reason3",
                             RoomId = 2,
-                            StartDate = new DateTime(2023, 1, 10, 17, 13, 57, 141, DateTimeKind.Utc).AddTicks(7129)
+                            StartDate = new DateTime(2023, 1, 13, 20, 14, 9, 860, DateTimeKind.Utc).AddTicks(9623)
                         },
                         new
                         {
@@ -1077,7 +1134,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 1,
                             Reason = "reason1",
                             RoomId = 1,
-                            StartDate = new DateTime(2023, 1, 10, 17, 13, 57, 141, DateTimeKind.Utc).AddTicks(7131)
+                            StartDate = new DateTime(2023, 1, 13, 20, 14, 9, 860, DateTimeKind.Utc).AddTicks(9625)
                         },
                         new
                         {
@@ -1088,7 +1145,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 2,
                             Reason = "reason2",
                             RoomId = 1,
-                            StartDate = new DateTime(2023, 1, 10, 17, 13, 57, 141, DateTimeKind.Utc).AddTicks(7131)
+                            StartDate = new DateTime(2023, 1, 13, 20, 14, 9, 860, DateTimeKind.Utc).AddTicks(9626)
                         },
                         new
                         {
@@ -1099,7 +1156,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 3,
                             Reason = "reason3",
                             RoomId = 2,
-                            StartDate = new DateTime(2023, 1, 10, 17, 13, 57, 141, DateTimeKind.Utc).AddTicks(7133)
+                            StartDate = new DateTime(2023, 1, 13, 20, 14, 9, 860, DateTimeKind.Utc).AddTicks(9628)
                         });
                 });
 
@@ -2298,6 +2355,17 @@ namespace HospitalLibrary.Migrations
                         .HasForeignKey("DoctorsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Aggregates.AppointmentScheduling.AppointmentEventWrapper", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Bed", b =>

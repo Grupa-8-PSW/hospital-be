@@ -1,31 +1,22 @@
 ﻿using HospitalLibrary.Core.Model.Aggregates.RenovationScheduling;
+using HospitalLibrary.Core.Repository;
 using HospitalLibrary.GraphicalEditor.BusinessUseCases;
+using HospitalLibrary.GraphicalEditor.Enums;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 using HospitalLibrary.Settings;
 
 namespace HospitalLibrary.GraphicalEditor.Repository
 {
-    public class RenovationSchedulingSessionRepository : IRenovationSchedulingSessionRepository
+    public class RenovationSchedulingSessionRepository : BaseEntityModelRepository<RenovationEventWrapper>, IRenovationSchedulingSessionRepository
     {
-
-        public void Add(RenovationSchedulingSession renovationSchedulingSession)
+        public RenovationSchedulingSessionRepository(HospitalDbContext dbContext) : base(dbContext)
         {
-            //throw new NotImplementedException();
         }
 
-        public RenovationSchedulingSession FindBy(int id)
+        public List<int> GetAll()
         {
-            throw new NotImplementedException();
+            return _dbContext.RenovationEventWrappers.Where(e => e.EventType == RenovationEventType.SESSION_ENDED).Select(ev => ev.AggregateId).ToList();
         }
 
-        public List<RenovationSchedulingSession> GetAll()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Save(RenovationSchedulingSession renovationSchedulingSession)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

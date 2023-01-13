@@ -1,4 +1,6 @@
 ﻿using HospitalLibrary.Core.Model.Aggregates.RenovationScheduling;
+using HospitalLibrary.Core.Model.Aggregates.RenovationScheduling.Events;
+using HospitalLibrary.GraphicalEditor.Enums;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 
 namespace HospitalLibrary.GraphicalEditor.BusinessUseCases
@@ -12,14 +14,91 @@ namespace HospitalLibrary.GraphicalEditor.BusinessUseCases
             _sessionRepository = sessionRepository;
         }
 
-        public void Create(RenovationSchedulingSession session)
+        public int CreateNewSessionEvent()
         {
-            _sessionRepository.Add(session);
+            RenovationEventWrapper e = new()
+            {
+                Data = new SessionStarted(DateTime.Now),
+                EventType = RenovationEventType.SESSION_STARTED
+            };
+            return _sessionRepository.Create(e).AggregateId;
         }
 
-        public List<RenovationSchedulingSession> GetAll()
+        public void CreateSessionStartedEvent(int aggregateId)
         {
-            return _sessionRepository.GetAll();
+            RenovationEventWrapper e = new()
+            {
+                AggregateId = aggregateId,
+                Data = new SessionStarted(DateTime.Now),
+                EventType = RenovationEventType.SESSION_STARTED
+            };
+            _sessionRepository.Create(e);
+        }
+
+        public void CreateTypeSelectedEvent(int aggregateId)
+        {
+            RenovationEventWrapper e = new()
+            {
+                AggregateId = aggregateId,
+                Data = new RenovationTypeSelected(DateTime.Now),
+                EventType = RenovationEventType.TYPE_SELECTED
+            };
+            _sessionRepository.Create(e);
+        }
+
+        public void CreateRoomSelectedEvent(int aggregateId)
+        {
+            RenovationEventWrapper e = new()
+            {
+                AggregateId = aggregateId,
+                Data = new RoomSelected(DateTime.Now),
+                EventType = RenovationEventType.ROOM_SELECTED
+            };
+            _sessionRepository.Create(e);
+        }
+
+        public void CreateDateTimeSelectedEvent(int aggregateId)
+        {
+            RenovationEventWrapper e = new()
+            {
+                AggregateId = aggregateId,
+                Data = new DateTimeSelected(DateTime.Now),
+                EventType = RenovationEventType.DATE_TIME_SELECTED
+            };
+            _sessionRepository.Create(e);
+        }
+
+        public void CreateDurationSelectedvent(int aggregateId)
+        {
+            RenovationEventWrapper e = new()
+            {
+                AggregateId = aggregateId,
+                Data = new DurationSelected(DateTime.Now),
+                EventType = RenovationEventType.DURATION_SELECTED
+            };
+            _sessionRepository.Create(e);
+        }
+
+        public void CreateAvailableSlotSelectedEvent(int aggregateId)
+        {
+            RenovationEventWrapper e = new()
+            {
+                AggregateId = aggregateId,
+                Data = new AvailableSlotSelected(DateTime.Now),
+                EventType = RenovationEventType.AVAILABLE_SLOT_SELECTED
+            };
+            _sessionRepository.Create(e);
+        }
+
+        public void CreateRenovationScheduledEvent(int aggregateId)
+        {
+            RenovationEventWrapper e = new()
+            {
+                AggregateId = aggregateId,
+                Data = new RenovationScheduled(DateTime.Now),
+                EventType = RenovationEventType.SESSION_ENDED
+            };
+            _sessionRepository.Create(e);
         }
 
     }

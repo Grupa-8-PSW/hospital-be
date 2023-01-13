@@ -4,6 +4,7 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings.DataSeed;
 using Microsoft.EntityFrameworkCore;
 using HospitalLibrary.Core.Model.Aggregates.AppointmentScheduling;
+using HospitalLibrary.Core.Model.Aggregates.RenovationScheduling;
 
 namespace HospitalLibrary.Settings
 {
@@ -24,6 +25,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Examination> Examinations { get; set; }
         public DbSet<TreatmentHistory> TreatmentHistories { get; set; }
         public DbSet<EquipmentTransfer> EquipmentTransfers { get; set; }
+        public DbSet<RenovationEventWrapper> RenovationEventWrappers { get; set; }
         public DbSet<Renovation> Renovations { get; set; }
         public DbSet<Therapy> Therapies { get; set; }
         public DbSet<BloodUnit> BloodUnits { get; set; }

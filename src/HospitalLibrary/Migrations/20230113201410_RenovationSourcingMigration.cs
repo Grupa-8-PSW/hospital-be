@@ -1,11 +1,12 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class TempMigration : Migration
+    public partial class RenovationSourcingMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,6 +59,45 @@ namespace HospitalLibrary.Migrations
                 nullable: false,
                 defaultValue: 0);
 
+            migrationBuilder.CreateTable(
+                name: "AppointmentEventWrappers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AggregateId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    PatientId = table.Column<int>(type: "integer", nullable: false),
+                    Data = table.Column<object>(type: "json", nullable: false),
+                    EventType = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppointmentEventWrappers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AppointmentEventWrappers_Patients_PatientId",
+                        column: x => x.PatientId,
+                        principalTable: "Patients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RenovationEventWrappers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AggregateId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Data = table.Column<object>(type: "json", nullable: false),
+                    EventType = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RenovationEventWrappers", x => x.Id);
+                });
+
             migrationBuilder.InsertData(
                 table: "Renovations",
                 columns: new[] { "Id", "Available", "Changes", "Duration", "Interval", "RoomId", "Schedule", "Type" },
@@ -79,60 +119,71 @@ namespace HospitalLibrary.Migrations
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "WhenPrescribed",
-                value: new DateTime(2023, 1, 10, 17, 13, 57, 141, DateTimeKind.Utc).AddTicks(7178));
+                value: new DateTime(2023, 1, 13, 20, 14, 9, 860, DateTimeKind.Utc).AddTicks(9721));
 
             migrationBuilder.UpdateData(
                 table: "Therapies",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "WhenPrescribed",
-                value: new DateTime(2023, 1, 10, 17, 13, 57, 141, DateTimeKind.Utc).AddTicks(7180));
+                value: new DateTime(2023, 1, 13, 20, 14, 9, 860, DateTimeKind.Utc).AddTicks(9723));
 
             migrationBuilder.UpdateData(
                 table: "TreatmentHistories",
                 keyColumn: "Id",
                 keyValue: 1,
                 columns: new[] { "EndDate", "StartDate" },
-                values: new object[] { new DateTime(2023, 1, 10, 17, 13, 57, 141, DateTimeKind.Utc).AddTicks(7124), new DateTime(2023, 1, 10, 17, 13, 57, 141, DateTimeKind.Utc).AddTicks(7123) });
+                values: new object[] { new DateTime(2023, 1, 13, 20, 14, 9, 860, DateTimeKind.Utc).AddTicks(9617), new DateTime(2023, 1, 13, 20, 14, 9, 860, DateTimeKind.Utc).AddTicks(9616) });
 
             migrationBuilder.UpdateData(
                 table: "TreatmentHistories",
                 keyColumn: "Id",
                 keyValue: 2,
                 columns: new[] { "EndDate", "StartDate" },
-                values: new object[] { new DateTime(2023, 1, 10, 17, 13, 57, 141, DateTimeKind.Utc).AddTicks(7128), new DateTime(2023, 1, 10, 17, 13, 57, 141, DateTimeKind.Utc).AddTicks(7128) });
+                values: new object[] { new DateTime(2023, 1, 13, 20, 14, 9, 860, DateTimeKind.Utc).AddTicks(9621), new DateTime(2023, 1, 13, 20, 14, 9, 860, DateTimeKind.Utc).AddTicks(9621) });
 
             migrationBuilder.UpdateData(
                 table: "TreatmentHistories",
                 keyColumn: "Id",
                 keyValue: 3,
                 columns: new[] { "EndDate", "StartDate" },
-                values: new object[] { new DateTime(2023, 1, 10, 17, 13, 57, 141, DateTimeKind.Utc).AddTicks(7130), new DateTime(2023, 1, 10, 17, 13, 57, 141, DateTimeKind.Utc).AddTicks(7129) });
+                values: new object[] { new DateTime(2023, 1, 13, 20, 14, 9, 860, DateTimeKind.Utc).AddTicks(9623), new DateTime(2023, 1, 13, 20, 14, 9, 860, DateTimeKind.Utc).AddTicks(9623) });
 
             migrationBuilder.UpdateData(
                 table: "TreatmentHistories",
                 keyColumn: "Id",
                 keyValue: 4,
                 column: "StartDate",
-                value: new DateTime(2023, 1, 10, 17, 13, 57, 141, DateTimeKind.Utc).AddTicks(7131));
+                value: new DateTime(2023, 1, 13, 20, 14, 9, 860, DateTimeKind.Utc).AddTicks(9625));
 
             migrationBuilder.UpdateData(
                 table: "TreatmentHistories",
                 keyColumn: "Id",
                 keyValue: 5,
                 column: "StartDate",
-                value: new DateTime(2023, 1, 10, 17, 13, 57, 141, DateTimeKind.Utc).AddTicks(7131));
+                value: new DateTime(2023, 1, 13, 20, 14, 9, 860, DateTimeKind.Utc).AddTicks(9626));
 
             migrationBuilder.UpdateData(
                 table: "TreatmentHistories",
                 keyColumn: "Id",
                 keyValue: 6,
                 column: "StartDate",
-                value: new DateTime(2023, 1, 10, 17, 13, 57, 141, DateTimeKind.Utc).AddTicks(7133));
+                value: new DateTime(2023, 1, 13, 20, 14, 9, 860, DateTimeKind.Utc).AddTicks(9628));
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppointmentEventWrappers_PatientId",
+                table: "AppointmentEventWrappers",
+                column: "PatientId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AppointmentEventWrappers");
+
+            migrationBuilder.DropTable(
+                name: "RenovationEventWrappers");
+
             migrationBuilder.DeleteData(
                 table: "Renovations",
                 keyColumn: "Id",
