@@ -35,6 +35,13 @@ namespace IntegrationAPI.Controllers
             return Ok(_bloodBankNewsService.GetById(id));
         }
 
+        [AllowAnonymous]
+        [HttpGet("published")]
+        public ActionResult GetAllPublished()
+        {
+            return Ok(_bloodBankNewsService.GetAllPublished());
+        }
+
 
         [HttpPut]
         [Route("archiveNews")]

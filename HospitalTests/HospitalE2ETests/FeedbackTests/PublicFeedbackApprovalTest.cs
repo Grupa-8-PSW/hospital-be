@@ -6,7 +6,7 @@ using Shouldly;
 
 namespace HospitalTests.HospitalE2ETests.FeedbackTests
 {
-    public class PublicFeedbackApprovalTest
+    public class PublicFeedbackApprovalTest : IDisposable
     {
         private const string url = "http://localhost:4200/feedback/approval";
 
@@ -16,6 +16,8 @@ namespace HospitalTests.HospitalE2ETests.FeedbackTests
 
         private IEnumerable<IWebElement> PublicFeedbacks => _driver.FindElements(
             By.CssSelector("mat-card"));
+
+        private IWebElement LastButton => PublicFeedbacks.Last().FindElement(By.CssSelector("button"));
 
         public PublicFeedbackApprovalTest()
         {
@@ -41,16 +43,9 @@ namespace HospitalTests.HospitalE2ETests.FeedbackTests
         [Fact]
         public void ApproveFeedback()
         {
-            IWebElement button = PublicFeedbacks.Last().FindElement(By.CssSelector("button"));
-            var buttonType = button.GetAttribute("name");
-            button.Click();
-            var wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 20));
-            wait.Until(condition => {
-                var btn = PublicFeedbacks.Last().FindElement(By.CssSelector("button"));
-                return btn != null;
-            });
-            var newButton = PublicFeedbacks.Last().FindElement(By.CssSelector("button"));
-            var newButtonType = newButton.GetAttribute("name");
+            var buttonType = LastButton.GetAttribute("name");
+            LastButton.Click();
+            var newButtonType = LastButton.GetAttribute("name");
             if (buttonType == "approval-button")
                 newButtonType.ShouldBe("deny-button");
             else
@@ -89,5 +84,10 @@ namespace HospitalTests.HospitalE2ETests.FeedbackTests
             _loginPage.WaitForLogin();
         }
 
+        public void Dispose()
+        {
+            _driver.Quit();
+            _driver.Dispose();
+        }
     }
 }

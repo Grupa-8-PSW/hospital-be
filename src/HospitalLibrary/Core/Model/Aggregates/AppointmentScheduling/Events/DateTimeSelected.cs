@@ -7,9 +7,9 @@ using HospitalLibrary.Core.Model.Aggregates;
 
 namespace HospitalLibrary.Core.Model.Aggregates.AppointmentScheduling.Events
 {
-    public class DateSelected : DomainEvent
+    public class DateTimeSelected : DomainEvent
     {
-        public DateSelected(int id, DateTime date) : base(id)
+        public DateTimeSelected(DateTime timestamp, DateTime date) : base(timestamp)
         {
             Date = date;
         }

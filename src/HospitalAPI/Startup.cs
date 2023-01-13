@@ -173,6 +173,10 @@ namespace HospitalAPI
             services.AddScoped<IExaminationDoneService, ExaminationDoneService>();
             services.AddScoped<IMapper<ExaminationDone, ExaminationDoneDTO>, ExaminationDoneMapper>();
 
+            services.AddScoped<IAppointmentSchedulingSessionRepository, AppointmentSchedulingSessionRepository>();
+            services.AddScoped<IAppointmentSchedulingEventsService, AppointmentSchedulingEventsService>();
+
+            services.AddScoped<IAppointmentEventWrapperRepository, AppointmentEventWrapperRepository>();
 
             services.AddScoped<IMapper<ConsiliumRequest, ConsiliumRequestDTO>, ConsiliumRequestMapper>();
 

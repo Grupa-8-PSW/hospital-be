@@ -10,7 +10,7 @@ namespace HospitalAPI.Security
 
         public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options) : base(options)
         {
-
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
