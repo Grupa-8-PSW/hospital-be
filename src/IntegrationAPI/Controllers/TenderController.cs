@@ -14,7 +14,7 @@ namespace IntegrationAPI.Controllers
     public class TenderController : ControllerBase
     {
         private readonly ITenderService _service;
-    
+
         public TenderController(ITenderService service)
         {
             this._service = service;
@@ -80,6 +80,7 @@ namespace IntegrationAPI.Controllers
 
            
             return ret;
+
         }
 
         [Route("getTenderStatisticPDF")]
