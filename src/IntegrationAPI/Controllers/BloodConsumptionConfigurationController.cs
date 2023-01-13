@@ -19,7 +19,6 @@ using Microsoft.AspNetCore.Authorization;
 namespace IntegrationAPI.Controllers
 {
 
-
     [Route("api/[controller]")]
     [ApiController]
     public class BloodConsumptionConfigurationController : ControllerBase
@@ -53,7 +52,6 @@ namespace IntegrationAPI.Controllers
 
             emailService.sendPDFReportAttached(file);
             return Ok();
-
         }
     }
 }
