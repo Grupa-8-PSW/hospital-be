@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Repository.Interfaces;
 using IntegrationLibrary.Persistence;
+using Microsoft.EntityFrameworkCore;
 using MimeKit;
 
 namespace IntegrationLibrary.Core.Repository
@@ -51,5 +53,18 @@ namespace IntegrationLibrary.Core.Repository
         {
             return _context.Tenders.Where(p => p.Status.Equals(TenderStatus.Active));
         }
+
+        public IEnumerable<Tender> GetAllBloodAmountsBetweenDates(DateTime start, DateTime end)
+        {
+            return _context.Tenders.Where(t => t.Status.Equals(TenderStatus.Inactive) && t.DateRange.Start >= start && t.DateRange.Start <= end);
+        }
+
+        public List<Tender> GetTendersBetweenDates(DateTime start, DateTime end)
+        {
+            var toRet = _context.Tenders.Where(t =>
+                t.Status.Equals(TenderStatus.Inactive) && t.DateRange.Start >= start && t.DateRange.End <= end).ToList();
+            return toRet;
+        }
+
     }
 }

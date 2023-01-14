@@ -8,7 +8,8 @@ namespace IntegrationLibrary.Core.Model.DTO
 {
     public class BloodUnitRequestDeliveryDTO
     {
-        public int hospitalRequestId;
-        public bool delivered;
+        public int hospitalRequestId { get; set; }
+        public bool delivered { get; set; }
+        public string bloodBankApiKey { get; set; }
     }
 }

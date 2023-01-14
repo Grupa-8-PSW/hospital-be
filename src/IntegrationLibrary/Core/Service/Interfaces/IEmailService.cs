@@ -15,5 +15,6 @@ namespace IntegrationLibrary.Core.Service.Interfaces
         void SendRejectEmail(string emailBB);
 
         void SendRejectMonthlyDeliveryEmail(string emailBB);
+        void sendPDFReportAttached(byte[] myFileAsByteArray);
     }
 }

@@ -50,9 +50,9 @@ namespace IntegrationAPI.Connections
                     var jsonMessage = Encoding.UTF8.GetString(body);
 
                     TryParseBloodBankNews(jsonMessage);
-                    TryParseSubscriptionResponse(jsonMessage);
-                    TryParseMonthlyBloodDelivery(jsonMessage);
-                    TryParseBloodRequestDelivery(jsonMessage);
+                   // TryParseSubscriptionResponse(jsonMessage);
+                   // TryParseMonthlyBloodDelivery(jsonMessage);
+                   // TryParseBloodRequestDelivery(jsonMessage);
 
                 };
                 channel.BasicConsume(queue: hospitalQueue,

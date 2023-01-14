@@ -21,15 +21,18 @@ namespace IntegrationLibrary.Core.Model
 
         public string APIKey { get; set; } = "unknown";
 
+        public string Image { get; set; }
+
         public string MonthlySubscriptionRoutingKey { get; set; }
 
-        public BloodBank(string name, string email, string serverAddress, string password, string aPIKey)
+        public BloodBank(string name, string email, string serverAddress, string password, string aPIKey, string image)
         {
             Name = name;
             Email = email;
             ServerAddress = serverAddress;
             Password = password;
             APIKey = aPIKey;
+            Image = image;
         }
 
         public BloodBank()

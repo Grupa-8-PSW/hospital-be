@@ -12,9 +12,9 @@ namespace IntegrationLibrary.Core.Model.ValueObject
 {
     public class Blood : ValueObject<Blood>
     {
-        public BloodType BloodType { get; }
+        public BloodType BloodType { get; set; }
 
-        public int Quantity { get; }
+        public int Quantity { get; set; }
 
         public Blood(BloodType bloodType, int quantity)
         {
@@ -22,6 +22,8 @@ namespace IntegrationLibrary.Core.Model.ValueObject
             BloodType = bloodType;
             Validate();
         }
+
+
 
         private void Validate()
         {
@@ -34,6 +36,7 @@ namespace IntegrationLibrary.Core.Model.ValueObject
             return BloodType == other.BloodType && Quantity == other.Quantity;
         }
 
+
         protected override int GetHashCodeCore()
         {
             unchecked
@@ -43,5 +46,6 @@ namespace IntegrationLibrary.Core.Model.ValueObject
                 return hashCode;
             }
         }
+
     }
 }
