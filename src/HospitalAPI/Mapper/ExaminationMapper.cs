@@ -11,14 +11,15 @@ namespace HospitalAPI.Web.Mapper
     {
         public ExaminationDTO toDTO(Examination examination)
         {
-            ExaminationDTO examinationDTO = new ExaminationDTO();
-            examinationDTO.Id = examination.Id;
-            examinationDTO.PatientId = examination.PatientId;
-            examinationDTO.DoctorId = examination.DoctorId;
-            /*examinationDTO.StartTime = examination.StartTime.ToString("o", CultureInfo.InvariantCulture);
-            examinationDTO.Duration = examination.Duration;*/
+            var examinationDto = new ExaminationDTO();
+            examinationDto.Id = examination.Id;
+            examinationDto.PatientId = examination.PatientId;
+            examinationDto.DoctorId = examination.DoctorId;
+            examinationDto.PatientFullName = examination.Patient.FullName;
+            examinationDto.StartTime = examination.DateRange.Start;
+            examinationDto.Duration = examination.DateRange.DurationInMinutes;
 
-            return examinationDTO;
+            return examinationDto;
         }
 
         public Collection<ExaminationDTO> toDTO(Collection<Examination> models)

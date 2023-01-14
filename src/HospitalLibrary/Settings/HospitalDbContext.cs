@@ -44,7 +44,7 @@ namespace HospitalLibrary.Settings
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+
             modelBuilder.Entity<MedicalDrugs>()
                 .HasIndex(m => m.Code)
                 .IsUnique();
@@ -67,6 +67,9 @@ namespace HospitalLibrary.Settings
             modelBuilder.SeedTherapy();
             modelBuilder.SeedAllergen();
             modelBuilder.SeedSymptoms();
+
+            modelBuilder.SeedConsilium();
+            modelBuilder.SeedDoneExaminations();
 
             base.OnModelCreating(modelBuilder);
 

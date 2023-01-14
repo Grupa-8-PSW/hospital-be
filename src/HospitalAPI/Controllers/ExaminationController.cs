@@ -46,7 +46,7 @@ namespace HospitalAPI.Controllers
         [HttpGet]
         public ActionResult GetAll()
         {
-            var res =  _examinationService.GetAll();
+            var res = _examinationService.GetAll();
             return Ok(res);
         }
 
@@ -60,7 +60,7 @@ namespace HospitalAPI.Controllers
                 return NotFound();
             }
 
-            return Ok(examination);
+            return Ok(_examinationMapper.toDTO(examination));
         }
 
         [HttpGet("{day}/{month}/{year}")]
@@ -86,7 +86,7 @@ namespace HospitalAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-            
+
             var examination = CreateExaminationFromPostRequest(postExaminationRequest);
 
             var success = _examinationService.Create(examination);
@@ -97,12 +97,12 @@ namespace HospitalAPI.Controllers
             return CreatedAtAction("GetById", new
             {
                 id = examination.Id
-            }, _examinationMapper.toDTO(examination));
+            }, _examinationMapper.toDTO(_examinationService.GetById(examination.Id)));
         }
 
         // PUT api/rooms/2
         [HttpPut("{id}")]
-        public ActionResult Update(int id, ExaminationDTO examinationDTO)
+        public ActionResult Update(int id, [FromBody] ExaminationDTO examinationDTO)
         {
             Doctor doctor = _doctorService.GetById(examinationDTO.DoctorId);
 
@@ -130,7 +130,7 @@ namespace HospitalAPI.Controllers
             {
                 return BadRequest("Poruka .....");
             }
-            return Ok(examination);
+            return Ok(_examinationService.GetById(examination.Id));
         }
 
         // DELETE api/rooms/2
@@ -146,7 +146,7 @@ namespace HospitalAPI.Controllers
             _examinationService.Delete(examination);
             return NoContent();
         }
-        
+
 
         [HttpGet("{id}/generateReport")]
         public async Task<ActionResult> DownloadReport(int id, [FromQuery] bool includeReport,

@@ -28,6 +28,14 @@ namespace HospitalAPI.Controllers.InternalApp
             return Ok(_mapper.Map<List<PatientDTO>>(_patientService.GetAll()));
         }
 
+        [HttpGet("{id}")]
+        public ActionResult GetById(int id)
+        {
+            var patient = _patientService.GetById(id);
+
+            return patient == null ? NotFound() : Ok(patient);
+        }
+
 
         [HttpGet("statistic")]
         public ActionResult GetStatistic()
