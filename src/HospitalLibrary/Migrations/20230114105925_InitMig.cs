@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
-    public partial class MergeMapMigration : Migration
+    public partial class InitMig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -103,21 +103,6 @@ namespace HospitalLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Equipments",
-                columns: table => new
-                {
-                    EquipmentId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Amount = table.Column<int>(type: "integer", nullable: false),
-                    RoomId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Equipments", x => x.EquipmentId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "EquipmentTransfers",
                 columns: table => new
                 {
@@ -190,6 +175,41 @@ namespace HospitalLibrary.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MedicalDrugs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RenovationEventWrappers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AggregateId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Data = table.Column<object>(type: "json", nullable: false),
+                    EventType = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RenovationEventWrappers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Renovations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Type = table.Column<int>(type: "integer", nullable: false),
+                    RoomId = table.Column<int>(type: "integer", nullable: false),
+                    Interval = table.Column<int>(type: "integer", nullable: false),
+                    Duration = table.Column<int>(type: "integer", nullable: false),
+                    Available = table.Column<int>(type: "integer", nullable: false),
+                    Changes = table.Column<int>(type: "integer", nullable: false),
+                    Schedule = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Renovations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -287,6 +307,29 @@ namespace HospitalLibrary.Migrations
                     table.ForeignKey(
                         name: "FK_AllergenPatient_Patients_PatientsId",
                         column: x => x.PatientsId,
+                        principalTable: "Patients",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AppointmentEventWrappers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    AggregateId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    PatientId = table.Column<int>(type: "integer", nullable: false),
+                    Data = table.Column<object>(type: "json", nullable: false),
+                    EventType = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AppointmentEventWrappers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AppointmentEventWrappers_Patients_PatientId",
+                        column: x => x.PatientId,
                         principalTable: "Patients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -401,6 +444,27 @@ namespace HospitalLibrary.Migrations
                     table.PrimaryKey("PK_Doctors", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Doctors_Rooms_RoomId",
+                        column: x => x.RoomId,
+                        principalTable: "Rooms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Equipments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Amount = table.Column<int>(type: "integer", nullable: false),
+                    RoomId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Equipments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Equipments_Rooms_RoomId",
                         column: x => x.RoomId,
                         principalTable: "Rooms",
                         principalColumn: "Id",
@@ -713,39 +777,6 @@ namespace HospitalLibrary.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Equipments",
-                columns: new[] { "EquipmentId", "Amount", "Name", "RoomId" },
-                values: new object[,]
-                {
-                    { 1, 2, "Krevet", 1 },
-                    { 2, 2, "Stetoskop", 1 },
-                    { 3, 4, "Stolica", 1 },
-                    { 4, 20, "Stolica", 2 },
-                    { 5, 2, "Aparat za kafu", 2 },
-                    { 6, 4, "Fotelja", 2 },
-                    { 7, 2, "Spric za ispiranje usiju", 3 },
-                    { 8, 3, "Otoskop", 3 },
-                    { 9, 2, "Stetoskop", 4 },
-                    { 10, 3, "Bolnicki krevet", 4 },
-                    { 11, 2, "Aparat za merenje pritiska", 4 },
-                    { 12, 4, "Stolica", 5 },
-                    { 13, 50, "Zavoji", 6 },
-                    { 14, 24, "Spricevi", 6 },
-                    { 15, 12, "Gips", 6 },
-                    { 16, 200, "Flasteri", 6 },
-                    { 17, 20, "Bolnicki krevet", 7 },
-                    { 18, 20, "Infuzija", 7 },
-                    { 19, 20, "Stolica", 8 },
-                    { 20, 2, "Stetoskop", 9 },
-                    { 21, 4, "Stolica", 10 },
-                    { 22, 2, "Krevet", 11 },
-                    { 23, 2, "Stetoskop", 12 },
-                    { 24, 4, "Infuzija", 13 },
-                    { 25, 1, "Fotelja", 13 },
-                    { 26, 20, "Stolica", 13 }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Forms",
                 columns: new[] { "Id", "Description", "EndHourSaturday", "EndHourSunday", "EndHourWorkDay", "Name", "RoomId", "StartHourSaturday", "StartHourSunday", "StartHourWorkDay" },
                 values: new object[,]
@@ -779,6 +810,22 @@ namespace HospitalLibrary.Migrations
                     { 1, 50, "Code1", "Drugs1" },
                     { 2, 50, "Code2", "Drugs2" },
                     { 3, 50, "Code3", "Drugs3" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Renovations",
+                columns: new[] { "Id", "Available", "Changes", "Duration", "Interval", "RoomId", "Schedule", "Type" },
+                values: new object[,]
+                {
+                    { 1, 3, 1, 3, 3, 2, 1, 2 },
+                    { 2, 3, 1, 3, 1, 2, 1, 1 },
+                    { 3, 2, 1, 3, 2, 1, 1, 1 },
+                    { 4, 2, 1, 3, 2, 3, 0, 2 },
+                    { 5, 2, 0, 2, 2, 3, 0, 2 },
+                    { 6, 2, 1, 2, 2, 2, 1, 2 },
+                    { 7, 1, 1, 3, 3, 2, 1, 1 },
+                    { 8, 0, 0, 1, 1, 1, 0, 1 },
+                    { 9, 1, 0, 1, 2, 2, 0, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -894,6 +941,39 @@ namespace HospitalLibrary.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Equipments",
+                columns: new[] { "Id", "Amount", "Name", "RoomId" },
+                values: new object[,]
+                {
+                    { 1, 2, "Krevet", 1 },
+                    { 2, 2, "Stetoskop", 1 },
+                    { 3, 4, "Stolica", 1 },
+                    { 4, 20, "Stolica", 2 },
+                    { 5, 2, "Aparat za kafu", 2 },
+                    { 6, 4, "Fotelja", 2 },
+                    { 7, 2, "Spric za ispiranje usiju", 3 },
+                    { 8, 3, "Otoskop", 3 },
+                    { 9, 2, "Stetoskop", 4 },
+                    { 10, 3, "Bolnicki krevet", 4 },
+                    { 11, 2, "Aparat za merenje pritiska", 4 },
+                    { 12, 4, "Stolica", 5 },
+                    { 13, 50, "Zavoji", 6 },
+                    { 14, 24, "Spricevi", 6 },
+                    { 15, 12, "Gips", 6 },
+                    { 16, 200, "Flasteri", 6 },
+                    { 17, 20, "Bolnicki krevet", 7 },
+                    { 18, 20, "Infuzija", 7 },
+                    { 19, 20, "Stolica", 8 },
+                    { 20, 2, "Stetoskop", 9 },
+                    { 21, 4, "Stolica", 10 },
+                    { 22, 2, "Krevet", 11 },
+                    { 23, 2, "Stetoskop", 12 },
+                    { 24, 4, "Infuzija", 13 },
+                    { 25, 1, "Fotelja", 13 },
+                    { 26, 20, "Stolica", 13 }
+                });
+
+            migrationBuilder.InsertData(
                 table: "MapRooms",
                 columns: new[] { "RoomId", "Color", "Height", "Width", "X", "Y" },
                 values: new object[,]
@@ -938,12 +1018,12 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "Id", "Active", "BedId", "DischargeReason", "EndDate", "PatientId", "Reason", "RoomId", "StartDate" },
                 values: new object[,]
                 {
-                    { 1, false, 1, "abc", new DateTime(2022, 12, 29, 13, 17, 11, 643, DateTimeKind.Utc).AddTicks(8497), 1, "reason1", 1, new DateTime(2022, 12, 29, 13, 17, 11, 643, DateTimeKind.Utc).AddTicks(8496) },
-                    { 2, false, 2, "abc", new DateTime(2022, 12, 29, 13, 17, 11, 643, DateTimeKind.Utc).AddTicks(8501), 2, "reason2", 1, new DateTime(2022, 12, 29, 13, 17, 11, 643, DateTimeKind.Utc).AddTicks(8501) },
-                    { 3, false, 4, "abc", new DateTime(2022, 12, 29, 13, 17, 11, 643, DateTimeKind.Utc).AddTicks(8502), 3, "reason3", 2, new DateTime(2022, 12, 29, 13, 17, 11, 643, DateTimeKind.Utc).AddTicks(8502) },
-                    { 4, true, 1, "abc", null, 1, "reason1", 1, new DateTime(2022, 12, 29, 13, 17, 11, 643, DateTimeKind.Utc).AddTicks(8503) },
-                    { 5, true, 2, "abc", null, 2, "reason2", 1, new DateTime(2022, 12, 29, 13, 17, 11, 643, DateTimeKind.Utc).AddTicks(8504) },
-                    { 6, true, 4, "abc", null, 3, "reason3", 2, new DateTime(2022, 12, 29, 13, 17, 11, 643, DateTimeKind.Utc).AddTicks(8505) }
+                    { 1, false, 1, "abc", new DateTime(2023, 1, 14, 10, 59, 25, 129, DateTimeKind.Utc).AddTicks(5467), 1, "reason1", 1, new DateTime(2023, 1, 14, 10, 59, 25, 129, DateTimeKind.Utc).AddTicks(5467) },
+                    { 2, false, 2, "abc", new DateTime(2023, 1, 14, 10, 59, 25, 129, DateTimeKind.Utc).AddTicks(5472), 2, "reason2", 1, new DateTime(2023, 1, 14, 10, 59, 25, 129, DateTimeKind.Utc).AddTicks(5472) },
+                    { 3, false, 4, "abc", new DateTime(2023, 1, 14, 10, 59, 25, 129, DateTimeKind.Utc).AddTicks(5474), 3, "reason3", 2, new DateTime(2023, 1, 14, 10, 59, 25, 129, DateTimeKind.Utc).AddTicks(5473) },
+                    { 4, true, 1, "abc", null, 1, "reason1", 1, new DateTime(2023, 1, 14, 10, 59, 25, 129, DateTimeKind.Utc).AddTicks(5475) },
+                    { 5, true, 2, "abc", null, 2, "reason2", 1, new DateTime(2023, 1, 14, 10, 59, 25, 129, DateTimeKind.Utc).AddTicks(5476) },
+                    { 6, true, 4, "abc", null, 3, "reason3", 2, new DateTime(2023, 1, 14, 10, 59, 25, 129, DateTimeKind.Utc).AddTicks(5477) }
                 });
 
             migrationBuilder.InsertData(
@@ -951,14 +1031,19 @@ namespace HospitalLibrary.Migrations
                 columns: new[] { "Id", "Amount", "DoctorId", "Reason", "TherapySubject", "TherapyType", "TreatmentHistoryId", "WhenPrescribed" },
                 values: new object[,]
                 {
-                    { 1, 1, 1, "Headache", "Bromazepam 500mg", 0, 1, new DateTime(2022, 12, 29, 13, 17, 11, 643, DateTimeKind.Utc).AddTicks(8548) },
-                    { 2, 1, 2, "Blood loss", "A+ 500ml", 1, 1, new DateTime(2022, 12, 29, 13, 17, 11, 643, DateTimeKind.Utc).AddTicks(8550) }
+                    { 1, 1, 1, "Headache", "Bromazepam 500mg", 0, 1, new DateTime(2023, 1, 14, 10, 59, 25, 129, DateTimeKind.Utc).AddTicks(5519) },
+                    { 2, 1, 2, "Blood loss", "A+ 500ml", 1, 1, new DateTime(2023, 1, 14, 10, 59, 25, 129, DateTimeKind.Utc).AddTicks(5521) }
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AllergenPatient_PatientsId",
                 table: "AllergenPatient",
                 column: "PatientsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AppointmentEventWrappers_PatientId",
+                table: "AppointmentEventWrappers",
+                column: "PatientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Beds_RoomId",
@@ -984,6 +1069,11 @@ namespace HospitalLibrary.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Doctors_RoomId",
                 table: "Doctors",
+                column: "RoomId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Equipments_RoomId",
+                table: "Equipments",
                 column: "RoomId");
 
             migrationBuilder.CreateIndex(
@@ -1096,6 +1186,9 @@ namespace HospitalLibrary.Migrations
                 name: "AllergenPatient");
 
             migrationBuilder.DropTable(
+                name: "AppointmentEventWrappers");
+
+            migrationBuilder.DropTable(
                 name: "Bloods");
 
             migrationBuilder.DropTable(
@@ -1133,6 +1226,12 @@ namespace HospitalLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "PrescriptionItem");
+
+            migrationBuilder.DropTable(
+                name: "RenovationEventWrappers");
+
+            migrationBuilder.DropTable(
+                name: "Renovations");
 
             migrationBuilder.DropTable(
                 name: "Symptoms");
