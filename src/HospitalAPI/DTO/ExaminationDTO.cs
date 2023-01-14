@@ -8,6 +8,8 @@ namespace HospitalAPI.Web.Dto
         public int DoctorId { get; set; }
         public int PatientId { get; set; }
         public string PatientFullName { get; set; }
+        public DateTime StartTime { get; set; }
+        public int Duration { get; set; }
         public DateRange DateRange { get; set; }
     }
 }

@@ -27,6 +27,10 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using System.Text.Json.Serialization;
+using AngleSharp.Io;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Runtime.Serialization;
+using AutoMapper;
 
 
 namespace HospitalAPI
@@ -179,6 +183,9 @@ namespace HospitalAPI
             services.AddScoped<IAppointmentEventWrapperRepository, AppointmentEventWrapperRepository>();
 
             services.AddScoped<IMapper<ConsiliumRequest, ConsiliumRequestDTO>, ConsiliumRequestMapper>();
+
+            services.AddScoped<IMapper<ExaminationDone, ExaminationDocumentResponse>, ExaminationDocumentMapper>();
+            services.AddScoped<ISearchTextParserService, SearchTextParserService>();
 
             services.AddCors(options =>
             {

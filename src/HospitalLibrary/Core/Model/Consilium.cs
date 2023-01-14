@@ -47,6 +47,15 @@ public class Consilium : BaseEntityModel
         Validate();
     }
 
+    public Consilium(int id, string subject, int duration)
+    {
+        Id = id;
+        Subject = subject;
+        Duration = duration;
+        _doctors = new List<Doctor>();
+        Validate();
+    }
+
     public Consilium()
     {
 

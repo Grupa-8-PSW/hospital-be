@@ -3,6 +3,7 @@ using System;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230114154337_SeedMigration")]
+    partial class SeedMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,63 +115,6 @@ namespace HospitalLibrary.Migrations
                             Number = "25",
                             Street = "Njegoseva"
                         });
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Aggregates.AppointmentScheduling.AppointmentEventWrapper", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AggregateId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AggregateId"));
-
-                    b.Property<object>("Data")
-                        .IsRequired()
-                        .HasColumnType("json");
-
-                    b.Property<int>("EventType")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PatientId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PatientId");
-
-                    b.ToTable("AppointmentEventWrappers");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Aggregates.RenovationScheduling.RenovationEventWrapper", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AggregateId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AggregateId"));
-
-                    b.Property<object>("Data")
-                        .IsRequired()
-                        .HasColumnType("json");
-
-                    b.Property<int>("EventType")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RenovationEventWrappers");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Allergen", b =>
@@ -511,6 +456,20 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Consiliums");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Duration = 120,
+                            Subject = "New disease"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Duration = 180,
+                            Subject = "Covid-19"
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Doctor", b =>
@@ -677,6 +636,26 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("ExaminationId");
 
                     b.ToTable("ExaminationsDone");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ExaminationId = 1,
+                            Record = "Patient successfully recovered."
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ExaminationId = 2,
+                            Record = "Patient successfully recovered after having stomach problems."
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ExaminationId = 3,
+                            Record = "Patient feels great."
+                        });
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Feedback", b =>
@@ -1029,7 +1008,7 @@ namespace HospitalLibrary.Migrations
                             TherapySubject = "Bromazepam 500mg",
                             TherapyType = 0,
                             TreatmentHistoryId = 1,
-                            WhenPrescribed = new DateTime(2023, 1, 14, 10, 59, 25, 129, DateTimeKind.Utc).AddTicks(5519)
+                            WhenPrescribed = new DateTime(2023, 1, 14, 15, 43, 36, 363, DateTimeKind.Utc).AddTicks(979)
                         },
                         new
                         {
@@ -1040,7 +1019,7 @@ namespace HospitalLibrary.Migrations
                             TherapySubject = "A+ 500ml",
                             TherapyType = 1,
                             TreatmentHistoryId = 1,
-                            WhenPrescribed = new DateTime(2023, 1, 14, 10, 59, 25, 129, DateTimeKind.Utc).AddTicks(5521)
+                            WhenPrescribed = new DateTime(2023, 1, 14, 15, 43, 36, 363, DateTimeKind.Utc).AddTicks(981)
                         });
                 });
 
@@ -1095,11 +1074,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 1,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2023, 1, 14, 10, 59, 25, 129, DateTimeKind.Utc).AddTicks(5467),
+                            EndDate = new DateTime(2023, 1, 14, 15, 43, 36, 363, DateTimeKind.Utc).AddTicks(937),
                             PatientId = 1,
                             Reason = "reason1",
                             RoomId = 1,
-                            StartDate = new DateTime(2023, 1, 14, 10, 59, 25, 129, DateTimeKind.Utc).AddTicks(5467)
+                            StartDate = new DateTime(2023, 1, 14, 15, 43, 36, 363, DateTimeKind.Utc).AddTicks(936)
                         },
                         new
                         {
@@ -1107,11 +1086,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 2,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2023, 1, 14, 10, 59, 25, 129, DateTimeKind.Utc).AddTicks(5472),
+                            EndDate = new DateTime(2023, 1, 14, 15, 43, 36, 363, DateTimeKind.Utc).AddTicks(941),
                             PatientId = 2,
                             Reason = "reason2",
                             RoomId = 1,
-                            StartDate = new DateTime(2023, 1, 14, 10, 59, 25, 129, DateTimeKind.Utc).AddTicks(5472)
+                            StartDate = new DateTime(2023, 1, 14, 15, 43, 36, 363, DateTimeKind.Utc).AddTicks(941)
                         },
                         new
                         {
@@ -1119,11 +1098,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 4,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2023, 1, 14, 10, 59, 25, 129, DateTimeKind.Utc).AddTicks(5474),
+                            EndDate = new DateTime(2023, 1, 14, 15, 43, 36, 363, DateTimeKind.Utc).AddTicks(942),
                             PatientId = 3,
                             Reason = "reason3",
                             RoomId = 2,
-                            StartDate = new DateTime(2023, 1, 14, 10, 59, 25, 129, DateTimeKind.Utc).AddTicks(5473)
+                            StartDate = new DateTime(2023, 1, 14, 15, 43, 36, 363, DateTimeKind.Utc).AddTicks(942)
                         },
                         new
                         {
@@ -1134,7 +1113,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 1,
                             Reason = "reason1",
                             RoomId = 1,
-                            StartDate = new DateTime(2023, 1, 14, 10, 59, 25, 129, DateTimeKind.Utc).AddTicks(5475)
+                            StartDate = new DateTime(2023, 1, 14, 15, 43, 36, 363, DateTimeKind.Utc).AddTicks(943)
                         },
                         new
                         {
@@ -1145,7 +1124,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 2,
                             Reason = "reason2",
                             RoomId = 1,
-                            StartDate = new DateTime(2023, 1, 14, 10, 59, 25, 129, DateTimeKind.Utc).AddTicks(5476)
+                            StartDate = new DateTime(2023, 1, 14, 15, 43, 36, 363, DateTimeKind.Utc).AddTicks(944)
                         },
                         new
                         {
@@ -1156,7 +1135,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 3,
                             Reason = "reason3",
                             RoomId = 2,
-                            StartDate = new DateTime(2023, 1, 14, 10, 59, 25, 129, DateTimeKind.Utc).AddTicks(5477)
+                            StartDate = new DateTime(2023, 1, 14, 15, 43, 36, 363, DateTimeKind.Utc).AddTicks(945)
                         });
                 });
 
@@ -1227,11 +1206,11 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Equipment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("EquipmentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("EquipmentId"));
 
                     b.Property<int>("Amount")
                         .HasColumnType("integer");
@@ -1243,191 +1222,189 @@ namespace HospitalLibrary.Migrations
                     b.Property<int>("RoomId")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoomId");
+                    b.HasKey("EquipmentId");
 
                     b.ToTable("Equipments");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            EquipmentId = 1,
                             Amount = 2,
                             Name = "Krevet",
                             RoomId = 1
                         },
                         new
                         {
-                            Id = 2,
+                            EquipmentId = 2,
                             Amount = 2,
                             Name = "Stetoskop",
                             RoomId = 1
                         },
                         new
                         {
-                            Id = 3,
+                            EquipmentId = 3,
                             Amount = 4,
                             Name = "Stolica",
                             RoomId = 1
                         },
                         new
                         {
-                            Id = 4,
+                            EquipmentId = 4,
                             Amount = 20,
                             Name = "Stolica",
                             RoomId = 2
                         },
                         new
                         {
-                            Id = 5,
+                            EquipmentId = 5,
                             Amount = 2,
                             Name = "Aparat za kafu",
                             RoomId = 2
                         },
                         new
                         {
-                            Id = 6,
+                            EquipmentId = 6,
                             Amount = 4,
                             Name = "Fotelja",
                             RoomId = 2
                         },
                         new
                         {
-                            Id = 7,
+                            EquipmentId = 7,
                             Amount = 2,
                             Name = "Spric za ispiranje usiju",
                             RoomId = 3
                         },
                         new
                         {
-                            Id = 8,
+                            EquipmentId = 8,
                             Amount = 3,
                             Name = "Otoskop",
                             RoomId = 3
                         },
                         new
                         {
-                            Id = 9,
+                            EquipmentId = 9,
                             Amount = 2,
                             Name = "Stetoskop",
                             RoomId = 4
                         },
                         new
                         {
-                            Id = 10,
+                            EquipmentId = 10,
                             Amount = 3,
                             Name = "Bolnicki krevet",
                             RoomId = 4
                         },
                         new
                         {
-                            Id = 11,
+                            EquipmentId = 11,
                             Amount = 2,
                             Name = "Aparat za merenje pritiska",
                             RoomId = 4
                         },
                         new
                         {
-                            Id = 12,
+                            EquipmentId = 12,
                             Amount = 4,
                             Name = "Stolica",
                             RoomId = 5
                         },
                         new
                         {
-                            Id = 13,
+                            EquipmentId = 13,
                             Amount = 50,
                             Name = "Zavoji",
                             RoomId = 6
                         },
                         new
                         {
-                            Id = 14,
+                            EquipmentId = 14,
                             Amount = 24,
                             Name = "Spricevi",
                             RoomId = 6
                         },
                         new
                         {
-                            Id = 15,
+                            EquipmentId = 15,
                             Amount = 12,
                             Name = "Gips",
                             RoomId = 6
                         },
                         new
                         {
-                            Id = 16,
+                            EquipmentId = 16,
                             Amount = 200,
                             Name = "Flasteri",
                             RoomId = 6
                         },
                         new
                         {
-                            Id = 17,
+                            EquipmentId = 17,
                             Amount = 20,
                             Name = "Bolnicki krevet",
                             RoomId = 7
                         },
                         new
                         {
-                            Id = 18,
+                            EquipmentId = 18,
                             Amount = 20,
                             Name = "Infuzija",
                             RoomId = 7
                         },
                         new
                         {
-                            Id = 19,
+                            EquipmentId = 19,
                             Amount = 20,
                             Name = "Stolica",
                             RoomId = 8
                         },
                         new
                         {
-                            Id = 20,
+                            EquipmentId = 20,
                             Amount = 2,
                             Name = "Stetoskop",
                             RoomId = 9
                         },
                         new
                         {
-                            Id = 21,
+                            EquipmentId = 21,
                             Amount = 4,
                             Name = "Stolica",
                             RoomId = 10
                         },
                         new
                         {
-                            Id = 22,
+                            EquipmentId = 22,
                             Amount = 2,
                             Name = "Krevet",
                             RoomId = 11
                         },
                         new
                         {
-                            Id = 23,
+                            EquipmentId = 23,
                             Amount = 2,
                             Name = "Stetoskop",
                             RoomId = 12
                         },
                         new
                         {
-                            Id = 24,
+                            EquipmentId = 24,
                             Amount = 4,
                             Name = "Infuzija",
                             RoomId = 13
                         },
                         new
                         {
-                            Id = 25,
+                            EquipmentId = 25,
                             Amount = 1,
                             Name = "Fotelja",
                             RoomId = 13
                         },
                         new
                         {
-                            Id = 26,
+                            EquipmentId = 26,
                             Amount = 20,
                             Name = "Stolica",
                             RoomId = 13
@@ -2009,141 +1986,6 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("MapForms");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Renovation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Available")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Changes")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Duration")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Interval")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("RoomId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Schedule")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Renovations");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Available = 3,
-                            Changes = 1,
-                            Duration = 3,
-                            Interval = 3,
-                            RoomId = 2,
-                            Schedule = 1,
-                            Type = 2
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Available = 3,
-                            Changes = 1,
-                            Duration = 3,
-                            Interval = 1,
-                            RoomId = 2,
-                            Schedule = 1,
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Available = 2,
-                            Changes = 1,
-                            Duration = 3,
-                            Interval = 2,
-                            RoomId = 1,
-                            Schedule = 1,
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Available = 2,
-                            Changes = 1,
-                            Duration = 3,
-                            Interval = 2,
-                            RoomId = 3,
-                            Schedule = 0,
-                            Type = 2
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Available = 2,
-                            Changes = 0,
-                            Duration = 2,
-                            Interval = 2,
-                            RoomId = 3,
-                            Schedule = 0,
-                            Type = 2
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Available = 2,
-                            Changes = 1,
-                            Duration = 2,
-                            Interval = 2,
-                            RoomId = 2,
-                            Schedule = 1,
-                            Type = 2
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Available = 1,
-                            Changes = 1,
-                            Duration = 3,
-                            Interval = 3,
-                            RoomId = 2,
-                            Schedule = 1,
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Available = 0,
-                            Changes = 0,
-                            Duration = 1,
-                            Interval = 1,
-                            RoomId = 1,
-                            Schedule = 0,
-                            Type = 1
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Available = 1,
-                            Changes = 0,
-                            Duration = 1,
-                            Interval = 2,
-                            RoomId = 2,
-                            Schedule = 0,
-                            Type = 2
-                        });
-                });
-
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Room", b =>
                 {
                     b.Property<int>("Id")
@@ -2357,17 +2199,6 @@ namespace HospitalLibrary.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Core.Model.Aggregates.AppointmentScheduling.AppointmentEventWrapper", b =>
-                {
-                    b.HasOne("HospitalLibrary.Core.Model.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Patient");
-                });
-
             modelBuilder.Entity("HospitalLibrary.Core.Model.Bed", b =>
                 {
                     b.HasOne("HospitalLibrary.GraphicalEditor.Model.Room", null)
@@ -2407,6 +2238,20 @@ namespace HospitalLibrary.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("ConsiliumId");
+
+                            b1.HasData(
+                                new
+                                {
+                                    ConsiliumId = 1,
+                                    End = new DateTime(2023, 1, 22, 16, 30, 0, 0, DateTimeKind.Utc),
+                                    Start = new DateTime(2023, 1, 22, 15, 30, 0, 0, DateTimeKind.Utc)
+                                },
+                                new
+                                {
+                                    ConsiliumId = 2,
+                                    End = new DateTime(2022, 10, 20, 12, 15, 0, 0, DateTimeKind.Utc),
+                                    Start = new DateTime(2022, 10, 20, 9, 15, 0, 0, DateTimeKind.Utc)
+                                });
                         });
 
                     b.Navigation("Interval")
@@ -2750,17 +2595,6 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Room");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Equipment", b =>
-                {
-                    b.HasOne("HospitalLibrary.GraphicalEditor.Model.Room", "Room")
-                        .WithMany("Equipment")
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Room");
-                });
-
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Floor", b =>
                 {
                     b.HasOne("HospitalLibrary.GraphicalEditor.Model.Building", "Building")
@@ -3051,8 +2885,6 @@ namespace HospitalLibrary.Migrations
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Room", b =>
                 {
                     b.Navigation("Beds");
-
-                    b.Navigation("Equipment");
                 });
 #pragma warning restore 612, 618
         }

@@ -21,7 +21,9 @@ namespace HospitalLibrary.Core.Repository
 
         public Examination? GetById(int id)
         {
-            return _context.Examinations.Find(id);
+            return _context.Examinations
+                .Include(ex => ex.Patient)
+                .SingleOrDefault(ex => ex.Id == id);
         }
 
         public void Create(Examination examination)
@@ -56,7 +58,9 @@ namespace HospitalLibrary.Core.Repository
 
         public IEnumerable<Examination> GetByDate(DateTime startTime)
         {
-            return _context.Examinations.Where(ex => ex.DateRange.Start.Date == startTime.Date).ToList();
+            return _context.Examinations
+                .Include(ex => ex.Patient)
+                .Where(ex => ex.DateRange.Start.Date == startTime.Date).ToList();
         }
 
         public IEnumerable<Examination> GetByDoctorAndDate(int doctorId, DateTime date)

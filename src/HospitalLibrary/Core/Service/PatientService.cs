@@ -16,7 +16,7 @@ namespace HospitalLibrary.Core.Service
 
         public List<Patient> GetBySelectedDoctorId(int id) => _patientRepository.GetBySelectedDoctorId(id).ToList();
 
-        public Patient GetById(int id) => _patientRepository.GetById(id);
+        public Patient? GetById(int id) => _patientRepository.GetById(id);
 
         public Patient Create(Patient patient) => _patientRepository.Create(patient);
 
@@ -42,7 +42,7 @@ namespace HospitalLibrary.Core.Service
         {
             AgeStatistic statistic = new AgeStatistic();
 
-            foreach(Patient p in patients)
+            foreach (Patient p in patients)
             {
                 int age = p.Pin.CalculateAge();
                 switch (age)
