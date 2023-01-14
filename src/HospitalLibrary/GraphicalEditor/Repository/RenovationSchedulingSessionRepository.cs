@@ -13,7 +13,7 @@ namespace HospitalLibrary.GraphicalEditor.Repository
         {
         }
 
-        public List<int> GetAll()
+        public List<int> GetScheduledRenovations()
         {
             return _dbContext.RenovationEventWrappers.Where(e => e.EventType == RenovationEventType.SESSION_ENDED).Select(ev => ev.AggregateId).ToList();
         }
