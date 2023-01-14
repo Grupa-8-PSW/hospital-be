@@ -55,11 +55,15 @@ namespace IntegrationLibrary.Core.Service
             return bloodBankNewsRepository.GetAll();
         }
 
+        public IEnumerable<BloodBankNews> GetAllPublished()
+        {
+            return bloodBankNewsRepository.GetAllPublished();
+        }
+
         public BloodBankNews GetById(int id)
         {
             return bloodBankNewsRepository.GetById(id);
         }
-
 
     }
 }

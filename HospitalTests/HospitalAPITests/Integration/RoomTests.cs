@@ -1,26 +1,18 @@
 ﻿using HospitalAPI;
 using HospitalAPI.Controllers.Map;
-using HospitalAPI.DTO;
-using HospitalLibrary.Core.Model;
 using HospitalLibrary.GraphicalEditor.Model;
 using HospitalLibrary.GraphicalEditor.Model.DTO;
-using HospitalLibrary.GraphicalEditor.Service;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using HospitalTests.HospitalAPITests.Setup;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalTests.HospitalAPITests.Integration
 {
     public class RoomTests : BaseIntegrationTest
     {
         public RoomTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
-        
+
         private static RoomController SetupController(IServiceScope scope)
         {
             return new RoomController(scope.ServiceProvider.GetRequiredService<IRoomService>());
@@ -38,16 +30,8 @@ namespace HospitalTests.HospitalAPITests.Integration
             Assert.NotNull(result);
         }
 
-        //[Fact]
-        //public void Finds_rooms_with_free_beds() {
-        //  var result = ((OkObjectResult)controller.GetFreeRooms())?.Value as List<RoomDTO>;
+        [Fact]
 
-        //  Assert.NotNull(result);
-        //  Assert.IsType<List<RoomDTO>>(result);
-        //  Assert.NotEmpty(result);
-        //}
-
-        
         public void Searches_rooms_with_same_name()
         {
             using var scope = Factory.Services.CreateScope();
@@ -109,7 +93,8 @@ namespace HospitalTests.HospitalAPITests.Integration
 
             var result = ((OkObjectResult)controller.Search("Kafe"))?.Value as List<RoomDTO>;
 
-            Assert.NotNull(result);
+
+
             Assert.IsType<List<RoomDTO>>(result);
             Assert.True(result.Count.Equals(1));
             Assert.True(result[0].Name.Equals("Kafeterija"));
@@ -128,5 +113,48 @@ namespace HospitalTests.HospitalAPITests.Integration
             Assert.True(result.Count.Equals(1));
             Assert.True(result[0].Name.Equals("Fizioterapeut"));
         }
+
+        //[Fact]
+        //public void Finds_rooms_with_free_beds() {
+        //  var result = ((OkObjectResult)controller.GetFreeRooms())?.Value as List<RoomDTO>;
+
+        //  Assert.NotNull(result);
+        //  Assert.IsType<List<RoomDTO>>(result);
+        //  Assert.NotEmpty(result);
+        //}
+
+        [Fact]
+        public void Dates_for_trainsfering_equipments()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            EquipmentTransferDTO dto = new EquipmentTransferDTO(1, 1, 2, new DateTime(2022, 11, 22, 00, 00, 00, DateTimeKind.Utc), new DateTime(2022, 11, 23, 00, 00, 00, DateTimeKind.Utc), 120, "Zavoji");
+            var freeSpace = ((OkObjectResult)controller.GetAvailableTerminsForTransfer(dto))?.Value as List<FreeSpaceDTO>;
+
+            Assert.NotNull(freeSpace);
+        }
+
+      /*  [Fact]
+        public void Separating_room()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            RoomForSeparateDTO dto = new RoomForSeparateDTO(2,"Ortopedija", "OTHER", "Pedijatrija", "OTHER");
+            var separatedRoom = ((OkObjectResult)controller.GetSeparatedRooms(dto))?.Value as List<SeparatedRoomsDTO>;
+
+            Assert.NotNull(separatedRoom);
+        } 
+
+        
+        [Fact]
+        public void Merging_Rooms()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            RoomsForMergeDTO dto = new RoomsForMergeDTO(1, 2, "Logopedija", "OTHER");
+            var mergedRoom = ((OkObjectResult)controller.GetMergedRoom(dto))?.Value as List<MergedRoomDTO>;
+
+            Assert.NotNull(mergedRoom);
+        } */
     }
 }

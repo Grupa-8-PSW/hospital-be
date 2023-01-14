@@ -1,27 +1,72 @@
 ﻿using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.GraphicalEditor.Model.Map;
-using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HospitalLibrary.GraphicalEditor.Model
 {
-    public class Room
+    public class Room : BaseEntityModel
     {
-        public int Id { get; set; }
-        [Required]
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
-        public string Color { get; set; }
-        public string Name { get; set; }
+        private List<Bed> _beds = new();
+        private List<Equipment> _equipment = new();
 
-        public int FloorId { get; set; }
+        public RoomType Type { get; private set; }
+        public string Number { get; private set; }
+        public string Name { get; private set; }
 
-        public virtual ICollection<Floor> Floors { get; set; }
+        [Column(TypeName = "jsonb")]
+        public MapRoom Map { get; private set; }
+        public int FloorId { get; private set; }
+        public virtual Floor Floor { get; private set; }
 
-        public ICollection<Bed> Beds { get; set; }
-        public RoomType Type { get; set; }
+        public virtual List<Bed> Beds
+        {
+            get => new(_beds);
+            private set => _beds = value;
+        }
 
+        public virtual List<Equipment> Equipment
+        {
+            get => new(_equipment);
+            private set => _equipment = value;
+        }
+
+        public Room(RoomType type, string number, string name, MapRoom map, int floorId, Floor floor,
+            List<Bed> beds, List<Equipment> equipment)
+        {
+            Type = type;
+            Number = number;
+            Name = name;
+            Map = map;
+            FloorId = floorId;
+            Floor = floor;
+            _beds = beds;
+            _equipment = equipment;
+            Validate();
+        }
+
+        public Room(int id, RoomType type, string number, string name, MapRoom map, int floorId, Floor floor)
+        {
+            Id = id;
+            Type = type;
+            Number = number;
+            Name = name;
+            Map = map;
+            FloorId = floorId;
+            Floor = floor;
+            _beds = new();
+            _equipment = new();
+            Validate();
+        }
+
+        public Room()
+        {
+        }
+
+        private void Validate()
+        {
+            //throw new ArgumentException("Not Implemented");
+        }
     }
 }

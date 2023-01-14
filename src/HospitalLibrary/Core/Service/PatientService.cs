@@ -44,7 +44,7 @@ namespace HospitalLibrary.Core.Service
 
             foreach(Patient p in patients)
             {
-                int age = CalculateAgeFromPin(p);
+                int age = p.Pin.CalculateAge();
                 switch (age)
                 {
                     case <= 18:
@@ -60,24 +60,6 @@ namespace HospitalLibrary.Core.Service
             }
 
             return statistic;
-        }
-
-        public int CalculateAgeFromPin(Patient p)
-        {
-            string birthYear = p.Pin.Substring(4, 3);
-            string fullBirthYear;
-            DateTime dateNow = DateTime.Now;
-
-            if(Int32.Parse(birthYear) > Int32.Parse(dateNow.Year.ToString().Substring(1, 3)))
-            {
-                fullBirthYear = "1" + birthYear;
-            } else
-            {
-                fullBirthYear = "2" + birthYear;
-            }
-
-            DateTime birthDate = DateTime.Parse(fullBirthYear + "-" + p.Pin.Substring(2, 2) + "-" + p.Pin.Substring(0, 2));
-            return new DateTime(dateNow.Subtract(birthDate).Ticks).Year - 1;
         }
 
         public GenderStatistic GetGenderStatistic(List<Patient> patients)

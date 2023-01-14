@@ -14,7 +14,7 @@ namespace HospitalAPI.Controllers.InternalApp;
 
 [ApiController]
 [Route("api/internal/[controller]")]
-[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+//[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class ConsiliumController : ControllerBase
 {
     private readonly IConsiliumService _consiliumService;

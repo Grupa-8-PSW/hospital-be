@@ -35,6 +35,11 @@ namespace IntegrationLibrary.Core.Repository
             return _context.BloodBankNews.Include(b => b.BloodBank).Where(b => b.Archived == false).ToList();
         }
 
+        public IEnumerable<BloodBankNews> GetAllPublished()
+        {
+            return _context.BloodBankNews.Where(b => b.Published && !b.Archived).ToList();
+        }
+
         public BloodBankNews GetById(int id)
         {
             return _context.BloodBankNews.Find(id);

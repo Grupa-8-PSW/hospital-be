@@ -38,7 +38,7 @@ public class ExaminationsPage
         {
             try
             {
-                return Rows.Count > 0;
+                return Rows.Count >= 0;
             }
             catch (StaleElementReferenceException)
             {

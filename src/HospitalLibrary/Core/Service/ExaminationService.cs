@@ -1,43 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HospitalLibrary.Core.DomainService;
+using HospitalLibrary.Core.Enums;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.ValueObjects;
 using HospitalLibrary.Core.Repository;
-using HospitalLibrary.Core.Validation;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 
 namespace HospitalLibrary.Core.Service
 {
     public class ExaminationService : IExaminationService
     {
         private readonly IExaminationRepository _examinationRepository;
-        private readonly IExaminationValidation _validation;
-        private readonly IDoctorRepository _doctorRepository;
+        private readonly IAppointmentRepository _appointmentRepository;
+        private readonly DoctorScheduler _doctorScheduler;
 
-        public ExaminationService(IExaminationRepository examinationRepository, IExaminationValidation validation, IDoctorRepository doctorRepository)
+        public ExaminationService(
+            IExaminationRepository examinationRepository,
+            DoctorScheduler doctorScheduler,
+            IAppointmentRepository appointmentRepository)
         {
             _examinationRepository = examinationRepository;
-            _validation = validation;
-            _doctorRepository = doctorRepository;
+            _doctorScheduler = doctorScheduler;
+            _appointmentRepository = appointmentRepository;
         }
 
         public IEnumerable<Examination> GetAll()
         {
-            /*  Room room = new Room(1, "11", 1);
-              Patient patient1 = new Patient(1, "Pera", "Peric");
-              Patient patient2 = new Patient(1, "Mira", "Miric");
-              Patient patient3 = new Patient(1, "Sara", "Peric");
-              Doctor doctor = new Doctor(1, "Lara", "Laric", 1, room);
-              var examinations = new List<Examination>();
-              examinations.Add(new Examination(1, 1, doctor, 1, patient1, 1, room, new DateTime(2022, 11, 17, 7, 30, 00), 20));
-              examinations.Add(new Examination(1, 1, doctor, 1, patient2, 1, room, new DateTime(2022, 11, 17, 7, 50, 00), 20));
-              examinations.Add(new Examination(1, 1, doctor, 1, patient3, 1, room, new DateTime(2022, 11, 17, 8, 30, 00), 20));
-              examinations.Add(new Examination(1, 1, doctor, 1, patient1, 1, room, new DateTime(2022, 11, 18, 7, 30, 00), 20));
-
-
-              return examinations;*/
             return _examinationRepository.GetAll();
         }
 
@@ -46,26 +32,35 @@ namespace HospitalLibrary.Core.Service
             return _examinationRepository.GetById(id);
         }
 
+        public IEnumerable<Examination> GetByRoomId(int roomId)
+        {
+            return _examinationRepository.GetByRoomId(roomId);
+        }
+
         public bool Create(Examination examination)
         {
-            if (!_validation.Validate(examination.DoctorId, examination.StartTime, examination.Duration))
-            {
+            if (!IsAvailable(examination))
                 return false;
-            }
             _examinationRepository.Create(examination);
             return true;
         }
 
         public bool Update(Examination examination)
         {
-            if (!_validation.ValidateNotIncludingExaminationId(examination.DoctorId, examination.StartTime, examination.Duration, examination.Id))
-            {
+            var examinationToUpdate = _examinationRepository.GetById(examination.Id);
+            if (examinationToUpdate.DateRange != examination.DateRange && !IsAvailable(examination, examinationToUpdate.DateRange))
                 return false;
-            }
-            Doctor doctor = _doctorRepository.GetById(examination.DoctorId);
-            examination.Doctor = doctor;
+            examination.RoomId = examinationToUpdate.RoomId;
             _examinationRepository.Update(examination);
             return true;
+        }
+
+        private bool IsAvailable(Examination examination, DateRange dateRangeToIgnore=null)
+        {
+            var doctorsBusyAppointments = _appointmentRepository.GetDoctorsBusyAppointments(examination.DoctorId, examination.DateRange.Start.Date);
+            if (dateRangeToIgnore is not null)
+                doctorsBusyAppointments = doctorsBusyAppointments.Where(dr => dateRangeToIgnore != dr).ToList();
+            return _doctorScheduler.IsAvailable(examination.DateRange, doctorsBusyAppointments);
         }
 
         public void Delete(Examination examination)
@@ -78,9 +73,26 @@ namespace HospitalLibrary.Core.Service
         }
         public IEnumerable<Examination> GetByDoctorIdAndDate(int doctorId, DateTime startTime)
         {
-            return _examinationRepository.GetByDoctorIdAndDate(doctorId, startTime);
+            return _examinationRepository.GetByDoctorAndDate(doctorId, startTime);
         }
 
+        public IEnumerable<Examination> GetByPatientId(int patientId)
+        {
+            return _examinationRepository.GetByPatientId(patientId);
+        }
 
+        public bool CheckIfCancellable(int id)
+        {
+            var examination = _examinationRepository.GetById(id);
+            if(examination.DateRange.Start < DateTime.Now || (examination.DateRange.Start - DateTime.Now) <= TimeSpan.FromHours(24) || examination == null)
+            {
+                return false;
+            } else
+            {
+                examination.Status = ExaminationStatus.CANCELED;
+                _examinationRepository.Update(examination);
+                return true;
+            }
+        }
     }
 }

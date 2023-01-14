@@ -102,13 +102,19 @@ namespace HospitalLibrary.Core.Util
                 SpaceAfter = "1cm",
                 SpaceBefore = "1cm"
             });
-            string[] prescriptionColumns = { "Number" };
+            string[] prescriptionColumns = { "Number", "Medical Drug", "Quantity" };
             var prescriptionRows = new List<RowInfo>();
             prescriptionRows = ExaminationDone.Prescriptions.Select(p =>
             {
+                var medicalDrugNames = p.PrescriptionItem.Select(pi =>
+                    pi.MedicalDrug.Name + ' ' + pi.MedicalDrug.Amount + "mg \n");
+                var quantities = p.PrescriptionItem.Select(pi =>
+                    pi.Quantity.ToString() + '\n');
                 return new RowInfo(new[]
                 {
-                    p.Id.ToString()
+                    p.Id.ToString(),
+                    string.Join(' ', medicalDrugNames),
+                    string.Join(' ', quantities)
                 });
             }).ToList();
             PDFUtils.DefineTable(Document, prescriptionColumns, prescriptionRows);
@@ -131,7 +137,8 @@ namespace HospitalLibrary.Core.Util
 
         }
 
-        public string? GenerateReport(string dirName, string fileName)
+        public string? GenerateReport(string dirName, string fileName,
+            bool showReport, bool showSymptoms, bool showPrescriptions)
         {
             AddParagraph(new ParagraphInfo()
             {
@@ -142,18 +149,27 @@ namespace HospitalLibrary.Core.Util
                 FontSize = 36,
                 SpaceAfter = "2cm"
             });
-
-            AddStatementSection(new ParagraphInfo
+            if (showReport)
             {
-                Allignment = ParagraphAlignment.Left,
-                Name = "Statement",
-                BookmarkName = "Statement Section",
-                Style = "Heading2",
-                SpaceAfter = "1cm",
-                FontColor = Color.Parse("#4169E1")
-            });
-            AddSymptomsSection();
-            AddPrescriptionsSection();
+                AddStatementSection(new ParagraphInfo
+                {
+                    Allignment = ParagraphAlignment.Left,
+                    Name = "Statement",
+                    BookmarkName = "Statement Section",
+                    Style = "Heading2",
+                    SpaceAfter = "1cm",
+                    FontColor = Color.Parse("#4169E1")
+                });
+            }
+            if (showSymptoms)
+            {
+                AddSymptomsSection();
+            }
+
+            if (showPrescriptions)
+            {
+                AddPrescriptionsSection();
+            }
             AddParagraph(new ParagraphInfo()
             {
                 Allignment = ParagraphAlignment.Center,

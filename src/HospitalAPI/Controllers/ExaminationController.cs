@@ -14,6 +14,8 @@ using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using System.Web.Http.Results;
 using HospitalAPI.Extensions;
+using HospitalLibrary.Core.Enums;
+using HospitalLibrary.Core.Model.ValueObjects;
 using HospitalLibrary.Core.Util;
 using Microsoft.Net.Http.Headers;
 
@@ -44,7 +46,8 @@ namespace HospitalAPI.Controllers
         [HttpGet]
         public ActionResult GetAll()
         {
-            return Ok(_examinationService.GetAll());
+            var res =  _examinationService.GetAll();
+            return Ok(res);
         }
 
         // GET api/rooms/2
@@ -83,7 +86,7 @@ namespace HospitalAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            
             var examination = CreateExaminationFromPostRequest(postExaminationRequest);
 
             var success = _examinationService.Create(examination);
@@ -104,7 +107,7 @@ namespace HospitalAPI.Controllers
             Doctor doctor = _doctorService.GetById(examinationDTO.DoctorId);
 
             Examination examination = _examinationMapper.toModel(examinationDTO);
-            examination.RoomId = doctor.RoomId;
+            // examination.RoomId = doctor.RoomId;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -143,9 +146,11 @@ namespace HospitalAPI.Controllers
             _examinationService.Delete(examination);
             return NoContent();
         }
+        
 
         [HttpGet("{id}/generateReport")]
-        public async Task<ActionResult> DownloadReport(int id)
+        public async Task<ActionResult> DownloadReport(int id, [FromQuery] bool includeReport,
+            [FromQuery] bool includeSymptoms, [FromQuery] bool includePrescriptions)
         {
             try
             {
@@ -156,7 +161,7 @@ namespace HospitalAPI.Controllers
                     return NotFound();
                 }
 
-                if (examination.StartTime.ToUniversalTime() > DateTime.UtcNow)
+                if (examination.DateRange.Start.ToUniversalTime() > DateTime.UtcNow)
                 {
                     return BadRequest();
                 }
@@ -173,7 +178,8 @@ namespace HospitalAPI.Controllers
                 const string dirName = @"C:\\Temp\";
                 var fileName = $"ExaminationReport_{examinationDone.Id}.pdf";
 
-                var fullPath = reportGenerator.GenerateReport(dirName, fileName);
+                var fullPath = reportGenerator.GenerateReport(dirName, fileName,
+                    includeReport, includeSymptoms, includePrescriptions);
 
                 if (fullPath == null)
                 {
@@ -218,17 +224,19 @@ namespace HospitalAPI.Controllers
         {
             try
             {
-                var doctorId = HttpContext.GetUserId();
+                //var doctorId = HttpContext.GetUserId();
+                var doctorId = 1;
                 var doctor = _doctorService.GetById(doctorId);
+                var startTime = DateTime.ParseExact(postExaminationRequest.StartTime, "dd/MM/yyyy HH:mm", null);
                 var examination = new Examination
                 {
                     DoctorId = doctorId,
-                    Duration = postExaminationRequest.Duration,
                     PatientId = postExaminationRequest.PatientId,
-                    StartTime = DateTime.ParseExact(postExaminationRequest.StartTime, "dd/MM/yyyy HH:mm", null),
+                    DateRange = new DateRange(startTime, startTime.AddMinutes(postExaminationRequest.Duration)),
                     RoomId = doctor.RoomId
                 };
                 examination.RoomId = doctor.RoomId;
+                examination.Status = ExaminationStatus.UPCOMING;
                 return examination;
             }
             catch (Exception ex)
@@ -236,7 +244,18 @@ namespace HospitalAPI.Controllers
                 Console.WriteLine(ex.Message);
                 return null;
             }
+        }
 
+        [HttpGet("room/{roomId}")]
+        public ActionResult GetByRoomId(int roomId)
+        {
+            var examination = _examinationService.GetByRoomId(roomId);
+            if (examination == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(examination);
         }
     }
 }

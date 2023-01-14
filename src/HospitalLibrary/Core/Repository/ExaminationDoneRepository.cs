@@ -65,6 +65,8 @@ namespace HospitalLibrary.Core.Repository
         {
             return _context.ExaminationsDone
                 .Include(x => x.Prescriptions)
+                .ThenInclude(p => p.PrescriptionItem)
+                .ThenInclude(pi => pi.MedicalDrug)
                 .Include(x => x.Symptoms)
                 .SingleOrDefault(x => x.ExaminationId == examinationId);
         }

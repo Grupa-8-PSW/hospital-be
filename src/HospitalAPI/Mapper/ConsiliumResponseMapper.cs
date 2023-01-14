@@ -22,8 +22,8 @@ public class ConsiliumResponseMapper : IResponseMapper<Consilium, ConsiliumRespo
             Id = model.Id,
             Subject = model.Subject,
             Duration = model.Duration,
-            From = model.Interval.From.ToString(CultureInfo.InvariantCulture),
-            To = model.Interval.To.ToString(CultureInfo.InvariantCulture),
+            From = model.Interval.Start.ToString(CultureInfo.InvariantCulture),
+            To = model.Interval.End.ToString(CultureInfo.InvariantCulture),
             Doctors = _doctorMapper.ToDto(model.Doctors)
         };
     }
