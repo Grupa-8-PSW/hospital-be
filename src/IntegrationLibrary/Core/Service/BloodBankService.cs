@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IntegrationLibrary.Core.Model;
-using IntegrationLibrary.Core.Repository;
+using IntegrationLibrary.Core.Repository.Interfaces;
 using IntegrationLibrary.Core.Service.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace IntegrationLibrary.Core.Service
 {
@@ -43,6 +44,11 @@ namespace IntegrationLibrary.Core.Service
         {
             return _bloodBankRepository.getByName(bloodBankName);
 
+        }
+
+        public BloodBank GetByApiKey(string apiKey)
+        {
+            return _bloodBankRepository.GetByApiKey(apiKey);
         }
     }
 }

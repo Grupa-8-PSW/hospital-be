@@ -14,7 +14,11 @@ using IntegrationAPI.GrpcServices;
 using IntegrationLibrary.Core.Service.Interfaces;
 using IntegrationLibraryAPI.Connections;
 using BloodDTO = IntegrationLibrary.Core.Model.DTO.BloodDTO;
-
+using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Repository.Interfaces;
+using IntegrationAPI.Mapper;
+using BloodUnit = Blood.BloodUnit;
+using BloodUnitRequest = Blood.BloodUnitRequest;
 
 namespace IntegrationAPI
 {
@@ -26,17 +30,22 @@ namespace IntegrationAPI
         private IBloodService _bloodService;
         private IHospitalHTTPConnectionService _hospitalHTTPConnectionService;
         private readonly IHospitalHTTPConnection _hospitalHttpConnection;
+        private  IBloodBankService _bloodBankService;
+        private  IUrgentRequestRepository _urgentRequestRepository;
 
         public ClientScheduledService(IBloodService bloodService, 
                                       IHospitalHTTPConnectionService hospitalHTTPConnectionService,
-                                      IHospitalHTTPConnection hospitalHttpConnection) 
+                                      IHospitalHTTPConnection hospitalHttpConnection,
+                                      IServiceScopeFactory factory) 
         {
-            this._hospitalHTTPConnectionService = hospitalHTTPConnectionService;
-            this._bloodService = bloodService;
-            this._hospitalHttpConnection = hospitalHttpConnection;
+            _hospitalHTTPConnectionService = hospitalHTTPConnectionService;
+            _bloodService = bloodService;
+            _hospitalHttpConnection = hospitalHttpConnection;
+            _bloodBankService = factory.CreateScope().ServiceProvider.GetRequiredService<IBloodBankService>();
+            _urgentRequestRepository = factory.CreateScope().ServiceProvider.GetRequiredService<IUrgentRequestRepository>();
         }
 
-        public async void communicate(string apiKey)
+        public async Task communicate(string apiKey)
         {
             channel = new Channel("127.0.0.1:8787", ChannelCredentials.Insecure);
             var client = new BloodProvider.BloodProviderClient(channel);
@@ -55,6 +64,8 @@ namespace IntegrationAPI
                 BloodResponse response = await client.communicateAsync(new BloodUnitRequest() { BankBankApiKey = apiKey, BloodUnits = { bloodUnitsProto } });
                 if (response.Status == RequestResponseStatus.BloodAvailable)
                 {
+                    UrgentRequest urgRequest = new UrgentRequest(_bloodBankService.GetByApiKey(apiKey).Id, DateTime.Now, TenderOfferMapper.BloodDtoToBloodAmount(storageList));
+                    _urgentRequestRepository.SaveUrgentRequest(urgRequest);
                     _hospitalHttpConnection.RestockBlood(storageList);
                 }
             }

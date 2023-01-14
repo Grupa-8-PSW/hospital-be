@@ -61,7 +61,8 @@ namespace IntegrationLibrary.Core.Service
             BloodUnitUrgentRequest request = new BloodUnitUrgentRequest();
             request.bloodUnits = _bloodService.GetMissingQuantities(_hospitalHTTPConnectionService.GetAllBlood());
             request.APIKey = apiKey;
-            bloodBankHTTPConnection.SendUrgentRequest(request);
+            string sendingStatus = "URGENT";
+            bloodBankHTTPConnection.SendUrgentRequest(request, sendingStatus);
             return true;
         }
 
@@ -72,7 +73,8 @@ namespace IntegrationLibrary.Core.Service
 
             request.bloodUnits = TenderOfferMapper.ToBloodDTO(tenderOffer.Offers);
             request.APIKey = apiKey;
-            bloodBankHTTPConnection.SendUrgentRequest(request);
+            string sendingStatus = "TENDER";
+            bloodBankHTTPConnection.SendUrgentRequest(request, sendingStatus);
             return true;
         }
 

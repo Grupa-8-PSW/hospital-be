@@ -2,7 +2,7 @@
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibrary.Core.Model.ValueObject;
-using IntegrationLibrary.Core.Repository;
+using IntegrationLibrary.Core.Repository.Interfaces;
 using IntegrationLibrary.Core.Service.Interfaces;
 
 namespace IntegrationLibrary.Core.Service;
@@ -61,7 +61,7 @@ public class MonthlySubscriptionService : IMonthlySubscriptionService
             }
         }else
         {
-            emailService.SendRejectMonthlyDeliveryEmail(monthlySubscription.DeliveryDate.ToString()); ;
+            emailService.SendRejectMonthlyDeliveryEmail(monthlySubscription.DeliveryDate.ToString());
         }
         SetNextDeliveryDate(monthlySubscription);
         return bloodDTOs;

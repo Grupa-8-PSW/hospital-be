@@ -14,5 +14,7 @@ namespace HospitalLibrary.GraphicalEditor.Repository.Interfaces
         IEnumerable<Room> GetFreeRooms();
 
         IEnumerable<Room> GetTransferedEquipment(EquipmentTransferDTO dto);
+        void Delete(Room room);
+        void Create(Room room);
     }
 }

@@ -10,6 +10,11 @@ using IntegrationLibrary.Core.Model;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Configuration;
 using IntegrationLibrary.Core.Service.Interfaces;
+using HospitalLibrary.Core.Model;
+using System.Net.Mail;
+using SmtpClient = MailKit.Net.Smtp.SmtpClient;
+using System.Net.Http;
+using System.Reflection.Metadata;
 
 namespace IntegrationLibrary.Core.Service
 {
@@ -113,6 +118,25 @@ namespace IntegrationLibrary.Core.Service
             email.To.Add(MailboxAddress.Parse("davidmijailovic9@gmail.com"));
             email.Subject = "Sorry, monthly delivery has been canceled";
             email.Body = new TextPart(TextFormat.Html) { Text = rejectTemplate.ToString() };
+
+        }
+
+        public void sendPDFReportAttached(byte[] myFileAsByteArray)
+        {
+            var message = new MimeMessage();
+            
+
+            message.From.Add(MailboxAddress.Parse(_config.GetSection("EmailUsername").Value));
+            message.To.Add(MailboxAddress.Parse("rbojan2000@gmail.com"));
+            message.Subject = "Blood consumption report";
+
+
+            var builder = new BodyBuilder();
+
+            builder.Attachments.Add("./Reports/report" + ".PDF");
+
+            message.Body = builder.ToMessageBody();
+            SmtpClient smtp = SetupSmtpClient(message);
 
         }
     }

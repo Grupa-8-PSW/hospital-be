@@ -18,7 +18,7 @@ namespace HospitalLibrary.GraphicalEditor.Model.DTO
 
         public EquipmentDTO(Equipment equipment)
         {
-            EquipmentId = equipment.EquipmentId;
+            EquipmentId = equipment.Id;
             Name = equipment.Name;
             Amount = equipment.Amount;
             RoomId = equipment.RoomId;

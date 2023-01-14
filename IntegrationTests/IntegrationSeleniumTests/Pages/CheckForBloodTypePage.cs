@@ -14,7 +14,7 @@ namespace IntegrationTests.IntegrationSeleniumTests.Pages
     public class CheckForBloodTypePage
     {
         private readonly IWebDriver driver;
-        public const string URI = "http://localhost:4200/bloodBanks/add";
+        public const string URI = "http://localhost:4200/bloodBanks/";
 
         private IWebElement BloodTypeOptions => driver.FindElement(By.Name("bloodTypeSelect"));
 

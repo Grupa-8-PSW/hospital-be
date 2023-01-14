@@ -7,7 +7,6 @@ namespace HospitalLibrary.Core.Repository
 {
     public class PatientRepository : BaseEntityModelRepository<Patient>, IPatientRepository
     {
-
         public PatientRepository(HospitalDbContext dbContext) : base(dbContext)
         {
 
