@@ -25,11 +25,11 @@ namespace IntegrationLibrary.Core.Service
             List<BloodDTO> missingQuinitites = new List<BloodDTO>();
             foreach (BloodDTO bloodUnit in bloodInStorage)
             {
-                if (bloodUnit.Quantity < 1000)
+                if (bloodUnit.Quantity < 200)
                 {
                     BloodDTO newBlood = new BloodDTO();
                     newBlood.Id = bloodUnit.Id;
-                    newBlood.Quantity = 1000 - bloodUnit.Quantity;
+                    newBlood.Quantity = 200 - bloodUnit.Quantity;
                     newBlood.Type = bloodUnit.Type;
                     missingQuinitites.Add(newBlood);
                 }
