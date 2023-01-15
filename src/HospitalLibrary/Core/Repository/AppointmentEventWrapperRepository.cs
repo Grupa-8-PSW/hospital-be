@@ -23,5 +23,10 @@ namespace HospitalLibrary.Core.Repository
             return _dbContext.AppointmentEventWrappers.Where(e => e.EventType == EventType.SESSION_END)
                                                       .Select(ev => ev.AggregateId).ToList();
         }
+        public int getNumOfAllAggregates()
+        {
+            return _dbContext.AppointmentEventWrappers.GroupBy(e => e.AggregateId).Count();
+                                                                                    
+        }
     }
 }

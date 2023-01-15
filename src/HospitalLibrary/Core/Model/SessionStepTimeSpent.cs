@@ -8,27 +8,27 @@ namespace HospitalLibrary.Core.Model
 {
     public class SessionStepTimeSpent
     {
-        public int StepOneMin { get; set; }
-        public int StepTwoMin { get; set; }
-        public int StepThreeMin { get; set; }
-        public int StepFourMin { get; set; }
+        public int StepOne { get; set; }
+        public int StepTwo { get; set; }
+        public int StepThree { get; set; }
+        public int StepFour { get; set; }
 
         public SessionStepTimeSpent()
         {
-            StepOneMin = 0;
-            StepTwoMin = 0;
-            StepThreeMin = 0;
-            StepFourMin = 0;
+            StepOne = 0;
+            StepTwo = 0;
+            StepThree = 0;
+            StepFour = 0;
         }
 
         public SessionStepTimeSpent(int one, int two, int three, int four)
         {
-            StepOneMin = one; StepTwoMin = two; StepThreeMin = three; StepFourMin = four;
+            StepOne = one; StepTwo = two; StepThree = three; StepFour = four;
         }
         public bool Check()
         {
-            if (StepOneMin == 0 || StepTwoMin == 0 || StepThreeMin == 0
-                || StepFourMin == 0) return false;
+            if (StepOne == 0 || StepTwo == 0 || StepThree == 0
+                || StepFour == 0) return false;
             return true;
         }
     }

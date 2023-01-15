@@ -10,7 +10,7 @@ namespace HospitalAPI.Controllers.InternalApp
 {
     [EnableCors("InternAllow")]
     [Route("api/internal/[controller]")]
-    [Authorize(Roles = "Manager")]
+    //[Authorize(Roles = "Manager")]
     [ApiController]
     public class AppointmentController : ControllerBase
     {
@@ -30,10 +30,18 @@ namespace HospitalAPI.Controllers.InternalApp
             {
                 AverageNumberOfStep = _appointmentSchedulingEventsService.GetAverageNumberOfSteps(),
                 AverageSecondsOfScheduling = _appointmentSchedulingEventsService.GetAverageDurationInMins(),
-                StepViewCountStatistic = _appointmentSchedulingEventsService.NumberOfViewsForStep()
+                StepViewCountStatistic = _appointmentSchedulingEventsService.NumberOfViewsForStep(),
+                DurationViewingEachStep = _appointmentSchedulingEventsService.DurationViewingEachStep(),
+                SuccesfullPercentage = _appointmentSchedulingEventsService.GetPercentageOfSuccesfulSchedule(),
+                AgeStatistic = _appointmentSchedulingEventsService.GetNumberOfStepsByAge(), 
             };
             
             return Ok(dto);
+        }
+        [HttpGet("stat")]
+        public ActionResult<StepViewCountStatistic> Get()
+        {
+            return Ok(_appointmentSchedulingEventsService.DurationViewingEachStep());
         }
     }
 }
