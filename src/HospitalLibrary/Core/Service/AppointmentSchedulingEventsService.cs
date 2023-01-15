@@ -19,10 +19,12 @@ namespace HospitalLibrary.Core.Service
     {
 
         private readonly IAppointmentEventWrapperRepository _eventWrapperRepository;
+        private readonly IPatientRepository _patientRepository;
 
-        public AppointmentSchedulingEventsService(IAppointmentEventWrapperRepository eventWrapperRepository)
+        public AppointmentSchedulingEventsService(IAppointmentEventWrapperRepository eventWrapperRepository, IPatientRepository patientRepository)
         {
             _eventWrapperRepository = eventWrapperRepository;
+            _patientRepository = patientRepository;
         }
 
         public int SaveSessionStartedEvent(int patientId)
@@ -31,7 +33,7 @@ namespace HospitalLibrary.Core.Service
             {
                 PatientId = patientId,
                 Data = new SessionStarted(DateTime.Now),
-                EventType = Enums.EventType.SESSION_STARTED
+                EventType = Enums.EventType.SESSION_STARTED,
             };
             return _eventWrapperRepository.Create(e).AggregateId;
         }
@@ -104,7 +106,7 @@ namespace HospitalLibrary.Core.Service
             {
                 foreach (var ev in _eventWrapperRepository.GetAll())
                 {
-                    if (num == ev.AggregateId)
+                    if (num == ev.AggregateId && ev.EventType != EventType.SESSION_END && ev.EventType != EventType.SESSION_STARTED)
                     {
                         count += 1;
                     }
@@ -151,7 +153,9 @@ namespace HospitalLibrary.Core.Service
             {
                 sum += num;
             }
-            return sum / mins.Count;
+            if(mins.Count > 0)
+                return sum / mins.Count;
+            return 0;
         }
         public StepViewCountStatistic NumberOfViewsForStep()
         {
@@ -173,17 +177,23 @@ namespace HospitalLibrary.Core.Service
             }
             return stepCounter;
         }
-        /*public SessionStepTimeSpent DurationViewingEachStep()
+        public SessionStepTimeSpent DurationViewingEachStep()
         {
             var sessionCounter = new SessionStepTimeSpent();
+            var list = new List<SessionStepTimeSpent>();
             DateTime stepOne = new();
             DateTime stepTwo = new();
             DateTime stepThree = new();
             DateTime stepFour = new();
-            DateTime stepFive = new();
+            DateTime start = new();
 
             foreach (var num in _eventWrapperRepository.GetScheduledAggregates())
             {
+                var timeSpentStepOne = new TimeSpan();
+                var timeSpentStepTwo = new TimeSpan();
+                var timeSpentStepThree = new TimeSpan();
+                var timeSpentStepFour = new TimeSpan();
+
                 foreach (var ev in _eventWrapperRepository.GetAll())
                 {
                     if (num == ev.AggregateId)
@@ -191,37 +201,112 @@ namespace HospitalLibrary.Core.Service
                         if (ev.EventType == EventType.SESSION_STARTED)
                         {
                             var obj = JsonObject.Parse(ev.Data.ToString());
-                            stepOne = Convert.ToDateTime(obj["Timestamp"].ToString());
+                            start = Convert.ToDateTime(obj["Timestamp"].ToString());
                         }
-                        if (ev.EventType == EventType.DOCTOR_SPECIALIZATION_SELECTED)
+                        else if (ev.EventType == EventType.DATE_TIME_SELECTED)
+                        {
+                            var obj = JsonObject.Parse(ev.Data.ToString());
+                            stepOne = Convert.ToDateTime(obj["Timestamp"].ToString());
+                            timeSpentStepOne += stepOne - start;
+                        }
+                        else if (ev.EventType == EventType.DOCTOR_SPECIALIZATION_SELECTED)
                         {
                             var obj = JsonObject.Parse(ev.Data.ToString());
                             stepTwo = Convert.ToDateTime(obj["Timestamp"].ToString());
+                            timeSpentStepTwo += stepTwo - stepOne;
                         }
-                        if (ev.EventType == EventType.DOCTOR_SELECTED)
+                        else if (ev.EventType == EventType.DOCTOR_SELECTED)
                         {
                             var obj = JsonObject.Parse(ev.Data.ToString());
                             stepThree = Convert.ToDateTime(obj["Timestamp"].ToString());
+                            timeSpentStepThree += stepThree - stepTwo;
                         }
-                        if (ev.EventType == EventType.APPOINTMENT_SELECTED)
+                        else if (ev.EventType == EventType.APPOINTMENT_SELECTED)
                         {
                             var obj = JsonObject.Parse(ev.Data.ToString());
                             stepFour = Convert.ToDateTime(obj["Timestamp"].ToString());
-                        }
-                        if (ev.EventType == EventType.SESSION_END)
-                        {
-                            var obj = JsonObject.Parse(ev.Data.ToString());
-                            stepFive = Convert.ToDateTime(obj["Timestamp"].ToString());
-                        }
+                            timeSpentStepFour += stepFour - stepThree;
+                        } 
                     }
-                    var timeSpentStepOne = stepTwo - stepOne;
-                    var timeSpentStepTwo = stepThree - stepTwo;
-                    var timeSpentStepThree = stepFour - stepThree;
-                    var timeSpentStepFour = stepFive - stepFour;
                 }
+                list.Add(new SessionStepTimeSpent(timeSpentStepOne.Seconds, timeSpentStepTwo.Seconds, timeSpentStepThree.Seconds, timeSpentStepFour.Seconds));
             }
+            var sum1 = 0;
+            var sum2 = 0;
+            var sum3 = 0;
+            var sum4 = 0;
+            foreach(var ss in list)
+            {
+                sum1 += ss.StepOne;
+                sum2 += ss.StepTwo;
+                sum3 += ss.StepThree;
+                sum4 += ss.StepFour;
+            }
+            sessionCounter.StepOne = sum1 / list.Count;
+            sessionCounter.StepTwo = sum2 / list.Count;
+            sessionCounter.StepThree = sum3 / list.Count;
+            sessionCounter.StepFour = sum4 / list.Count;
 
             return sessionCounter;
-        }*/
+        }
+
+        public int GetPercentageOfSuccesfulSchedule()
+        {
+            var numOfSuccesful = Convert.ToDouble(_eventWrapperRepository.GetScheduledAggregates().Count);
+            var total = Convert.ToDouble(_eventWrapperRepository.getNumOfAllAggregates());
+            decimal temp2 = (decimal)(numOfSuccesful / total);
+            var temp = Math.Round(temp2, 2);
+            return (int)(temp * 100);
+        }
+        
+        public AgeStatistic GetNumberOfStepsByAge()
+        {
+            var ageStat = new AgeStatistic();
+            int count = 0;
+            int patientId = 0;
+            var countUnderEighteen = 0;
+            var countOverEighteen = 0;
+            var countOverSixtyFive = 0;
+
+            foreach (var num in _eventWrapperRepository.GetScheduledAggregates())
+            {
+                foreach (var ev in _eventWrapperRepository.GetAll())
+                {
+                    if (num == ev.AggregateId && ev.EventType != EventType.SESSION_END && ev.EventType != EventType.SESSION_STARTED)
+                    {
+                        count += 1;
+                        patientId = ev.PatientId;
+                    }
+                }
+                if(_patientRepository.GetById(patientId).Pin.CalculateAge() <= 18)
+                {
+                    ageStat.ZeroToEighteen += count;
+                    countUnderEighteen++;
+                }
+                else if (_patientRepository.GetById(patientId).Pin.CalculateAge() > 18 &&
+                        _patientRepository.GetById(patientId).Pin.CalculateAge() <= 65)
+                {
+                    ageStat.NineteenToSixtyFour += count;
+                    countOverEighteen++;
+                }
+                else if (_patientRepository.GetById(patientId).Pin.CalculateAge() > 65)
+                {
+                    ageStat.SixtyFivePlus += count;
+                    countOverSixtyFive++;
+                }
+                
+                count = 0;
+            }
+
+            if(countUnderEighteen != 0)
+                ageStat.ZeroToEighteen /= countUnderEighteen;
+            if(countOverEighteen != 0)
+                ageStat.NineteenToSixtyFour /= countOverEighteen;
+            if (countOverSixtyFive != 0)
+                ageStat.SixtyFivePlus /= countOverSixtyFive;
+
+            return ageStat;
+        }
+
     }
 }

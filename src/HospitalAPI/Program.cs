@@ -1,4 +1,5 @@
 using HospitalAPI.Security;
+using HospitalLibrary.Settings.DataSeed;
 
 namespace HospitalAPI
 {
@@ -12,6 +13,7 @@ namespace HospitalAPI
             var services = scope.ServiceProvider;
 
             //await AppIdentityDbContextSeed.SeedAsync(services);
+            //AppointmentEventWrapperSeed.SeedAppointementEvents(services);
 
             host.Run();
         }

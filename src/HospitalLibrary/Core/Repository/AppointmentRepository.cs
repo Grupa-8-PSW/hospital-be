@@ -22,7 +22,8 @@ namespace HospitalLibrary.Core.Repository
 
         public List<DateRange> GetDoctorsBusyAppointments(int doctorId, DateRange dateRange)
             => _context.Examinations
-            .Where(ex => ex.DoctorId == doctorId && ex.DateRange.Start < dateRange.End && dateRange.Start < ex.DateRange.End)
+            .Where(ex => ex.DoctorId == doctorId && ex.DateRange.Start.Date >= dateRange.Start.Date && ex.DateRange.Start.Date <= dateRange.End.Date
+                                                     && ex.DateRange.End.Date >= dateRange.Start.Date && ex.DateRange.End.Date <= dateRange.End.Date)
             .Select(ex => ex.DateRange)
             .ToList();
     }

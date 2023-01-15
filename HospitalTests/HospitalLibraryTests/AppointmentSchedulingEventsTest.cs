@@ -17,7 +17,8 @@ namespace HospitalTests.HospitalLibraryTests
         [Fact]
         public void Get_average_number_of_steps()
         {
-            var service = new AppointmentSchedulingEventsService(CreateStubRepository());
+            var patientStubRepo = new Mock<IPatientRepository>();
+            var service = new AppointmentSchedulingEventsService(CreateStubRepository(), patientStubRepo.Object);
             var averageNumberOfSteps = service.GetAverageNumberOfSteps();
 
             averageNumberOfSteps.ShouldBe(6);
@@ -25,7 +26,8 @@ namespace HospitalTests.HospitalLibraryTests
         [Fact]
         public void Get_number_of_view_each_step()
         {
-            var service = new AppointmentSchedulingEventsService(CreateStubRepository());
+            var patientStubRepo = new Mock<IPatientRepository>();
+            var service = new AppointmentSchedulingEventsService(CreateStubRepository(), patientStubRepo.Object);
             var averageNumberOfEachStep = service.NumberOfViewsForStep();
             
             averageNumberOfEachStep.StepOne.ShouldBe(1);
@@ -54,6 +56,7 @@ namespace HospitalTests.HospitalLibraryTests
             events.Add(@event5);
 
             var stubRepo = new Mock<IAppointmentEventWrapperRepository>();
+            
 
             stubRepo.Setup(e => e.GetAll()).Returns(events);
             stubRepo.Setup(e => e.GetScheduledAggregates()).Returns(aggregateInts);

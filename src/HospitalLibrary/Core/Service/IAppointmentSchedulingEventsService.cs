@@ -17,5 +17,8 @@ namespace HospitalLibrary.Core.Service
         public int GetAverageNumberOfSteps();
         public int GetAverageDurationInMins();
         public StepViewCountStatistic NumberOfViewsForStep();
+        public SessionStepTimeSpent DurationViewingEachStep();
+        public int GetPercentageOfSuccesfulSchedule();
+        public AgeStatistic GetNumberOfStepsByAge();
     }
 }
