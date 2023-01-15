@@ -3,7 +3,6 @@ using System;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,10 +11,9 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20230114154337_SeedMigration")]
-    partial class SeedMigration
+    partial class HospitalDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,6 +113,63 @@ namespace HospitalLibrary.Migrations
                             Number = "25",
                             Street = "Njegoseva"
                         });
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Aggregates.AppointmentScheduling.AppointmentEventWrapper", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AggregateId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AggregateId"));
+
+                    b.Property<object>("Data")
+                        .IsRequired()
+                        .HasColumnType("json");
+
+                    b.Property<int>("EventType")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("AppointmentEventWrappers");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Aggregates.RenovationScheduling.RenovationEventWrapper", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AggregateId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AggregateId"));
+
+                    b.Property<object>("Data")
+                        .IsRequired()
+                        .HasColumnType("json");
+
+                    b.Property<int>("EventType")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RenovationEventWrappers");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Allergen", b =>
@@ -613,6 +668,422 @@ namespace HospitalLibrary.Migrations
                             PatientId = 3,
                             RoomId = 3,
                             Status = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            DoctorId = 1,
+                            PatientId = 3,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 9,
+                            DoctorId = 1,
+                            PatientId = 1,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 10,
+                            DoctorId = 1,
+                            PatientId = 2,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 11,
+                            DoctorId = 1,
+                            PatientId = 3,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 12,
+                            DoctorId = 1,
+                            PatientId = 4,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 13,
+                            DoctorId = 1,
+                            PatientId = 1,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 14,
+                            DoctorId = 1,
+                            PatientId = 2,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 15,
+                            DoctorId = 1,
+                            PatientId = 3,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 16,
+                            DoctorId = 1,
+                            PatientId = 4,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 17,
+                            DoctorId = 1,
+                            PatientId = 1,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 18,
+                            DoctorId = 1,
+                            PatientId = 2,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 19,
+                            DoctorId = 1,
+                            PatientId = 3,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 20,
+                            DoctorId = 1,
+                            PatientId = 4,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 21,
+                            DoctorId = 1,
+                            PatientId = 1,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 22,
+                            DoctorId = 1,
+                            PatientId = 2,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 23,
+                            DoctorId = 1,
+                            PatientId = 3,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 24,
+                            DoctorId = 1,
+                            PatientId = 4,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 25,
+                            DoctorId = 1,
+                            PatientId = 1,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 26,
+                            DoctorId = 1,
+                            PatientId = 2,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 27,
+                            DoctorId = 1,
+                            PatientId = 3,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 28,
+                            DoctorId = 1,
+                            PatientId = 4,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 29,
+                            DoctorId = 1,
+                            PatientId = 1,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 30,
+                            DoctorId = 1,
+                            PatientId = 2,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 31,
+                            DoctorId = 1,
+                            PatientId = 3,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 32,
+                            DoctorId = 1,
+                            PatientId = 4,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 33,
+                            DoctorId = 1,
+                            PatientId = 1,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 34,
+                            DoctorId = 1,
+                            PatientId = 3,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 35,
+                            DoctorId = 1,
+                            PatientId = 1,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 36,
+                            DoctorId = 1,
+                            PatientId = 2,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 37,
+                            DoctorId = 1,
+                            PatientId = 3,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 38,
+                            DoctorId = 1,
+                            PatientId = 4,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 39,
+                            DoctorId = 1,
+                            PatientId = 1,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 40,
+                            DoctorId = 1,
+                            PatientId = 2,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 41,
+                            DoctorId = 1,
+                            PatientId = 3,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 42,
+                            DoctorId = 1,
+                            PatientId = 4,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 43,
+                            DoctorId = 1,
+                            PatientId = 1,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 44,
+                            DoctorId = 1,
+                            PatientId = 2,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 45,
+                            DoctorId = 1,
+                            PatientId = 3,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 46,
+                            DoctorId = 1,
+                            PatientId = 4,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 47,
+                            DoctorId = 1,
+                            PatientId = 1,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 48,
+                            DoctorId = 1,
+                            PatientId = 2,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 49,
+                            DoctorId = 1,
+                            PatientId = 3,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 50,
+                            DoctorId = 1,
+                            PatientId = 4,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 51,
+                            DoctorId = 1,
+                            PatientId = 1,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 52,
+                            DoctorId = 1,
+                            PatientId = 2,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 53,
+                            DoctorId = 1,
+                            PatientId = 3,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 54,
+                            DoctorId = 1,
+                            PatientId = 4,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 55,
+                            DoctorId = 1,
+                            PatientId = 1,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 56,
+                            DoctorId = 1,
+                            PatientId = 2,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 57,
+                            DoctorId = 1,
+                            PatientId = 3,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 58,
+                            DoctorId = 1,
+                            PatientId = 4,
+                            RoomId = 3,
+                            Status = 0
+                        },
+                        new
+                        {
+                            Id = 59,
+                            DoctorId = 1,
+                            PatientId = 1,
+                            RoomId = 3,
+                            Status = 0
                         });
                 });
 
@@ -836,7 +1307,7 @@ namespace HospitalLibrary.Migrations
                             Gender = 0,
                             LastName = "Peric",
                             SelectedDoctorId = 1,
-                            UserId = 1
+                            UserId = 5
                         },
                         new
                         {
@@ -848,7 +1319,7 @@ namespace HospitalLibrary.Migrations
                             Gender = 0,
                             LastName = "Markovic",
                             SelectedDoctorId = 2,
-                            UserId = 2
+                            UserId = 6
                         },
                         new
                         {
@@ -860,7 +1331,7 @@ namespace HospitalLibrary.Migrations
                             Gender = 0,
                             LastName = "Baljinac",
                             SelectedDoctorId = 1,
-                            UserId = 3
+                            UserId = 7
                         },
                         new
                         {
@@ -872,7 +1343,7 @@ namespace HospitalLibrary.Migrations
                             Gender = 0,
                             LastName = "Radulovic",
                             SelectedDoctorId = 2,
-                            UserId = 4
+                            UserId = 8
                         });
                 });
 
@@ -1008,7 +1479,7 @@ namespace HospitalLibrary.Migrations
                             TherapySubject = "Bromazepam 500mg",
                             TherapyType = 0,
                             TreatmentHistoryId = 1,
-                            WhenPrescribed = new DateTime(2023, 1, 14, 15, 43, 36, 363, DateTimeKind.Utc).AddTicks(979)
+                            WhenPrescribed = new DateTime(2023, 1, 15, 17, 6, 25, 627, DateTimeKind.Utc).AddTicks(1950)
                         },
                         new
                         {
@@ -1019,7 +1490,7 @@ namespace HospitalLibrary.Migrations
                             TherapySubject = "A+ 500ml",
                             TherapyType = 1,
                             TreatmentHistoryId = 1,
-                            WhenPrescribed = new DateTime(2023, 1, 14, 15, 43, 36, 363, DateTimeKind.Utc).AddTicks(981)
+                            WhenPrescribed = new DateTime(2023, 1, 15, 17, 6, 25, 627, DateTimeKind.Utc).AddTicks(1952)
                         });
                 });
 
@@ -1074,11 +1545,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 1,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2023, 1, 14, 15, 43, 36, 363, DateTimeKind.Utc).AddTicks(937),
+                            EndDate = new DateTime(2023, 1, 15, 17, 6, 25, 627, DateTimeKind.Utc).AddTicks(1881),
                             PatientId = 1,
                             Reason = "reason1",
                             RoomId = 1,
-                            StartDate = new DateTime(2023, 1, 14, 15, 43, 36, 363, DateTimeKind.Utc).AddTicks(936)
+                            StartDate = new DateTime(2023, 1, 15, 17, 6, 25, 627, DateTimeKind.Utc).AddTicks(1879)
                         },
                         new
                         {
@@ -1086,11 +1557,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 2,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2023, 1, 14, 15, 43, 36, 363, DateTimeKind.Utc).AddTicks(941),
+                            EndDate = new DateTime(2023, 1, 15, 17, 6, 25, 627, DateTimeKind.Utc).AddTicks(1886),
                             PatientId = 2,
                             Reason = "reason2",
                             RoomId = 1,
-                            StartDate = new DateTime(2023, 1, 14, 15, 43, 36, 363, DateTimeKind.Utc).AddTicks(941)
+                            StartDate = new DateTime(2023, 1, 15, 17, 6, 25, 627, DateTimeKind.Utc).AddTicks(1885)
                         },
                         new
                         {
@@ -1098,11 +1569,11 @@ namespace HospitalLibrary.Migrations
                             Active = false,
                             BedId = 4,
                             DischargeReason = "abc",
-                            EndDate = new DateTime(2023, 1, 14, 15, 43, 36, 363, DateTimeKind.Utc).AddTicks(942),
+                            EndDate = new DateTime(2023, 1, 15, 17, 6, 25, 627, DateTimeKind.Utc).AddTicks(1888),
                             PatientId = 3,
                             Reason = "reason3",
                             RoomId = 2,
-                            StartDate = new DateTime(2023, 1, 14, 15, 43, 36, 363, DateTimeKind.Utc).AddTicks(942)
+                            StartDate = new DateTime(2023, 1, 15, 17, 6, 25, 627, DateTimeKind.Utc).AddTicks(1887)
                         },
                         new
                         {
@@ -1113,7 +1584,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 1,
                             Reason = "reason1",
                             RoomId = 1,
-                            StartDate = new DateTime(2023, 1, 14, 15, 43, 36, 363, DateTimeKind.Utc).AddTicks(943)
+                            StartDate = new DateTime(2023, 1, 15, 17, 6, 25, 627, DateTimeKind.Utc).AddTicks(1889)
                         },
                         new
                         {
@@ -1124,7 +1595,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 2,
                             Reason = "reason2",
                             RoomId = 1,
-                            StartDate = new DateTime(2023, 1, 14, 15, 43, 36, 363, DateTimeKind.Utc).AddTicks(944)
+                            StartDate = new DateTime(2023, 1, 15, 17, 6, 25, 627, DateTimeKind.Utc).AddTicks(1889)
                         },
                         new
                         {
@@ -1135,7 +1606,7 @@ namespace HospitalLibrary.Migrations
                             PatientId = 3,
                             Reason = "reason3",
                             RoomId = 2,
-                            StartDate = new DateTime(2023, 1, 14, 15, 43, 36, 363, DateTimeKind.Utc).AddTicks(945)
+                            StartDate = new DateTime(2023, 1, 15, 17, 6, 25, 627, DateTimeKind.Utc).AddTicks(1890)
                         });
                 });
 
@@ -1177,7 +1648,7 @@ namespace HospitalLibrary.Migrations
                             Id = 1,
                             Color = "gray",
                             Height = 150,
-                            Name = "One",
+                            Name = "A-Wing",
                             Width = 450,
                             X = 100,
                             Y = 100
@@ -1187,7 +1658,7 @@ namespace HospitalLibrary.Migrations
                             Id = 2,
                             Color = "gray",
                             Height = 450,
-                            Name = "Too",
+                            Name = "B-Wing",
                             Width = 150,
                             X = 600,
                             Y = 100
@@ -1197,7 +1668,7 @@ namespace HospitalLibrary.Migrations
                             Id = 3,
                             Color = "gray",
                             Height = 130,
-                            Name = "Tre",
+                            Name = "Y-Wing",
                             Width = 400,
                             X = 400,
                             Y = 600
@@ -1206,11 +1677,11 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Equipment", b =>
                 {
-                    b.Property<int>("EquipmentId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("EquipmentId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Amount")
                         .HasColumnType("integer");
@@ -1222,189 +1693,191 @@ namespace HospitalLibrary.Migrations
                     b.Property<int>("RoomId")
                         .HasColumnType("integer");
 
-                    b.HasKey("EquipmentId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
 
                     b.ToTable("Equipments");
 
                     b.HasData(
                         new
                         {
-                            EquipmentId = 1,
+                            Id = 1,
                             Amount = 2,
                             Name = "Krevet",
                             RoomId = 1
                         },
                         new
                         {
-                            EquipmentId = 2,
+                            Id = 2,
                             Amount = 2,
                             Name = "Stetoskop",
                             RoomId = 1
                         },
                         new
                         {
-                            EquipmentId = 3,
+                            Id = 3,
                             Amount = 4,
                             Name = "Stolica",
                             RoomId = 1
                         },
                         new
                         {
-                            EquipmentId = 4,
+                            Id = 4,
                             Amount = 20,
                             Name = "Stolica",
                             RoomId = 2
                         },
                         new
                         {
-                            EquipmentId = 5,
+                            Id = 5,
                             Amount = 2,
                             Name = "Aparat za kafu",
                             RoomId = 2
                         },
                         new
                         {
-                            EquipmentId = 6,
+                            Id = 6,
                             Amount = 4,
                             Name = "Fotelja",
                             RoomId = 2
                         },
                         new
                         {
-                            EquipmentId = 7,
+                            Id = 7,
                             Amount = 2,
-                            Name = "Spric za ispiranje usiju",
+                            Name = "Busilica",
                             RoomId = 3
                         },
                         new
                         {
-                            EquipmentId = 8,
+                            Id = 8,
                             Amount = 3,
                             Name = "Otoskop",
                             RoomId = 3
                         },
                         new
                         {
-                            EquipmentId = 9,
+                            Id = 9,
                             Amount = 2,
                             Name = "Stetoskop",
                             RoomId = 4
                         },
                         new
                         {
-                            EquipmentId = 10,
+                            Id = 10,
                             Amount = 3,
                             Name = "Bolnicki krevet",
                             RoomId = 4
                         },
                         new
                         {
-                            EquipmentId = 11,
+                            Id = 11,
                             Amount = 2,
                             Name = "Aparat za merenje pritiska",
                             RoomId = 4
                         },
                         new
                         {
-                            EquipmentId = 12,
+                            Id = 12,
                             Amount = 4,
                             Name = "Stolica",
                             RoomId = 5
                         },
                         new
                         {
-                            EquipmentId = 13,
+                            Id = 13,
                             Amount = 50,
                             Name = "Zavoji",
                             RoomId = 6
                         },
                         new
                         {
-                            EquipmentId = 14,
+                            Id = 14,
                             Amount = 24,
                             Name = "Spricevi",
                             RoomId = 6
                         },
                         new
                         {
-                            EquipmentId = 15,
+                            Id = 15,
                             Amount = 12,
                             Name = "Gips",
                             RoomId = 6
                         },
                         new
                         {
-                            EquipmentId = 16,
+                            Id = 16,
                             Amount = 200,
                             Name = "Flasteri",
                             RoomId = 6
                         },
                         new
                         {
-                            EquipmentId = 17,
+                            Id = 17,
                             Amount = 20,
                             Name = "Bolnicki krevet",
                             RoomId = 7
                         },
                         new
                         {
-                            EquipmentId = 18,
+                            Id = 18,
                             Amount = 20,
                             Name = "Infuzija",
                             RoomId = 7
                         },
                         new
                         {
-                            EquipmentId = 19,
+                            Id = 19,
                             Amount = 20,
                             Name = "Stolica",
                             RoomId = 8
                         },
                         new
                         {
-                            EquipmentId = 20,
+                            Id = 20,
                             Amount = 2,
                             Name = "Stetoskop",
                             RoomId = 9
                         },
                         new
                         {
-                            EquipmentId = 21,
+                            Id = 21,
                             Amount = 4,
                             Name = "Stolica",
                             RoomId = 10
                         },
                         new
                         {
-                            EquipmentId = 22,
+                            Id = 22,
                             Amount = 2,
                             Name = "Krevet",
                             RoomId = 11
                         },
                         new
                         {
-                            EquipmentId = 23,
+                            Id = 23,
                             Amount = 2,
                             Name = "Stetoskop",
                             RoomId = 12
                         },
                         new
                         {
-                            EquipmentId = 24,
+                            Id = 24,
                             Amount = 4,
                             Name = "Infuzija",
                             RoomId = 13
                         },
                         new
                         {
-                            EquipmentId = 25,
+                            Id = 25,
                             Amount = 1,
                             Name = "Fotelja",
                             RoomId = 13
                         },
                         new
                         {
-                            EquipmentId = 26,
+                            Id = 26,
                             Amount = 20,
                             Name = "Stolica",
                             RoomId = 13
@@ -1986,6 +2459,141 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("MapForms");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Renovation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Available")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Changes")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Interval")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Schedule")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Renovations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Available = 3,
+                            Changes = 1,
+                            Duration = 3,
+                            Interval = 3,
+                            RoomId = 2,
+                            Schedule = 1,
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Available = 3,
+                            Changes = 1,
+                            Duration = 3,
+                            Interval = 1,
+                            RoomId = 2,
+                            Schedule = 1,
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Available = 2,
+                            Changes = 1,
+                            Duration = 3,
+                            Interval = 2,
+                            RoomId = 1,
+                            Schedule = 1,
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Available = 2,
+                            Changes = 1,
+                            Duration = 3,
+                            Interval = 2,
+                            RoomId = 3,
+                            Schedule = 0,
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Available = 2,
+                            Changes = 0,
+                            Duration = 2,
+                            Interval = 2,
+                            RoomId = 3,
+                            Schedule = 0,
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Available = 2,
+                            Changes = 1,
+                            Duration = 2,
+                            Interval = 2,
+                            RoomId = 2,
+                            Schedule = 1,
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Available = 1,
+                            Changes = 1,
+                            Duration = 3,
+                            Interval = 3,
+                            RoomId = 2,
+                            Schedule = 1,
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Available = 0,
+                            Changes = 0,
+                            Duration = 1,
+                            Interval = 1,
+                            RoomId = 1,
+                            Schedule = 0,
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Available = 1,
+                            Changes = 0,
+                            Duration = 1,
+                            Interval = 2,
+                            RoomId = 2,
+                            Schedule = 0,
+                            Type = 2
+                        });
+                });
+
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Room", b =>
                 {
                     b.Property<int>("Id")
@@ -2199,6 +2807,17 @@ namespace HospitalLibrary.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Aggregates.AppointmentScheduling.AppointmentEventWrapper", b =>
+                {
+                    b.HasOne("HospitalLibrary.Core.Model.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Patient");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Core.Model.Bed", b =>
                 {
                     b.HasOne("HospitalLibrary.GraphicalEditor.Model.Room", null)
@@ -2391,6 +3010,318 @@ namespace HospitalLibrary.Migrations
                                     ExaminationId = 7,
                                     End = new DateTime(2022, 12, 1, 9, 0, 0, 0, DateTimeKind.Unspecified),
                                     Start = new DateTime(2022, 12, 1, 8, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 8,
+                                    End = new DateTime(2023, 1, 23, 7, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 7, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 9,
+                                    End = new DateTime(2023, 1, 23, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 7, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 10,
+                                    End = new DateTime(2023, 1, 23, 8, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 8, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 11,
+                                    End = new DateTime(2023, 1, 23, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 8, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 12,
+                                    End = new DateTime(2023, 1, 23, 9, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 9, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 13,
+                                    End = new DateTime(2023, 1, 23, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 9, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 14,
+                                    End = new DateTime(2023, 1, 23, 10, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 10, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 15,
+                                    End = new DateTime(2023, 1, 23, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 10, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 16,
+                                    End = new DateTime(2023, 1, 23, 11, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 11, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 17,
+                                    End = new DateTime(2023, 1, 23, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 11, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 18,
+                                    End = new DateTime(2023, 1, 23, 12, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 12, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 19,
+                                    End = new DateTime(2023, 1, 23, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 12, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 20,
+                                    End = new DateTime(2023, 1, 23, 13, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 13, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 21,
+                                    End = new DateTime(2023, 1, 23, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 13, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 22,
+                                    End = new DateTime(2023, 1, 23, 14, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 14, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 23,
+                                    End = new DateTime(2023, 1, 23, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 14, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 24,
+                                    End = new DateTime(2023, 1, 23, 15, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 15, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 25,
+                                    End = new DateTime(2023, 1, 23, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 15, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 26,
+                                    End = new DateTime(2023, 1, 23, 16, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 16, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 27,
+                                    End = new DateTime(2023, 1, 23, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 16, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 28,
+                                    End = new DateTime(2023, 1, 23, 17, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 17, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 29,
+                                    End = new DateTime(2023, 1, 23, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 17, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 30,
+                                    End = new DateTime(2023, 1, 23, 18, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 18, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 31,
+                                    End = new DateTime(2023, 1, 23, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 18, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 32,
+                                    End = new DateTime(2023, 1, 23, 19, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 19, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 33,
+                                    End = new DateTime(2023, 1, 23, 20, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 23, 19, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 34,
+                                    End = new DateTime(2023, 1, 24, 7, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 7, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 35,
+                                    End = new DateTime(2023, 1, 24, 8, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 7, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 36,
+                                    End = new DateTime(2023, 1, 24, 8, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 8, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 37,
+                                    End = new DateTime(2023, 1, 24, 9, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 8, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 38,
+                                    End = new DateTime(2023, 1, 24, 9, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 9, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 39,
+                                    End = new DateTime(2023, 1, 24, 10, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 9, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 40,
+                                    End = new DateTime(2023, 1, 24, 10, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 10, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 41,
+                                    End = new DateTime(2023, 1, 24, 11, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 10, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 42,
+                                    End = new DateTime(2023, 1, 24, 11, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 11, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 43,
+                                    End = new DateTime(2023, 1, 24, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 11, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 44,
+                                    End = new DateTime(2023, 1, 24, 12, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 12, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 45,
+                                    End = new DateTime(2023, 1, 24, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 12, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 46,
+                                    End = new DateTime(2023, 1, 24, 13, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 13, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 47,
+                                    End = new DateTime(2023, 1, 24, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 13, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 48,
+                                    End = new DateTime(2023, 1, 24, 14, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 14, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 49,
+                                    End = new DateTime(2023, 1, 24, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 14, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 50,
+                                    End = new DateTime(2023, 1, 24, 15, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 15, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 51,
+                                    End = new DateTime(2023, 1, 24, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 15, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 52,
+                                    End = new DateTime(2023, 1, 24, 16, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 16, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 53,
+                                    End = new DateTime(2023, 1, 24, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 16, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 54,
+                                    End = new DateTime(2023, 1, 24, 17, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 17, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 55,
+                                    End = new DateTime(2023, 1, 24, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 17, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 56,
+                                    End = new DateTime(2023, 1, 24, 18, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 18, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 57,
+                                    End = new DateTime(2023, 1, 24, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 18, 30, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 58,
+                                    End = new DateTime(2023, 1, 24, 19, 30, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 19, 0, 0, 0, DateTimeKind.Unspecified)
+                                },
+                                new
+                                {
+                                    ExaminationId = 59,
+                                    End = new DateTime(2023, 1, 24, 20, 0, 0, 0, DateTimeKind.Unspecified),
+                                    Start = new DateTime(2023, 1, 24, 19, 30, 0, 0, DateTimeKind.Unspecified)
                                 });
                         });
 
@@ -2510,7 +3441,7 @@ namespace HospitalLibrary.Migrations
                                 new
                                 {
                                     PatientId = 4,
-                                    Value = "1111978020204"
+                                    Value = "1111952020204"
                                 });
                         });
 
@@ -2591,6 +3522,17 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Bed");
 
                     b.Navigation("Patient");
+
+                    b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Equipment", b =>
+                {
+                    b.HasOne("HospitalLibrary.GraphicalEditor.Model.Room", "Room")
+                        .WithMany("Equipment")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Room");
                 });
@@ -2885,6 +3827,8 @@ namespace HospitalLibrary.Migrations
             modelBuilder.Entity("HospitalLibrary.GraphicalEditor.Model.Room", b =>
                 {
                     b.Navigation("Beds");
+
+                    b.Navigation("Equipment");
                 });
 #pragma warning restore 612, 618
         }
