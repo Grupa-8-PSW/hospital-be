@@ -21,49 +21,49 @@ namespace HospitalAPI.Controllers.Map
             return Ok(_scheduleRenovation.CreateNewSessionEvent());
         }
 
-        [HttpPost("type")]
+        [HttpGet("type/{id}")]
         public IActionResult CreateSessionStartedEvent(int id)
         {
             _scheduleRenovation.CreateSessionStartedEvent(id);
             return Ok();
         }
 
-        [HttpPost("room")]
+        [HttpGet("room/{id}")]
         public IActionResult CreateTypeSelectedEvent(int id)
         {
             _scheduleRenovation.CreateTypeSelectedEvent(id);
             return Ok();
         }
 
-        [HttpPost("interval")]
+        [HttpGet("interval/{id}")]
         public IActionResult CreateRoomSelectedEvent(int id)
         {
             _scheduleRenovation.CreateRoomSelectedEvent(id);
             return Ok();
         }
 
-        [HttpPost("duration")]
+        [HttpGet("duration/{id}")]
         public IActionResult CreateDateTimeSelectedEvent(int id)
         {
             _scheduleRenovation.CreateDateTimeSelectedEvent(id);
             return Ok();
         }
 
-        [HttpPost("available")]
+        [HttpGet("available/{id}")]
         public IActionResult CreateDurationSelectedvent(int id)
         {
             _scheduleRenovation.CreateDurationSelectedvent(id);
             return Ok();
         }
 
-        [HttpPost("create")]
+        [HttpGet("create/{id}")]
         public IActionResult CreateAvailableSlotSelectedEvent(int id)
         {
             _scheduleRenovation.CreateAvailableSlotSelectedEvent(id);
             return Ok();
         }
 
-        [HttpPost("schedule")]
+        [HttpGet("schedule/{id}")]
         public IActionResult CreateRenovationScheduledEvent(int id)
         {
             _scheduleRenovation.CreateRenovationScheduledEvent(id);
