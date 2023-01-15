@@ -9,9 +9,9 @@ namespace HospitalLibrary.Settings.DataSeed
         public static void SeedMap(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Building>().HasData(
-                new Building() { Id = 1, X = 100, Y = 100, Width = 450, Height = 150, Color = "gray", Name = "One", Floors = new List<Floor>() },
-                new Building() { Id = 2, X = 600, Y = 100, Width = 150, Height = 450, Color = "gray", Name = "Too", Floors = new List<Floor>() },
-                new Building() { Id = 3, X = 400, Y = 600, Width = 400, Height = 130, Color = "gray", Name = "Tre", Floors = new List<Floor>() }
+                new Building() { Id = 1, X = 100, Y = 100, Width = 450, Height = 150, Color = "gray", Name = "A-Wing", Floors = new List<Floor>() },
+                new Building() { Id = 2, X = 600, Y = 100, Width = 150, Height = 450, Color = "gray", Name = "B-Wing", Floors = new List<Floor>() },
+                new Building() { Id = 3, X = 400, Y = 600, Width = 400, Height = 130, Color = "gray", Name = "Y-Wing", Floors = new List<Floor>() }
             );
 
             modelBuilder.Entity<Floor>().HasData(
@@ -111,7 +111,7 @@ namespace HospitalLibrary.Settings.DataSeed
                new Equipment() { Id = 4, Name = "Stolica", Amount = 20, RoomId = 2 },
                new Equipment() { Id = 5, Name = "Aparat za kafu", Amount = 2, RoomId = 2 },
                new Equipment() { Id = 6, Name = "Fotelja", Amount = 4, RoomId = 2 },
-               new Equipment() { Id = 7, Name = "Spric za ispiranje usiju", Amount = 2, RoomId = 3 },
+               new Equipment() { Id = 7, Name = "Busilica", Amount = 2, RoomId = 3 },
                new Equipment() { Id = 8, Name = "Otoskop", Amount = 3, RoomId = 3 },
                new Equipment() { Id = 9, Name = "Stetoskop", Amount = 2, RoomId = 4 },
                new Equipment() { Id = 10, Name = "Bolnicki krevet", Amount = 3, RoomId = 4 },
