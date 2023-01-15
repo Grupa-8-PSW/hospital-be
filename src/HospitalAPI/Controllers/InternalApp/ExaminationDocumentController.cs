@@ -29,6 +29,7 @@ namespace HospitalAPI.Controllers.InternalApp
             _examinationDocumentMapper = examinationDocumentMapper;
         }
 
+        [HttpGet]
         public ActionResult GetAll([FromQuery] string? searchText)
         {
             if (!searchText.IsNullOrEmpty())
