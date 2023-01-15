@@ -13,6 +13,7 @@ namespace HospitalAPI
             var services = scope.ServiceProvider;
 
             //await AppIdentityDbContextSeed.SeedAsync(services);
+            //RenovationEventSeed.SeedRenovationEvents(services);
             //AppointmentEventWrapperSeed.SeedAppointementEvents(services);
 
             host.Run();
