@@ -9,5 +9,7 @@ namespace HospitalLibrary.Core.Model
     public class Prescription
     {
         public int Id { get; set; }
+        public List<PrescriptionItem> PrescriptionItem { get; set; }
+
     }
 }

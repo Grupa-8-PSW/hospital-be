@@ -1,5 +1,4 @@
 ﻿using IntegrationLibrary.Core.Model;
-using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Service.Interfaces;
 using iTextSharp.text.pdf;
 using iTextSharp.text;
@@ -10,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IntegrationLibrary.Core.Model.DTO;
 using Microsoft.Extensions.DependencyInjection;
+using IntegrationLibrary.Core.Repository.Interfaces;
 
 namespace IntegrationLibrary.Core.Service
 {
@@ -104,6 +104,8 @@ namespace IntegrationLibrary.Core.Service
                 writer.Close();
                 var constant = ms.ToArray();
 
+                Guid uniqueSuffix = Guid.NewGuid();
+                File.WriteAllBytesAsync("./Reports/report" + ".PDF", constant);
                 return constant;
 
 

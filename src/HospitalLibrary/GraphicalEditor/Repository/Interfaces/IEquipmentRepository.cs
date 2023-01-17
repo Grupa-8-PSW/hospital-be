@@ -14,5 +14,15 @@ namespace HospitalLibrary.GraphicalEditor.Repository.Interfaces
         IEnumerable<Equipment> Search(string name, int? amount);
 
         IEnumerable<Equipment> GetEquipmentByRoomId(int id);
+
+        Equipment GetEquipmentByRoomIdAndName(int roomId, string name);
+
+        void CreateEquipTransfer(EquipmentTransfer equipTrans);
+
+        void Create(Equipment equip);
+
+        void Update(Equipment equip);
+
+        IEnumerable<EquipmentTransfer> GetEquipmentTransferByRoomId(int id);
     }
 }

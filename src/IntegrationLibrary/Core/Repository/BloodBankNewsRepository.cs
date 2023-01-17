@@ -1,4 +1,5 @@
 ﻿using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Repository.Interfaces;
 using IntegrationLibrary.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -32,6 +33,11 @@ namespace IntegrationLibrary.Core.Repository
         public IEnumerable<BloodBankNews> GetAll()
         {
             return _context.BloodBankNews.Include(b => b.BloodBank).Where(b => b.Archived == false).ToList();
+        }
+
+        public IEnumerable<BloodBankNews> GetAllPublished()
+        {
+            return _context.BloodBankNews.Where(b => b.Published && !b.Archived).ToList();
         }
 
         public BloodBankNews GetById(int id)

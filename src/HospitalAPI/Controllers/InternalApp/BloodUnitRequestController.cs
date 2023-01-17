@@ -1,4 +1,4 @@
-﻿using System.Web.Http.Cors;
+using System.Web.Http.Cors;
 using HospitalAPI.Connections;
 using HospitalAPI.DTO;
 using HospitalAPI.Web.Mapper;
@@ -23,8 +23,6 @@ namespace HospitalAPI.Controllers.InternalApp
         }
 
 
-
-        // GET: api/rooms
         [HttpGet]
         public ActionResult GetAll()
         {

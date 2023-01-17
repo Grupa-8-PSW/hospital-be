@@ -1,20 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HospitalLibrary.GraphicalEditor.Model.Map
+﻿namespace HospitalLibrary.GraphicalEditor.Model.Map
 {
-    public class MapRoom
+    public class MapRoom : ValueObject<MapRoom>
     {
-        public int Id { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
-        public string Color { get; set; }
+        public int X { get; private set; }
+        public int Y { get; private set; }
+        public int Width { get; private set; }
+        public int Height { get; private set; }
+        public string Color { get; private set; }
 
-      
+        public MapRoom(int x, int y, int width, int height, string color)
+        {
+            X = x;
+            Y = y;
+            Width = width;
+            Height = height;
+            Color = color;
+        }
+        public MapRoom() { }
+
+        protected override bool EqualsCore(MapRoom room)
+        {
+            return X == room.X &&
+                   Y == room.Y &&
+                   Width == room.Width &&
+                   Height == room.Height &&
+                   Color == room.Color;
+        }
+
+        protected override int GetHashCodeCore()
+        {
+            return HashCode.Combine(base.GetHashCode(), X, Y, Width, Height, Color);
+        }
     }
 }

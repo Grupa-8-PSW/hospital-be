@@ -12,10 +12,18 @@ using IntegrationAPI.ExceptionHandler.Validators;
 using IntegrationLibrary.Core.Service;
 using IntegrationLibrary.Core.Service.Interfaces;
 using HospitalLibrary.Core.Enums;
-using static iTextSharp.text.pdf.AcroFields;
 using IntegrationAPI.ConnectionService.Interface;
 using Microsoft.Extensions.DependencyInjection;
 using HospitalAPI.Connections;
+using HospitalAPI.DTO;
+using IntegrationLibrary.Core.Model.DTO;
+using IntegrationLibraryAPI.Connections;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
+using IntegrationAPI.ExceptionHandler.Exceptions;
+using IntegrationAPI.Middlewares;
+using IntegrationAPI.Mapper;
+using IntegrationLibrary.Core.Repository.Interfaces;
 
 namespace IntegrationAPI.Connections
 {
@@ -24,17 +32,20 @@ namespace IntegrationAPI.Connections
 
         private readonly IBloodConsumptionConfigurationService _service;
         private readonly IBloodBankService _bankService;
-        private readonly IHospitalHTTPConnection _bloodUnitService;
+        private readonly IHospitalHTTPConnection _hospitalHttpConnection;
+        private readonly IUrgentRequestRepository _urgentRequestRepository;
         private String api = "reports/sendReports";
 
-        public BloodBankHTTPConnection(IServiceScopeFactory factory)
+        public BloodBankHTTPConnection(IServiceScopeFactory factory, IUrgentRequestRepository urgentRequestRepository)
         {
             _service = factory.CreateScope().ServiceProvider
                 .GetRequiredService<IBloodConsumptionConfigurationService>();
 
             _bankService = factory.CreateScope().ServiceProvider.GetRequiredService<IBloodBankService>();
 
-            _bloodUnitService = factory.CreateScope().ServiceProvider.GetRequiredService<IHospitalHTTPConnection>();
+            _hospitalHttpConnection = factory.CreateScope().ServiceProvider.GetRequiredService<IHospitalHTTPConnection>();
+
+            _urgentRequestRepository = factory.CreateScope().ServiceProvider.GetRequiredService<IUrgentRequestRepository>();
         }
 
         public bool CheckForSpecificBloodType(BloodBank bloodBank, string bloodType)
@@ -94,17 +105,17 @@ namespace IntegrationAPI.Connections
             {
                 Guid uniqueSuffix = Guid.NewGuid();
                 //var scopedService = scope.ServiceProvider.GetRequiredService<IBloodBankHTTPConnection>();
-                byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(_bloodUnitService.GetAllBloodUnits(), out var configuration));
+                byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(_hospitalHttpConnection.GetAllBloodUnits(), out var configuration));
                 using (var stream = File.Create("./Reports/bloodConsumptionReport" + uniqueSuffix + ".PDF"))
                 {
                 }
 
                 await File.WriteAllBytesAsync("./Reports/bloodConsumptionReport" + uniqueSuffix + ".PDF", file);
                 SendUrlToBloodBanks(await Upload(uniqueSuffix));
-                bcc.NextSendingTime = bcc.NextSendingTime + bcc.FrequencyPeriodInHours;
+                bcc.NextSendingTime = bcc.NextSendingTime + TimeSpan.FromSeconds(10);
                 bcc.NextSendingTime = DateTime.SpecifyKind(bcc.NextSendingTime, DateTimeKind.Utc);
                 _service.Update(bcc);
-                return bcc.FrequencyPeriodInHours;
+                return TimeSpan.FromSeconds(10);
             }
 
             return delay;
@@ -142,7 +153,7 @@ namespace IntegrationAPI.Connections
                 bcc.NextSendingTime = DateTime.SpecifyKind(bcc.NextSendingTime, DateTimeKind.Utc);
                 _service.Update(bcc);
                 Guid uniqueSuffix = Guid.NewGuid();
-                byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(_bloodUnitService.GetAllBloodUnits(), out var configuration));
+                byte[] file = _service.GeneratePdf(bcc, _service.FindValidBloodUnits(_hospitalHttpConnection.GetAllBloodUnits(), out var configuration));
                 using (var stream = File.Create("./Reports/bloodConsumptionReport" + uniqueSuffix + ".PDF"))
                 {
                 }
@@ -159,8 +170,7 @@ namespace IntegrationAPI.Connections
             var bloodBanks = _bankService.GetAll();
             foreach (var bloodBank in bloodBanks)
             {
-                RestClient restClient =
-                    BloodBankConnectionValidator.ValidateURL(bloodBank.ServerAddress + api);
+                RestClient restClient = BloodBankConnectionValidator.ValidateURL(bloodBank.ServerAddress + api);
                 RestRequest request = new RestRequest();
                 request.AddParameter("url", url);
                 request.AddHeader("apiKey", bloodBank.APIKey);
@@ -173,6 +183,36 @@ namespace IntegrationAPI.Connections
                     Console.WriteLine(e);
                 }
             }
+        }
+
+        public async void SendUrgentRequest(BloodUnitUrgentRequest urgentRequest, String status)
+        {
+            var client = new RestClient("http://localhost:8081");
+            var request = new RestRequest("/bloodBanks/urgentRequest", Method.Post);
+
+            request.AddHeader("apiKey", urgentRequest.APIKey);
+            request.AddJsonBody(urgentRequest);
+            RestResponse res = new RestResponse();
+            try
+            {
+                res = await client.ExecuteAsync(request);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            bool hasEnoughBlood = JsonSerializer.Deserialize<bool>(Boolean.Parse(res.Content));
+
+            if (!hasEnoughBlood)
+                Console.WriteLine("The blood bank does not have enough blood !");
+            else if (status == "URGENT")
+            {
+                UrgentRequest urgRequest = new UrgentRequest(_bankService.GetByApiKey(urgentRequest.APIKey).Id, DateTime.Now, TenderOfferMapper.BloodDtoToBloodAmount(urgentRequest.bloodUnits));
+                _urgentRequestRepository.SaveUrgentRequest(urgRequest);
+
+                _hospitalHttpConnection.RestockBlood(urgentRequest.bloodUnits);
+            } else
+                _hospitalHttpConnection.RestockBlood(urgentRequest.bloodUnits);
         }
 
 

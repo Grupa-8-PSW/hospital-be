@@ -17,8 +17,8 @@ namespace HospitalAPI.Mapper
         {
             var consiliumRequestDTO = new ConsiliumRequestDTO();
             consiliumRequestDTO.Subject = model.Subject;
-            consiliumRequestDTO.FromDate = model.Interval.From.ToString("dd/MM/yyyy");
-            consiliumRequestDTO.ToDate = model.Interval.To.ToString("dd/MM/yyyy");
+            consiliumRequestDTO.FromDate = model.Interval.Start.ToString("dd/MM/yyyy");
+            consiliumRequestDTO.ToDate = model.Interval.End.ToString("dd/MM/yyyy");
             consiliumRequestDTO.Duration = model.Duration;
             consiliumRequestDTO.IsDoctors = model.IsDoctors;
             consiliumRequestDTO.DoctorIds = model.DoctorIds;

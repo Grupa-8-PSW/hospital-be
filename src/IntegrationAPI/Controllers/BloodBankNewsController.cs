@@ -3,11 +3,15 @@ using HospitalLibrary.Core.Model;
 using IntegrationLibrary.Core.Model;
 using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibrary.Core.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.ObjectModel;
+using System.Data;
 
 namespace IntegrationAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BloodBankNewsController : ControllerBase
@@ -29,6 +33,13 @@ namespace IntegrationAPI.Controllers
         public ActionResult GetById(int id)
         {
             return Ok(_bloodBankNewsService.GetById(id));
+        }
+
+        [AllowAnonymous]
+        [HttpGet("published")]
+        public ActionResult GetAllPublished()
+        {
+            return Ok(_bloodBankNewsService.GetAllPublished());
         }
 
 

@@ -20,7 +20,14 @@ namespace HospitalLibrary.Core.Repository
 
         public IEnumerable<ExaminationDone> GetAll()
         {
-            return _context.ExaminationsDone.ToList();
+            return _context.ExaminationsDone
+                .Include(x => x.Prescriptions)
+                .ThenInclude(x => x.PrescriptionItem)
+                .ThenInclude(x => x.MedicalDrug)
+                .Include(x => x.Examination)
+                .Include(x => x.Examination.Doctor)
+                .Include(x => x.Examination.Patient)
+                .ToList();
         }
 
         public ExaminationDone GetById(int id)
@@ -64,8 +71,10 @@ namespace HospitalLibrary.Core.Repository
         public ExaminationDone? GetByExamination(int examinationId)
         {
             return _context.ExaminationsDone
-                .Include(x => x.Symptoms)
                 .Include(x => x.Prescriptions)
+                .ThenInclude(p => p.PrescriptionItem)
+                .ThenInclude(pi => pi.MedicalDrug)
+                .Include(x => x.Symptoms)
                 .SingleOrDefault(x => x.ExaminationId == examinationId);
         }
     }

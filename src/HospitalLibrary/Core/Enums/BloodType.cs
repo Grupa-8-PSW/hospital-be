@@ -17,4 +17,5 @@ namespace HospitalLibrary.Core.Enums
         AB_POSITIVE,
         AB_NEGATIVE
     }
+
 }

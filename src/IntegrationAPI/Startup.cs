@@ -1,4 +1,5 @@
-﻿using IntegrationAPI.Connections;
+using Grpc.Core;
+using IntegrationAPI.Connections;
 using IntegrationAPI.Connections.Interface;
 using IntegrationAPI.Middlewares;
 using IntegrationAPI.ConnectionService.Interface;
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using IntegrationAPI.ConnectionService;
 using HospitalAPI.Connections;
+using IntegrationAPI.GrpcServices;
 using IntegrationAPI.Mapper;
 using static IntegrationAPI.Mapper.IMapper;
 using IntegrationAPI.Security;
@@ -17,6 +19,9 @@ using IntegrationLibrary.Core.Repository;
 using IntegrationLibrary.Core.Service.Interfaces;
 using IntegrationLibrary.Core.Model.DTO;
 using IntegrationLibrary.Core.Model;
+using IntegrationLibraryAPI.Connections;
+using Microsoft.Extensions.Options;
+using IntegrationLibrary.Core.Repository.Interfaces;
 
 namespace IntegrationAPI
 {
@@ -38,33 +43,51 @@ namespace IntegrationAPI
           
             services.AddSwaggerGen(c =>
             {
+                c.CustomSchemaIds(type => type.ToString());
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IntegrationAPI", Version = "v1" });
             });
 
             services.AddScoped<IBloodConsumptionConfigurationRepository, BloodConsumptionConfigurationRepository>();
             services.AddScoped<IBloodConsumptionConfigurationService, BloodConsumptionConfigurationService>();
             services.AddHostedService<BloodBankRabbitMqConnection>();
-
+            services.AddScoped<ITenderOfferService, TenderOfferService>();
+            services.AddScoped<ITenderOfferRepository, TenderOfferRepository>();
+            services.AddScoped<IUrgentRequestRepository, UrgentRequestRepository>();
             services.AddScoped<IBloodBankConnectionService, BloodBankConnectionService>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IBloodBankService, BloodBankService>();
             services.AddScoped<IBloodBankRepository, BloodBankRepository>();
             services.AddScoped<IBloodBankHTTPConnection, BloodBankHTTPConnection>();
             services.AddScoped<IBloodBankConnectionService, BloodBankConnectionService>();
+            services.AddScoped<IUrgentRequestService, UrgentRequestService>();
             services.AddScoped<ICredentialGenerator, CredentialGenerator>();
             services.AddScoped<IBloodBankHTTPConnection, BloodBankHTTPConnection>();
+            services.AddScoped<IBloodService, BloodService>();
             services.AddScoped<IBloodBankNewsRepository, BloodBankNewsRepository>();
             services.AddScoped<IBloodBankNewsService, BloodBankNewsService>();
             services.AddScoped<IHospitalHTTPConnectionService, HospitalHTTPConnectionService>();
             services.AddScoped<IHospitalHTTPConnection, HospitalHTTPConnection>();
             services.AddScoped<IMapper<BloodBankNews, BloodBankNewsDTO>, BloodBankNewsMapper>();
+            services.AddScoped<ITenderRepository, TenderRepository>();
+            services.AddScoped<ITenderService, TenderService>();
+            services.AddScoped<ITenderRepository, TenderRepository>();
+            services.AddScoped<ITenderService, TenderService>();
+            services.AddScoped<IHospitalRabbitMqPublisher, HospitalRabbitMqPublisher>();
+            services.AddScoped<IMonthlySubscriptionRepository, MonthlySubscriptionRepository>();
+            services.AddScoped<IMonthlySubscriptionService, MonthlySubscriptionService>();
+
+            services.AddScoped<IBloodRequestDeliveryRepository, BloodRequestDeliveryRepository>();
+            services.AddScoped<IBloodRequestDeliveryService, BloodRequestDeliveryService>();
+
+            services.AddScoped<IMapper<BloodBankNews, BloodBankNewsDTO>, BloodBankNewsMapper>();
+            services.AddScoped<IMapper<MonthlySubscription, MonthlySubscriptionDTO>, MonthlySubscriptionMapper>();
             services.AddTransient<ExceptionMiddleware>();
-
+            services.AddScoped<IClientScheduledService, ClientScheduledService>();
             services.AddScoped<IHospitalAPIClient, HospitalAPIClient>();
-
             services.AddAuthentication("Default")
                 .AddScheme<AuthenticationSchemeOptions, AuthHandler>("Default", null);
             services.AddAuthorization();
+
 
         }
 
@@ -88,20 +111,19 @@ namespace IntegrationAPI
             }
 
             app.UseMiddleware<ExceptionMiddleware>();
-
+            
             app.UseRouting();
-
 
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
-            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
+            //AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+            
         }
+
 
     }
 

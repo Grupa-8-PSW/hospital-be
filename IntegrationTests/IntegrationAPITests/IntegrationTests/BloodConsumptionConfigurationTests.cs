@@ -20,7 +20,8 @@ namespace IntegrationTeamTests.Integration
         private static BloodConsumptionConfigurationController SetupController(IServiceScope scope)
         {
             return new BloodConsumptionConfigurationController(scope.ServiceProvider.GetRequiredService<IBloodConsumptionConfigurationService>(),
-                                                                scope.ServiceProvider.GetRequiredService<IHospitalHTTPConnectionService>());
+                                                                scope.ServiceProvider.GetRequiredService<IHospitalHTTPConnectionService>(),
+                                                                scope.ServiceProvider.GetRequiredService<IEmailService>());
         }
         [Fact]
         public void CreatingBloodConsumptionConfiguration()
@@ -38,13 +39,9 @@ namespace IntegrationTeamTests.Integration
 
             };
 
-
-
             // Act
             var retVal = controller.CreateConfiguration(dto) as OkObjectResult;
             
-
-
             //Assert
             BloodConsumptionConfiguration createdBloodConsumptionConfiguration = (BloodConsumptionConfiguration)retVal.Value;
             Assert.IsType<OkObjectResult>(retVal);

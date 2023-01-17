@@ -1,33 +1,37 @@
+using HospitalAPI.Connections;
+using HospitalAPI.Converters;
+using HospitalAPI.DTO;
+using HospitalAPI.Mapper;
+using HospitalAPI.Responses;
+using HospitalAPI.Security;
+using HospitalAPI.Security.Models;
+using HospitalAPI.Web.Dto;
+using HospitalAPI.Web.Mapper;
+using HospitalLibrary.Core.DomainService;
+using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Model.Aggregates.RenovationScheduling;
+using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Core.Service;
+using HospitalLibrary.Core.Validation;
+using HospitalLibrary.GraphicalEditor.BusinessUseCases;
 using HospitalLibrary.GraphicalEditor.Repository;
 using HospitalLibrary.GraphicalEditor.Repository.Interfaces;
 using HospitalLibrary.GraphicalEditor.Repository.Map.Interfaces;
 using HospitalLibrary.GraphicalEditor.Service;
 using HospitalLibrary.GraphicalEditor.Service.Interfaces;
 using HospitalLibrary.Settings;
-using HospitalLibrary.Core.Service;
-using HospitalLibrary.Core.Repository;
-using HospitalAPI.Converters;
-using HospitalAPI.DTO;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using HospitalAPI.Web.Dto;
-using HospitalAPI.Web.Mapper;
-using HospitalLibrary.Core.Model;
-using HospitalLibrary.Core.Validation;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
-using HospitalAPI.Mapper;
-using HospitalLibrary.Core.Util;
-using HospitalAPI.Connections;
-using Microsoft.AspNetCore.Identity;
-using HospitalAPI.Security;
-using HospitalAPI.Security.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 using System.Text.Json.Serialization;
 using AngleSharp.Io;
-using HospitalAPI.Responses;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Runtime.Serialization;
+using AutoMapper;
+
 
 namespace HospitalAPI
 {
@@ -44,7 +48,11 @@ namespace HospitalAPI
         {
             services.AddControllers();
 
-            services.AddDbContext<HospitalDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")));
+            services.AddDbContext<HospitalDbContext>(options =>
+            {
+                options.UseNpgsql(Configuration.GetConnectionString("HospitalDB"));
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            });
             services.AddDbContext<AppIdentityDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("HospitalDB")));
 
             services.AddScoped(typeof(IFeedbackService), typeof(FeedbackService));
@@ -88,6 +96,15 @@ namespace HospitalAPI
             services.AddScoped<IEquipmentService, EquipmentService>();
             services.AddScoped<IEquipmentRepository, EquipmentRepository>();
 
+            services.AddScoped<IEquipmentTransferService, EquipmentTransferService>();
+            services.AddScoped<IEquipmentTransferRepository, EquipmentTransferRepository>();
+
+            services.AddScoped<IRenovationService, RenovationService>();
+            services.AddScoped<IRenovationRepository, RenovationRepository>();
+
+            services.AddScoped<ScheduleRenovation>();
+            services.AddScoped<IRenovationSchedulingSessionRepository, RenovationSchedulingSessionRepository>();
+
             services.AddScoped<IMapBuildingService, MapBuildingService>();
             services.AddScoped<IMapBuildingRepository, MapBuildingRepository>();
 
@@ -102,6 +119,9 @@ namespace HospitalAPI
 
             services.AddScoped<IExaminationService, ExaminationService>();
             services.AddScoped<IExaminationRepository, ExaminationRepository>();
+
+            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+            services.AddScoped<IAppointmentService, AppointmentService>();
 
             services.AddScoped<IMapper<Examination, ExaminationDTO>, ExaminationMapper>();
             services.AddScoped<IMapper<TreatmentHistory, TreatmentHistoryDTO>, TreatmentHistoryMapper>();
@@ -152,12 +172,20 @@ namespace HospitalAPI
             services.AddScoped<IResponseMapper<Consilium, ConsiliumResponse>, ConsiliumResponseMapper>();
             services.AddScoped<IResponseMapper<Doctor, ConsiliumDoctorResponse>, ConsiliumDoctorResponseMapper>();
 
+            services.AddScoped<DoctorScheduler>();
             services.AddScoped<IExaminationDoneRepository, ExaminationDoneRepository>();
             services.AddScoped<IExaminationDoneService, ExaminationDoneService>();
             services.AddScoped<IMapper<ExaminationDone, ExaminationDoneDTO>, ExaminationDoneMapper>();
 
+            services.AddScoped<IAppointmentSchedulingSessionRepository, AppointmentSchedulingSessionRepository>();
+            services.AddScoped<IAppointmentSchedulingEventsService, AppointmentSchedulingEventsService>();
 
-            services.AddScoped<IMapper<ConsiliumRequest, ConsiliumRequestDTO>>();
+            services.AddScoped<IAppointmentEventWrapperRepository, AppointmentEventWrapperRepository>();
+
+            services.AddScoped<IMapper<ConsiliumRequest, ConsiliumRequestDTO>, ConsiliumRequestMapper>();
+
+            services.AddScoped<IMapper<ExaminationDone, ExaminationDocumentResponse>, ExaminationDocumentMapper>();
+            services.AddScoped<ISearchTextParserService, SearchTextParserService>();
 
             services.AddCors(options =>
             {

@@ -3,6 +3,8 @@ using HospitalLibrary.GraphicalEditor.Model.Map;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Settings.DataSeed;
 using Microsoft.EntityFrameworkCore;
+using HospitalLibrary.Core.Model.Aggregates.AppointmentScheduling;
+using HospitalLibrary.Core.Model.Aggregates.RenovationScheduling;
 
 namespace HospitalLibrary.Settings
 {
@@ -22,6 +24,9 @@ namespace HospitalLibrary.Settings
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Examination> Examinations { get; set; }
         public DbSet<TreatmentHistory> TreatmentHistories { get; set; }
+        public DbSet<EquipmentTransfer> EquipmentTransfers { get; set; }
+        public DbSet<RenovationEventWrapper> RenovationEventWrappers { get; set; }
+        public DbSet<Renovation> Renovations { get; set; }
         public DbSet<Therapy> Therapies { get; set; }
         public DbSet<BloodUnit> BloodUnits { get; set; }
         public DbSet<MedicalDrugs> MedicalDrugs { get; set; }
@@ -33,12 +38,16 @@ namespace HospitalLibrary.Settings
         public DbSet<Consilium> Consiliums { get; set; }
         public DbSet<ExaminationDone> ExaminationsDone { get; set; }
         public DbSet<Symptom> Symptoms { get; set; }
+        public DbSet<AppointmentEventWrapper> AppointmentEventWrappers { get; set; }
 
-
-        public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
+        public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
+        {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<MedicalDrugs>()
                 .HasIndex(m => m.Code)
                 .IsUnique();
@@ -47,10 +56,12 @@ namespace HospitalLibrary.Settings
                 .IsUnique();
 
             modelBuilder.SeedMap();
+
             modelBuilder.SeedAddress();
             modelBuilder.SeedDoctor();
             modelBuilder.SeedPatient();
             modelBuilder.SeedFeedback();
+            modelBuilder.SeedExamination();
 
             modelBuilder.SeedBed();
             modelBuilder.SeedMedicalDrugs();
@@ -59,6 +70,9 @@ namespace HospitalLibrary.Settings
             modelBuilder.SeedTherapy();
             modelBuilder.SeedAllergen();
             modelBuilder.SeedSymptoms();
+
+            modelBuilder.SeedConsilium();
+            modelBuilder.SeedDoneExaminations();
 
             base.OnModelCreating(modelBuilder);
 

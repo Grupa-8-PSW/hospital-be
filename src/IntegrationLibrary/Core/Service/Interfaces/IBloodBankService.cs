@@ -12,6 +12,9 @@ namespace IntegrationLibrary.Core.Service.Interfaces
         IEnumerable<BloodBank> GetAll();
         void Create(BloodBank bloodBank);
         BloodBank GetById(int id);
-        public void Delete(BloodBank bloodBank);
+        void Delete(BloodBank bloodBank);
+        BloodBank GetByName(string bloodBankName);
+
+        BloodBank GetByApiKey(string apiKey);
     }
 }

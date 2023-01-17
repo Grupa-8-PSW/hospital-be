@@ -55,6 +55,8 @@ public class ConsiliumRepository : IConsiliumRepository
 
     public async Task<List<Consilium>> GetAllIncludeDoctors()
     {
-        return await _context.Consiliums.Include(c => c.Doctors).ToListAsync();
+        return await _context.Consiliums
+            .Include(c => c.Doctors)
+            .ToListAsync();
     }
 }

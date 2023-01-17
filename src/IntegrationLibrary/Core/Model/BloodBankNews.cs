@@ -8,17 +8,17 @@ namespace IntegrationLibrary.Core.Model
 {
     public class BloodBankNews
     {
-        public string Text { get; set; }
-        public string Subject { get; set; }
-        public int Id { get; set; }
+        public string Text { get;   set; }
+        public string Subject { get;  set; }
+        public int Id { get;  set; }
 
-        public string ImgSrc { get; set; }
+        public string ImgSrc { get;  set; }
 
-        public int BloodBankId { get; set; }  
+        public int BloodBankId { get;  set; }  
 
-        public BloodBank BloodBank { get; set; }
+        public BloodBank BloodBank { get;  set; }
 
-        public bool Published { get; set; }
+        public bool Published { get;   set;  }
 
         public bool Archived { get; set; }
 
@@ -47,6 +47,34 @@ namespace IntegrationLibrary.Core.Model
 
         public BloodBankNews()
         {
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is BloodBankNews news &&
+                   Text == news.Text &&
+                   Subject == news.Subject &&
+                   Id == news.Id &&
+                   ImgSrc == news.ImgSrc &&
+                   BloodBankId == news.BloodBankId &&
+                   EqualityComparer<BloodBank>.Default.Equals(BloodBank, news.BloodBank) &&
+                   Published == news.Published &&
+                   Archived == news.Archived;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Text, Subject, Id, ImgSrc, BloodBankId, BloodBank, Published, Archived);
+        }
+
+        public void ArchiveNews()
+        {
+            this.Archived = true;
+        }
+
+        public void PublishNews()
+        {
+            this.Published = true;
         }
     }
 }

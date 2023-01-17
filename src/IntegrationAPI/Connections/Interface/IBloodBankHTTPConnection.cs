@@ -1,4 +1,6 @@
-﻿using IntegrationLibrary.Core.Model;
+﻿
+using IntegrationLibrary.Core.Model;
+using IntegrationLibrary.Core.Model.DTO;
 using RestSharp;
 
 namespace IntegrationAPI.Connections.Interface
@@ -7,5 +9,8 @@ namespace IntegrationAPI.Connections.Interface
     {
         public bool CheckForSpecificBloodType(BloodBank bloodBank, string bloodType);
         public bool CheckBloodAmount(string api, string bloodType, double quant);
+
+        public void SendUrgentRequest(BloodUnitUrgentRequest bloodUnit, string sendingStatus);
+
     }
 }

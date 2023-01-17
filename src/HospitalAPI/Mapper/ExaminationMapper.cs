@@ -11,14 +11,15 @@ namespace HospitalAPI.Web.Mapper
     {
         public ExaminationDTO toDTO(Examination examination)
         {
-            ExaminationDTO examinationDTO = new ExaminationDTO();
-            examinationDTO.Id = examination.Id;
-            examinationDTO.PatientId = examination.PatientId;
-            examinationDTO.DoctorId = examination.DoctorId;
-            examinationDTO.StartTime = examination.StartTime.ToString("o", CultureInfo.InvariantCulture);
-            examinationDTO.Duration = examination.Duration;
+            var examinationDto = new ExaminationDTO();
+            examinationDto.Id = examination.Id;
+            examinationDto.PatientId = examination.PatientId;
+            examinationDto.DoctorId = examination.DoctorId;
+            examinationDto.PatientFullName = examination.Patient.FullName;
+            examinationDto.StartTime = examination.DateRange.Start;
+            examinationDto.Duration = examination.DateRange.DurationInMinutes;
 
-            return examinationDTO;
+            return examinationDto;
         }
 
         public Collection<ExaminationDTO> toDTO(Collection<Examination> models)
@@ -37,8 +38,7 @@ namespace HospitalAPI.Web.Mapper
             }
             examination.DoctorId = dto.DoctorId;
             examination.PatientId = dto.PatientId;
-            examination.Duration = dto.Duration;
-            examination.StartTime = DateTime.ParseExact(dto.StartTime, "dd/MM/yyyy HH:mm", null); //DateTime.Parse(dto.StartTime, null, System.Globalization.DateTimeStyles.RoundtripKind);
+            examination.DateRange = dto.DateRange;
 
             return examination;
         }
