@@ -173,7 +173,7 @@ namespace HospitalLibrary.Core.Service
             }
             return stepCounter;
         }
-        public SessionStepTimeSpent DurationViewingEachStep()
+        /*public SessionStepTimeSpent DurationViewingEachStep()
         {
             var sessionCounter = new SessionStepTimeSpent();
             DateTime stepOne = new();
@@ -222,6 +222,6 @@ namespace HospitalLibrary.Core.Service
             }
 
             return sessionCounter;
-        }
+        }*/
     }
 }
