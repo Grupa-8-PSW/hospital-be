@@ -30,7 +30,8 @@ namespace IntegrationAPI.Controllers
 
         public String Create([FromBody]MonthlySubscriptionDTO subscription)
         {
-            subscription.Bank =_bankService.GetById(subscription.BankId); 
+            subscription.Bank =_bankService.GetById(subscription.BankId);
+            subscription.Status = SubscriptionStatus.WAITING;
             if (!ModelState.IsValid)
             {
                 Console.WriteLine(ModelState);
@@ -47,12 +48,33 @@ namespace IntegrationAPI.Controllers
             }
             MonthlySubscription created = _service.GetLast();
             MonthlySubscriptionMessageDTO monthlySubscriptionDTO = MonthlySubscriptionMessageMapper.ToDTO(created);
+            monthlySubscriptionDTO.BloodCenterId = subscription.BloodCenterId;
             try
             {
                 _bloodBankConnectionService.SendMonthlySubscriptionOffer(monthlySubscriptionDTO, subscription.Bank.MonthlySubscriptionRoutingKey);
             }catch (Exception e) { Console.WriteLine(e); }
 
             return "success";
+        }
+
+        [HttpGet("test")]
+        public ActionResult Test()
+        {
+            var bloods = new List<BloodDTO>();
+            bloods.Add(new BloodDTO()
+            {
+                Id = 1,
+                Type = "A",
+                Quantity = 5,
+            });
+            _bloodBankConnectionService.SendMonthlySubscriptionOffer(new MonthlySubscriptionMessageDTO()
+            {
+                RequestedBlood = bloods,
+                HospitalSubscriptionId = 1,
+                DeliveryDate = "2022-01-01",
+                BloodBankAPIKey = "321"
+            }, "monthlySubscriptions30"); ;
+            return Ok();
         }
 
         [HttpGet]

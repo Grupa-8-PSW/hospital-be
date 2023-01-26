@@ -17,6 +17,7 @@ namespace IntegrationLibrary.Core.Model.DTO
         public BloodBank Bank { get; set; }
         public int BankId { get; set; }
         public SubscriptionStatus Status { get; set; }
+        public int BloodCenterId { get; set; }
 
         public MonthlySubscriptionDTO(List<Blood> requestedBlood, DateTime deliveryDate, int id, BloodBank bank, SubscriptionStatus status, int bankId)
         {

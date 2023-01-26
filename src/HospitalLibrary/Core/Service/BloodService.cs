@@ -46,8 +46,10 @@ namespace HospitalLibrary.Core.Service
         public void RestockBlood(int id, Blood blood)   
         {
             Blood oldBlood = _bloodRepo.GetByBloodType(blood.Type);
-            blood.Quantity = oldBlood.Quantity + blood.Quantity;
-            _bloodRepo.RestockBlood(blood);
+            oldBlood.Quantity = oldBlood.Quantity + blood.Quantity;
+            _bloodRepo.Update(oldBlood);
+            // blood.Quantity = oldBlood.Quantity + blood.Quantity;
+            // _bloodRepo.RestockBlood(blood);
         }
     }
 }

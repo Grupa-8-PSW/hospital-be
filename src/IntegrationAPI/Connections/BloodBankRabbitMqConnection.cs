@@ -34,7 +34,6 @@ namespace IntegrationAPI.Connections
                 {
                     var scopedService = scope.ServiceProvider.GetRequiredService<IConfiguration>();
                     hospitalQueue = scopedService.GetSection("hospitalQueue").Value;
-
                 }
                 connection = factory.CreateConnection();
                 channel = connection.CreateModel();
@@ -53,7 +52,6 @@ namespace IntegrationAPI.Connections
                     TryParseSubscriptionResponse(jsonMessage);
                     TryParseMonthlyBloodDelivery(jsonMessage);
                     TryParseBloodRequestDelivery(jsonMessage);
-
                 };
                 channel.BasicConsume(queue: hospitalQueue,
                                        autoAck: true,

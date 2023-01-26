@@ -8,7 +8,7 @@ namespace IntegrationLibrary.Core.Model.DTO
 {
     public enum SubscriptionResponseStatus
     {
-        REJECTED,
-        ACCEPTED
+        ACCEPTED,
+        REJECTED
     }
 }
